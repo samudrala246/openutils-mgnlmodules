@@ -1,0 +1,30 @@
+div.pzc,div.pzc div {
+  padding: 0;
+  margin: 0;
+  border: 0;
+  position: relative;
+}
+
+div.pzc div.pzcMask {
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+}
+
+div.pzc div.pzcMedia {
+  position: absolute;
+}
+
+div.pzc div.pzcMedia img {
+  width: 100%;
+  height: 100%;
+}
+
+div.pzc div.pzcSlider {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 5px;
+  border: solid 1px #666;
+  margin-bottom: 5px;
+}

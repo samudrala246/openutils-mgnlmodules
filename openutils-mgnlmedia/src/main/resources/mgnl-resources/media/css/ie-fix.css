@@ -1,0 +1,40 @@
+.image span {
+  display: inline-block;
+  height: 100%;
+}
+
+.menupopup a {
+  padding: 1px 4px;
+}
+
+.menupopup a span {
+  word-wrap: break-word;
+}
+
+/* prevent paginator falling */
+#navigation #bgselectorblock {
+  width: 280px;
+}
+
+/* margin included in width above */
+.paging {
+  margin-right: 0;
+}
+
+/* increase vertical spacing */
+#navigation .sortingcontainer {
+  padding-top: 8px;
+}
+
+.mediaBranding {
+  height: 26px !important;
+}
+
+#scrollablecontent {
+  position: relative;
+}
+
+#scrollablecontent .iespacer {
+  height: 10px;
+  clear: both;
+}

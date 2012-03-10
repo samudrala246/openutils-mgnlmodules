@@ -1,0 +1,81 @@
+<?xml version="1.0"?>
+  <!--
+  "type" attribute can be: add, remove, update or fix.
+-->
+<document>
+  <properties>
+    <title>Changes</title>
+    <author email="fgiust(at)users.sourceforge.net">Fabrizio Giustina</author>
+  </properties>
+  <body>
+    <release version="4.0-b10" date="in svn" description="">
+      <action type="fix" dev="molaschi">[MEDIA-17] - Remove link titles "modifica" and "pubblica" in folder view</action>
+      <action type="fix" dev="molaschi">[MEDIA-18] - When a media is not activated don't show activate button (already
+        present) but "Not activated" text</action>
+      <action type="fix" dev="molaschi">[MEDIA-19] - media.tld is not correct</action>
+      <action type="fix" dev="molaschi">[MEDIA-21] - ImageUtils throws Exceptions when trying to get scaled image</action>
+      <action type="fix" dev="molaschi">[MEDIA-22] - IllegalArgumentException with resize="nocrop" and resize="fitbands"
+      </action>
+      <action type="fix" dev="molaschi">[MEDIA-23] - media.tag uses wrong height value for resized image</action>
+      <action type="fix" dev="molaschi">[MEDIA-25] - Resizing of PNG replaces transparent background with white</action>
+      <action type="fix" dev="molaschi">[MEDIA-28] - When changing the selected media the media browser doesn't open on
+        folder of selected media</action>
+      <action type="update" dev="molaschi">[MEDIA-24] - selectMedia references not working after an activate</action>
+      <action type="add" dev="molaschi">[MEDIA-26] - Round Corners image post processor</action>
+      <action type="add" dev="molaschi">[MEDIA-27] - control image quality and progressive mode</action>
+      <action type="add" dev="molaschi">[MEDIA-29] - media tag: make images use the style attribute for size, and add
+        attributes to write dimensions in em insteadof px</action>
+    </release>
+    <release version="4.0-b9" date="in svn" description="">
+      <action type="fix" dev="molaschi">fix some media.tag issues</action>
+      <action type="update" dev="molaschi">insert some defaults for video and audio player dimensions on media.tag</action>
+    </release>
+    <release version="4.0-b8" date="in svn" description="">
+      <action type="fix" dev="molaschi">fix i18n in selectMedia control</action>
+    </release>
+    <release version="4.0-b7" date="in svn" description="">
+      <action type="fix" dev="molaschi">fix error in freemarker comment syntax selectMedia.ftl</action>
+      <action type="add" dev="molaschi">add grayscale image post processor</action>
+    </release>
+    <release version="4.0-b6" date="in svn" description="">
+      <action type="fix" dev="fgiust">Avoid image processing when the requested size is identical to the original image
+      </action>
+      <action type="add" dev="molaschi">Add configurable image post processors</action>
+      <action type="update" dev="molaschi">Make image resolution processors configurable under modules/media/processors
+      </action>
+    </release>
+    <release version="4.0-b5" date="2009-06-04" description="">
+      <action type="fix" dev="fgiust">MediaCustomSaveHandler now only warns about missing referenced media without
+        blocking</action>
+      <action type="fix" dev="fgiust">Media jcr browser was displying duplicate nodes</action>
+      <action type="add" dev="fgiust">Fckeditor integration for creating links to objects in the media repository.
+        Requires the fix for MAGNOLIA-2759 to be applied to work (hopefully it will work out-of-the-box only starting
+        from magnolia 4.1.1)</action>
+    </release>
+    <release version="4.0-b4" date="2009-04-29" description="">
+      <action type="update" dev="fgiust">YouTubeVideoTypeHandler modified in order to work with generic external urls (not
+        only youtube)</action>
+      <action type="add" dev="fgiust">new utility class net.sourceforge.openutils.mgnlmedia.media.utils.MediaLoadUtils
+      </action>
+      <action type="add" dev="fgiust">new property "autoactivate" that can be set in module configuration
+        (/modules/media/config/autoactivate) to have imported media activated by default.</action>
+    </release>
+    <release version="4.0-b3" date="2009-04-23" description="">
+      <action type="update" dev="fgiust">Update openutils-mgnltasks dependency to 4.0</action>
+      <action type="add" dev="fgiust">Support for resize without crop to a fixed size with borders. Background color can
+        be specified with the syntax: "o100x100;background=FF0096"</action>
+      <action type="add" dev="fgiust">Alternative prefix for "fit in" resize. In previous versions you had to use &lt;
+        (not very handy in html), now you can use "L" (lower, case insensitive), e.g. "L100x100"</action>
+    </release>
+    <release version="4.0-b2" date="2009-04-16" description="">
+      <action type="update" dev="fgiust">Stable release for Magnolia 4.x</action>
+    </release>
+    <release version="3.6" date="2009-02-15" description="">
+      <action type="add" dev="fgiust">Added support for reading CMYK/YCCK jpegs</action>
+      <action type="update" dev="fgiust">Stable release for Magnolia 3.6.x</action>
+    </release>
+    <release version="0.1" date="2008-12-04" description="">
+      <action type="add" dev="fgiust">first alpha release</action>
+    </release>
+  </body>
+</document>

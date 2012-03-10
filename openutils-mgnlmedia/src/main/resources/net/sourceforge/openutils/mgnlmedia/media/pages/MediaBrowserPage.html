@@ -1,0 +1,370 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <link rel="stylesheet" type="text/css" href="${this.request.contextPath}/.resources/ext/css/ext-all.css" />
+    <link rel="stylesheet" type="text/css" href="${this.request.contextPath}/.resources/ext/css/xtheme-gray.css" />
+    <link rel="stylesheet" type="text/css" href="${this.request.contextPath}/.resources/media/css/branding.css?version=${this.moduleVersion}" />
+    <!--[if lte IE 7]>
+    <link rel="stylesheet" type="text/css" href="${this.request.contextPath}/.resources/media/css/ie-fix.css" />
+    <![endif]-->
+    <script type="text/javascript" src="${this.request.contextPath}/.resources/media/js/mootools-1.2.4-core.js"></script>
+    <script type="text/javascript" src="${this.request.contextPath}/.resources/media/js/mootools-1.2.4.4-more.js"></script>
+    <script type="text/javascript" src="${this.request.contextPath}/.resources/ext/ext-base.js"></script>
+    <script type="text/javascript" src="${this.request.contextPath}/.resources/ext/ext-all.js"></script>
+    <script type="text/javascript" src="${this.request.contextPath}/.resources/media/js/miframe.js"></script>
+    <script type="text/javascript">
+      // <![CDATA[
+      if ((typeof Range !== "undefined") && !Range.prototype.createContextualFragment)
+{
+    Range.prototype.createContextualFragment = function(html)
+    {
+        var frag = document.createDocumentFragment(),
+        div = document.createElement("div");
+        frag.appendChild(div);
+        div.outerHTML = html;
+        return frag;
+    };
+}
+
+var viewport;
+var nodeid = "${this.nodeid!''}";
+var selectMedia = ${this.selectMedia?string("true", "false")};
+var openPath = "${this.openPath!''}";
+var actMediaHandle = "${this.actMediaHandle!''}";
+var mediaType = "${this.mediaType!''}"; // get tree url
+
+function getTreeUrl() {
+  var url = "${this.request.contextPath}/.magnolia/trees/media.html?mgnlCK=" + (new Date()).getTime();
+  if (selectMedia)
+  {
+    url += "&selectMedia=true";
+  }
+  url += "&pathOpen="+ encodeURIComponent(openPath) +"&pathCurrent=" + encodeURIComponent(openPath) +"&pathSelected=" + encodeURIComponent(openPath);
+  if (mediaType != null && mediaType != 'null')
+  {
+    url += "&mediaType=" + encodeURIComponent(mediaType);
+  }
+  return url;
+}
+
+function search() {
+  Ext.Msg.prompt('${this.msgs.get('media.menu.search')}', '${this.msgs.get('media.menu.search')}', function(btn, text){
+    if (btn == 'ok'){
+      searchForMedia(text);
+    }
+  });
+}
+
+function searchForMedia(textToSearch){
+
+  var centerPanel = viewport.getComponent('center-panel');
+  (selectMedia ? centerPanel : centerPanel.getComponent('center-center-panel')).setTitle("Search results for : "+ textToSearch);
+
+  var url = "${this.request.contextPath}/.magnolia/pages/mediaFolderView.html?search=" + encodeURIComponent(textToSearch) + "&mgnlCK=" + (new Date()).getTime();
+  if (selectMedia)
+  {
+    url += "&selectMedia=true&actMediaHandle=" + encodeURIComponent(actMediaHandle);
+  }
+  if (mediaType != null && mediaType != 'null')
+  {
+    url += "&mediaType=" + encodeURIComponent(mediaType);
+  }
+  frames['mediaFolderView'].location.href = url;
+}
+
+Ext.onReady(function(){
+  Ext.state.Manager.setProvider(new Ext.state.CookieProvider());
+
+  var centerItem;
+  if (selectMedia)
+  {
+    centerItem = {
+      region:'center',
+      id:'center-panel',
+      title:'Media',
+      contentEl:'mediaFolderView'
+    };
+  }
+  else
+  {
+    centerItem = {
+      region:'center',
+      id:'center-panel',
+      layout:'border',
+      border:false,
+      items:[
+        {
+          region:'center',
+          id:'center-center-panel',
+          contentEl:'mediaFolderView'
+        },
+        {
+          region:'south',
+          id:'branding-panel',
+          html:'<div class="mediaBranding"><a href="http://www.openmindonline.it" target="_blank"><img src="${this.request.contextPath}/.resources/media/assets/branding/openmind-logo.png" class="logo" alt="openmind" /></a><span class="brandinginfo">${this.getMessage('media.footer.text', this.moduleVersion)}</span></div>',
+          height: 24
+        }
+      ]
+    };
+  }
+  viewport = new Ext.Viewport({
+    layout:'border',
+    items:[
+      {
+        region:'west',
+        xtype: 'tabpanel',
+        id:'west-panel',
+        split:true,
+        width: 240,
+        minSize: 175,
+        maxSize: 400,
+        collapsible: true,
+        margins:'0 0 0 0',
+        padding: 0,
+        expandOnShow: true,
+        floatable: true,
+        frame: false,
+        border: false,
+        bodyBorder: false,
+        hideBorders: true,
+        animCollapse:false,
+        animFloat: false,
+        stateful: true,
+        deferredRender:false,
+        activeTab:[#if (this.playlistHandle?has_content)]1[#else]0[/#if],
+        items:[{
+            contentEl:'mediaTreeView',
+            title: 'Browse'
+        },{
+            contentEl:'advancedSearchView',
+            title: 'Search'
+        }]
+      },
+      centerItem
+    ]
+  });
+
+  // FF 3.6 patch
+  setTimeout(function() {
+    setTreeCollapsed(false);
+    frames['mediaTreeView'].location.href = getTreeUrl();
+    frames['advancedSearchView'].location.href = "${this.request.contextPath}/.magnolia/pages/media-advsearchform.html?selectMedia="+encodeURIComponent(selectMedia)+"&playlistHandle=${this.playlistHandle!''}&${this.playlistSearch!''}";
+    if (openPath != null && openPath != "null" && openPath.length > 0)
+    {
+      reloadFolder(openPath);
+    }
+    [#if message?exists]
+    Ext.Msg.alert('', '${message?js_string}');
+    [/#if]
+  }, 100);
+});
+
+// check if tree panel is collapsed
+function isTreeCollapsed()
+{
+  return viewport.getComponent('west-panel').collapsed;
+}
+
+// set tree collapsed (true collapse, false expand)
+function setTreeCollapsed(collapsed)
+{
+  if (collapsed && !isTreeCollapsed())
+  {
+    viewport.getComponent('west-panel').collapse();
+  }
+  if (!collapsed && isTreeCollapsed())
+  {
+    viewport.getComponent('west-panel').expand();
+  }
+}
+
+
+var ulDialog;
+
+// create floating dialog
+function openWindow(src)
+{
+  var width = 435;
+  var height = 380;
+  ulDialog = new Ext.Window({
+    height:     height,
+    width:      width,
+    minHeight:    50,
+    minWidth:   100,
+    modal:      true,
+    shadow:     false,
+    collapsible:  false,
+    closable:   true,
+    body:     new Ext.ux.ManagedIFrame({autoCreate:{id:'dynamicIframe1',cls:'x-window-body',frameBorder: 0,width:'100%',height:'100%',src: "${this.request.contextPath}/"+src}}),
+    animate:    true,
+    title:      "",
+    resizable:    false,
+    bodyBorder:   false,
+    buttons:    [],//{text: "Close", handler: function() {ulDialog.hide();ulDialog.destroy();} }],
+    keys:     [],//{key: 27, fn: function() {ulDialog.hide();ulDialog.destroy();}, scope: this}]
+    stateful: false
+  });
+  ulDialog.show();
+}
+
+// set dialog title
+function setLayerTitle(title)
+{
+  if (ulDialog)
+  {
+    ulDialog.setTitle(title);
+  }
+}
+
+// resize dialog
+function resizeTo(w, h)
+{
+  if (ulDialog)
+  {
+    ulDialog.setWidth(w);
+    ulDialog.setHeight(h);
+    ulDialog.center();
+  }
+}
+
+// close dialog
+function closeLayer()
+{
+  if (ulDialog)
+  {
+    ulDialog.destroy();
+  }
+}
+
+// reload folder content
+function reloadFolder(path, type, isbrowse)
+{
+
+  var centerPanel = viewport.getComponent('center-panel');
+  (selectMedia ? centerPanel : centerPanel.getComponent('center-center-panel')).setTitle("Media - "+ path);
+
+  var url = frames['mediaFolderView'].location.pathname;
+  // fix 404 on Chromium and IE8
+  if (url == 'blank' || url == '/blank') url = '';
+  
+  var querystringoriginal = frames['mediaFolderView'].location.search.substring(1).cleanQueryString().parseQueryString();
+   
+  var querystring = {};
+  
+  if (!querystringoriginal['search']){
+    querystring = querystringoriginal;
+  }
+  
+  if (isbrowse || url == "") {
+    url = "${this.request.contextPath}/.magnolia/pages/mediaFolderView.html";
+  }
+  
+  querystring['path'] = path;
+
+  querystring['mgnlCK'] = (new Date()).getTime();
+  
+  // reset command
+  if (querystring['command']) delete querystring.command;
+  
+  if (selectMedia)
+  {
+    querystring['selectMedia'] = true;
+    querystring['actMediaHandle'] = actMediaHandle;
+  }
+  if (type != null && type != 'null')
+  {
+    querystring['type'] = type;
+  }
+  if (mediaType != null && mediaType != 'null')
+  {
+    querystring['mediaType'] = mediaType;
+  }
+  
+  frames['mediaFolderView'].location.href = url + "?" + new Hash(querystring).toQueryString();
+}
+
+function setNewMedia(uuid, thumb, file)
+{
+  window.opener.setNewMedia(nodeid, uuid, file, thumb);
+  window.opener.focus();
+  window.close();
+}
+
+function uploadzip(tree)
+{
+  var width = 290;
+  var height = 100;
+  var uploadDlg;
+  var tpl = Ext.XTemplate.from("formDiv");
+  var html = tpl.apply({
+    parentPath: tree.selectedNode.path
+  });
+  uploadDlg = new Ext.Window({
+    width:      width,
+    height:     height,
+    modal:      true,
+    shadow:     true,
+    collapsible:  false,
+    closable: false,
+    html: html,
+    title:      "${this.msgs.get('media.loadzip')}",
+    resizable:    false,
+    bodyBorder:   false,
+    buttons:    [
+      {
+        text: "${this.msgs.get('buttons.ok')}",
+        handler: function() {
+          uploadDlg.hide();
+          var ch = uploadDlg.body.child(".formToSubmit");
+          ch.dom.submit();
+        }
+      }, {text: "${this.msgs.get('buttons.cancel')}", handler: function() {uploadDlg.hide();uploadDlg.destroy();} }],
+    keys:     [],//{key: 27, fn: function() {ulDialog.hide();ulDialog.destroy();}, scope: this}]
+    stateful: false
+  });
+  uploadDlg.show();
+}
+
+function extConfirm(title, text, callback)
+{
+  Ext.MessageBox.confirm(title, text, function(btn){
+    callback(btn == 'yes');
+  });
+}
+//]]>
+    </script>
+    
+<script type="text/javascript">
+    // <![CDATA[[
+if (!(document.location.host.indexOf('localhost') > -1) && !(document.location.host.indexOf('127.0.0.1') > -1) ) {
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-10294410-8']);
+  _gaq.push(['_setReferrerOverride', document.location]);
+  _gaq.push(['_trackPageview', '/products/media/' + document.location.host]);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+}
+// ]]>
+</script>
+  </head>
+  <body>
+    <iframe id="mediaTreeView" name="mediaTreeView" class="x-panel-body" src=""
+      style="width:100%; height:100%; border:0 none; margin:0; padding:0;" frameborder="0" scrolling="no"></iframe>
+    <iframe id="advancedSearchView" name="advancedSearchView" class="x-panel-body"
+      src="" style="width:100%; height:100%; border:0 none; margin:0; padding:0; overflow:auto;" frameborder="0" scrolling="no"></iframe>
+    <iframe id="mediaFolderView" name="mediaFolderView" class="x-panel-body" src=""
+      style="width:100%; height:100%; border:0 none; overflow:hidden;" frameborder="0" scrolling="no"></iframe>
+    <div id="formDiv" style="display:none">
+      <form class="formToSubmit" action="" enctype="multipart/form-data" method="post">
+        <input type="hidden" name="command" value="saveZip" />
+        <input id="parentPath" type="hidden" name="parentPath" value="{parentPath}" />
+        <input type="file" name="zipFile" />
+      </form>
+    </div>
+  </body>
+</html>

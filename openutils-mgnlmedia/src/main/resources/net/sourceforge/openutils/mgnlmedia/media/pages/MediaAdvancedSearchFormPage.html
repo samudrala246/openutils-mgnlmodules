@@ -1,0 +1,56 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <link href="${this.request.contextPath}/.resources/admin-css/admin-all.css" type="text/css" rel="stylesheet" />
+    <link title="Aqua" href="${this.request.contextPath}/.resources/calendar/skins/aqua/theme.css" media="all" type="text/css" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="${this.request.contextPath}/.resources/media/css/advancedSearch.css" />
+    <script type="text/javascript" src="${this.request.contextPath}/.magnolia/pages/javascript.js"></script>
+    <script type="text/javascript" src="${this.request.contextPath}/.resources/admin-js/dialogs/dialogs.js"></script>
+    <script type="text/javascript" src="${this.request.contextPath}/.resources/calendar/calendar.js"></script>
+    <script src="${this.request.contextPath}/.resources/calendar/lang/calendar-en.js" type="text/javascript"></script>
+    <script src="${this.request.contextPath}/.resources/calendar/calendar-setup.js" type="text/javascript"></script>
+    <script type="text/javascript" src="${this.request.contextPath}/.resources/media/js/mootools-1.2-core.js"></script>
+    <script type="text/javascript" src="${this.request.contextPath}/.resources/media/js/mootools-1.2-more.js"></script>
+    <script type="text/javascript">
+window.addEvent('domready', function(){
+  var form = $('mediaSearchForm');
+  form.getElement('input[name=saveAsPlaylist]').addEvent('click', function(e){
+    new Event(e).stop();
+    [#if this.playlistHandle?has_content]parent.extConfirm("${this.msgs['playlist.confirmUpdate.title']?js_string}", "${this.msgs.get('playlist.confirmUpdate.text', [this.playlistHandle])?js_string}", saveAsPlaylist);[#else]saveAsPlaylist();[/#if]
+  });
+  
+  function saveAsPlaylist(update){
+    form.getElement('input[name=command]').set('value', 'saveAsPlaylist');
+    form.getElement('input[name=playlistHandle]').set('value', update ? "${this.playlistHandle!''}" : '');
+    form.submit();
+  }
+});
+    </script>
+  </head>
+  <body id="mgnl">
+    <form id="mediaSearchForm" action="${this.request.contextPath}/media/search" target="mediaFolderView">
+      [#macro msgIfAvail key]
+        [#if !(this.msgs[key])?starts_with("???")]${this.msgs[key]}[#else]${key}[/#if]
+      [/#macro]
+      [#macro rendersFilter filters]
+        [#list filters?keys as filterKey]
+          [#if filters[filterKey].control?? & filters[filterKey].control?length gt 0]
+            [#assign controlUrl]/search/freemarker/controls/${filters[filterKey].control}.ftl[/#assign]
+            [#assign filter=filters[filterKey]]
+            [#include controlUrl /]
+          [/#if]
+        [/#list]
+      [/#macro]
+      [@rendersFilter this.filters /]
+    
+      <input type="hidden" name="selectMedia" value="${this.selectMedia?string('true', 'false')}" />
+
+      <div class="row">
+        <input type="submit" name="search" value="${this.msgs['buttons.search']}" class="button-submit" onclick="this.form.command.value = ''"/>
+        <input type="submit" name="saveAsPlaylist" value="${this.msgs['buttons.saveAsPlaylist']}" class="button-submit" />
+        <input type="hidden" name="command" value="" />
+        <input type="hidden" name="playlistHandle" value="" />
+      </div>
+    </form>
+  </body>
+</html>

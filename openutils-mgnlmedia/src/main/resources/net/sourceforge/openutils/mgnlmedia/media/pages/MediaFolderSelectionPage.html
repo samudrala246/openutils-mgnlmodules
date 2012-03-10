@@ -1,0 +1,64 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <style type="text/css">
+html, body {
+  font:normal 12px verdana;
+  margin:0;
+  padding:0;
+  border:0 none;
+  overflow:hidden;
+  height:100%;
+}
+
+body {
+  background-color:#FAFBF4;
+}
+
+.mgnlControlButton, .mgnlControlButton_PUSHED {
+  font-size:11px;
+  height:15px;
+  padding:1px 8px 1px 10px;
+  color:#F0F2E6;
+  cursor:default;
+  font-family:Verdana,sans-serif;
+  white-space:nowrap;
+  background-color:#5E9201;
+  border-color:#ADC97B rgb(57, 97, 1) rgb(57, 97, 1) rgb(173, 201, 123);
+  border-style:solid;
+  border-width:1px;
+}
+
+
+    </style>
+    <script type="text/javascript" src="${this.request.contextPath}/.resources/media/js/mootools-1.2-core.js"></script>
+    <script type="text/javascript">
+    window.addEvent('domready', function(){
+      parent.resizeTo(300, 450);
+      parent.setLayerTitle('Seleziona cartella');
+      frames['mediaTreeSelection'].location.href = "${this.request.contextPath}/.magnolia/trees/media.html?browseMode=true&mgnlCK="+(new Date()).getTime();
+    });
+
+    function select(){
+      var destPath = frames['mediaTreeSelection'].document.getElementById("mgnlTreeControlAddressBar").value;
+
+      if (destPath == null || destPath.length == 0) {
+        alert('${this.msgs.get('media.move.error.selectnode')}');
+      } else {
+        parent.frames['${this.parentFrame!'mediaFolderView'}'].performAction('${this.action!''}', '${this.sourceNode!''}', destPath);
+        parent.closeLayer();
+      }
+    }
+    </script>
+  </head>
+  <body>
+    <div id="tree" style="position:relative;width:100%;height:390px;float:left;">
+      <iframe id="mediaTreeSelection" name="mediaTreeSelection" src="" frameborder="0" scrolling="auto"
+        style="width:100%;height:100%"><!--  --></iframe>
+    </div>
+    <div id="buttons" style="position:relative;width:100%;height:30px;float:left;clear:both;">
+      <span class="mgnlControlButton" onclick="parent.closeLayer()" style="float: right;margin-right:5px;">${this.msgs.get('buttons.cancel')}</span>
+      <span class="mgnlControlButton" onclick="select()" style="float: right;margin-right:5px;">${this.msgs.get('buttons.ok')}</span>
+    </div>
+  </body>
+</html>

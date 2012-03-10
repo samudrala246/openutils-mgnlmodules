@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE module SYSTEM "module.dtd">
+<module>
+  <name>media</name>
+  <displayName>magnolia media module</displayName>
+  <description>magnolia media module</description>
+  <class>net.sourceforge.openutils.mgnlmedia.media.lifecycle.MediaModule</class>
+  <versionHandler>net.sourceforge.openutils.mgnlmedia.media.setup.MediaModuleVersionHandler</versionHandler>
+  <version>${project.version}</version>
+  <dependencies>
+    <dependency>
+      <name>adminInterface</name>
+      <version>4.0/*</version>
+      <optional>true</optional>
+    </dependency>
+    <dependency>
+      <name>standard-templating-kit</name>
+      <version>1.2/*</version>
+      <optional>true</optional>
+    </dependency>
+  </dependencies>
+  <repositories>
+    <repository>
+      <name>magnolia</name>
+      <workspaces>
+        <workspace>media</workspace>
+      </workspaces>
+      <nodeTypeFile>/mgnl-nodetypes/media/magnolia-nodetypes.xml</nodeTypeFile>
+    </repository>
+    <repository>
+      <name>magnolia</name>
+      <workspaces>
+        <workspace>playlists</workspace>
+      </workspaces>
+      <nodeTypeFile>/mgnl-nodetypes/media/magnolia-nodetypes-playlist.xml</nodeTypeFile>
+    </repository>
+  </repositories>
+</module>

@@ -1,0 +1,18 @@
+.x-grid3-col-title,.x-grid3-col-description,.x-grid3-col-tags {
+  white-space: normal;
+}
+
+.playlistLink {
+  background-repeat: no-repeat;
+  background-position: left;
+  padding-left: 20px;
+  color: #000;
+}
+
+.playlistLinkBox {
+  width: 100%;
+}
+
+.hidden {
+  display: none !important;
+}

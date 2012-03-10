@@ -1,0 +1,355 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<taglib xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-jsptaglibrary_2_0.xsd"
+  version="2.0">
+  <description>Media tag library</description>
+  <display-name>Media tags</display-name>
+  <tlib-version>1.1</tlib-version>
+  <short-name>media</short-name>
+  <uri>http://net.sourceforge.openutils/mgnlMedia</uri>
+  <tag-file>
+    <description>Displays a media</description>
+    <display-name>Media Tag</display-name>
+    <name>media</name>
+    <path>/META-INF/tags/media/media.tag</path>
+    <example>
+      <![CDATA[
+      <media:media id="myMedia" item="${content.image}"  />
+      ]]>
+    </example>
+  </tag-file>
+  <tag-file>
+    <description>Renders the audio or video player</description>
+    <display-name>Player Tag</display-name>
+    <name>player</name>
+    <path>/META-INF/tags/media/player.tag</path>
+  </tag-file>
+  <tag-file>
+    <description>generic flash player with swfobject</description>
+    <display-name>player: generic flash player with swfobject</display-name>
+    <name>player-genericswfobject</name>
+    <path>/META-INF/tags/media/player-genericswfobject.tag</path>
+  </tag-file>
+  <tag-file>
+    <description>jwplayer 5</description>
+    <display-name>jwplayer 5</display-name>
+    <name>player-jwplayer5</name>
+    <path>/META-INF/tags/media/player-jwplayer5.tag</path>
+  </tag-file>
+  <tag-file>
+    <description>Renders the flash-content and the javascript for replacing it</description>
+    <display-name>Swfobject Tag</display-name>
+    <name>swfobject</name>
+    <path>/META-INF/tags/media/swfobject.tag</path>
+    <example>
+      <![CDATA[
+      <media:swfobject player="jwplayer5" width="${width}" height="${height}" allowfullscreen="true" allowscriptaccess="always" wmode="opaque" flashvars="${flashvars}" />
+      ]]>
+    </example>
+  </tag-file>
+  <tag-file>
+    <description>Allow editors to crop (zoom and pan) an image</description>
+    <display-name>Crop Tag</display-name>
+    <name>crop</name>
+    <path>/META-INF/tags/media/crop.tag</path>
+  </tag-file>
+  <function>
+    <description>Get the media module instance.</description>
+    <display-name>module</display-name>
+    <name>module</name>
+    <function-class>net.sourceforge.openutils.mgnlmedia.media.tags.el.MediaEl</function-class>
+    <function-signature>net.sourceforge.openutils.mgnlmedia.media.lifecycle.MediaModule module()</function-signature>
+    <example>
+      <![CDATA[
+      <c:set var="player" value="${media:module().player}" />
+      ]]>
+    </example>
+  </function>
+  <function>
+    <description>Load a node from the media repository, given the UUID of the media node.</description>
+    <display-name>node</display-name>
+    <name>node</name>
+    <function-class>net.sourceforge.openutils.mgnlmedia.media.tags.el.MediaEl</function-class>
+    <function-signature>info.magnolia.cms.core.Content node(java.lang.Object)</function-signature>
+    <example>
+      <![CDATA[
+      <c:set var="mediaNode" value="${media:node(content.image)}" />
+      ]]>
+    </example>
+  </function>
+  <function>
+    <description>Get the description from a media, given the media node itself.</description>
+    <display-name>desc</display-name>
+    <name>desc</name>
+    <function-class>net.sourceforge.openutils.mgnlmedia.media.tags.el.MediaEl</function-class>
+    <function-signature>java.lang.String desc(info.magnolia.cms.core.Content)</function-signature>
+    <example>
+      <![CDATA[
+      <c:set var="mediaNode" value="${media:node(content.image)}" />
+      <c:out value="${media:desc(mediaNode)}" />
+      ]]>
+    </example>
+  </function>
+  <function>
+    <description>Get the description from a media, given the media node itself and a locale. Try to get the value from nodedata "description-{locale}"; if not found get the value from "description-en"; if not found again, get the value from "description".</description>
+    <display-name>descLoc</display-name>
+    <name>descLoc</name>
+    <function-class>net.sourceforge.openutils.mgnlmedia.media.tags.el.MediaEl</function-class>
+    <function-signature>java.lang.String descLoc(info.magnolia.cms.core.Content, java.util.Locale)</function-signature>
+    <example>
+      <![CDATA[
+      <c:set var="mediaNode" value="${media:node(content.image)}" />
+      <c:out value="${media:descLoc(mediaNode, pageContext.request.locale)}" />
+      ]]>
+    </example>
+  </function>
+  <function>
+    <description>Get the title from a media, given the media node itself.</description>
+    <display-name>title</display-name>
+    <name>title</name>
+    <function-class>net.sourceforge.openutils.mgnlmedia.media.tags.el.MediaEl</function-class>
+    <function-signature>java.lang.String title(info.magnolia.cms.core.Content)</function-signature>
+    <example>
+      <![CDATA[
+      <c:set var="mediaNode" value="${media:node(content.image)}" />
+      <c:out value="${media:title(mediaNode)}" />
+      ]]>
+    </example>
+  </function>
+  <function>
+    <description>Get the title from a media, given the media node itself and a locale. Try to get the value from nodedata "title-{locale}"; if not found get the value from "title-en"; if not found again, get the value from "title".</description>
+    <display-name>titleLoc</display-name>
+    <name>titleLoc</name>
+    <function-class>net.sourceforge.openutils.mgnlmedia.media.tags.el.MediaEl</function-class>
+    <function-signature>java.lang.String titleLoc(info.magnolia.cms.core.Content, java.util.Locale)</function-signature>
+    <example>
+      <![CDATA[
+      <c:set var="mediaNode" value="${media:node(content.image)}" />
+      <c:out value="${media:titleLoc(mediaNode, pageContext.request.locale)}" />
+      ]]>
+    </example>
+  </function>
+  <function>
+    <description>Get the tags from a media, given the media node itself.</description>
+    <display-name>tags</display-name>
+    <name>tags</name>
+    <function-class>net.sourceforge.openutils.mgnlmedia.media.tags.el.MediaEl</function-class>
+    <function-signature>java.lang.String[] tags(info.magnolia.cms.core.Content)</function-signature>
+    <example>
+      <![CDATA[
+      <c:set var="mediaNode" value="${media:node(content.image)}" />
+      <c:forEach var="tag" items="${media:tags(mediaNode)}">
+        <c:out value="${tag}" />
+      </c:forEach>
+      ]]>
+    </example>
+  </function>
+  <function>
+    <description>Get the tags from a media, given the media node itself and a locale. Try to get the value from nodedata "tags-{locale}"; if not found get the value from "tags-en"; if not found again, get the value from "tags".</description>
+    <display-name>tagsLoc</display-name>
+    <name>tagsLoc</name>
+    <function-class>net.sourceforge.openutils.mgnlmedia.media.tags.el.MediaEl</function-class>
+    <function-signature>java.lang.String[] tagsLoc(info.magnolia.cms.core.Content, java.util.Locale)</function-signature>
+    <example>
+      <![CDATA[
+      <c:set var="mediaNode" value="${media:node(content.image)}" />
+      <c:forEach var="tag" items="${media:tagsLoc(mediaNode, pageContext.request.locale)}">
+        <c:out value="${tag}" />
+      </c:forEach>
+      ]]>
+    </example>
+  </function>
+  <function>
+    <description>Get the url to the media, given the media node itself or its UUID</description>
+    <display-name>url</display-name>
+    <name>url</name>
+    <function-class>net.sourceforge.openutils.mgnlmedia.media.tags.el.MediaEl</function-class>
+    <function-signature>java.lang.String url(java.lang.Object)</function-signature>
+    <example>
+      <![CDATA[
+      <c:set var="mediaNode" value="${media:node(content.image)}" />
+      <img src="${pageContext.request.contextPath}${media:url(mediaNode)}" />
+      ]]>
+    </example>
+  </function>
+  <function>
+    <description>@deprecated use urlParams()</description>
+    <display-name>url2</display-name>
+    <name>url2</name>
+    <function-class>net.sourceforge.openutils.mgnlmedia.media.tags.el.MediaEl</function-class>
+    <function-signature>java.lang.String getUrl2(info.magnolia.cms.core.Content, java.util.Map)</function-signature>
+  </function>
+  <function>
+    <description>Get the url to the media, given the media node itself or its UUID and a Map of options</description>
+    <display-name>url2</display-name>
+    <name>urlParams</name>
+    <function-class>net.sourceforge.openutils.mgnlmedia.media.tags.el.MediaEl</function-class>
+    <function-signature>java.lang.String urlParams(java.lang.Object, java.util.Map)</function-signature>
+    <example>
+      <![CDATA[
+      <c:set var="mediaNode" value="${media:node(content.image)}" />
+      <img src="${pageContext.request.contextPath}${media:url(mediaNode, optionsMap)}" />
+      ]]>
+    </example>
+  </function>
+  <function>
+    <description>
+    <![CDATA[
+    Get the url to the resolution for a given media node (image or flv/youtube preview)<br />
+    The resolution string has the following pattern [controlChar][width]x[height][;param_key1=param_value1,param_key2=param_value2,...]<br />
+    The controlChar identifies which resize method will be used:
+    <ul>
+      <li>
+        <strong>o</strong>:
+        makes the new image to fit into required res and fills empty areas with background color you pass to in "parameter"
+        attribute as hex value of "background"
+        parameter (i.e. paramters=&apos;background=FF67A5&apos;)
+      </li>
+      <li>
+        <strong>l</strong>
+        : makes the new image to fit into required res
+      </li>
+      <li>
+        <strong>n</strong>
+        : makes the new image to contain the required res
+      </li>
+      <li>
+        <strong>no control char</strong>
+        : makes the new image to contain the required res and the crop the simmetric bands that outfit res
+      </li>
+    </ul>
+    ]]>
+    </description>
+    <display-name>urlres</display-name>
+    <name>urlres</name>
+    <function-class>net.sourceforge.openutils.mgnlmedia.media.tags.el.MediaEl</function-class>
+    <function-signature>java.lang.String urlres(java.lang.Object, java.lang.String)</function-signature>
+    <example>
+      <![CDATA[
+      <c:set var="mediaNode" value="${media:node(content.image)}" />
+      <img src="${pageContext.request.contextPath}${media:urlres(mediaNode, "o200x300")}" />
+      ]]>
+    </example>
+  </function>
+  <function>
+    <description>Get all the resolutions for a given media node.</description>
+    <display-name>resolutions</display-name>
+    <name>resolutions</name>
+    <function-class>net.sourceforge.openutils.mgnlmedia.media.tags.el.MediaEl</function-class>
+    <function-signature>java.lang.String[] resolutions(java.lang.Object)</function-signature>
+    <example>
+      <![CDATA[
+      <c:set var="mediaNode" value="${media:node(content.image)}" />
+      <c:forEach var="res" items="${media:resolutions(mediaNode)}">
+        <img src="${pageContext.request.contextPath}${media:urlres(mediaNode, res)}" />
+      </c:forEach>
+      ]]>
+    </example>
+  </function>
+  <function>
+    <description>Get the url to the thumbnail (l100x100 resolution) for a given media node (image or flv/youtube preview)</description>
+    <display-name>thumbnail</display-name>
+    <name>thumbnail</name>
+    <function-class>net.sourceforge.openutils.mgnlmedia.media.tags.el.MediaEl</function-class>
+    <function-signature>java.lang.String thumbnail(java.lang.Object)</function-signature>
+    <example>
+      <![CDATA[
+      <c:set var="mediaNode" value="${media:node(content.image)}" />
+      <img src="${pageContext.request.contextPath}${media:thumbnail(mediaNode)}" />
+      ]]>
+    </example>
+  </function>
+  <function>
+    <description>Get the url to the preview (l45x350 resolution) for a given media node (image or flv/youtube preview)</description>
+    <display-name>preview</display-name>
+    <name>preview</name>
+    <function-class>net.sourceforge.openutils.mgnlmedia.media.tags.el.MediaEl</function-class>
+    <function-signature>java.lang.String preview(java.lang.Object)</function-signature>
+    <example>
+      <![CDATA[
+      <c:set var="mediaNode" value="${media:node(content.image)}" />
+      <img src="${pageContext.request.contextPath}${media:preview(mediaNode)}" />
+      ]]>
+    </example>
+  </function>
+  <function>
+    <description>Get the media type for a given media node</description>
+    <display-name>type</display-name>
+    <name>type</name>
+    <function-class>net.sourceforge.openutils.mgnlmedia.media.tags.el.MediaEl</function-class>
+    <function-signature>java.lang.String type(java.lang.Object)</function-signature>
+    <example>
+      <![CDATA[
+      <c:set var="mediaNode" value="${media:node(content.image)}" />
+      <c:if test="${media:type(mediaNode) eq 'image'}">
+        <img src="${pageContext.request.contextPath}${media:url(mediaNode)}" />
+      </c:if>
+      ]]>
+    </example>
+  </function>
+  <function>
+    <description>Get the real size of a resolution for a given media node (image or flv/youtube preview).
+    Parameters are the media node and a resolution. You can use 'original' as resolution to get the size of the original image</description>
+    <display-name>size</display-name>
+    <name>size</name>
+    <function-class>net.sourceforge.openutils.mgnlmedia.media.tags.el.MediaEl</function-class>
+    <function-signature>int[] size(java.lang.Object, java.lang.String)</function-signature>
+    <example>
+      <![CDATA[
+      <c:set var="mediaNode" value="${media:node(content.image)}" />
+      <c:set var="size" value="${media:size(content.image, 'original')}" />
+      <img src="${pageContext.request.contextPath}${media:url(mediaNode)}" style="width:${size[0]};height:${size[1]}" />
+      ]]>
+    </example>
+  </function>
+  <function>
+    <description>Get list of path to content nodes of website repository in which the given media node is used</description>
+    <display-name>usedInWebPages</display-name>
+    <name>usedInWebPages</name>
+    <function-class>net.sourceforge.openutils.mgnlmedia.media.tags.el.MediaEl</function-class>
+    <function-signature>java.lang.String[] usedInWebPages(java.lang.Object)</function-signature>
+    <example>
+      <![CDATA[
+      <c:set var="mediaNode" value="${media:node(content.image)}" />
+      <c:forEach var="page" items="${media:usedInWebPages(mediaNode)}">
+        <a href="${pageContext.request.contextPath}${page}">${page}</a>
+      </c:forEach>
+      ]]>
+    </example>
+  </function>
+  <function>
+    <description>Returns the width of the *original* media, if available</description>
+    <display-name>width</display-name>
+    <name>width</name>
+    <function-class>net.sourceforge.openutils.mgnlmedia.media.tags.el.MediaEl</function-class>
+    <function-signature>java.lang.Integer width(java.lang.Object)</function-signature>
+  </function>
+  <function>
+    <description>Returns the height of the *original* media, if available</description>
+    <display-name>height</display-name>
+    <name>height</name>
+    <function-class>net.sourceforge.openutils.mgnlmedia.media.tags.el.MediaEl</function-class>
+    <function-signature>java.lang.Integer height(java.lang.Object)</function-signature>
+  </function>
+  <function>
+    <description>Returns a property (nodeData) of the media, given the media Content and the property name</description>
+    <display-name>property</display-name>
+    <name>property</name>
+    <function-class>net.sourceforge.openutils.mgnlmedia.media.tags.el.MediaEl</function-class>
+    <function-signature>java.lang.Object property(java.lang.Object, java.lang.String)</function-signature>
+  </function>
+  <function>
+    <description>Returns an interator on the playlist content, given the playlist node or UUID. Support both static and dynamic (search based) playlists</description>
+    <display-name>mediaNodesInPlaylist</display-name>
+    <name>mediaNodesInPlaylist</name>
+    <function-class>net.sourceforge.openutils.mgnlmedia.media.tags.el.MediaEl</function-class>
+    <function-signature>java.util.Iterator mediaNodesInPlaylist(java.lang.Object)</function-signature>
+  </function>
+  <function>
+    <description>Utility functions used to replace a param in the current URL, Used internally by the crop tag.</description>
+    <display-name>replaceParam</display-name>
+    <name>replaceParam</name>
+    <function-class>net.sourceforge.openutils.mgnlmedia.media.tags.el.MediaEl</function-class>
+    <function-signature>java.lang.String replaceParam(java.lang.String, java.lang.String)</function-signature>
+  </function>
+</taglib>

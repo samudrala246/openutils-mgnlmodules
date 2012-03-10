@@ -1,0 +1,134 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <link rel="stylesheet" type="text/css" href="${this.request.contextPath}/.resources/ext/css/ext-all.css" />
+    <link rel="stylesheet" type="text/css" href="${this.request.contextPath}/.resources/ext/css/xtheme-gray.css" />
+    <script type="text/javascript" src="${this.request.contextPath}/.resources/ext/ext-base.js"></script>
+    <script type="text/javascript" src="${this.request.contextPath}/.resources/ext/ext-all.js"></script>
+    <script type="text/javascript" src="${this.request.contextPath}/.resources/media/js/miframe.js"></script>
+    <script type="text/javascript">
+      // <![CDATA[
+var viewport;
+var openPath = "${this.openPath!''}";
+
+Ext.onReady(function(){
+  viewport = new Ext.Viewport({
+    layout:'border',
+    items:[
+      {
+        region:'west',
+        id:'west-panel',
+        title:'${this.msgs.get('tree.playlists')}',
+        split:true,
+        width: 240,
+        minSize: 175,
+        maxSize: 400,
+        collapsible: true,
+        margins:'0 0 0 0',
+        padding: 0,
+        expandOnShow: true,
+        contentEl: 'playlistTreeView',
+        floatable: true,
+        frame: false,
+        border: false,
+        bodyBorder: false,
+        hideBorders: true,
+        animCollapse:false,
+        animFloat: false,
+        stateful: true
+      },
+      {
+        region:'center',
+        id:'center-panel',
+        contentEl:'playlistView'
+      }
+    ]
+  });
+  setTimeout(function() {
+    frames['playlistTreeView'].location.href = '${this.request.contextPath}/.magnolia/trees/playlists.html?pathOpen=' + openPath + '&pathCurrent=' + openPath + '&pathSelected=' + openPath + '&mgnlCK=' + (new Date()).getTime();
+    frames['playlistView'].location.href = '${this.request.contextPath}/.magnolia/pages/playlistView.html?path=' + openPath + '&mgnlCK=' + (new Date()).getTime();
+  }, 100);
+});
+
+var currentPath;
+
+function openPlaylist(path){
+  if (path) currentPath = path;
+  var frame = frames['playlistView'];
+  if (frame.disposePlaylistView) frame.disposePlaylistView();
+  frame.location.href = '${this.request.contextPath}/.magnolia/pages/playlistView.html?path=' + currentPath + '&mgnlCK=' + (new Date()).getTime();
+}
+
+var ulDialog;
+
+// create floating dialog
+function openWindow(src)
+{
+  var width = 435;
+  var height = 380;
+  ulDialog = new Ext.Window({
+    height:     height,
+    width:      width,
+    minHeight:    50,
+    minWidth:   100,
+    modal:      true,
+    shadow:     false,
+    collapsible:  false,
+    closable:   true,
+    body:     new Ext.ux.ManagedIFrame({autoCreate:{id:'dynamicIframe1',cls:'x-window-body',frameBorder: 0,width:'100%',height:'100%',src: "${this.request.contextPath}/"+src}}),
+    animate:    true,
+    title:      "",
+    resizable:    false,
+    bodyBorder:   false,
+    buttons:    [],//{text: "Close", handler: function() {ulDialog.hide();ulDialog.destroy();} }],
+    keys:     [],//{key: 27, fn: function() {ulDialog.hide();ulDialog.destroy();}, scope: this}]
+    stateful: false
+  });
+  ulDialog.show();
+}
+
+//set dialog title
+function setLayerTitle(title)
+{
+  if (ulDialog)
+  {
+    ulDialog.setTitle(title);
+  }
+}
+
+// resize dialog
+function resizeTo(w, h)
+{
+  if (ulDialog)
+  {
+    ulDialog.setWidth(w);
+    ulDialog.setHeight(h);
+    ulDialog.center();
+  }
+}
+
+// close dialog
+function closeLayer()
+{
+  if (ulDialog)
+  {
+    ulDialog.destroy();
+  }
+}
+
+//reload folder content
+function reloadFolder(path, type)
+{
+  openPlaylist();
+}
+//]]>
+    </script>
+  </head>
+  <body>
+    <iframe id="playlistTreeView" name="playlistTreeView" class="x-panel-body" src=""
+      style="width:100%;height:100%;border:0;margin:0;padding:0;" frameborder="0"></iframe>
+    <iframe id="playlistView" name="playlistView" class="x-panel-body" src=""
+      style="width:100%;height:100%;border:0;overflow:hidden;" frameborder="0"></iframe>
+  </body>
+</html>

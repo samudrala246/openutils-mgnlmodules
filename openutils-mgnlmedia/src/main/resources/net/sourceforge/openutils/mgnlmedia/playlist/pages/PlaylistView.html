@@ -1,0 +1,429 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+[#setting url_escaping_charset="UTF-8"]
+[#assign mgnlEl = this.getStatic("it.openutils.mgnlutils.el.MgnlUtilsElFunctions")]
+[#assign mediaEl = this.getStatic("net.sourceforge.openutils.mgnlmedia.media.tags.el.MediaEl")]
+[#assign i18nSupport = this.getStatic("info.magnolia.cms.i18n.I18nContentSupportFactory").getI18nSupport()]
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <link rel="stylesheet" type="text/css" href="${this.request.contextPath}/.resources/ext/css/ext-all.css" />
+    <link rel="stylesheet" type="text/css" href="${this.request.contextPath}/.resources/ext/css/xtheme-gray.css" />
+    <link rel="stylesheet" type="text/css" href="${this.request.contextPath}/.resources/media/css/playlist-view.css" />
+    <script type="text/javascript" src="${this.request.contextPath}/.resources/ext/ext-base.js"></script>
+    <script type="text/javascript" src="${this.request.contextPath}/.resources/ext/ext-all.js"></script>
+    <script type="text/javascript" src="${this.request.contextPath}/.resources/media/js/ext-grid-dd-roworder.js"></script>
+    <script type="text/javascript">
+      // <![CDATA[
+var contextPath = '${this.request.contextPath}';
+
+var playlist, container, playlistView, grid;
+
+function initPlaylistView(){
+  container = parent.viewport.getComponent('center-panel');
+
+  var dataStore = new Ext.data.SimpleStore({
+    fields: ['thumbnail', 'type', 'title', 'description', 'tags', 'handle', 'mediaHandle', 'mediaDialog']
+  });
+  dataStore.loadData(playlist.entries);
+
+  var colModel = new Ext.grid.ColumnModel([
+    {
+      header: 'Thumbnail',
+      renderer : function(v, p, record){
+        return v ? '<img border="0" alt="" src="' + contextPath + v + '" title="' + record.data['mediaHandle'] + '" />' : '';
+      }
+    },
+    {header: 'Type'},
+    {
+      id: 'title',
+      header: 'Title'
+    },
+    {
+      id: 'description',
+      header: 'Description'
+    },
+    {
+      id: 'tags',
+      header: 'Tags'
+    }
+  ]);
+
+  var tbar = [
+[#if (!this.playlist?exists)]
+[#elseif (this.playlist.searchBased)]
+    {
+      text: playlist.msgs.editSearch,
+      icon: contextPath + '/.resources/media/icons/ico16-edit.png',
+      iconCls: 'button-edit-search',
+      handler: function(){
+        parent.location.href = '${this.request.contextPath}/.magnolia/pages/mediaBrowser.html?playlistHandle=${this.playlist.handle}';
+      }
+    },
+[#else]
+    {
+      text: playlist.msgs.addEntry,
+      icon: contextPath + '/.resources/media/icons/ico16-add.png',
+      iconCls: 'button-add',
+      handler: function(){
+        var mgnlWin = parent.parent;
+        mgnlWin.setNewMedia = function(nodeid, uuid, file, thumb){
+          Ext.Ajax.request({
+            form: 'addEntryForm',
+            params: {
+              mgnlPath: playlist.handle,
+              media: uuid
+            },
+            success: function(){
+              parent.openPlaylist(playlist.handle);
+            },
+            failure: function(){
+              // todo
+            }
+          });
+        };
+        mgnlWin.mgnlOpenWindow('/.magnolia/pages/mediaBrowser.html?nodeid=media&selectMedia=true&mgnlCK=' + mgnlWin.mgnlGetCacheKiller(), 800, 500);
+      }
+    },
+    {
+      text: playlist.msgs.addEntries,
+      icon: contextPath + '/.resources/media/icons/ico16-addmany.png',
+      iconCls: 'button-addmany',
+      handler: function(){
+        var mgnlWin = parent.parent;
+        parent.openWindow(".magnolia/pages/mediaFolderSelection.html?parentFrame=playlistView&action=addEntries&mgnlCK=" + mgnlWin.mgnlGetCacheKiller());
+      }
+    },
+    {
+      id: 'removeEntryBtn',
+      text: playlist.msgs.removeEntry,
+      icon: contextPath + '/.resources/media/icons/ico16-remove.png',
+      iconCls: 'button-remove',
+      disabled: true,
+      handler: function(){
+        Ext.MessageBox.confirm('Confirm', 'Are you sure?', function(btn){
+          if (btn != 'yes') return;
+          var s = grid.getSelectionModel().getSelections();
+          for(var i = 0, r; r = s[i]; i++){
+            removeEntry(r);
+          }
+        });
+      }
+    },
+[/#if]
+    {
+      id: 'editMediaBtn',
+      text: playlist.msgs.editMedia,
+      icon: contextPath + '/.resources/media/icons/ico16-edit.png',
+      iconCls: 'button-edit',
+      disabled: true,
+      handler: function(){
+        var s = grid.getSelectionModel().getSelections();
+        parent.openWindow('.magnolia/dialogs/' + s[0].data['mediaDialog'] + '.html'
+          + '?mgnlPath=' + s[0].data['mediaHandle']
+          + '&mgnlRepository=media');
+      }
+    }
+  ];
+
+  function removeEntry(r){
+    Ext.Ajax.request({
+      method: 'post',
+      url: contextPath + '/.magnolia/trees/playlists.html',
+      params: {
+        browseMode: false,
+        deleteNode: r.data['handle'].match(/\/?([^\/]+)$/)[1],
+        mgnlCK: (new Date()).getTime(),
+        path: playlist.handle,
+        treeMode: 'snippet'
+      },
+      success: function(){
+        grid.store.remove(r);
+      }
+    });
+  }
+
+  var dd = new Ext.ux.dd.GridDragDropRowOrder({
+    scrollable: true // auto-scroll for easy moving an item in a long playlist
+  });
+
+  var playlistForm = new Ext.FormPanel({
+    items: {
+      xtype: 'fieldset',
+      labelWidth: 90,
+      title: '${this.msgs.get('playlist.details.header')?js_string}',
+      defaults: {width: 140},  // Default config options for child items
+      defaultType: 'textfield',
+      autoHeight: true,
+      bodyStyle: Ext.isIE ? 'padding:0 0 5px 15px;' : 'padding:10px 15px;',
+      border: false,
+      style: {
+        "margin-left": "10px", // when you add custom margin in IE 6...
+        "margin-right": Ext.isIE6 ? (Ext.isStrict ? "-10px" : "-13px") : "0"  // you have to adjust for it somewhere else
+      },
+      items: [{
+        xtype: 'hidden',
+        name: 'command',
+        value: 'save'
+      }, {
+        xtype: 'hidden',
+        name: 'mgnlCK',
+        value: (new Date()).getTime()
+      }, {
+        xtype: 'hidden',
+        name: 'path',
+        value: playlist.handle
+      }, {
+        fieldLabel: '${this.msgs.get('playlist.details.title')?js_string}',
+        name: 'title',
+        value: playlist.title,
+        anchor: '100% none'
+      }, {
+        xtype: 'textarea',
+        fieldLabel: '${this.msgs.get('playlist.details.description')?js_string}',
+        name: 'description',
+        value: playlist.description,
+        anchor: '100% none'
+      }],
+      buttons: [{
+        text: '${this.msgs.get('playlist.save')?js_string}',
+        handler: function(){
+          if(playlistForm.getForm().isValid()){
+            playlistForm.getForm().submit({
+              url: contextPath + '/.magnolia/pages/playlistView.html',
+              success: function(){
+                Ext.Msg.alert('', '${this.msgs.get('playlist.saved')?js_string}');
+              },
+              failure: function(){
+                Ext.Msg.alert('', '${this.msgs.get('playlist.cantsave')?js_string}');
+              }
+            });
+          }
+        }
+      }]
+    }
+  });
+
+  var detailItems = [
+    {
+      xtype: 'panel',
+      html: '<select style="float: right;" onchange="location.href = \'${this.request.contextPath}/.magnolia/pages/playlistView.html?path=\' + playlist.handle + \'&mgnlCK=\' + (new Date()).getTime() + \'&locale=\' + this.options[this.selectedIndex].value;">\
+      [#list i18nSupport.getLocales() as locale]
+        <option value="${locale?string}" [#if (this.locale?exists && locale?string == this.locale) || (!this.locale?exists && locale == i18nSupport.fallbackLocale)]selected="selected"[/#if]>${locale.getDisplayLanguage(locale)}</option>\
+      [/#list]
+        </select>'
+    },
+    playlistForm
+    [#list mediaEl.module().playlistLinks as item]
+      [#assign itemText = this.msgs.get(item.text)]
+      [#if itemText?starts_with('???')][#assign itemText = item.text][/#if]
+    ,
+    {
+      xtype: 'panel',
+      bodyStyle: 'padding:0 35px;',
+      html: '<a id="playlistLink${item_index}" href="#" class="x-form-item playlistLink" [#if item.icon?exists]style="background-image: url(\'${this.request.contextPath}${item.icon}\')"[/#if]>${itemText}</a>'
+    },
+    {
+      xtype: 'panel',
+      bodyStyle: 'padding:0 35px;',
+      html: '<input id="playlistLink${item_index}Box" value="[#if this.playlist?exists][#if !item.external]${mgnlEl.baseUrl()}[/#if]${item.url(this.playlist)}[/#if]" class="x-form-item playlistLinkBox hidden" readonly="readonly"/>'
+    }
+    [/#list]
+  ];
+  playlistView = new Ext.Panel({
+    id: 'playlistView',
+    frame: true,
+    labelAlign: 'left',
+    layout: 'column',
+    items: [{
+      columnWidth: 0.6,
+      layout: 'fit',
+      items: {
+        xtype: 'grid',
+        id: 'playlistEntries',
+        viewConfig: {
+          forceFit: true,
+          autoFill : true
+        },
+        store: dataStore,
+        cm: colModel,
+        selModel: new Ext.grid.RowSelectionModel({
+          singleSelect: true,
+          listeners: {
+            rowselect: function(sm, row, rec) {
+              // nothing to do
+            },
+            rowdeselect: function(sm, row, rec) {
+              // nothing to do
+            }
+          }
+        }),
+        autoSizeColumns: true,
+        enableColLock: false,
+        tbar: tbar,
+        stripeRows: true
+[#if (this.playlist?exists && !this.playlist.searchBased)]
+        , plugins: [dd]
+[/#if]
+      }
+    },{
+      columnWidth: 0.4,
+      items: detailItems
+    }],
+    renderTo: Ext.getBody()
+  });
+
+  grid = Ext.getCmp('playlistEntries');
+
+  var playlistLink;
+  [#list mediaEl.module().playlistLinks as item]
+  playlistLink = Ext.get('playlistLink${item_index}');
+  playlistLink.on('click', function() {
+      var box = Ext.get('playlistLink${item_index}Box');
+      box.toggleClass('hidden');
+      box.dom.select();
+  }, playlistLink, {stopEvent:true});
+  [/#list]
+
+  dd.on('beforerowmove', function(dropTarget, i1, i2){
+    if (i2 > i1 && i2 == grid.store.data.length - 1) return false;
+    Ext.Ajax.request({
+      method: 'post',
+      url: contextPath + '/.magnolia/trees/playlists.html',
+      params: {
+        browseMode: false,
+        mgnlCK: (new Date()).getTime(),
+        pasteType: 0,
+        path: playlist.handle,
+        pathClipboard: grid.store.getAt(i1).data['handle'],
+        pathSelected: grid.store.getAt(i2 + (i1 < i2 ? 1 : 0)).data['handle'],
+        treeAction: 0,
+        treeMode: 'snippet'
+      }
+    });
+  });
+  grid.getSelectionModel().on('selectionchange', function(sm){
+    var removeEntryBtn = Ext.getCmp('removeEntryBtn');
+    if (removeEntryBtn) removeEntryBtn.setDisabled(sm.getCount() < 1);
+    Ext.getCmp('editMediaBtn').setDisabled(sm.getCount() < 1);
+  });
+
+  container.on('bodyresize', resizeGrid);
+  resizeGrid();
+}
+
+function disposePlaylistView(){
+  if (!container) return;
+  container.un('bodyresize', resizeGrid);
+  delete container;
+}
+
+function resizeGrid(){
+  playlistView.setWidth(container.body.getWidth(true));
+  grid.setHeight(container.body.getHeight(true) - 13);
+};
+
+function performAction(action, sourceNode, destPath){
+  Ext.MessageBox.show({
+    title: playlist.msgs.addManyEntriesMsgBoxTitle,
+    msg: playlist.msgs.addManyEntriesMsgBoxMsg,
+    progressText: playlist.msgs.addManyEntriesProgressStart,
+    width: 300,
+    progress: true,
+    closable: false
+  });
+  Ext.Ajax.request({
+    method: 'post',
+    url: contextPath + '/.magnolia/pages/playlistView.html',
+    params: {
+      command: 'mediaFolder',
+      path: destPath
+    },
+    success: function(r){
+      var items = Ext.decode(r.responseText).items;
+      var index = 0;
+      var addNextEntry = function(){
+        if (index == items.length){
+          Ext.MessageBox.updateProgress(1, playlist.msgs.addManyEntriesProgressEnd);
+          (function(){
+            Ext.MessageBox.hide();
+            parent.openPlaylist(playlist.handle);
+          }).defer(1500);
+        }
+        else{
+          Ext.Ajax.request({
+            form: 'addEntryForm',
+            params: {
+              mgnlPath: playlist.handle,
+              media: items[index]
+            },
+            success: function(){
+              var p = (index + 1) / items.length;
+              Ext.MessageBox.updateProgress(p, playlist.msgs.addManyEntriesProgress.replace(/\{0\}/, parseInt(p * 100, 10) + '%'));
+              index++;
+              addNextEntry();
+            }
+          });
+        }
+      };
+      addNextEntry();
+    }
+  });
+}
+
+
+
+
+
+
+
+Ext.onReady(function(){
+  [#if this.playlist?exists]
+  playlist = {
+    handle: '${this.playlist.handle}',
+    title: '${(this.playlist.title!'')?js_string}',
+    description: '${(this.playlist.description!'')?js_string}',
+    entries: [
+      [#list this.playlist.entries as entry]
+      [
+        '${entry.thumbnail!'/.resources/media/icons/thumb-broken.png'}',
+        '${entry.type!'[not found]'}',
+        '${(entry.title!'')?js_string}',
+        '${(entry.description!'')?js_string}',
+        '${(entry.tags!'')?js_string}',
+        '${entry.handle!''}',
+        '${entry.mediaHandle!''}',
+        '${entry.mediaDialog!''}'
+      ][#if entry_has_next],[/#if]
+      [/#list]
+    ],
+    msgs: {
+      addEntry: '${this.msgs.get('playlist.entries.add')?js_string}',
+      addEntries: '${this.msgs.get('playlist.entries.addMany')?js_string}',
+      removeEntry: '${this.msgs.get('playlist.entries.remove')?js_string}',
+      editMedia: '${this.msgs.get('playlist.media.edit')?js_string}',
+      editSearch: '${this.msgs.get('playlist.search.edit')?js_string}',
+      addManyEntriesMsgBoxTitle: '${this.msgs.get('playlist.entries.addMany.msgBox.title')?js_string}',
+      addManyEntriesMsgBoxMsg: '${this.msgs.get('playlist.entries.addMany.msgBox.msg')?js_string}',
+      addManyEntriesProgressStart: '${this.msgs.get('playlist.entries.addMany.msgBox.progressStart')?js_string}',
+      addManyEntriesProgressEnd: '${this.msgs.get('playlist.entries.addMany.msgBox.progressEnd')?js_string}',
+      addManyEntriesProgress: '${this.msgs.get('playlist.entries.addMany.msgBox.progress')?js_string}'
+    },
+    searchBased: ${(this.playlist.searchBased)?string}
+  };
+  initPlaylistView();
+  [/#if]
+});
+//]]>
+    </script>
+  </head>
+  <body style="overflow: hidden;">
+    <div style="display: none;">
+      <form id="addEntryForm" method="POST" action="${this.request.contextPath}/.magnolia/dialogs/playlistentry.html" enctype="multipart/form-data">
+        <input type="hidden" name="mgnlDialog" value="playlistentry" />
+        <input type="hidden" name="mgnlRepository" value="playlists" />
+        <input type="hidden" name="mgnlSaveInfo" value="media,String,0,0,0" />
+        <input type="hidden" name="media_saveHandler" value="net.sourceforge.openutils.mgnlmedia.media.save.MediaCustomSaveHandler" />
+        <input type="hidden" name="media_configNode" value="/modules/media/dialogs/playlistentry/tabGeneral/media" />
+      </form>
+    </div>
+  </body>
+</html>

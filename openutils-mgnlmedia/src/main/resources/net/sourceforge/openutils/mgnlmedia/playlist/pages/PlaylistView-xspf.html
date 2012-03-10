@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<playlist version="1" xmlns="http://xspf.org/ns/0/" xmlns:media="http://www.openmindlab.com/media">
+  [#assign mgnlEl = this.getStatic("it.openutils.mgnlutils.el.MgnlUtilsElFunctions")]
+  [#assign systemProperty = this.getStatic("info.magnolia.cms.core.SystemProperty")]
+  [#assign dateUtils = this.getStatic("net.sourceforge.openutils.elfunctions.DateElUtils")]
+  [#assign cal = this.getStatic("java.util.Calendar")]
+  [#assign mediaEl = this.getStatic("net.sourceforge.openutils.mgnlmedia.media.tags.el.MediaEl")]
+  [#assign freemarkerEnv = this.getStatic("freemarker.core.Environment")]
+  [#assign title = this.playlistTitle()!'']
+  [#if title?has_content]
+  <title><![CDATA[${title}]]></title>
+  [/#if]
+  <location><![CDATA[${mgnlEl.baseUrl()}${this.playlistLocation()}]]></location>
+  <date>${dateUtils.toXsdDate(cal.getInstance())}</date>
+  [#assign metas = this.playlistMetas()]
+  [#list metas?keys as key]
+    <meta rel="${key}">${metas[key]}</meta>
+  [/#list]
+  <trackList>
+  [#list this.mediaContentList as mediaNode]
+    [#assign mediaLocale = this.locale!'']
+    [#if mediaNode?has_content]
+    <track>
+      [#assign mediaURL = mgnlEl.toAbsoluteUrl(mediaEl.url(mediaNode))]
+      <location>${mediaURL}</location>
+      <identifier>media:${mediaNode.@uuid}</identifier>
+      [#if (mediaNode['title_' + mediaLocale])?exists]
+      <title><![CDATA[${mediaNode['title_' + mediaLocale]}]]></title>
+      [/#if]
+      [#assign resolution = systemProperty.getProperty("thumbresolution")!'l100x100']
+      [#if mediaEl.type(mediaNode) == 'image' || mediaNode.image?exists]
+        [#assign imagePath = mediaEl.urlres(mediaNode, resolution)!'']
+        [#if imagePath?has_content]
+      <image>${mgnlEl.baseUrl()}${mediaEl.urlres(mediaNode, resolution)}</image>
+        [/#if]
+      [/#if]
+      [#if (mediaNode['description_' + mediaLocale])?exists]
+      <annotation><![CDATA[${mediaNode['description_' + mediaLocale]}]]></annotation>
+      [/#if]
+      [#if (mediaNode.media_duration)?exists]
+      <duration>${(mediaNode.media_duration * 1000)?string.computer}</duration>
+      [/#if]
+      <extension application="http://www.openmindlab.com/media">
+        <media:locale code="${mediaLocale}" />
+        ${this.writePlaylistTrackExtension(mediaNode, freemarkerEnv.getCurrentEnvironment().out)}
+      </extension>
+    </track>
+    [/#if]
+  [/#list]
+  </trackList>
+</playlist>

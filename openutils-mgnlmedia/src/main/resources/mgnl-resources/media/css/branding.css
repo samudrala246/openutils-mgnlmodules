@@ -1,0 +1,27 @@
+.mediaBranding {
+  font-family: Verdana, sans-serif;
+  font-size: 11px;
+  line-height: 19px;
+  background: #fff url(../assets/branding/background.png) repeat-x scroll left top;
+  color: #333;
+  height: 22px;
+  text-align: center;
+}
+
+#branding-panel .x-panel-body-noheader {
+  border: none;
+}
+
+.mediaBranding img.logo {
+  display: inline;
+  margin: 0 8px 0 12px;
+  vertical-align: middle;
+}
+
+.mediaBranding a {
+  color: #333;
+}
+
+.mgnlListHeaderBackground {
+  border: 10px solid red;
+}

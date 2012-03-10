@@ -1,0 +1,9 @@
+{
+  success: true,
+  items: [
+  [#list this.mediaBeans as bean]
+    '${bean.uuid!''}'
+    [#if bean_has_next],[/#if]
+  [/#list]
+  ]
+}

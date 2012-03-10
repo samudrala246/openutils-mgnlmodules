@@ -1,0 +1,610 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+[#setting url_escaping_charset="UTF-8"]
+  <head>
+    <title>${this.path!?html!""}</title>
+    <link rel="stylesheet" type="text/css" href="${this.request.contextPath}/.resources/media/css/multibox.css" />
+    <link rel="stylesheet" type="text/css" href="${this.request.contextPath}/.resources/media/css/sexy-tooltips/msn.css" />
+    <link rel="stylesheet" type="text/css" href="${this.request.contextPath}/.resources/media/css/folderView.css?version=${this.moduleVersion}" />
+    <link rel="stylesheet" type="text/css" href="${this.request.contextPath}/.resources/media/css/mooSelecta.css" />
+    <!--[if lte IE 7]>
+    <link rel="stylesheet" type="text/css" href="${this.request.contextPath}/.resources/media/css/ie-fix.css" />
+    <![endif]-->
+    <script type="text/javascript" src="${this.request.contextPath}/.resources/media/js/mootools-1.2.4-core.js"></script>
+    <script type="text/javascript" src="${this.request.contextPath}/.resources/media/js/mootools-1.2.4.4-more.js"></script>
+    <script type="text/javascript" src="${this.request.contextPath}/.resources/media/js/mootips.js"></script>
+    <script type="text/javascript" src="${this.request.contextPath}/.resources/media/js/multibox/multibox.js"></script>
+    <script type="text/javascript" src="${this.request.contextPath}/.resources/media/js/multibox/overlay.js"></script>
+    <script type="text/javascript" src="${this.request.contextPath}/.resources/media/js/sexy-tooltips-1.1.js"></script>
+    <script type="text/javascript" src="${this.request.contextPath}/.resources/media/js/mooSelecta.js"></script>
+    <script type="text/javascript">
+var MediaFolderView = new Class({
+
+  Implements: Options,
+
+  options: {
+    queryString: ''
+  },
+
+  initialize: function(options){
+    this.setOptions(options);
+    window.addEvent('resize', this.layout);
+    this.layout();
+    new mooSelecta({
+      selector: '#sorting'
+    });
+  new MediaFolderView.BgSelectors('#navigation a.bg-selector');
+  new MediaFolderView.PagesizeSelectors('#navigation a.pagesize-selector', this.options);
+  new MediaFolderView.Sorting('sorting', this.options);
+    new MediaFolderView.EditMenus('li.media .menuitem');
+    new MediaFolderView.InfoTooltips('li.media .image');
+    Cookie.write('mediafolderpath', '${this.path!}', {duration: 30});
+    [#if (this.request.getParameter('command')!'') == 'saveAsPlaylist']
+    this.openPlaylistFromSearchDialog();
+    [/#if]
+  },
+
+  layout: function(){
+    $('scrollablecontent').setStyle('height', window.getSize().y - 58 + 'px');
+  },
+
+  openPlaylistFromSearchDialog: function(){
+    [#assign playlistHandle = this.request.getParameter('playlistHandle')!'']
+    parent.openWindow('.magnolia/dialogs/[#if playlistHandle?has_content]update[#else]save[/#if]SearchBasedPlaylist.html?mgnlRepository=playlists&mgnlPath=${playlistHandle}&mgnlCK=' + (new Date()).getTime() + '[#list this.request.parameterNames as name][#if !['selectMedia','saveAsPlaylist','command','playlistHandle']?seq_contains(name)][#list this.request.getParameterValues(name) as value]&search.${name?js_string}=${value?js_string}[/#list][/#if][/#list]');
+  }
+
+});
+
+MediaFolderView.BgSelectors = new Class({
+
+  initialize: function(selectors){
+    this.selectors = $$(selectors).addEvent('click', this.handleClick.bindWithEvent(this));
+    this.previousValue = document.body.className.match(/bg-(\w+)/)[1];
+  },
+
+  handleClick: function(e){
+    e.stop();
+    var selector = $(e.target);
+    var value = selector.className.match(/bg-selector\s+(\w+)(-active)?/)[1];
+    if (value == this.previousValue) return;
+    if (this.previousValue) $(document.body).removeClass('bg-' + this.previousValue);
+    $(document.body).addClass('bg-' + value);
+    Cookie.write('bgselector', value, {duration: 30});
+    this.selectors.each(function(item){
+      if (item == selector) item.addClass(value + '-active');
+      else if (this.previousValue) item.removeClass(this.previousValue + '-active');
+    }, this);
+    this.previousValue = value;
+  }
+
+});
+
+MediaFolderView.PagesizeSelectors = new Class({
+
+  Implements: Options,
+
+  initialize: function(selectors, options){
+    this.selectors = $$(selectors).addEvent('click', this.handleClick.bindWithEvent(this));
+    this.setOptions(options);
+  },
+
+  handleClick: function(e){
+    e.stop();
+    var selector = $(e.target);
+    var value = selector.className.match(/pagesize-selector\s+(\w+)(-active)?/)[1];
+    Cookie.write('pagesizeselector', value, {duration: 30});
+    location.href = '?' + [this.options.queryString, 'type=${this.type!}'].join('&');
+  }
+
+});
+
+MediaFolderView.Sorting = new Class({
+
+  Implements: Options,
+
+  initialize: function(select, options){
+    this.select = $(select);
+    this.setOptions(options);
+    this.select.addEvent('change', this.handleSelectChange.bind(this));
+  },
+
+  handleSelectChange: function(){
+    Cookie.write('sorting', this.select.get('value'), {duration: 30});
+    location.href = '?' + [this.options.queryString, 'type=${this.type!}'].join('&');
+  }
+
+});
+
+MediaFolderView.EditMenus = new Class({
+
+  initialize: function(triggers){
+    $$(triggers).addEvent('click', this.handleTriggerClick.bindWithEvent(this));
+    this.popup = new Element('div').addClass('menupopup').inject(document.body);
+    this.popup.addEvents({
+      mouseenter: this.handlePopupEnter.bindWithEvent(this),
+      mousemove: this.handlePopupMove.bindWithEvent(this),
+      mouseleave: this.handlePopupLeave.bindWithEvent(this)
+    });
+  },
+
+  handleTriggerClick: function(e){
+    this.timer = $clear(this.timer);
+    var menuitem = $(e.target);
+    var menu = menuitem.getNext();
+    if (menu != this.menu){
+      this.hide();
+      var width = menu.getStyle('width')
+      var content = new Element('div', {html: menu.get('html')});
+      content.getElements('a span').setStyle('width', (width.toInt() - 30) + 'px')
+      var coords = menuitem.getCoordinates();
+      this.popup
+        .empty()
+        .grab(content)
+        .setStyles({
+          left: coords.left + 'px',
+          top: (coords.bottom + 5) + 'px',
+          width: width,
+          display: 'block'
+        });
+      this.popup.setStyle('height', content.getSize().y + 'px');
+      this.menu = menu;
+    }
+  },
+
+  handlePopupEnter: function(){
+    this.timer = $clear(this.timer);
+  },
+
+  handlePopupMove: function(e){
+    var t = $(e.target);
+    if (!this.popup.hasChild(t)) return;
+    if (this.li != null && (this.li == t || this.li.hasChild(t))) return;
+    if (this.li) this.li.removeClass('active');
+    var tag = t.tagName.toLowerCase();
+    var li = (tag == 'li' ? t : t.getParent('li'));
+    this.li = li;
+    if (!li) return;
+    li.addClass('active');
+    if (Browser.Engine.name == 'trident'){
+      var span = li.getElement('span');
+      span.set('text', span.get('text'));
+    }
+  },
+
+  handlePopupLeave: function(e){
+    if (!this.timer) this.timer = this.hide.delay(250, this);
+  },
+
+  hide: function(){
+    if (this.menu){
+      this.popup.setStyle('display', '');
+      delete this.menu;
+    }
+    if (this.li){
+      this.li.removeClass('active');
+      delete this.li;
+    }
+  }
+
+});
+
+MediaFolderView.InfoTooltips = new Class({
+
+  initialize: function(triggers){
+    this.hideStarter = function(){
+      this.hideTimer = this.hide.delay(250, this);
+    }.bind(this);
+    this.hideStopper = function(){
+      if (this.hideTimer) this.hideTimer = $clear(this.hideTimer);
+    }.bind(this);
+    $$(triggers).each(function(trigger){
+      var tooltip = trigger.tooltip(trigger.getElement('.details').get('html'), {
+        width: 170,
+        style: 'alert',
+        sticky: true,
+        fixedPosition: true,
+        offset: {x: -20, y: 100},
+        fx: false,
+        noClose: true
+      });
+      trigger.addEvents({
+        'mouseleave': this.hideStarter,
+        'mouseenter': this.hideStopper,
+        'tooltipshow': this.handleShow.bind(this, trigger),
+        'tooltiphide': this.handleHide.bind(this, trigger)
+      });
+      tooltip.tooltip.addEvents({
+        'mouseenter': this.hideStopper,
+        'mouseleave': this.hideStarter
+      });
+    }, this);
+  },
+
+  handleShow: function(el){
+    this.hideStopper();
+    if (this.trigger) this.trigger.tooltip_hide();
+    this.trigger = el;
+  },
+
+  handleHide: function(el){
+    if (this.trigger == el) this.trigger = null;
+  },
+
+  hide: function(){
+    if (!this.trigger) return;
+    this.trigger.tooltip_hide();
+    this.trigger = null;
+  }
+
+});
+    </script>
+    <script type="text/javascript">
+    [#list this.types as type]
+       [#if type.name == this.type!]
+          [#assign currentType = type]
+       [/#if]
+    [/#list]
+
+    function openDialog(path, dialog) {
+      parent.openWindow(".magnolia/dialogs/" + dialog + ".html?mgnlPath=" + path + "&mgnlRepository=media");
+    }
+
+    function openMediaTree(action, path) {
+      parent.openWindow(".magnolia/pages/mediaFolderSelection.html?sourceNode="+ path +"&action="+ action +"&mgnlCK=" + (new Date()).getTime());
+    }
+
+    function performAction(action, source, dest)
+    {
+      if (action == "move" && dest == "${this.path!?url!""}")
+      {
+        alert("${this.msgs.get('media.move.error.samenode')}");
+        return;
+      }
+      $("actionCmd").value = action;
+      $("actionNode").value = source;
+      $("actionDest").value = dest;
+      var submitForm = $("actionForm");
+      if ((submitForm.get("action")) && (submitForm.get("action").length > 0)) {
+        var currentUrl = new URI(submitForm.get("action"));
+      } else if (window.location.href.length > 0) {
+        // In this case, the form will use the iframe href.
+        var currentUrl = new URI(window.location.href);
+      }
+      if (currentUrl) {
+        // Given that in some cases the form is POSTed to a url with parameter, be sure to remove them before submitting. 
+        currentUrl.setData("command", null);
+        currentUrl.setData("node", null);
+        currentUrl.setData("dest", null);
+        submitForm.set("action", currentUrl.toString());
+      }
+      submitForm.submit();
+    }
+
+    function deleteMedia(source) {
+      if (confirm("${this.msgs.get('media.alert.delete')}"))
+      {
+        performAction("delete", source, "");
+      }
+    }
+
+    function selectMedia(uuid, thumb, file)
+    {
+      parent.setNewMedia(uuid, thumb, file);
+    }
+
+    var isTreeCollapsed = false;
+
+    window.addEvent(Browser.Engine.name == 'trident' ? 'load' : 'domready', function(){
+      var multibox = new MultiBox('multibox', {
+         path: '${this.request.contextPath}/.resources/media/players/',
+         useOverlay: true,
+         onOpen: function(){
+          isTreeCollapsed = parent.isTreeCollapsed();
+          if (!isTreeCollapsed)
+          {
+            parent.setTreeCollapsed(true);
+          }
+         },
+         onClose: function(){
+          if (!isTreeCollapsed)
+          {
+            parent.setTreeCollapsed(false);
+          }
+         },
+         titleOfContent: function(content){
+           return content.getElement('img').get('alt');
+         }
+      });
+
+      new MediaFolderView({queryString: '${this.currentQueryString()?js_string}'});
+
+      [#if message?exists]
+       alert("${message?js_string}");
+      [/#if]
+    });
+    </script>
+  </head>
+  <body id="mediafolderview" class="bg-${this.bgSelector}">
+    <form action="" style="display:none" id="actionForm" method="post">
+      <input type="hidden" id="actionCmd" name="command" value="delete" />
+      <input type="hidden" id="actionPath" name="path" value="${this.path!""}" />
+      <input type="hidden" id="actionSearch" name="search" value="${this.search!""}" />
+      <input type="hidden" id="actionNode" name="node" />
+      <input type="hidden" id="actionDest" name="dest" />
+      <input type="hidden" name="type" value="${this.type!}" />
+      [#if this.request.parameterMap['selectMedia']?exists]
+        <input type="hidden" name="selectMedia" value="true" />
+      [/#if]
+      <input type="hidden" name="search" value="${this.search!''}" />
+      [#if this.path?exists]
+        <input type="hidden" name="path" value="${this.path}" />
+      [/#if]
+    </form>
+
+    <div id="navigation">
+
+
+
+
+      <div class="tabsrow1">
+         [#if "" == this.type!]
+            [#assign actual = "actual"]
+          [#else]
+            [#assign actual = ""]
+          [/#if]
+        <div class="voice mediatab ${actual}">
+          <a href="${this.mediatabLink(null)}">
+            <img src="${this.request.contextPath}/.resources/media/icons/type-all.png" alt="${this.msgs.get('media.types.all')}" />
+            ${this.msgs.get('media.types.all')} [#if this.numberOfMedia?exists](${this.numberOfMedia[""]!'0'})[/#if]
+          </a>
+        </div>
+        [#list this.types as type]
+          [#if type.name == this.type!]
+            [#assign actual = "actual"]
+          [#else]
+            [#assign actual = ""]
+          [/#if]
+        <div class="voice mediatab ${actual}">
+          <a href="${this.mediatabLink(type)}">
+            <img src="${this.request.contextPath}${type.menuIcon}" alt="${this.msgs.get('media.types.' + type.name)}" />
+            ${this.msgs.get('media.types.' + type.name)} [#if this.numberOfMedia?exists](${this.numberOfMedia[type.name]!'0'})[/#if]
+          </a>
+        </div>
+        [/#list]
+      </div>
+
+
+      <div class="tabsrow2">
+
+
+
+      <div id="bgselectorblock">
+        <div class="voice right">
+          <a name="bg-black" href="#" class="bg-selector black [#if this.bgSelector == 'black']black-active[/#if]" title="${this.msgs.get('media.bgselector.black')}"><!--  --></a>
+        </div>
+        <div class="voice right">
+          <a name="bg-transparent" href="#" class="bg-selector transparent [#if this.bgSelector == 'transparent']transparent-active[/#if]" title="${this.msgs.get('media.bgselector.transparent')}"><!--  --></a>
+        </div>
+        <div class="voice right">
+          <a name="bg-white" href="#" class="bg-selector white [#if this.bgSelector == 'white']white-active[/#if]" title="${this.msgs.get('media.bgselector.white')}"><!--  --></a>
+        </div>
+        <div class="voice right" style="margin-right: 10px;">
+          <a name="pagesize3" href="#" class="pagesize-selector size3 [#if this.pagesizeSelector == 'size3']size3-active[/#if]"><!--  --></a>
+        </div>
+        <div class="voice right">
+          <a name="pagesize2" href="#" class="pagesize-selector size2 [#if this.pagesizeSelector == 'size2']size2-active[/#if]"><!--  --></a>
+        </div>
+        <div class="voice right">
+          <a name="pagesize1" href="#" class="pagesize-selector size1 [#if this.pagesizeSelector == 'size1']size1-active[/#if]"><!--  --></a>
+        </div>
+        <div class="voice right sortingcontainer">
+          <select id="sorting" name="sorting">
+            [#if this.request.requestURI?ends_with('/media-advsearch.html')]
+            <option value="score"[#if this.sorting == 'score'] selected="selected"[/#if]>${this.msgs.get('media.sorting.score')}</option>
+            [/#if]
+            <option value="CREATIONDATE_ASC"[#if this.sorting == 'CREATIONDATE_ASC'] selected="selected"[/#if]>${this.msgs.get('media.sorting.date.asc')}</option>
+            <option value="CREATIONDATE_DESC"[#if this.sorting == 'CREATIONDATE_DESC'] selected="selected"[/#if]>${this.msgs.get('media.sorting.date.desc')}</option>
+            <option value="FILENAME_ASC"[#if this.sorting == 'FILENAME_ASC'] selected="selected"[/#if]>${this.msgs.get('media.sorting.name.asc')}</option>
+            <option value="FILENAME_DESC"[#if this.sorting == 'FILENAME_DESC'] selected="selected"[/#if]>${this.msgs.get('media.sorting.name.desc')}</option>
+          </select>
+        </div>
+      </div>
+
+
+        [#if this.pages?has_content && this.pages?size > 5]
+          <div class="pagincontainer">
+            <table class="paging">
+              <tr>
+              [#list this.pages as page]
+              <td class="page-current-${page.current?string} page-active-${page.active?string} ${page.cssclass}">
+                <a href="${page.url}">${page.label}</a>
+              </td>
+              [/#list]
+              </tr>
+            </table>
+          </div>
+        [/#if]
+
+
+
+      </div>
+
+
+    </div>
+
+  <div style="clear:both; height: 1px"><!--  --></div>
+
+  <div id="scrollablecontent">
+    <ul class="mediaList">
+      [#assign index = 0]
+      [#list this.medias as media]
+        [#assign name = media.name]
+        [#if name?length gt 17]
+          [#assign name = name?substring(0,13)]
+          [#assign name = name?right_pad(17, ".")]
+        [/#if]
+        [#assign index = index + 1 ]
+        [#assign mediaStatusClass = ""]
+        [#if this.selectMedia && !this.develop]
+          [#assign mediaStatusClass = "mediaStatus${media.metaData.activationStatus}"]
+        [/#if]
+        [#assign selectMediaClass = ""]
+        [#if this.selectMedia]
+          [#assign selectMediaClass = "selectMedia"]
+        [/#if]
+      <li class="media ${mediaStatusClass} ${selectMediaClass} mediatype-${media.type}" style="text-align:center">
+        <div class="mediaheader">
+          <span class="edit menuitem"><img src="${this.request.contextPath}${media.icon}" alt="${this.msgs.get('media.types.' + media.type)}" /> &nbsp;</span>
+          <div class="icons menu" style="display: none;">
+            <ul class="mediamenu">
+              [#if media.writable]
+              <li>
+                <a href="javascript:$empty()" onclick="openDialog('${media.handle}', '${media.dialog}')" title="${this.msgs.get('media.edit')}" style="background-image: url('${this.request.contextPath}/.resources/media/icons/ico16-edit.png');">
+                  ${this.msgs.get('media.edit')}
+                </a>
+              </li>
+              <li>
+                <a href="javascript:$empty()" onclick="deleteMedia('${media.handle}')" title="${this.msgs.get('media.delete')}" style="background-image: url('${this.request.contextPath}/.resources/icons/16/delete2.gif');">
+                  ${this.msgs.get('media.delete')}
+                </a>
+              </li>
+              <li>
+                <a href="javascript:$empty()" onclick="openMediaTree('move','${media.handle}')" title="${this.msgs.get('media.move')}" style="background-image: url('${this.request.contextPath}/.resources/icons/16/up_down.gif');">
+                  ${this.msgs.get('media.move')}
+                </a>
+              </li>
+              <li>
+                <a href="javascript:$empty()" onclick="openMediaTree('copy','${media.handle}')" title="${this.msgs.get('media.copy')}" style="background-image: url('${this.request.contextPath}/.resources/icons/16/copy.gif');">
+                  ${this.msgs.get('media.copy')}
+                </a>
+              </li>
+              [#else]
+              <li>
+                <a style="background-image: url('${this.request.contextPath}/.resources/media/icons/ico16-edit_inactive.png');">
+                  <span style="display:block; clear:left;"><!--  --></span>
+                </a>
+              </li>
+              <li>
+                <a style="background-image: url('${this.request.contextPath}/.resources/icons/16/delete2_inactive.gif');">
+                  <span style="display:block; clear:left;"><!--  --></span>
+                </a>
+              </li>
+              <li>
+                <a style="background-image: url('${this.request.contextPath}/.resources/icons/16/up_down_inactive.gif');">
+                  <span style="display:block; clear:left;"><!--  --></span>
+                </a>
+              </li>
+              <li>
+                <a style="background-image: url('${this.request.contextPath}/.resources/icons/16/copy_inactive.gif');">
+                  <span style="display:block; clear:left;"><!--  --></span>
+                </a>
+              </li>
+              [/#if]
+              [#if !media.external]
+              <li>
+                <a href="?command=download&amp;path=${media.handle}" style="background-image: url('${this.request.contextPath}/.resources/media/icons/ico16-download.png');">
+                  <span>${this.msgs.get('media.download')}</span>
+                </a>
+              </li>
+              [/#if]
+              [#if !this.singleInstance]
+                [#if media.canPublish]
+                <li>
+                  <a href="javascript:$empty()" onclick="performAction('activate', '${media.handle}','')" title="${this.msgs.get('media.activate')}" style="background-image: url('${this.request.contextPath}/.resources/icons/16/arrow_right_green.gif');">
+                    ${this.msgs.get('media.activate')}
+                  </a>
+                </li>
+                [#else]
+                <li>
+                  <a title="${this.msgs.get('media.activate')}" class="disabled" style="background-image: url('${this.request.contextPath}/.resources/media/icons/ico16-arrow_right_inactive.png');">
+                    ${this.msgs.get('media.activate')}
+                  </a>
+                </li>
+                [/#if]
+                [#if media.canPublish && media.metaData.activationStatus = 2]
+                <li>
+                  <a href="javascript:$empty()" onclick="performAction('deactivate', '${media.handle}','')" title="${this.msgs.get('media.deactivate')}" style="background-image: url('${this.request.contextPath}/.resources/icons/16/arrow_left_red.gif');">
+                    ${this.msgs.get('media.deactivate')}
+                  </a>
+                </li>
+                [#else]
+                <li>
+                  <a title="${this.msgs.get('media.deactivate')}" class="disabled" style="background-image: url('${this.request.contextPath}/.resources/icons/16/arrow_left_red_inactive.gif');">
+                     ${this.msgs.get('media.deactivate')} 
+                  </a>
+                </li>
+                [/#if]
+              [/#if]
+            </ul>
+          </div>
+          [#if media.usedInWebPages?size = 0]
+          <span>${this.msgs.get('media.nopages')}</span>
+          [#else]
+          <span class="tips menuitem">${this.msgs.get('media.pages')} (${media.usedInWebPages?size})</span>
+          <div class="pages menu" style="display: none;">
+            <ul class="mediamenu medialinks">
+              [#list media.usedInUris as uri]
+              <li>
+                <a href="${this.request.contextPath}${uri}" target="_blank">
+                  ${uri}
+                </a>
+              </li>
+              [/#list]
+            </ul>
+          </div>
+          [/#if]
+        </div>
+        <div class="imageBorder">
+          <div class="image">
+            <span><!-- vertical centering --></span>
+             [#assign url = media.previewUrl]
+
+             [#if !url?contains('://') ]
+              [#assign url = "${this.request.contextPath}${media.previewUrl}"]
+             [/#if]
+            <a id="mb${index}" class="multibox" href="${url}">
+              [#assign thumbnailPath = media.thumbnailUrl]
+              [#if thumbnailPath == '']
+                [#assign thumbnailPath = "/.resources/media/icons/thumb-broken.png"]
+              [/#if]
+              <img src="${this.request.contextPath}${thumbnailPath}" border="0" alt="${media.description!""}" />
+            </a>
+            <div class="details">
+              <h4>${media.title!""}</h4>
+              [#list media.mediaInfo?keys as key]
+                [#if key != "media_name" ]
+                  ${this.getMessage("media.info.${key}", media.mediaInfo[key])}<br/>
+                [/#if]
+              [/#list]
+            </div>
+          </div>
+        </div>
+        [#if media.mediaInfo??]
+          <div class="mediainfo">
+            ${media.mediaInfo['media_extension']!}
+            [#if media.mediaInfo['media_width']?? && media.mediaInfo['media_height']??]
+              ${media.mediaInfo['media_width']}x${media.mediaInfo['media_height']}
+            [/#if]
+          </div>
+        [/#if]
+        [#if this.selectMedia]
+          <div class="selectMediaLine">
+            [#if this.develop || this.singleInstance || media.metaData.activationStatus = 2]
+            <a href="javascript:$empty()" onclick="selectMedia('${media.uuid}', '${this.request.contextPath}${media.thumbnailUrl}', '${name?js_string}')">
+              ${this.msgs.get('media.select')}
+            </a>
+            [#else]
+              ${this.msgs.get('media.notpublished')}
+            [/#if]
+          </div>
+        [/#if]
+        <span class="name [#if !this.singleInstance] status${media.metaData.activationStatus}[/#if]" title="${media.filename}">${name}</span>
+      </li>
+      [/#list]
+    </ul>
+
+    <div class="iespacer"><!--  --></div>
+  </div>
+
+  </body>
+</html>
