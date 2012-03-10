@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+  <!--
+  "type" attribute can be: add, remove, update or fix.
+-->
+<document>
+  <properties>
+    <title>Changes</title>
+    <author email="fgiust(at)users.sourceforge.net">Fabrizio Giustina</author>
+  </properties>
+  <body>
+    <release version="4.0" date="2009-07-28" description="">
+      <action type="add" dev="fgiust">First release (marked as 4.0 to align with supported magnolia versions)</action>
+    </release>
+    <release version="4.0.1" date="2009-08-10" description="">
+      <action type="fix" dev="fgiust">The released package was missing a freemarker template</action>
+    </release>
+  </body>
+</document>

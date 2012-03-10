@@ -1,0 +1,25 @@
+                                 --------------------------
+                                   openutils-mgnlrepoutils
+                                 --------------------------
+                                     Fabrizio Giustina
+                                 --------------------------
+
+About openutils-mgnlrepoutils
+
+ openutils-mgnlrepoutils is a simple {{{http://www.magnolia.info}magnolia}} module which let you run consistency checks
+ on jackrabbit repository from the admin interface
+
+
+Configuration
+
+ Drop the openutils-mgnlrepoutils jar into WEB-INF/lib, or if you are using maven just declare the following dependency:
+
++----------------------------------------------+
+    <dependency>
+        <groupId>net.sourceforge.openutils</groupId>
+        <artifactId>openutils-mgnlrepoutils</artifactId>
+        <version>4.0</version>
+    </dependency>
++----------------------------------------------+
+
+ A new page named "Repository utils" will show up in the tools section in the magnolia admin central.

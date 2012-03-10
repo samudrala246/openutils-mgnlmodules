@@ -1,0 +1,66 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <title>Repository tools</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link href="${this.request.contextPath}/.resources/repoutils/css/mgnladmin.css" type="text/css" rel="stylesheet" />
+  </head>
+  <body class="ma">
+    <div class="ma-frame">
+      <form action="" method="post">
+        <h2>
+          Repository tools
+          <a target="_blank" href="http://www.openmindonline.it" style="position:absolute;right:45px;">
+            <img class="omlogo" alt="openmind" src="${this.request.contextPath}/.resources/repoutils/img/openmind-logo.png" />
+          </a>
+        </h2>
+        <div class="ma-framecenter">
+          <div class="ma-warning">
+            <p>This page let you run some checks on the Jackrabbit repository or Lucene index without having to edit
+              Jackrabbit configuration files and without restarting Magnolia.</p>
+            <p>
+              <strong>Warning:</strong>
+              this only works with Jackrabbit, and it works by using private APIs that are not guaranted to work in
+              future versions (this is actually tested with versions from 1.5 to 2.2). The Persistence Manager check
+              only works with "bundle" PMs.
+              <strong>Use it at your own risk.</strong>
+            </p>
+          </div>
+          <div class="ma-formel-container">
+            <div class="ma-formel-left">
+              <label for="">Workspaces</label>
+            </div>
+            <div class="ma-formel-right">
+              <select name="repos" id="repos" multiple="multiple" style="width: 300px">
+                [#list this.repositories as item]
+                <option>${item}</option>
+                [/#list]
+              </select>
+            </div>
+          </div>
+          <div class="ma-formel-container">
+            <div class="ma-formel-left">
+              <label for="">Operation</label>
+            </div>
+            <div class="ma-formel-right">
+              <select name="command" id="command" style="width: 300px">
+                <option value="doIndexConsistencyFix">Index consistency check</option>
+                <option value="doPmCheck">Persistence Manager consistency check (only for bundle PMs)</option>
+              </select>
+            </div>
+          </div>
+          [#if message?exists]
+          <pre class="ma-info">${message}</pre>
+          [/#if]
+        </div>
+        <div class="ma-framefooter">
+          <div class="ma-framefooterinner">
+            <div class="ma-buttons">
+              <input type="submit" name="submit" value="Execute" class="mgnlControlButton" />
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </body>
+</html>
