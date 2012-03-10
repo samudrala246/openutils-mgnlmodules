@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE module SYSTEM "module.dtd">
+<module>
+  <name>simplemail</name>
+  <displayName>simplemail for Magnolia CMS</displayName>
+  <description>simplemail for Magnolia CMS</description>
+  <versionHandler>net.sourceforge.openutils.mgnlmail.SimpleMailModuleVersionHandler</versionHandler>
+  <version>${project.version}</version>
+  <dependencies>
+    <dependency>
+      <name>adminInterface</name>
+      <version>4.0/*</version>
+    </dependency>
+    <dependency>
+      <name>mail</name>
+      <version>4.0/*</version>
+    </dependency>
+  </dependencies>
+  <repositories>
+    <repository>
+      <name>magnolia</name>
+      <workspaces>
+        <workspace>email</workspace>
+      </workspaces>
+    </repository>
+  </repositories>
+</module>
