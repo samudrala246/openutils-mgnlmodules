@@ -1,0 +1,29 @@
+                                 --------------------------
+                                   openutils-mgnlstruts11
+                                 --------------------------
+                                     Fabrizio Giustina
+                                 --------------------------
+
+About openutils-mgnlstruts11
+
+ openutils-mgnlstruts11 is a custom {{{http://www.magnolia.info}magnolia}} module which integrates the
+ Struts 1.1 framework into magnolia-powered websites.
+
+ After installed into magnolia, this module will allow you to use any available Struts action/forward as a Magnolia paragraph.
+
+
+Configuration
+
+ First of all drop the openutils-mgnlstruts11 jar and the struts jar into WEB-INF/lib, or (better) if you are using maven
+ just declare the following dependency:
+
++----------------------------------------------+
+    <dependency>
+        <groupId>net.sourceforge.openutils</groupId>
+        <artifactId>openutils-mgnlstruts11</artifactId>
+        <version>...</version>
+    </dependency>
++----------------------------------------------+
+
+
+
