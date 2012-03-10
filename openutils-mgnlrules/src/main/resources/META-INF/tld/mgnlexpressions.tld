@@ -1,0 +1,14 @@
+<taglib xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-jsptaglibrary_2_0.xsd"
+  version="2.0">
+  <description>Magnolia expressions Tags and EL functions</description>
+  <display-name>Magnolia expressions Tags and EL functions</display-name>
+  <tlib-version>1.0</tlib-version>
+  <short-name>mexpr</short-name>
+  <uri>mgnlexpressions</uri>
+  <function>
+    <name>evaluate</name>
+    <function-class>net.sourceforge.openutils.mgnlrules.el.ExpressionsElFunctions</function-class>
+    <function-signature>java.lang.Object evaluate(java.lang.String, javax.servlet.jsp.PageContext)</function-signature>
+  </function>
+</taglib>

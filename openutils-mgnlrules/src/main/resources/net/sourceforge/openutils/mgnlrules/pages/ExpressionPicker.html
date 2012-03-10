@@ -1,0 +1,61 @@
+<html>
+	<head>
+		<title>Expression</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<meta content="noindex, nofollow" name="robots">
+		<script src="${this.request.contextPath}/.resources/fckeditor/editor/dialog/common/fck_dialog_common.js" type="text/javascript"></script>
+		<script language="javascript">
+var dialog = window.parent;
+var oEditor = dialog.InnerDialogLoaded();
+var oSample;
+
+[#list this.expressionProviders as provider]
+dialog.AddTab('${provider.name}', '${provider.label}');
+[/#list]
+
+function OnDialogTabChange(tabCode){
+[#list this.expressionProviders as provider]
+  ShowE('div_${provider.name}', (tabCode == '${provider.name}'));
+[/#list]
+}
+
+window.onload = function(){
+  oEditor.FCKLanguageManager.TranslatePage(document);
+  oSample = document.getElementById("SampleTD");
+[#if (this.expressionProviders?has_content)]
+  dialog.SetSelectedTab('${this.expressionProviders[0].name}') ;
+[/#if]
+};
+
+function insert(value){
+  oEditor.FCKUndo.SaveUndoStep() ;
+  oEditor.FCK.InsertHtml(value || "");
+  window.parent.Cancel() ;
+}
+
+function over(td, value){
+  if (!oSample) return;
+  oSample.innerHTML = value;
+  td.className = 'LightBackground';
+}
+
+function out(td){
+  if (!oSample) return;
+  oSample.innerHTML = "&nbsp;";
+  td.className = 'DarkBackground';
+}
+		</script>
+	</head>
+	<body scroll="no" style="OVERFLOW: hidden">
+[#list this.expressionProviders as provider]
+      <div id="div_${provider.name}" style="display: none; height: 100px; overflow: auto;">
+        <ul style="list-style: none; padding: 0;">
+  [#list provider.expressions as expression]
+          <li class="DarkBackground" onclick="insert('${this.escapeApostrophe(expression.value)}')" onmouseover="over(this, '${this.escapeApostrophe(expression.value)}')" onmouseout="out(this)">${expression.label}</li>
+  [/#list]
+        </ul>
+      </div>
+[/#list]
+      <p id="SampleTD">&nbsp;</p>
+	</body>
+</html>

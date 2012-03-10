@@ -1,0 +1,47 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <title>Expression</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <script type="text/javascript" src="../../.magnolia/pages/javascript.js"></script>
+    <script type="text/javascript" src="../../.resources/admin-js/dialogs/dialogs.js"></script>
+    <link rel="stylesheet" type="text/css" href="../../.resources/admin-css/admin-all.css" />
+
+    <script type="text/javascript" src="../../.resources/fckeditor/fckeditor.js"></script>
+  </head>
+  <body style="padding:0;margin:0">
+    <h1 style="background-color:#F0F2E6; color:#396101; font-size:11pt; border-bottom:1px solid #999;margin:0;padding:3px 10px">Expression Language</h1>
+    <p style="margin: 10px">
+      <script type="text/javascript">
+var sBasePath = '../../.resources/fckeditor/';
+var oFCKeditor = new FCKeditor('FCKeditor1');
+oFCKeditor.BasePath = sBasePath;
+oFCKeditor.Config['CustomConfigurationsPath'] = '../../../.resources/expressions/js/ExpressionField.config.js';
+oFCKeditor.Config['EnterMode'] = 'br';
+oFCKeditor.Config['ShiftEnterMode'] = 'br';
+oFCKeditor.ToolbarSet = 'Expression';
+oFCKeditor.Height = 200;
+oFCKeditor.Value = window.opener.getExpressionValue();
+oFCKeditor.Create() ;
+
+function getPlainText(){
+  var oEditor = FCKeditorAPI.GetInstance('FCKeditor1');
+  var oDOM = oEditor.EditorDocument;
+  if (document.all){
+    return oDOM.body.innerText;
+  } else {
+    var r = oDOM.createRange();
+    r.selectNodeContents(oDOM.body);
+    return r.toString();
+  }
+}
+      </script>
+    </p>
+    <div class="mgnlDialogTabsetSaveBar">
+      <span class="mgnlControlButton" onclick="window.opener.setExpressionValue(getPlainText()); mgnlShiftPushButtonClick(this); window.opener.focus(); window.close();" onmouseout="mgnlShiftPushButtonOut(this);"
+        onmousedown="mgnlShiftPushButtonDown(this);">
+        OK
+      </span>
+    </div>
+  </body>
+</html>

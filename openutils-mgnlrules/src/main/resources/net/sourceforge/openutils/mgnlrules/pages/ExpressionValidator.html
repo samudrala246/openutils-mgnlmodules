@@ -1,0 +1,24 @@
+<html>
+	<head>
+		<title>Validation</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<meta content="noindex, nofollow" name="robots">
+		<script src="${this.request.contextPath}/.resources/fckeditor/editor/dialog/common/fck_dialog_common.js" type="text/javascript"></script>
+	</head>
+	<body scroll="no" style="OVERFLOW: hidden">
+		<script language="javascript">
+var dialog = window.parent;
+var oEditor = dialog.InnerDialogLoaded();
+var oDOM = oEditor.FCK.EditorDocument;
+var text;
+if (document.all){
+  text = oDOM.body.innerText;
+} else {
+  var r = oDOM.createRange();
+  r.selectNodeContents(oDOM.body);
+  text = r.toString();
+}
+document.write('<iframe src="${this.request.contextPath}/.magnolia/pages/expression-validator.html?command=validate&expression=' + encodeURIComponent(text) + '" frameborder="0" width="100%" />');
+		</script>
+	</body>
+</html>

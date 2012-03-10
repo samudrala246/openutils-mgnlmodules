@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE module SYSTEM "module.dtd">
+<module>
+  <name>rules</name>
+  <displayName>rules</displayName>
+  <description>Openutils - Magnolia Rule Module</description>
+  <class>net.sourceforge.openutils.mgnlrules.module.RuleModule</class>
+    <versionHandler>net.sourceforge.openutils.mgnlrules.setup.RuleModuleVersionHandler</versionHandler>
+  <version>${project.version}</version>
+</module>
