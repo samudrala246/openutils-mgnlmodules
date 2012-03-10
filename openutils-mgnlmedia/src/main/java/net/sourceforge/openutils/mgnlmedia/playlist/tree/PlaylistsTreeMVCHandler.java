@@ -139,14 +139,7 @@ public class PlaylistsTreeMVCHandler extends AdminTreeMVCHandler
         parentNode.updateMetaData();
         if (MediaEl.module().isSingleinstance())
         {
-            try
-            {
-                parentNode.getMetaData().setActivated();
-            }
-            catch (RepositoryException e)
-            {
-                log.error("Error adding activated status to playlist entry node", e);
-            }
+            parentNode.getMetaData().setActivated();
         }
         parentNode.save();
     }
