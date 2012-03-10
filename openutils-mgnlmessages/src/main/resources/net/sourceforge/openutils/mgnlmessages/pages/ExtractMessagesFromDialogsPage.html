@@ -1,0 +1,39 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <title>Magnolia</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link href="${this.request.contextPath}/.resources/messages/css/mgnladmin.css" type="text/css" rel="stylesheet" />
+  </head>
+  <body class="ma">
+    <div class="ma-frame">
+      <h2>
+        Extract messages from dialogs
+        <a target="_blank" href="http://www.openmindonline.it" style="position:absolute;right:45px;">
+          <img class="omlogo" alt="openmind" src="${this.request.contextPath}/.resources/repoutils/img/openmind-logo.png" />
+        </a>
+      </h2>
+      <form method="post" action="" enctype="multipart/form-data">
+        <div class="ma-framecenter">
+          Select dialogs roots to extract messages from:
+          <input type="hidden" name="command" value="extract" />
+          <ul style="list-style: none">
+            [#list this.dialogsRoot as root]
+            <li>
+              <input type="checkbox" name="dialogsRoots" value="${root}" />
+              ${root}
+            </li>
+            [/#list]
+          </ul>
+        </div>
+        <div class="ma-framefooter">
+          <div class="ma-framefooterinner">
+            <div class="ma-buttons">
+              <input type="submit" name="doextract" value='Do extract' />
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE module SYSTEM "module.dtd">
+<module>
+  <name>messages</name>
+  <displayName>magnolia messages module</displayName>
+  <description>magnolia messages module</description>
+  <class>net.sourceforge.openutils.mgnlmessages.lifecycle.MessagesModuleLifecycle</class>
+  <versionHandler>net.sourceforge.openutils.mgnlmessages.setup.MessagesModuleVersionHandler</versionHandler>
+  <version>${project.version}</version>
+  <properties>
+    <property>
+      <name>info.magnolia.cms.i18n.MessagesManager</name>
+      <value>net.sourceforge.openutils.mgnlmessages.i18n.MultiBundleMgnlMessagesManager</value>
+    </property>
+  </properties>
+  <dependencies>
+    <dependency>
+      <name>adminInterface</name>
+      <version>4.0/*</version>
+    </dependency>
+  </dependencies>
+  <repositories>
+    <repository>
+      <name>magnolia</name>
+      <workspaces>
+        <workspace>messages</workspace>
+      </workspaces>
+    </repository>
+  </repositories>
+</module>

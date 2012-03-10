@@ -1,0 +1,56 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <link rel="stylesheet" type="text/css" href="${this.request.contextPath}/.resources/ext/css/ext-all.css" />
+    <link rel="stylesheet" type="text/css" href="${this.request.contextPath}/.resources/ext/css/xtheme-gray.css" />
+    <link rel="stylesheet" type="text/css" href="${this.request.contextPath}/.resources/messages/css/messagespanel.css" />
+    <script type="text/javascript" src="${this.request.contextPath}/.resources/ext/ext-base.js"></script>
+    <#-- TODO import the appropriate script depending on SystemProperty.getBooleanProperty("magnolia.develop")
+    <#if debug>
+    <script type="text/javascript" src="${this.request.contextPath}/.resources/ext/ext-all-debug.js"></script>
+    <#else>
+    -->
+    <script type="text/javascript" src="${this.request.contextPath}/.resources/ext/ext-all.js"></script>
+    <#--</#if>-->
+    <script type="text/javascript">
+    var ctx = "${this.request.contextPath}";
+    var keys = [
+    <#list this.keys as key>
+    ['${key}', '0'],
+    </#list>
+    ['','']
+    ];
+    keys.pop();
+    
+    var languages = [
+    <#list this.locales as loc>
+      [
+        <#if loc.displayCountry?exists && loc.displayCountry?length &gt; 0>
+        "${loc.displayLanguage?capitalize} (${loc.displayCountry})",
+        "${loc.language}_${loc.country}"
+        <#else>
+        "${loc.displayLanguage?capitalize}",
+        "${loc.language}"
+        </#if>
+      ],
+    </#list>
+    {}
+    ];
+    languages.pop();
+    
+    var currentlanguage = "${this.currentLanguage}";
+    
+    var pageUrl = "${this.request.contextPath}/.magnolia/pages/messagesEdit.html";
+
+    </script>
+    <script type="text/javascript" src="${this.request.contextPath}/.resources/messages/js/TabCloseMenu.js"></script>
+    <script type="text/javascript" src="${this.request.contextPath}/.resources/messages/js/MessagesPanel.js"></script>
+    <script type="text/javascript" src="${this.request.contextPath}/.resources/messages/js/SearchPanel.js"></script>
+    <script type="text/javascript" src="${this.request.contextPath}/.resources/messages/js/MainPanel.js"></script>
+    <script type="text/javascript" src="${this.request.contextPath}/.resources/messages/js/MessagesViewer.js"></script>
+  </head>
+  <body>
+    <div style="width:600px;" id="search-panel"></div>
+  </body>
+</html>

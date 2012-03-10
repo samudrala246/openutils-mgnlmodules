@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+  <!--
+  "type" attribute can be: add, remove, update or fix.
+-->
+<document>
+  <properties>
+    <title>Changes</title>
+    <author email="fgiust(at)users.sourceforge.net">Fabrizio Giustina</author>
+    <author email="molaschi(at)users.sourceforge.net">Manuel Molaschi</author>
+  </properties>
+  <body>
+    <release version="4.0.2" date="in svn" description="">
+      <action type="fix" dev="fgiust">net.sourceforge.openutils.mgnlmessages.i18n.SimpleMessagesImpl could return a null
+        bundle in case of IOExceptions during loading: fixed</action>
+    </release>
+    <release version="4.0.2" date="2009-05-24" description="">
+      <action type="update" dev="fgiust">Dependencies updated to magnolia 4.0.1, removed useless patches and classes with
+        the "info.magnolia" package</action>
+    </release>
+    <release version="4.0-b3" date="2009-04-16" description="">
+      <action type="update" dev="fgiust">Stable release for Magnolia 4.x</action>
+    </release>
+    <release version="1.1" date="2009-01-31" description="">
+      <action type="fix" dev="fgiust">minor bugfixes and basic documentation added</action>
+    </release>
+    <release version="1.0" date="2008-12-03" description="first release">
+      <action type="new" dev="fgiust">Initial public release.</action>
+    </release>
+  </body>
+</document>

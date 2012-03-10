@@ -1,0 +1,47 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <title>Magnolia</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link href="${this.request.contextPath}/.resources/messages/css/mgnladmin.css" type="text/css" rel="stylesheet" />
+  </head>
+  <body class="ma">
+    <div class="ma-frame">
+      <h2>
+        ${this.msgs.get("messages.expimppage")}
+        <a target="_blank" href="http://www.openmindonline.it" style="position:absolute;right:45px;">
+          <img class="omlogo" alt="openmind" src="${this.request.contextPath}/.resources/repoutils/img/openmind-logo.png" />
+        </a>
+      </h2>
+      <form method="post" action="" enctype="multipart/form-data">
+        <div class="ma-framecenter">
+          <div class="ma-warning">
+            <p>${this.msgs.get("messages.expimpinfo")}</p>
+          </div>
+          <div class="ma-formel-container">
+            <div class="ma-formel-left">
+              <label for="uploadFile">${this.msgs.get("messages.expimppage.uploadFile")}</label>
+            </div>
+            <div class="ma-formel-right">
+              <input name="uploadFile" type="file" />
+            </div>
+          </div>
+          <input type="hidden" name="command" value="importExcel" id="command" />
+          [#if message?exists]
+          <pre class="ma-info">${message}</pre>
+          [/#if]
+        </div>
+        <div class="ma-framefooter">
+          <div class="ma-framefooterinner">
+            <div class="ma-buttons">
+              <input type="submit" name="doexport" value='${this.msgs.get("messages.expimppage.doexport")}'
+                onclick="document.getElementById('command').value='exportExcel'" />
+              <input type="submit" name="doimport" value='${this.msgs.get("messages.expimppage.doimport")}'
+                onclick="document.getElementById('command').value='importExcel'" />
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </body>
+</html>

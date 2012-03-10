@@ -1,0 +1,20 @@
+.msgEditDialog label,.msgEditDialog input {
+  display: block;
+}
+
+.msgEditDialog input, .msgEditDialog textarea {
+  margin-bottom: 12px;
+  width: 95%;
+  padding: .4em;
+}
+
+.msgEditDialog fieldset {
+  padding: 0;
+  border: 0;
+  margin-top: 25px;
+}
+
+.msgEditDialog h1 {
+  font-size: 1.2em;
+  margin: .6em 0;
+}

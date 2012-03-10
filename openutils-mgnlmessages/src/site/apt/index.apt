@@ -1,0 +1,32 @@
+                                 --------------------------
+                                   openutils-mgnlmessages
+                                 --------------------------
+                                     Fabrizio Giustina
+                                      Manuel Molaschi
+                                 --------------------------
+
+About openutils-mgnlmessages
+
+ openutils-mgnlmessages is a custom {{{http://www.magnolia.info}magnolia}} module which adds a GUI for translating messages
+ inside the magnolia admin interface.
+
+ This is how the translation page looks:
+
+[images/gui.png]
+
+
+Installation
+
+ <<This module currently requires magnolia 4.0.x>>
+
+ The module needs to be installed as usual, by declaring an additional dependency into your pom or by manually dropping the jar
+ into magnolia.
+
+ You also need to configure in magnolia.properties:
+
+ info.magnolia.cms.i18n.MessagesManager=net.sourceforge.openutils.mgnlmessages.i18n.OpenutilsMgnlMessagesManager
+
+
+Released versions
+
+ {{{http://www.mvnrepository.com/artifact/net.sourceforge.openutils/openutils-mgnlmessages}http://www.mvnrepository.com/artifact/net.sourceforge.openutils/openutils-mgnlmessages}}
