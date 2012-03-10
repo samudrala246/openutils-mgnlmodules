@@ -1,0 +1,342 @@
+<taglib xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-jsptaglibrary_2_0.xsd"
+  version="2.0">
+  <description>Magnolia utility Tags and EL functions</description>
+  <display-name>Magnolia utility Tags and EL functions</display-name>
+  <tlib-version>1.0</tlib-version>
+  <short-name>mu</short-name>
+  <uri>mgnlutils</uri>
+  <function>
+    <description>Test if exists a parent page with content in the collectionName given as parameter, if exist set the parent page as actpage</description>
+    <name>firstPageWithCollection</name>
+    <function-class>it.openutils.mgnlutils.el.MgnlUtilsElFunctions</function-class>
+    <function-signature>java.lang.Boolean firstPageWithCollection(java.lang.String)</function-signature>
+    <example>
+      <![CDATA[
+        <cms:newBar contentNodeCollectionName="newcontent" paragraph="xyz" />
+        ${mu:firstPageWithCollection("newcontent")}}
+      ]]>
+    </example>
+  </function>
+  <function>
+    <description>Evaluate if primary node type of the associated Node of an object is a mgnl:contentNode</description>
+    <name>isPage</name>
+    <function-class>it.openutils.mgnlutils.el.MgnlUtilsElFunctions</function-class>
+    <function-signature>java.lang.Boolean isPage(info.magnolia.cms.core.Content)</function-signature>
+    <example>
+      <![CDATA[
+        ${mu:isPage(actpage)}
+      ]]>
+    </example>
+  </function>
+  <function>
+    <description>Return the object passed or the first parent page that has content type = mgnl:content</description>
+    <name>getPage</name>
+    <function-class>it.openutils.mgnlutils.el.MgnlUtilsElFunctions</function-class>
+    <function-signature>info.magnolia.cms.core.Content getPage(info.magnolia.cms.core.Content)</function-signature>
+    <example>
+      <![CDATA[
+        ${mu:getPage(actpage)}
+      ]]>
+    </example>
+  </function>
+  <function>
+    <description>Return a map key=value of all magnolia request attributes</description>
+    <name>requestAttributeMap</name>
+    <function-class>it.openutils.mgnlutils.el.MgnlUtilsElFunctions</function-class>
+    <function-signature>java.util.Map getRequestAttributeMap()</function-signature>
+    <example>
+      <![CDATA[
+        ${mu:requestAttributeMap()["javax.servlet.forward.request_uri"]}
+      ]]>
+    </example>
+  </function>
+  <function>
+    <description>Count the nodes in a collection with a given content and the name of the collection</description>
+    <name>countNodesInCollection</name>
+    <function-class>it.openutils.mgnlutils.el.MgnlUtilsElFunctions</function-class>
+    <function-signature>java.lang.Integer countNodesInCollection(info.magnolia.cms.core.Content, java.lang.String)</function-signature>
+    <example>
+      <![CDATA[
+       <cms:newBar contentNodeCollectionName="newcontent" paragraph="xyz" />
+       ${mu:countNodesInCollection(actpage,"newcontent")}
+      ]]>
+    </example>
+  </function>
+  <function>
+    <description>Count subpages with a given content</description>
+    <name>countSubpages</name>
+    <function-class>it.openutils.mgnlutils.el.MgnlUtilsElFunctions</function-class>
+    <function-signature>java.lang.Integer countSubpages(info.magnolia.cms.core.Content)</function-signature>
+    <example>
+      <![CDATA[
+       ${mu:countSubpages(actpage)}
+      ]]>
+    </example>
+  </function>
+  <function>
+    <description>Return the collection of subpages of a given page</description>
+    <name>subpages</name>
+    <function-class>it.openutils.mgnlutils.el.MgnlUtilsElFunctions</function-class>
+    <function-signature>java.util.Collection subpages(info.magnolia.cms.core.Content)</function-signature>
+  </function>
+  <function>
+    <description>Return the current user logged</description>
+    <name>user</name>
+    <function-class>info.magnolia.context.MgnlContext</function-class>
+    <function-signature>info.magnolia.cms.security.User getUser()</function-signature>
+    <example>
+      <![CDATA[
+       ${mu:user()}
+      ]]>
+    </example>
+  </function>
+  <function>
+    <description>Get the current context of this thread.</description>
+    <name>ctx</name>
+    <function-class>info.magnolia.context.MgnlContext</function-class>
+    <function-signature>info.magnolia.context.Context getInstance()</function-signature>
+  </function>
+  <function>
+    <description>Return the content of a given path and repository</description>
+    <name>contentByPath</name>
+    <function-class>it.openutils.mgnlutils.el.MgnlUtilsElFunctions</function-class>
+    <function-signature>info.magnolia.cms.core.Content contentByPath(java.lang.String, java.lang.String)</function-signature>
+    <example>
+      <![CDATA[
+       ${mu:contentByPath('Magnolia-Utils','website')}
+      ]]>
+    </example>
+  </function>
+  <function>
+    <description>Return the message for a given key, localized according to the content i18n settings.</description>
+    <name>message</name>
+    <function-class>it.openutils.mgnlutils.el.MgnlUtilsElFunctions</function-class>
+    <function-signature>java.lang.String message(java.lang.String)</function-signature>
+  </function>
+  <function>
+    <description>Return the message for a given key, formatted with the given arguments and localized according to the content i18n settings.</description>
+    <name>messageWithArgs</name>
+    <function-class>it.openutils.mgnlutils.el.MgnlUtilsElFunctions</function-class>
+    <function-signature>java.lang.String messageWithArgs(java.lang.String, java.lang.Object[])</function-signature>
+  </function>
+  <function>
+    <description>Test the system property 'magnolia.develop'</description>
+    <name>develop</name>
+    <function-class>it.openutils.mgnlutils.el.MgnlUtilsElFunctions</function-class>
+    <function-signature>java.lang.Boolean develop()</function-signature>
+  </function>
+  <function>
+    <description>Return a cleaned url (external or internal with contextPath). Accept in input generic string, url, uuid.</description>
+    <name>link</name>
+    <function-class>it.openutils.mgnlutils.el.MgnlUtilsElFunctions</function-class>
+    <function-signature>java.lang.String link(java.lang.String)</function-signature>
+  </function>
+  <function>
+    <description>Create an html complete link from a string composed by link \t link text. If the link is empty the function return only the text</description>
+    <name>tolinkOrText</name>
+    <function-class>it.openutils.mgnlutils.el.MgnlUtilsElFunctions</function-class>
+    <function-signature>java.lang.String tolinkOrText(java.lang.String)</function-signature>
+  </function>
+  <function>
+    <description>encode handle for a JackRabbit search</description>
+    <name>encodeISO9075</name>
+    <function-class>it.openutils.mgnlutils.el.MgnlUtilsElFunctions</function-class>
+    <function-signature>java.lang.String encodeISO9075(java.lang.String)</function-signature>
+  </function>
+  <function>
+    <description>Return true if the current user has a given role</description>
+    <name>userInRole</name>
+    <function-class>it.openutils.mgnlutils.el.MgnlUtilsElFunctions</function-class>
+    <function-signature>java.lang.Boolean userInRole(java.lang.String)</function-signature>
+  </function>
+  <function>
+    <description>Retrieve validate label for input string</description>
+    <name>getValidatedLabel</name>
+    <function-class>it.openutils.mgnlutils.el.MgnlUtilsElFunctions</function-class>
+    <function-signature>java.lang.String getValidatedLabel(java.lang.String)</function-signature>
+  </function>
+  <function>
+    <description>
+      splits the first argument based on the third (regex) argument and checks if the second argument is present
+      in the resulting array
+    </description>
+    <name>isStringInSeparatedList</name>
+    <function-class>it.openutils.mgnlutils.el.MgnlUtilsElFunctions</function-class>
+    <function-signature>java.lang.Boolean isStringInSeparatedList(java.lang.String, java.lang.String, java.lang.String)</function-signature>
+    <example><![CDATA[
+mu:isStringInSeparatedList('xAxBxC', 'B', 'x') = true 
+mu:isStringInSeparatedList('xAxBxC', 'B', '[A|B]x') = false]]></example>
+  </function>
+  <function>
+    <description>
+      check if the second argument string equals one line of the first argument string, same as isStringInSeparatedList
+      with third argument "\n"
+    </description>
+    <name>isLine</name>
+    <function-class>it.openutils.mgnlutils.el.MgnlUtilsElFunctions</function-class>
+    <function-signature>java.lang.Boolean isLine(java.lang.String, java.lang.String)</function-signature>
+    <example><![CDATA[
+mu:isLine('test\r\nprova\r\ntest', 'prova') = true 
+mu:isLine('aaa\nbb\nc', 'c') = true 
+mu:isLine('aaa\nbb\nc', 'b') = false]]></example>
+  </function>
+  <function>
+    <description>Splits the given string on newlines and after on tab characters</description>
+    <name>splitAndTokenize</name>
+    <function-class>it.openutils.mgnlutils.el.MgnlUtilsElFunctions</function-class>
+    <function-signature>java.lang.String[][] splitAndTokenize(java.lang.String)</function-signature>
+  </function>
+  <function>
+    <description>Extracts a map from a bi-dimensional array of strings, getting keys and values from the specified columns</description>
+    <name>mapTokens</name>
+    <function-class>it.openutils.mgnlutils.el.MgnlUtilsElFunctions</function-class>
+    <function-signature>java.util.Map mapTokens(java.lang.String[][], int, int)</function-signature>
+  </function>
+  <function>
+    <description>
+      Same as mapTokens, but the resulting map is multi-value, i.e. the same key can have more than one value.
+      Rows having no key specified are considered entries of the last used key.
+    </description>
+    <name>multiMapTokens</name>
+    <function-class>it.openutils.mgnlutils.el.MgnlUtilsElFunctions</function-class>
+    <function-signature>java.util.Map multiMapTokens(java.lang.String[][], int, int)</function-signature>
+  </function>
+  <function>
+    <description>
+     Returns the base URL for the request (scheme + server + port + context path, like http://server:81/context/)
+    </description>
+    <name>baseUrl</name>
+    <function-class>it.openutils.mgnlutils.el.MgnlUtilsElFunctions</function-class>
+    <function-signature>java.lang.String baseUrl()</function-signature>
+  </function>
+  <function>
+    <description>
+     Returns the base URL for the request without the context path (scheme + server + port, like http://server:81/)
+    </description>
+    <name>baseUrlWithoutContextPath</name>
+    <function-class>it.openutils.mgnlutils.el.MgnlUtilsElFunctions</function-class>
+    <function-signature>java.lang.String baseUrlWithoutContextPath()</function-signature>
+  </function>
+  <function>
+    <description>
+     Returns the full url to the given content (starting with http)
+    </description>
+    <name>pageFullUrl</name>
+    <function-class>it.openutils.mgnlutils.el.MgnlUtilsElFunctions</function-class>
+    <function-signature>java.lang.String pageFullUrl(info.magnolia.cms.core.Content)</function-signature>
+  </function>
+  <function>
+    <description>
+     Convert a relative url to absolute, using the current base url. If the link is already absolute it will not be altered.
+    </description>
+    <name>toAbsoluteUrl</name>
+    <function-class>it.openutils.mgnlutils.el.MgnlUtilsElFunctions</function-class>
+    <function-signature>java.lang.String toAbsoluteUrl(java.lang.String)</function-signature>
+  </function>
+  <function>
+    <description>Returns the full url to the current page (starting with http)</description>
+    <name>activePageFullUrl</name>
+    <function-class>it.openutils.mgnlutils.el.MgnlUtilsElFunctions</function-class>
+    <function-signature>java.lang.String activePageFullUrl()</function-signature>
+  </function>
+  <function>
+    <description>Returns a link from an uuid. Accepts in input uuid.</description>
+    <name>repoUuidLink</name>
+    <function-class>it.openutils.mgnlutils.el.MgnlUtilsElFunctions</function-class>
+    <function-signature>java.lang.String repoUuidLink(java.lang.String, java.lang.String)</function-signature>
+  </function>
+  <function>
+    <description>Convert a content list into a collection, also wrapping the content inside a I18NNodeMapWrapper</description>
+    <name>convertToCollection</name>
+    <function-class>it.openutils.mgnlutils.el.MgnlUtilsElFunctions</function-class>
+    <function-signature>java.util.List convertToCollection(java.util.List)</function-signature>
+  </function>
+  <function>
+    <description>Check if the content parameter has a child with title equal the title parameter</description>
+    <name>hasChildWithTitle</name>
+    <function-class>it.openutils.mgnlutils.el.MgnlUtilsElFunctions</function-class>
+    <function-signature>java.lang.Boolean hasChildWithTitle(info.magnolia.cms.core.Content, java.lang.String)</function-signature>
+  </function>
+  <function>
+    <description>Get child nodes of specified content type and its subtypes</description>
+    <name>contentChildrenOfType</name>
+    <function-class>it.openutils.mgnlutils.el.MgnlUtilsElFunctions</function-class>
+    <function-signature>java.util.Collection contentChildrenOfType(info.magnolia.cms.core.Content, java.lang.String)</function-signature>
+  </function>
+  <function>
+    <description>Creates a list of Page objects that can be used to draw a pagination bar.
+    Takes as parameters the total number of pages, the maximum number of pages to show and the name of the request parameter that will hold the current page number</description>
+    <name>pageList</name>
+    <function-class>it.openutils.mgnlutils.el.MgnlPagingElFunctions</function-class>
+    <function-signature>java.util.List pageList(int, int, java.lang.String)</function-signature>
+    <example><![CDATA[
+    <c:set var="pageList" value="${mu:pageList(numPages, maxPages, 'page')}" />
+    <ul class="paging">
+      <c:forEach var="page" items="${pageList}">
+        <li class="page-current-${page.current} page-active-${page.active} ${page.cssclass}">
+          <a href="${page.url}">${page.label}</a>
+        </li>
+      </c:forEach>
+    </ul>
+    ]]></example>
+  </function>
+  <function>
+    <description>Builds a query string with the actual request parameters, optionally excluding a list of parameters. The list list of parameters to exclude in given as a single whitespace separated string. 
+    The returned querystring doesn't contain the leading "?" and has all the parameters already urlencoded (but with ampersands not html escaped)</description>
+    <name>buildQuerystringExcluding</name>
+    <function-class>it.openutils.mgnlutils.el.MgnlUtilsElFunctions</function-class>
+    <function-signature>java.util.String buildQuerystringExcluding(java.lang.String)</function-signature>
+  </function>
+  <function>
+    <description>Builds a query string with the actual request parameters, only including the given list of parameters. The list list of parameters to include in given as a single whitespace separated string. 
+    The returned querystring doesn't contain the leading "?" and has all the parameters already urlencoded (but with ampersands not html escaped)</description>
+    <name>buildQuerystringIncluding</name>
+    <function-class>it.openutils.mgnlutils.el.MgnlUtilsElFunctions</function-class>
+    <function-signature>java.util.String buildQuerystringIncluding(java.lang.String)</function-signature>
+  </function>
+  <function>
+    <description></description>
+    <name>content</name>
+    <function-class>it.openutils.mgnlutils.el.MgnlUtilsElFunctions</function-class>
+    <function-signature>info.magnolia.cms.core.Content content(java.lang.Object, java.lang.String)</function-signature>
+  </function>
+  <function>
+    <description></description>
+    <name>node</name>
+    <function-class>it.openutils.mgnlutils.el.MgnlUtilsElFunctions</function-class>
+    <function-signature>info.magnolia.cms.util.NodeMapWrapper node(java.lang.Object, java.lang.String)</function-signature>
+  </function>
+  <function>
+    <description>Get a user property calling MgnlContext.getUser().getProperty(propertyname)</description>
+    <name>userPropertyCurrent</name>
+    <function-class>it.openutils.mgnlutils.el.MgnlUtilsElFunctions</function-class>
+    <function-signature>java.lang.String userPropertyCurrent(java.lang.String)</function-signature>
+  </function>
+  <function>
+    <description>Get a user property calling getProperty(property) on the given User object. Params: instance of info.magnolia.cms.security.User, property key</description>
+    <name>userProperty</name>
+    <function-class>it.openutils.mgnlutils.el.MgnlUtilsElFunctions</function-class>
+    <function-signature>java.lang.String userProperty(info.magnolia.cms.security.User, java.lang.String)</function-signature>
+  </function>
+  <function>
+    <description>Returns a Map with all the properties of the current user, taken from the current jaas Principal (note: this uses info.magnolia.jaas.principal.EntityImpl internals)</description>
+    <display-name>userProperties</display-name>
+    <name>userProperties</name>
+    <function-class>it.openutils.mgnlutils.el.MgnlUtilsElFunctions</function-class>
+    <function-signature>java.util.Map userProperties()</function-signature>
+  </function>
+  <function>
+    <name>pagePropertyInherited</name>
+    <description>Returns the value of a page property, by iterating on active page ancestor till a value is found</description>
+    <function-class>it.openutils.mgnlutils.el.MgnlUtilsElFunctions</function-class>
+    <function-signature>java.lang.String pagePropertyInherited( java.lang.String)</function-signature>
+  </function>
+  <function>
+    <name>setActivePage</name>
+    <description>Sets the given content as the active page, calling MgnlContext.getAggregationState().setCurrentContent)</description>
+    <function-class>it.openutils.mgnlutils.el.MgnlUtilsElFunctions</function-class>
+    <function-signature>void setActivePage(info.magnolia.cms.core.Content)</function-signature>
+  </function>
+  <!-- please don't add new funtions without a meaningfull <description> -->
+</taglib>

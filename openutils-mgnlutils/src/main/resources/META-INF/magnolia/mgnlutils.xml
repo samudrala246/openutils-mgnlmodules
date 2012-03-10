@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE module SYSTEM "module.dtd">
+<module>
+  <name>mgnlutils</name>
+  <displayName>Magnolia utils module</displayName>
+  <description>Useful EL functions and generic Magnolia utilities</description>
+  <version>${project.version}</version>
+</module>
