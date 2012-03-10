@@ -1,0 +1,54 @@
+<?xml version="1.0"?>
+  <!--
+  "type" attribute can be: add, remove, update or fix.
+-->
+<document>
+  <properties>
+    <title>Changes</title>
+    <author email="fgiust(at)users.sourceforge.net">Fabrizio Giustina</author>
+  </properties>
+  <body>
+    <release version="4.0.3" date="2009-06-04" description="">
+      <action type="fix" dev="fgiust">StripesMagnoliaFilter was leaking open jcr sessions</action>
+    </release>
+    <release version="4.0.2" date="2009-05-02" description="">
+      <action type="add" dev="fgiust">Stripes renderer updated to set magnolia 4.0 implicit objects by default (actpage,
+        content...)</action>
+      <action type="fix" dev="fgiust">Fixed "post not supported error" with stripes 1.5.1</action>
+    </release>
+    <release version="4.0.1" date="2009-05-02" description="">
+      <action type="update" dev="fgiust">updated to Stripes 1.5.1</action>
+      <action type="add" dev="fgiust">added dependency from openutils-mgnltasks</action>
+      <action type="add" dev="fgiust">i18n basename for paragraphs can now be set using the
+        /modules/stripes/config/i18nbasename property</action>
+    </release>
+    <release version="4.0" date="2009-01-30" description="">
+      <action type="update" dev="molaschi">port to magnolia 4.0 (created the branch "openutils-mgnlstripes-3.6.x" to
+        continue supporting magnolia 3.6.x integration)</action>
+    </release>
+    <release version="3.6-b2" date="2008-09-17" description="">
+      <action type="fix" dev="fgiust">fix handling of stripes locale</action>
+    </release>
+    <release version="3.6-b1" date="2008-9-16" description="">
+      <action type="update" dev="fgiust">support for stripes 1.5 (note: it only works with 1.5, not 1.4.x anymore)
+      </action>
+      <action type="update" dev="fgiust">update deps to magnolia 3.6.1</action>
+    </release>
+    <release version="3.5" date="2008-04-24" description="3.5">
+      <action type="update" dev="fgiust">update deps to magnolia 3.5.4</action>
+      <action type="update" dev="fgiust">the stripes filter is now added by the module automatically, and it should not be
+        added anymore in web.xml</action>
+      <action type="update" dev="fgiust">multipart forms are now handled properly</action>
+    </release>
+    <release version="0.2" date="2007-08-14" description="">
+      <action type="update" dev="fgiust"> Added support for indexed parameters by replacing "{}" with "[]" in parameter
+        names (hack). With Stripes you can use indexed parameters, but square brakets are not allowed in jcr node names
+        and can't be used in paragraph attributes. You can now use "list{1}" in attribute names for that.</action>
+      <action type="fix" dev="fgiust"> Excluded commons-logging dependency from stripes in pom.xml. Magnolia already
+        imports jcl104-over-slf4j, which is a replacement over the standard commons-logging jar.</action>
+    </release>
+    <release version="0.1" date="2007-08-13" description="Initial release">
+      <action type="add" dev="fgiust" due-to="">Initial release with support for stripes paragraphs.</action>
+    </release>
+  </body>
+</document>

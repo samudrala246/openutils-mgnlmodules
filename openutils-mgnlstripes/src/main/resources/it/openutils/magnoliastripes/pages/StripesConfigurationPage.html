@@ -1,0 +1,78 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <title>Stripes configuration</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link href="${this.request.contextPath}/.resources/admin-css/admin-all.css" type="text/css" rel="stylesheet" />
+
+    <script src="${contextPath}/.magnolia/pages/messages.en.js" type="text/javascript"><!--  --></script>
+    <script src="${contextPath}/.magnolia/pages/javascript.js" type="text/javascript"><!--  --></script>
+    <script src="${contextPath}/.resources/admin-js/dialogs/dialogs.js" type="text/javascript"><!--  --></script>
+
+    <style type="text/css">
+      table {
+        border-collapse: collapse;
+        border: 1px solid #ccc;
+        width: 100%;
+        font-size:11px;
+      }
+      th, td {
+        border: 1px solid #ccc;
+        padding: 2px 5px 2px 5px;
+      }
+      thead td, thead th {
+        background-color: #ccc; text-align: left;
+      }
+
+    </style>
+  </head>
+  <body id="mgnl" class="mgnlBgLight">
+    <h1>
+      <img src="${contextPath}/.resources/stripes/img/stripes-logo.png" alt="Stripes" />
+    </h1>
+
+    <h3>Configured Stripes Paragraphs</h3>
+    <table summary="System data">
+      <thead>
+        <tr>
+          <th scope="col">Paragraph name</th>
+          <th scope="col">Dialog name</th>
+          <th scope="col">Stripes mapping</th>
+          <th scope="col">Title</th>
+          <th scope="col">Description</th>
+        </tr>
+      </thead>
+      [#list this.stripesParagraphs as paragraph]
+
+      <tr>
+        [#if this.isDialogConfigured(paragraph.name)]
+        <th align="left" scope="row">
+          <a href="javascript:mgnlOpenDialog('/test','main','0','${paragraph.dialog}','website');"
+            title="Open dialog ${paragraph.dialog}">
+            ${paragraph.name}
+          </a>
+        </th>
+        <td>
+          <a href="javascript:MgnlAdminCentral.showTree('config','${this.getDialogPath(paragraph.name)}')"
+            title="Open ${paragraph.dialog} dialog configuration">
+            ${paragraph.dialog}
+          </a>
+        </td>
+        <td>${paragraph.templatePath}</td>
+        <td>${this.messages.get(paragraph.title)}</td>
+        <td>${this.messages.get(paragraph.description)}</td>
+        [#else]
+        <th align="left" scope="row">${paragraph.name}</th>
+        <td>${paragraph.dialog}</td>
+        <td>${paragraph.templatePath}</td>
+        <!--          <td>${paragraph.type}</td>-->
+        <td></td>
+        <td></td>
+        [/#if]
+      </tr>
+
+
+      [/#list]
+    </table>
+  </body>
+</html>

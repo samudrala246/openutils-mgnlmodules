@@ -1,0 +1,158 @@
+                                 --------------------------
+                                   openutils-mgnlstripes
+                                 --------------------------
+                                     Fabrizio Giustina
+                                 --------------------------
+
+About openutils-mgnlstripes
+
+ openutils-mgnlstripes is a custom {{{http://www.magnolia.info}magnolia}} module which integrates the
+ {{{http://mc4j.org/confluence/display/stripes/Home}Stripes}} MVC framework.
+
+ After installed into magnolia, this module will allow you to use any available Stripes action as a Magnolia paragraph,
+ Any magically-converted Stripes action will still be able to use any standard Stripes feature, plus it will enjoy the
+ automatic injection of any paragraph property.
+
+ <<This module requires magnolia 4.0.x, and will not work on any earlier version!>>
+
+Supported versions:
+
+*-----------------------------*--------------------------------*--------------------------------------------
+| mgnlstripes                 |      stripes                   | magnolia
+*-----------------------------*--------------------------------*--------------------------------------------
+| 3.5.x                       |  1.4.x (doesn't work with 1.5) | 3.5 (also works on 3.6)
+*-----------------------------*--------------------------------*--------------------------------------------
+| 3.6.x (currently beta)      |  1.5 (doesn't work with 1.4.x) | 3.6 (also works on 3.5)
+*-----------------------------*--------------------------------*--------------------------------------------
+| 4.0.x (currently beta)      |  1.5 (doesn't work with 1.4.x) | 4.0 (doesn't work with previous versions)
+*-----------------------------*--------------------------------*--------------------------------------------
+
+
+
+Configuration
+
+ First of all drop the openutils-mgnlstripes jar and the stripes jar into WEB-INF/lib, or (better) if you are using maven
+ just declare the following dependency:
+
++----------------------------------------------+
+    <dependency>
+        <groupId>net.sourceforge.openutils</groupId>
+        <artifactId>openutils-mgnlstripes</artifactId>
+        <version>4.0</version>
+    </dependency>
++----------------------------------------------+
+
+ Then configure stripes in your web.xml as usual (see {{{http://mc4j.org/confluence/display/stripes/Quick+Start+Guide}http://mc4j.org/confluence/display/stripes/Quick+Start+Guide}} for this).
+
+ <<update: since version 3.5 you don't need to add the Stripes filter to web.xml manually, since this is automatically
+ configured by the module in config:server/filters. You can add any initialization parameter you may need to the main
+ magnolia filter in web.xml and it will be inherited by the stripes filter>>
+
+ You only need to change the configuration for the stripes <<<ActionResolver.Class>>> in order to use
+ <<<it.openutils.magnoliastripes.MgnlActionResolver>>>. You can do that by adding/modifying the following init parameter
+ in WEB.xml:
+
+
++----------------------------------------------+
+    <init-param>
+      <param-name>ActionResolver.Class</param-name>
+      <param-value>it.openutils.magnoliastripes.MgnlActionResolver</param-value>
+    </init-param>
++----------------------------------------------+
+
+Usage
+
+ When magnolia and stripes will startup now any auto-discovered stripes action will be configured in order to be used as
+ a magnolia paragraph. This means that paragraphs will be auto-generated, and they don't need to be configured into jcr.
+
+ You should see a few <<<info>>> logs that enumerates the list of stripes paragraphs configured. By convention the name of
+ the paragraph is the same name of the Stripes action class minus action and lowercase.
+
+ So <<<it.myapp.web.MyStripesAction >>> will be available as a paragraph named <<<mystripes>>>.
+
+ Before being able to use any paragraph you will need to create a dialog for that. By convention the dialog should have
+ the same name of the paragraph so, following the previous example, you will need to configure a dialog called <<<mystripes>>>.
+
+ Try to put a property called <<<title>>> in such dialog for a test.
+
+ You are ready to use your paragraph into any magnolia template as usual:
+
++----------------------------------------------+
+
+  <cms:contentNodeIterator contentNodeCollectionName="column">
+    <cms:editBar adminOnly="true" />
+    <cms:includeTemplate />
+  </cms:contentNodeIterator>
+  <cms:newBar contentNodeCollectionName="column" paragraph="mystripes" adminOnly="true" />
+
++----------------------------------------------+
+
+ Try to add an instance of the <<<mystripes>>> paragraph. Set the title property to whatever you want, you
+ will be able to use it in your Stripes action bean.
+
+ The following example show the code for the simple <<<MyStripesAction>>> that prints out the configured title to the log:
+
++----------------------------------------------+
+package it.myapp.web;
+
+import net.sourceforge.stripes.action.ActionBean;
+import net.sourceforge.stripes.action.ActionBeanContext;
+import net.sourceforge.stripes.action.DefaultHandler;
+import net.sourceforge.stripes.action.ForwardResolution;
+import net.sourceforge.stripes.action.Resolution;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+
+public class MyStripesAction implements ActionBean
+{
+
+    private Logger log = LoggerFactory.getLogger(MyStripesAction.class);
+
+    private String title;
+
+    @Override
+    public ActionBeanContext getContext()
+    {
+        // TODO
+        return null;
+    }
+
+    @Override
+    public void setContext(ActionBeanContext context)
+    {
+        // TODO
+    }
+
+    public void setTitle(String title)
+    {
+        this.title = title;
+    }
+
+    @DefaultHandler
+    public Resolution show()
+    {
+
+        log.info("My title is: {}!", title);
+
+        return new ForwardResolution("/templates/paragraphs/anyjsp.jsp");
+    }
+}
++----------------------------------------------+
+
+ As you can see, you will be able to mix parameters that you can use in Stripes action with pure content. Note that you
+ will not need to configure and use any magnolia paragraph property into your action since you can still use also the
+ standard magnolia tags in the jsp that is rendered by stripes!
+
+
+Todo/improvements
+
+ This is a list of know todos:
+
+ * Important! reload stripes paragraph when the configuration of other paragraphs in magnolia is changed! At this moment
+   stripes paragraphs disappear after any change in paragraphs configured into jcr.
+
+ * Use stripes binding/validation for validation of fields in dialogs
+
+
