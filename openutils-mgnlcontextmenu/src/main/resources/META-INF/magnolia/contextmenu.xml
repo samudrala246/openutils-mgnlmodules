@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE module SYSTEM "module.dtd">
+<module>
+  <name>contextmenu</name>
+  <displayName>contextmenu</displayName>
+  <description>Openutils - Magnolia Context Menu Library</description>
+  <class>net.sourceforge.openutils.mgnlcontextmenu.module.ContextMenuModule</class>
+    <versionHandler>net.sourceforge.openutils.mgnlcontextmenu.setup.ContextMenuModuleVersionHandler</versionHandler>
+  <version>${project.version}</version>
+</module>

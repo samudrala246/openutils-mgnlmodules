@@ -1,0 +1,109 @@
+<taglib xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-jsptaglibrary_2_0.xsd"
+  version="2.0">
+  <description>Magnolia context menu Tags and EL functions</description>
+  <display-name>Magnolia context menu Tags and EL functions</display-name>
+  <tlib-version>1.0</tlib-version>
+  <short-name>mcmenu</short-name>
+  <uri>mgnlcontextmenu</uri>
+  <tag>
+    <description>
+      <![CDATA[Imports js and css resources for the editing of contents via context menu. Should be used in the head
+      section of the page.]]>
+    </description>
+    <display-name>links</display-name>
+    <name>links</name>
+    <tag-class>net.sourceforge.openutils.mgnlcontextmenu.tags.LinksTag</tag-class>
+    <body-content>empty</body-content>
+    <attribute>
+      <description>The JavaScript framework to use: can be jquery or mootools.</description>
+      <name>jsFramework</name>
+      <required>true</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <description>Should be set to true if the JavaScript framework is already included in the page.</description>
+      <name>skipJsFramework</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+      <type>boolean</type>
+    </attribute>
+  </tag>
+  <tag>
+    <description>
+      <![CDATA[Wraps an HTML snippet and possibly replaces it with content set by the editor user.<br />
+      Editor users have access to a context menu which opens on mouse right click.]]>
+    </description>
+    <display-name>element</display-name>
+    <name>element</name>
+    <tag-class>net.sourceforge.openutils.mgnlcontextmenu.tags.ElementTag</tag-class>
+    <body-content>JSP</body-content>
+    <attribute>
+      <description>
+        <![CDATA[The name for this tag's content. If a corresponding entry is present in the global or local contents,
+        the tag replaces its body with that entry value. If the context menu has more items than the default one, the
+        content editable by each non-default item corresponds to a key which is the concatenation of this name attribute
+        and the name of the menu item.]]>
+      </description>
+      <name>name</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <description>
+        <![CDATA[The name of a context menu; if not specified, "default" is used. Context menus are configured under the
+        "contextMenus" node of the configuration workspace.]]>
+      </description>
+      <name>menu</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <description>
+        <![CDATA[The node to use for reading/writing the entries of the context menu. If not specified, the current
+        paragraph is used.]]>
+      </description>
+      <name>node</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+      <type>info.magnolia.cms.core.Content</type>
+    </attribute>
+    <attribute>
+      <description>
+        <![CDATA[The HTML tag to use for wrapping the elements. If not specified, a "span" is used.]]>
+      </description>
+      <name>wrapper</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <description>
+        <![CDATA[If true, no context menu will be attached to element, and only content substitution logic will be
+        performed.]]>
+      </description>
+      <name>readonly</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+      <type>boolean</type>
+    </attribute>
+  </tag>
+  <tag>
+    <description>
+      <![CDATA[Collects all informations about context menu definitions and use, and exposes them as JavaScript
+      variables.]]>
+    </description>
+    <display-name>script</display-name>
+    <name>script</name>
+    <tag-class>net.sourceforge.openutils.mgnlcontextmenu.tags.ScriptTag</tag-class>
+    <body-content>empty</body-content>
+  </tag>
+  <function>
+    <description>
+      <![CDATA[Gets the entry value for the specified key, searching for it in the local and global contents
+      corresponding to the given node. Local contents take precedence on the global ones.]]>
+    </description>
+    <name>entryValue</name>
+    <function-class>net.sourceforge.openutils.mgnlcontextmenu.el.ContextMenuElFunctions</function-class>
+    <function-signature>java.lang.String entryValue(info.magnolia.cms.core.Content, java.lang.String)</function-signature>
+  </function>
+</taglib>
