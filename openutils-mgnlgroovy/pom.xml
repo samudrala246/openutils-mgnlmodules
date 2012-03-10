@@ -24,8 +24,8 @@
     <url>http://jira.openmindlab.com/browse/GROOVY</url>
   </issueManagement>
   <scm>
-    <connection>scm:svn:https://openutils.svn.sourceforge.net/svnroot/openutils/trunk/openutils-mgnlgroovy</connection>
-    <developerConnection>scm:svn:https://openutils.svn.sourceforge.net/svnroot/openutils/trunk/openutils-mgnlgroovy</developerConnection>
+    <connection>scm:svn:https://openutils.svn.sourceforge.net/svnroot/openutils/magnoliamodules/trunk/openutils-mgnlgroovy</connection>
+    <developerConnection>scm:svn:https://openutils.svn.sourceforge.net/svnroot/openutils/magnoliamodules/trunk/openutils-mgnlgroovy</developerConnection>
     <url>http://openutils.svn.sourceforge.net/viewcvs.cgi/openutils/trunk/openutils-mgnlgroovy</url>
   </scm>
   <build>

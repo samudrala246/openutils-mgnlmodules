@@ -25,8 +25,8 @@
     <url>http://jira.openmindlab.com/browse/MENU</url>
   </issueManagement>
   <scm>
-    <connection>scm:svn:https://openutils.svn.sourceforge.net/svnroot/openutils/trunk/openutils-mgnlcontextmenu</connection>
-    <developerConnection>scm:svn:https://openutils.svn.sourceforge.net/svnroot/openutils/trunk/openutils-mgnlcontextmenu</developerConnection>
+    <connection>scm:svn:https://openutils.svn.sourceforge.net/svnroot/openutils/magnoliamodules/trunk/openutils-mgnlcontextmenu</connection>
+    <developerConnection>scm:svn:https://openutils.svn.sourceforge.net/svnroot/openutils/magnoliamodules/trunk/openutils-mgnlcontextmenu</developerConnection>
     <url>http://openutils.svn.sourceforge.net/viewcvs.cgi/openutils/trunk/openutils-mgnlcontextmenu</url>
   </scm>
   <build>
