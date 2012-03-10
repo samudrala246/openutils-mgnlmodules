@@ -1,0 +1,20 @@
+                                 --------------------------
+                                   openutils-mgnlext
+                                 --------------------------
+                                     Fabrizio Giustina
+                                 --------------------------
+
+About openutils-mgnlext
+
+ openutils-mgnlext is simply a distribution of {{{http://extjs.com/}extjs}} for usage into {{{http://www.magnolia.info}magnolia}}.
+
+ The standard ext resources (js/css/images) are packaged in the jar inside the "mgnl-resources" folder, so that they are
+ available using the ".resources" path in magnolia. You can simply add a dependency on openutils-mgnlext instead of copying
+ all the extjs resources in the webapp folder or in your custom modules.
+
+ The packaged version of extjs is 2.1. The license (GPL) is the same as ext, since this module doesn't contain anything
+ more than the standard ext distribution.
+
+Released versions
+
+ {{{http://www.mvnrepository.com/artifact/net.sourceforge.openutils/openutils-mgnlext}http://www.mvnrepository.com/artifact/net.sourceforge.openutils/openutils-mgnlext}}

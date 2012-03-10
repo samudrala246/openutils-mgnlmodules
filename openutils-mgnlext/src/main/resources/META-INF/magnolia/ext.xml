@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE module SYSTEM "module.dtd">
+<module>
+  <name>ext</name>
+  <displayName>openutils-mgnlext</displayName>
+  <description>A repackaging of ext-js for easier usage into Magnolia</description>
+  <version>${project.version}</version>
+</module>

@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<!--
+  "type" attribute can be: add, remove, update or fix.
+-->
+<document>
+  <properties>
+    <title>Changes</title>
+    <author email="fgiust(at)users.sourceforge.net">Fabrizio Giustina</author>
+  </properties>
+  <body>
+    <release version="2.1" date="2008-07-12" description="Initial release, with ext 2.1">
+    </release>
+  </body>
+</document>
