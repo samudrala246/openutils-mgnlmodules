@@ -1,0 +1,61 @@
+@CHARSET "UTF-8";
+
+.clear {
+	clear: both;
+}
+
+div.status {
+	float: left;
+	line-height: 112.5px;
+	width: 175px;
+}
+
+div.user-report {
+	float: left;
+	height: 30px;
+	line-height: 112.5px;
+	font-weight: bold;
+	width: 50%;
+}
+
+div.title-header {
+	background-color: #CDE8A6;
+	font-size: 15px;
+	font-weight: bold;
+	margin: 0;
+	padding: 5px;
+}
+
+div.header {
+	float: left;
+	line-height: 30px;
+}
+
+input.error {
+	background-color: yellow;
+}
+
+.toggler {
+	border-top: 1px solid #9DB517;
+	color: #000;
+	cursor: pointer;
+	font-size: 14px;
+	font-weight: bold;
+	margin: 0;
+	padding: 10px 5px 10px 0;
+}
+
+.toggler:hover {
+	background: #eee;
+}
+
+.element {
+	margin: 0 auto;
+	padding: 10px 5px;
+	width: 95%;
+}
+
+.toggler img {
+	float: right;
+	vertical-align: middle;
+}

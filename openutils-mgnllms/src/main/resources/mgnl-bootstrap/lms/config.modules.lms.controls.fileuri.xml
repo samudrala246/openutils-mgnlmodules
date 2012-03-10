@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sv:node sv:name="fileuri" xmlns:x2="http://schemas.microsoft.com/office/excel/2003/xml"
+  xmlns:fn_old="http://www.w3.org/2004/10/xpath-functions" xmlns:fn="http://www.w3.org/2005/xpath-functions"
+  xmlns:html="http://www.w3.org/TR/REC-html40" xmlns:jcr="http://www.jcp.org/jcr/1.0"
+  xmlns:mgnl="http://www.magnolia.info/jcr/mgnl" xmlns:jcrfn="http://www.jcp.org/jcr/xpath-functions/1.0"
+  xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns:rep="internal" xmlns:xs="http://www.w3.org/2001/XMLSchema"
+  xmlns:stringutils="xalan://org.apache.commons.lang.StringUtils"
+  xmlns:_pre="urn:schemas-microsoft-com:office:spreadsheet"
+  xmlns:jcrutils="xalan://it.openmindonline.urmetdomus.assembler.utils.Path" xmlns:sv="http://www.jcp.org/jcr/sv/1.0"
+  xmlns:mix="http://www.jcp.org/jcr/mix/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0"
+  xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <sv:property sv:name="jcr:primaryType" sv:type="Name">
+    <sv:value>mgnl:contentNode</sv:value>
+  </sv:property>
+  <sv:property sv:name="jcr:uuid" sv:type="String">
+    <sv:value>68d1e5d3-a409-4148-8d06-c7c83d2f05a2</sv:value>
+  </sv:property>
+  <sv:property sv:name="class" sv:type="String">
+    <sv:value>net.sourceforge.openutils.mgnllms.lms.gui.control.LmsDialogFile</sv:value>
+  </sv:property>
+  <sv:node sv:name="MetaData">
+    <sv:property sv:name="jcr:primaryType" sv:type="Name">
+      <sv:value>mgnl:metaData</sv:value>
+    </sv:property>
+    <sv:property sv:name="mgnl:Data" sv:type="String">
+      <sv:value>MetaData</sv:value>
+    </sv:property>
+    <sv:property sv:name="mgnl:activated" sv:type="Boolean">
+      <sv:value>false</sv:value>
+    </sv:property>
+    <sv:property sv:name="mgnl:authorid" sv:type="String">
+      <sv:value>superuser</sv:value>
+    </sv:property>
+    <sv:property sv:name="mgnl:creationdate" sv:type="String">
+      <sv:value>2005-04-30T14:46:54.316+02:00</sv:value>
+    </sv:property>
+    <sv:property sv:name="mgnl:lastmodified" sv:type="Date">
+      <sv:value>2009-08-28T16:10:01.344+02:00</sv:value>
+    </sv:property>
+  </sv:node>
+</sv:node>

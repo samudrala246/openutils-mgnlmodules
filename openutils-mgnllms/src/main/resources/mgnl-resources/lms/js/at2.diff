@@ -1,0 +1,192 @@
+Index: ActivityTree.js
+===================================================================
+--- ActivityTree.js	(revisione 3419)
++++ ActivityTree.js	(copia locale)
+@@ -129,7 +129,7 @@
+ 	 */
+ 	
+ 	/* Continue Sequencing Request Process [SB.2.7] */
+-	continueSequencingRequestProcess: function() {
++	continueSequencingRequestProcess: function(target,dontTerminate) {
+ 		
+ 		/*
+ 		 * The Continue Sequencing Request Subprocess assumes the current
+@@ -145,8 +145,9 @@
+ 		if (this.current!=this.root) /* 2 */
+ 			if (!this.current.owner.getControlMode().flow) /* 2.1 */
+ 				return {activity: null, exception: "SB.2.7-2"};
+-		var fsp = this.flowSubprocess(this.current, "forward", false); /* 3 */
+-		if (fsp.deliverable == false){
++		var fsp = this.flowSubprocess(this.current, "forward", false, dontTerminate); /* 3 */
++		//if (fsp.deliverable == false){
++		if (fsp.activity == false){
+ 			return {activity: null, endSs: fsp.endSs, exception: fsp.exception};
+ 		}else {
+ 			return {activity: fsp.activity, exception: null};
+@@ -154,14 +155,14 @@
+ 	},
+ 	
+ 	/* Previous Sequencing Request Process [SB.2.8] */
+-	previousSequencingRequestProcess: function() {
++	previousSequencingRequestProcess: function(target,dontTerminate) {
+ 		if (!this.current) /* 1 */
+ 			return {activity: null, exception: "SB.2.8-1"};
+ 		if (this.current!=this.root) /* 2 */
+ 			if (this.current.owner.getControlMode().flow == false) /* 2.1 */
+ 				return {activity: null, exception: "SB.2.8-2"};
+ 		var fsp = this.flowSubprocess(this.current, "backward", false); /* 3 */
+-		if (fsp.deliverable == false){
++		if (fsp.deliverable==false){
+ 			return {activity: null, exception: fsp.exception};
+ 		}else {
+ 			return {activity: fsp.activity, exception: null};
+@@ -180,7 +181,7 @@
+ 		/* 3 */
+ 		}else{
+ 			var fs = this.flowSubprocess(this.root,'forward',true);
+-			if (!fs.deliverable){
++			if (fs.activity==null){
+ 				return{
+ 					activity: null,
+ 					endSs: fs.endSs,
+@@ -199,6 +200,7 @@
+ 	choiceSequencingRequestProcess: function(target,dontTerminate){
+ 		var temp = {activity: null, exception: null}
+ 		var traverse; 
++		
+ 		if (!target){
+ 			temp.exception = 'SB.2.9-1';
+ 			return temp;
+@@ -243,23 +245,23 @@
+ 		}
+ 		/* 7 */
+ 		if (this.current == target){
+-			
++
+ 		}else 
+ 		/* 8 */
+ 		if(this.current && this.current.owner == target.owner){
+-			var s = this.preorder.indexOf(this.current);
+-			var e = this.preorder.indexOf(target);
++			var s = this.current.owner.nodes.indexOf(this.current);
++			var e = this.current.owner.nodes.indexOf(target);
+ 			var actPath = new Array();
+ 			if (e>s) {
+-				actPath = this.preorder.slice(s,e+1);
++				actPath = this.current.owner.nodes.slice(s,e+1);
+ 			}else{
+-				actPath = this.preorder.slice(e+1,s+1).reverse();
++				actPath = this.current.owner.nodes.slice(e+1,s+1).reverse();
+ 			}
+ 			if (actPath.length == 0){
+-				temp.exception = 'SB.2.9-4';
++				temp.exception = 'SB.2.9-5';
+ 				return temp;
+ 			}
+-			if (e>s){
++			if (this.preorderFull.indexOf(target)>this.preorderFull.indexOf(this.current)){
+ 				traverse = 'forward';
+ 			}else{
+ 				traverse = 'backward';
+@@ -321,16 +323,33 @@
+ 				i++
+ 			}while(i<actPath.length);
+ 			
+-		}else{
++		}else
++		if(ancestor.findChild([target.getName()])){
++			/*
++			 * {
++                     process = walk.getControlModeChoiceExit();
++
++                     if ( process && con == null )
++                     {
++                        if ( walk.getConstrainChoice() )
++                        {
++                           con = walk;
++                        }
++                     }
++
++                     walk = walk.getParent();
++                  }
++			 */
+ 			/* 11 */
++			
+ 			var actPath = new Array();
+ 			for(var n = this.current; n!=ancestor; n=n.owner){
+ 				actPath.push(n);
+ 			}
+-			if (actPath.length == 0){
+-				temp.exception = 'SB.2.9-5';
+-				return temp;
+-			}
++//			if (actPath.length == 0){
++//				temp.exception = 'SB.2.9-5';
++//				return temp;
++//			}
+ 			var constrained = null;
+ 			var i=0;
+ 			do{
+@@ -357,7 +376,7 @@
+ 				}
+ 				var cfs = this.choiceFlowSubprocess(constrained,traverse);
+ 				var consider = cfs.activity;
+-				if(consider.findChild(target)==null
++				if(consider.findChild([target.getName()])==null
+ 						&& target != consider
+ 						&& target != constrained){
+ 					temp.exception = 'SB.2.9-8';
+@@ -490,8 +509,8 @@
+ 	},
+ 	
+ 	/* Flow Subprocess [SB.2.3] */
+-	flowSubprocess: function(node, direction, children) {
+-		var fttsp = this.flowTreeTraversalSubprocess(node, direction, null, children);
++	flowSubprocess: function(node, direction, children, dontTerminate) {
++		var fttsp = this.flowTreeTraversalSubprocess(node, direction, null, children, dontTerminate);
+ 		if (fttsp.activity == null) {
+ 			return {activity: node, deliverable: false, endSs: fttsp.endSs, exception: fttsp.exception};
+ 		}else{
+@@ -537,7 +556,7 @@
+ 			if (node==node.owner.availableChildren()[0]){
+ 				return this.choiceFlowTreeTraversalSubprocess(node.owner,'backward');
+ 			}else{
+-				return node.prev
++				return node.prev();
+ 			}
+ 		}
+ 	},
+@@ -689,7 +708,7 @@
+ 	},
+ 	
+ 	/* Flow Tree Traversal Subprocess [SB.2.1] */
+-	flowTreeTraversalSubprocess: function(node, direction, previous, children){
++	flowTreeTraversalSubprocess: function(node, direction, previous, children, dontTerminate){
+ 		/*
+ 		 * For an activity, a traversal direction, a consider children flag, and
+ 		 * a previous traversal direction; returns the ‘next’ activity in
+@@ -718,7 +737,9 @@
+ 		if (direction && direction=="forward"){
+ 			/* 3.1 */
+ 			if (this.preorder.getLast()==node || (node == this.root && children==false)){
+-				this.terminateDescendentAttemptsProcess(this.root);
++				if (!dontTerminate){
++					this.terminateDescendentAttemptsProcess(this.root);
++				}
+ 				return {
+ 					activity: null,
+ 					endSs: true,
+@@ -1175,11 +1196,11 @@
+ 		}
+ 		
+ 		// REQ_117.2 && REQ_117.4
+-		if(this.sequencingRequestProcess("continue").valid==false){
++		if(this.sequencingRequestProcess("continue",null,true).valid==false){
+ 			this.scormPlayer.layout.buttons.continueBtn.setEnabled(false);
+ 		}
+ 		
+-		if(this.sequencingRequestProcess("previous").valid==false){
++		if(this.sequencingRequestProcess("previous",null,true).valid==false){
+ 			this.scormPlayer.layout.buttons.previousBtn.setEnabled(false);
+ 		}
+ 		

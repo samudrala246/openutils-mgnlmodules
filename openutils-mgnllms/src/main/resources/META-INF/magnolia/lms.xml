@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE module SYSTEM "module.dtd">
+<module>
+  <name>lms</name>
+  <displayName>Openutils Magnolia LMS Module</displayName>
+  <class>net.sourceforge.openutils.mgnllms.module.LMSModule</class>
+  <versionHandler>net.sourceforge.openutils.mgnllms.module.LMSModuleVersionHandler</versionHandler>
+  <version>${project.version}</version>
+  <properties>
+    <property>
+      <name>net.sourceforge.openutils.mgnllms.managers.LearnerManager</name>
+      <value>net.sourceforge.openutils.mgnllms.managers.impl.LearnerManagerWithMagnoliaUsers</value>
+    </property>
+    <property>
+      <name>net.sourceforge.openutils.mgnllms.managers.ScormCMIManager</name>
+      <value>net.sourceforge.openutils.mgnllms.managers.impl.MagnoliaScormCmiManager</value>
+    </property>
+    <property>
+      <name>net.sourceforge.openutils.mgnllms.managers.LearnerActivitiesManager</name>
+      <value>net.sourceforge.openutils.mgnllms.managers.impl.MagnoliaLearnerActivitiesManager</value>
+    </property>
+  </properties>
+  <dependencies>
+    <dependency>
+      <name>adminInterface</name>
+      <version>4.3/*</version>
+    </dependency>
+    <dependency>
+      <name>templating</name>
+      <version>4.3/*</version>
+    </dependency>
+  </dependencies>
+  <repositories>
+    <repository>
+      <name>magnolia</name>
+      <workspaces>
+        <workspace>lms</workspace>
+      </workspaces>
+      <nodeTypeFile>/mgnl-nodetypes/lms/magnolia-nodetypes.xml</nodeTypeFile>
+    </repository>
+  </repositories>
+</module>

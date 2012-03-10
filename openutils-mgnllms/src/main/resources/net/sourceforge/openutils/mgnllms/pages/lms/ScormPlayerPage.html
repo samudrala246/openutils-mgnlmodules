@@ -1,0 +1,92 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<head>
+<script type="text/javascript"
+	src="${this.request.contextPath}/.resources/lms/js/mootools-1.2.3-core-nc.js"></script>
+<script type="text/javascript"
+	src="${this.request.contextPath}/.resources/lms/js/mootools-1.2.3.1-more.js"></script>
+<script type="text/javascript"
+	src="${this.request.contextPath}/.resources/lms/js/jxlib/jxlib.standalone.uncompressed.js"></script>
+<link rel="stylesheet"
+	href="${this.request.contextPath}/.resources/lms/js/jxlib/themes/delicious/jxtheme.uncompressed.css"
+	type="text/css" media="screen" charset="utf-8"></link>
+<!--
+      <script type="text/javascript" src="${this.request.contextPath}/.resources/lms/js/ActivityTree.js"></script>
+    -->
+<script type="text/javascript"
+	src="${this.request.contextPath}/.resources/lms/js/AuxClass.js"></script>
+<script type="text/javascript"
+	src="${this.request.contextPath}/.resources/lms/js/RollupProcess.js"></script>
+<script type="text/javascript"
+	src="${this.request.contextPath}/.resources/lms/js/TrackingModel.js"></script>
+<script type="text/javascript"
+	src="${this.request.contextPath}/.resources/lms/js/ActivityTree.js"></script>
+<script type="text/javascript"
+	src="${this.request.contextPath}/.resources/lms/js/IScorm.js"></script>
+
+<script type="text/javascript"
+	src="${this.request.contextPath}/.resources/lms/js/Objective.js"></script>
+<script type="text/javascript"
+	src="${this.request.contextPath}/.resources/lms/js/GlobalSharedObjective.js"></script>
+<script type="text/javascript"
+	src="${this.request.contextPath}/.resources/lms/js/ui2.js"></script>
+<script type="text/javascript"
+	src="${this.request.contextPath}/.resources/lms/js/validator.js"></script>
+<script type="text/javascript"
+	src="${this.request.contextPath}/.resources/lms/js/store.js"></script>
+<script type="text/javascript"
+	src="${this.request.contextPath}/.resources/lms/js/api_scorm.js"></script>
+
+<!-- <script type='text/javascript' src='http://getfirebug.com/releases/lite/1.2/firebug-lite-compressed.js'></script> -->
+
+<style type="text/css">
+body {
+	overflow: hidden;
+}
+</style>
+<script type="text/javascript"> 
+    /*<![CDATA[*/
+      var debug = false; 
+      var path = "${this.mgnlPath}";
+      var urlPersistence='/lms/persist'; //virtual uri
+      var manifest = ${this.manifest};
+      var contextPath = '${this.request.contextPath}/';
+      var API_1484_11; 
+      window.addEvent('load', function()
+      {
+        $('scormMain').grab(new Element('iframe',{
+          id: 'scormFrame',
+          name: 'scormFrame',
+          width: '100%',
+          height: '100%',
+        }));
+        
+        [#if this.mgnlRepository??]
+        init(manifest,"${this.request.contextPath}/${this.mgnlRepository}${this.mgnlPath}/zip/","${this.request.contextPath}");
+        [#else]
+        init(manifest,"${this.request.contextPath}/.resources/lms/sample/","${this.request.contextPath}");
+        [/#if]
+          
+        
+      });
+      /*]]>*/
+    </script>
+<title>Scorm Player</title>
+</head>
+<body>
+<div id="container">
+<div id="scormHeader" style="background-color: grey">
+<p style="color: lightgrey; float: right; padding-right: 2em;">User:
+${this.user}</p>
+</div>
+<div id="scormTree" style="background-color: lightgrey; overflow: auto">
+<div id="trackingModel"
+	style="border: 1px solid black; font-size: 10px; display: none">
+<h5 id="tm" style="border: 1px solid yellow;">Tracking Model</h5>
+<div id="contentTM"></div>
+</div>
+</div>
+<div id="scormMain" style="background-color: white"></div>
+</div>
+</body>
+</html>

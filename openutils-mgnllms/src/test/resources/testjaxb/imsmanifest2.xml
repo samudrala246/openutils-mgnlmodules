@@ -1,0 +1,1556 @@
+<?xml version="1.0" encoding="UTF-8"?>
+  <!--This is a Reload version 1.3.2 Beta2_c SCORM 2004 Content Package document-->
+  <!--Spawned from the Reload Content Package Generator - http://www.reload.ac.uk-->
+<manifest xmlns="http://www.imsglobal.org/xsd/imscp_v1p1" xmlns:lom="http://ltsc.ieee.org/xsd/LOM" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:adlcp="http://www.adlnet.org/xsd/adlcp_v1p3" xmlns:imsss="http://www.imsglobal.org/xsd/imsss" xmlns:adlnav="http://www.adlnet.org/xsd/adlnav_v1p3"
+  identifier="MANIFEST-FDC59F51-B25F-70CF-3923-B549F45F83F0"
+  xsi:schemaLocation="http://www.imsglobal.org/xsd/imscp_v1p1 imscp_v1p1.xsd http://ltsc.ieee.org/xsd/LOM lom.xsd http://www.adlnet.org/xsd/adlcp_v1p3 adlcp_v1p3.xsd http://www.imsglobal.org/xsd/imsss imsss_v1p0.xsd http://www.adlnet.org/xsd/adlnav_v1p3 adlnav_v1p3.xsd"
+  version="1.3">
+  <metadata>
+    <schema>ADL SCORM</schema>
+    <schemaversion>CAM 1.3</schemaversion>
+    <lom:lom>
+      <lom:general>
+        <lom:identifier>
+          <lom:entry>1FF4E78E15854092807210E0B15113A2</lom:entry>
+        </lom:identifier>
+        <lom:title>
+          <lom:string>Sequencing Essentials Content Example (SECE)</lom:string>
+        </lom:title>
+        <lom:description>
+          <lom:string>A SCORM 2004 conformant content example created to build foundational knowledge on the key
+            concepts that apply to SCORM 2004 Sequencing.</lom:string>
+        </lom:description>
+        <lom:keyword>
+          <lom:string>SECE</lom:string>
+        </lom:keyword>
+        <lom:keyword>
+          <lom:string>Sequencing</lom:string>
+        </lom:keyword>
+        <lom:keyword>
+          <lom:string>Sequencing and Navigation</lom:string>
+        </lom:keyword>
+        <lom:keyword>
+          <lom:string>SCORM Sequencing</lom:string>
+        </lom:keyword>
+        <lom:keyword>
+          <lom:string>SCORM 2004 Sequencing</lom:string>
+        </lom:keyword>
+        <lom:keyword>
+          <lom:string>Content Example</lom:string>
+        </lom:keyword>
+        <lom:keyword>
+          <lom:string>Tutorial</lom:string>
+        </lom:keyword>
+        <lom:aggregationLevel>
+          <lom:source>LOMv1.0</lom:source>
+          <lom:value>4</lom:value>
+        </lom:aggregationLevel>
+      </lom:general>
+      <lom:lifeCycle>
+        <lom:version>
+          <lom:string>2005.11.18-1.0.0</lom:string>
+        </lom:version>
+        <lom:status>
+          <lom:source>LOMv1.0</lom:source>
+          <lom:value>final</lom:value>
+        </lom:status>
+        <lom:contribute>
+          <lom:role>
+            <lom:source>LOMv1.0</lom:source>
+            <lom:value>instructional designer</lom:value>
+          </lom:role>
+          <lom:entity>BEGIN:VCARD VERSION:2.1 FN:Cande Filip END:VCARD</lom:entity>
+          <lom:entity>BEGIN:VCARD VERSION:2.1 FN:Megan Beyer END:VCARD</lom:entity>
+        </lom:contribute>
+        <lom:contribute>
+          <lom:role>
+            <lom:source>LOMv1.0</lom:source>
+            <lom:value>graphical designer</lom:value>
+          </lom:role>
+          <lom:entity>BEGIN:VCARD VERSION:2.1 FN:April Interval END:VCARD</lom:entity>
+        </lom:contribute>
+        <lom:contribute>
+          <lom:role>
+            <lom:source>LOMv1.0</lom:source>
+            <lom:value>content provider</lom:value>
+          </lom:role>
+          <lom:entity>BEGIN:VCARD VERSION:2.1 FN:Griffin Wesler END:VCARD</lom:entity>
+          <lom:entity>BEGIN:VCARD VERSION:2.1 FN:Aaron E. Silvers END:VCARD</lom:entity>
+        </lom:contribute>
+        <lom:contribute>
+          <lom:role>
+            <lom:source>LOMv1.0</lom:source>
+            <lom:value>subject matter expert</lom:value>
+          </lom:role>
+          <lom:entity>BEGIN:VCARD VERSION:2.1 FN:Angelo Panar END:VCARD</lom:entity>
+          <lom:entity>BEGIN:VCARD VERSION:2.1 FN:Aaron E. Silvers END:VCARD</lom:entity>
+        </lom:contribute>
+      </lom:lifeCycle>
+      <lom:metaMetadata>
+        <lom:identifier>
+          <lom:entry>A311416FD5204168805E2B130184DBCE</lom:entry>
+        </lom:identifier>
+        <lom:contribute>
+          <lom:role>
+            <lom:source>LOMv1.0</lom:source>
+            <lom:value>creator</lom:value>
+          </lom:role>
+          <lom:entity>BEGIN:VCARD VERSION:2.1 FN:Aaron E. Silvers END:VCARD</lom:entity>
+        </lom:contribute>
+        <lom:metadataSchema>LOMv1.0</lom:metadataSchema>
+        <lom:metadataSchema>SCORM_CAM_v1.3</lom:metadataSchema>
+      </lom:metaMetadata>
+      <lom:technical>
+        <lom:format>webcontent</lom:format>
+        <lom:size>3192510</lom:size>
+        <lom:location>http://www.adlnet.org/scorm/history/2004/CE.cfm</lom:location>
+        <lom:requirement>
+          <lom:orComposite>
+            <lom:type>
+              <lom:source>LOMv1.0</lom:source>
+              <lom:value>browser</lom:value>
+            </lom:type>
+            <lom:name>
+              <lom:source>LOMv1.0</lom:source>
+              <lom:value>ms-internet explorer</lom:value>
+            </lom:name>
+            <lom:minimumVersion>4.0</lom:minimumVersion>
+          </lom:orComposite>
+        </lom:requirement>
+        <lom:otherPlatformRequirements>
+          <lom:string>This content requires the use of the Macromedia Flash Player (version 7 or above)</lom:string>
+        </lom:otherPlatformRequirements>
+      </lom:technical>
+      <lom:rights>
+        <lom:cost>
+          <lom:source>LOMv1.0</lom:source>
+          <lom:value>no</lom:value>
+        </lom:cost>
+        <lom:copyrightAndOtherRestrictions>
+          <lom:source>LOMv1.0</lom:source>
+          <lom:value>yes</lom:value>
+        </lom:copyrightAndOtherRestrictions>
+        <lom:description>
+          <lom:string>Copyright 2005 Advanced Distributed Learning. All Rights Reserved</lom:string>
+        </lom:description>
+      </lom:rights>
+    </lom:lom>
+  </metadata>
+  <organizations default="ORG-AAE040C6-5D31-FF80-7A74-C93346D3DE42">
+    <organization identifier="ORG-AAE040C6-5D31-FF80-7A74-C93346D3DE42" structure="hierarchical">
+      <title>Sequencing Essentials</title>
+      <item identifier="ITEM-C2D1FAF9-FF04-07BD-9A28-CDC8DC6EC0B8" isvisible="true"
+        identifierref="RES-65C9FBA6-5173-A9A8-C1A0-FE9EDFAB4788">
+        <title>Introduction</title>
+        <imsss:sequencing>
+          <imsss:controlMode choice="true" choiceExit="true" flow="true" forwardOnly="false"
+            useCurrentAttemptObjectiveInfo="true" useCurrentAttemptProgressInfo="true" />
+        </imsss:sequencing>
+      </item>
+      <item identifier="ITEM-231E0CBA-AA25-A2B1-3D5D-8B2B8AF1F819" isvisible="true"
+        identifierref="RES-8EB166DA-A6B5-CEFA-7F8D-10AB9BAA6151">
+        <title>Sequencing Overview</title>
+        <imsss:sequencing>
+          <imsss:controlMode choice="true" choiceExit="true" flow="true" forwardOnly="false"
+            useCurrentAttemptObjectiveInfo="true" useCurrentAttemptProgressInfo="true" />
+        </imsss:sequencing>
+      </item>
+      <item identifier="ITEM-A52F015C-D98D-13A3-040B-4A6DD3AC6421" isvisible="true"
+        identifierref="RES-6AFF8BC5-8B84-1B79-151E-A4F99718ACE8">
+        <title>Tracking Model</title>
+        <imsss:sequencing>
+          <imsss:controlMode choice="true" choiceExit="true" flow="true" forwardOnly="false"
+            useCurrentAttemptObjectiveInfo="true" useCurrentAttemptProgressInfo="true" />
+        </imsss:sequencing>
+      </item>
+      <item identifier="ITEM-89D2EBA5-91A4-D04E-EDA5-8541CA5077C0" isvisible="true"
+        identifierref="RES-D33C3500-4541-BB47-9774-0C815CFB30E9">
+        <title>Sequencing Control Modes</title>
+        <imsss:sequencing>
+          <imsss:controlMode choice="true" choiceExit="true" flow="true" forwardOnly="false"
+            useCurrentAttemptObjectiveInfo="true" useCurrentAttemptProgressInfo="true" />
+        </imsss:sequencing>
+      </item>
+      <item identifier="ITEM-50905A28-2551-3016-F584-3E58232266C5" isvisible="true"
+        identifierref="RES-1049C360-6473-4FBE-5C3D-2FB7894291FD">
+        <title>Constrained Choice</title>
+        <imsss:sequencing>
+          <imsss:controlMode choice="true" choiceExit="true" flow="true" forwardOnly="false"
+            useCurrentAttemptObjectiveInfo="true" useCurrentAttemptProgressInfo="true" />
+        </imsss:sequencing>
+      </item>
+      <item identifier="ITEM-DFEE9C6A-CB3F-FC3C-6361-C3346BEE6B21" isvisible="true"
+        identifierref="RES-7CE20F53-C192-51DF-873B-D1201ABE35DE">
+        <title>Sequencing Rule Description</title>
+        <imsss:sequencing>
+          <imsss:controlMode choice="true" choiceExit="true" flow="true" forwardOnly="false"
+            useCurrentAttemptObjectiveInfo="true" useCurrentAttemptProgressInfo="true" />
+        </imsss:sequencing>
+      </item>
+      <item identifier="ITEM-EC3ED913-3442-6D93-643F-56BFA5E3FBFA" isvisible="true"
+        identifierref="RES-A083AD23-0D9D-5022-9B75-A4EE09A1C29C">
+        <title>Limit Conditions</title>
+        <imsss:sequencing>
+          <imsss:controlMode choice="true" choiceExit="true" flow="true" forwardOnly="false"
+            useCurrentAttemptObjectiveInfo="true" useCurrentAttemptProgressInfo="true" />
+        </imsss:sequencing>
+      </item>
+      <item identifier="ITEM-8A3D8BF0-F47A-B6F2-0A62-01E712CAE37E" isvisible="true"
+        identifierref="RES-F813D8EC-1806-8653-B793-513E9AFC6D04">
+        <title>Rollup Rule Description</title>
+        <imsss:sequencing>
+          <imsss:controlMode choice="true" choiceExit="true" flow="true" forwardOnly="false"
+            useCurrentAttemptObjectiveInfo="true" useCurrentAttemptProgressInfo="true" />
+        </imsss:sequencing>
+      </item>
+      <item identifier="ITEM-E99115F0-D4CF-7229-10F2-B96F18D1D771" isvisible="true"
+        identifierref="RES-7E7A3EA4-0113-CA7D-17B0-7C71422E700B">
+        <title>Rollup Behavior</title>
+        <imsss:sequencing>
+          <imsss:controlMode choice="true" choiceExit="true" flow="true" forwardOnly="false"
+            useCurrentAttemptObjectiveInfo="true" useCurrentAttemptProgressInfo="true" />
+        </imsss:sequencing>
+      </item>
+      <item identifier="ITEM-69BD40F3-0A2C-1F6D-B562-2DD56FE4BD35" isvisible="true"
+        identifierref="RES-0A23028C-4AF5-1A9F-2D9E-6554F4F392EA">
+        <title>Objective Description</title>
+        <imsss:sequencing>
+          <imsss:controlMode choice="true" choiceExit="true" flow="true" forwardOnly="false"
+            useCurrentAttemptObjectiveInfo="true" useCurrentAttemptProgressInfo="true" />
+        </imsss:sequencing>
+      </item>
+      <item identifier="ITEM-29BD2C69-846C-ED58-44B3-4A65D77A08B6" isvisible="true"
+        identifierref="RES-884C6B7F-FA45-B872-AF75-7A2230757FEC">
+        <title>Conclusion</title>
+        <imsss:sequencing>
+          <imsss:controlMode choice="true" choiceExit="true" flow="false" forwardOnly="false"
+            useCurrentAttemptObjectiveInfo="true" useCurrentAttemptProgressInfo="true" />
+          <imsss:sequencingRules>
+            <imsss:postConditionRule>
+              <imsss:ruleConditions conditionCombination="all">
+                <imsss:ruleCondition operator="noOp" condition="attempted" />
+              </imsss:ruleConditions>
+              <imsss:ruleAction action="exitAll" />
+            </imsss:postConditionRule>
+          </imsss:sequencingRules>
+          <imsss:rollupRules objectiveMeasureWeight="1.0000" />
+        </imsss:sequencing>
+      </item>
+
+      <!-- items to test sequencing rules processing -->
+      <item identifier="activity_1" identifierref="SEQ01" parameters="?4&amp;1">
+        <title>Activity 1</title>
+      </item>
+      <item identifier="activity_2" identifierref="SEQ01" parameters="?4&amp;2">
+        <title>Activity 2</title>
+        <imsss:sequencing>
+          <imsss:sequencingRules>
+            <imsss:preConditionRule>
+              <imsss:ruleConditions>
+                <imsss:ruleCondition condition="satisfied" />
+              </imsss:ruleConditions>
+              <imsss:ruleAction action="skip" />
+            </imsss:preConditionRule>
+          </imsss:sequencingRules>
+          <imsss:objectives>
+            <imsss:primaryObjective />
+          </imsss:objectives>
+        </imsss:sequencing>
+      </item>
+      <item identifier="activity_3" identifierref="SEQ01" parameters="?4&amp;3">
+        <title>Activity 3</title>
+        <imsss:sequencing>
+          <imsss:objectives>
+            <imsss:primaryObjective objectiveID="PRIMARYOBJ" />
+          </imsss:objectives>
+        </imsss:sequencing>
+      </item>
+
+      <!-- an item with sub item to test navigation to sub items -->
+      <item identifier="activity_X">
+        <title>Activity X</title>
+        <item identifier="activity_Y" identifierref="SEQ01">
+          <title>Activity Y</title>
+        </item>
+      </item>
+      <imsss:sequencing>
+        <imsss:controlMode choice="true" choiceExit="true" flow="true" forwardOnly="false"
+          useCurrentAttemptObjectiveInfo="true" useCurrentAttemptProgressInfo="true" />
+      </imsss:sequencing>
+    </organization>
+  </organizations>
+  <resources>
+    <resource identifier="RES-65C9FBA6-5173-A9A8-C1A0-FE9EDFAB4788" type="webcontent" href="00_introduction.html"
+      adlcp:scormType="sco">
+      <metadata>
+        <lom:lom>
+          <lom:general>
+            <lom:identifier>
+              <lom:entry>4CB617D9F0A04DE9904997AD5132816A</lom:entry>
+            </lom:identifier>
+            <lom:title>
+              <lom:string>Introduction</lom:string>
+            </lom:title>
+            <lom:description>
+              <lom:string>Content introducing the Sequencing Essentials content.</lom:string>
+            </lom:description>
+            <lom:keyword>
+              <lom:string>introduction</lom:string>
+            </lom:keyword>
+            <lom:keyword>
+              <lom:string>how-to</lom:string>
+            </lom:keyword>
+            <lom:keyword>
+              <lom:string>instructions</lom:string>
+            </lom:keyword>
+          </lom:general>
+          <lom:lifeCycle>
+            <lom:version>
+              <lom:string>2005.11.18-1.0.0</lom:string>
+            </lom:version>
+            <lom:status>
+              <lom:source>LOMv1.0</lom:source>
+              <lom:value>final</lom:value>
+            </lom:status>
+            <lom:contribute>
+              <lom:role>
+                <lom:source>LOMv1.0</lom:source>
+                <lom:value>instructional designer</lom:value>
+              </lom:role>
+              <lom:entity>BEGIN:VCARD VERSION:2.1 FN:Cande Filip END:VCARD</lom:entity>
+              <lom:entity>BEGIN:VCARD VERSION:2.1 FN:Megan Beyer END:VCARD</lom:entity>
+            </lom:contribute>
+            <lom:contribute>
+              <lom:role>
+                <lom:source>LOMv1.0</lom:source>
+                <lom:value>graphical designer</lom:value>
+              </lom:role>
+              <lom:entity>BEGIN:VCARD VERSION:2.1 FN:April Interval END:VCARD</lom:entity>
+            </lom:contribute>
+            <lom:contribute>
+              <lom:role>
+                <lom:source>LOMv1.0</lom:source>
+                <lom:value>content provider</lom:value>
+              </lom:role>
+              <lom:entity>BEGIN:VCARD VERSION:2.1 FN:Griffin Wesler END:VCARD</lom:entity>
+              <lom:entity>BEGIN:VCARD VERSION:2.1 FN:Aaron E. Silvers END:VCARD</lom:entity>
+            </lom:contribute>
+            <lom:contribute>
+              <lom:role>
+                <lom:source>LOMv1.0</lom:source>
+                <lom:value>subject matter expert</lom:value>
+              </lom:role>
+              <lom:entity>BEGIN:VCARD VERSION:2.1 FN:Angelo Panar END:VCARD</lom:entity>
+              <lom:entity>BEGIN:VCARD VERSION:2.1 FN:Aaron E. Silvers END:VCARD</lom:entity>
+            </lom:contribute>
+          </lom:lifeCycle>
+          <lom:metaMetadata>
+            <lom:identifier>
+              <lom:entry>326FBBFA8B18459AA3FB8189E2196613</lom:entry>
+            </lom:identifier>
+            <lom:contribute>
+              <lom:role>
+                <lom:source>LOMv1.0</lom:source>
+                <lom:value>creator</lom:value>
+              </lom:role>
+              <lom:entity>BEGIN:VCARD VERSION:2.1 FN:Aaron E. Silvers END:VCARD</lom:entity>
+            </lom:contribute>
+            <lom:metadataSchema>LOMv1.0</lom:metadataSchema>
+            <lom:metadataSchema>SCORM_CAM_v1.3</lom:metadataSchema>
+          </lom:metaMetadata>
+          <lom:technical>
+            <lom:format>webcontent</lom:format>
+            <lom:requirement>
+              <lom:orComposite>
+                <lom:type>
+                  <lom:source>LOMv1.0</lom:source>
+                  <lom:value>browser</lom:value>
+                </lom:type>
+                <lom:name>
+                  <lom:source>LOMv1.0</lom:source>
+                  <lom:value>ms-internet explorer</lom:value>
+                </lom:name>
+                <lom:minimumVersion>4.0</lom:minimumVersion>
+              </lom:orComposite>
+            </lom:requirement>
+            <lom:otherPlatformRequirements>
+              <lom:string>This content requires the use of the Macromedia Flash Player (version 7 or above)</lom:string>
+            </lom:otherPlatformRequirements>
+          </lom:technical>
+          <lom:rights>
+            <lom:cost>
+              <lom:source>LOMv1.0</lom:source>
+              <lom:value>no</lom:value>
+            </lom:cost>
+            <lom:copyrightAndOtherRestrictions>
+              <lom:source>LOMv1.0</lom:source>
+              <lom:value>yes</lom:value>
+            </lom:copyrightAndOtherRestrictions>
+            <lom:description>
+              <lom:string>Copyright 2005 Advanced Distributed Learning. All Rights Reserved</lom:string>
+            </lom:description>
+          </lom:rights>
+        </lom:lom>
+      </metadata>
+      <file href="00_introduction.html" />
+      <file href="js/APIWrapper.js" />
+      <file href="js/courseFunctions.js" />
+      <dependency identifierref="RES-E6C525FC-6B51-6E14-5B91-46B8F1D0A10A" />
+    </resource>
+    <resource identifier="RES-8EB166DA-A6B5-CEFA-7F8D-10AB9BAA6151" type="webcontent" href="01_ov_overview.html"
+      adlcp:scormType="sco">
+      <metadata>
+        <lom:lom>
+          <lom:general>
+            <lom:identifier>
+              <lom:entry>4CEA6292D40043C6BE4828DB9B234246</lom:entry>
+            </lom:identifier>
+            <lom:title>
+              <lom:string>Content Structure and the Activity Tree</lom:string>
+            </lom:title>
+            <lom:language>en</lom:language>
+            <lom:description>
+              <lom:string>Content providing and overview of key SCORM Sequencing terms.</lom:string>
+            </lom:description>
+            <lom:keyword>
+              <lom:string>Activity tree; cluster; leaf; learning activity</lom:string>
+            </lom:keyword>
+            <lom:keyword>
+              <lom:string>leaf</lom:string>
+            </lom:keyword>
+            <lom:keyword>
+              <lom:string>learning activity</lom:string>
+            </lom:keyword>
+          </lom:general>
+          <lom:lifeCycle>
+            <lom:version>
+              <lom:string>2005.11.18-1.0.0</lom:string>
+            </lom:version>
+            <lom:status>
+              <lom:source>LOMv1.0</lom:source>
+              <lom:value>final</lom:value>
+            </lom:status>
+          </lom:lifeCycle>
+          <lom:metaMetadata>
+            <lom:identifier>
+              <lom:entry>F8AF365B68FB4C8EB4C42FBC5D022848</lom:entry>
+            </lom:identifier>
+            <lom:contribute>
+              <lom:role>
+                <lom:source>LOMv1.0</lom:source>
+                <lom:value>creator</lom:value>
+              </lom:role>
+              <lom:entity>BEGIN:VCARD VERSION:2.1 FN:Aaron E. Silvers END:VCARD</lom:entity>
+            </lom:contribute>
+            <lom:metadataSchema>LOMv1.0</lom:metadataSchema>
+            <lom:metadataSchema>SCORM_CAM_v1.3</lom:metadataSchema>
+            <lom:language>en</lom:language>
+          </lom:metaMetadata>
+          <lom:technical>
+            <lom:format>webcontent</lom:format>
+            <lom:requirement>
+              <lom:orComposite>
+                <lom:type>
+                  <lom:source>LOMv1.0</lom:source>
+                  <lom:value>browser</lom:value>
+                </lom:type>
+                <lom:name>
+                  <lom:source>LOMv1.0</lom:source>
+                  <lom:value>ms-internet explorer</lom:value>
+                </lom:name>
+                <lom:minimumVersion>4.0</lom:minimumVersion>
+              </lom:orComposite>
+            </lom:requirement>
+            <lom:otherPlatformRequirements>
+              <lom:string>This content requires the use of the Macromedia Flash Player (version 7 or above)</lom:string>
+            </lom:otherPlatformRequirements>
+          </lom:technical>
+          <lom:educational>
+            <lom:language>en</lom:language>
+          </lom:educational>
+          <lom:rights>
+            <lom:cost>
+              <lom:source>LOMv1.0</lom:source>
+              <lom:value>no</lom:value>
+            </lom:cost>
+            <lom:copyrightAndOtherRestrictions>
+              <lom:source>LOMv1.0</lom:source>
+              <lom:value>yes</lom:value>
+            </lom:copyrightAndOtherRestrictions>
+            <lom:description>
+              <lom:string>Copyright 2005 Advanced Distributed Learning. All Rights Reserved</lom:string>
+            </lom:description>
+          </lom:rights>
+        </lom:lom>
+      </metadata>
+      <file href="01_ov_overview.html" />
+      <file href="js/APIWrapper.js" />
+      <file href="js/courseFunctions.js" />
+      <file href="images/ov/ov1.swf" />
+      <file href="images/ov/ov3.jpg" />
+      <file href="images/ov/ov4.swf" />
+      <file href="images/ov/ov5.swf" />
+      <file href="images/ov/ov6.jpg" />
+      <file href="images/ov/ov7.swf" />
+      <dependency identifierref="RES-E6C525FC-6B51-6E14-5B91-46B8F1D0A10A" />
+    </resource>
+    <resource identifier="RES-6AFF8BC5-8B84-1B79-151E-A4F99718ACE8" type="webcontent" href="02_tm_trackingModel.html"
+      adlcp:scormType="sco">
+      <metadata>
+        <lom:lom>
+          <lom:general>
+            <lom:identifier>
+              <lom:entry>4CEA6292D40043C6BE4828DB9B234246</lom:entry>
+            </lom:identifier>
+            <lom:title>
+              <lom:string>Content Structure and the Activity Tree</lom:string>
+            </lom:title>
+            <lom:language>en</lom:language>
+            <lom:description>
+              <lom:string>Content providing and overview of key SCORM Sequencing terms.</lom:string>
+            </lom:description>
+            <lom:keyword>
+              <lom:string>Activity tree</lom:string>
+            </lom:keyword>
+            <lom:keyword>
+              <lom:string>cluster</lom:string>
+            </lom:keyword>
+            <lom:keyword>
+              <lom:string>leaf</lom:string>
+            </lom:keyword>
+            <lom:keyword>
+              <lom:string>learning activity</lom:string>
+            </lom:keyword>
+          </lom:general>
+          <lom:lifeCycle>
+            <lom:version>
+              <lom:string>2005.11.18-1.0.0</lom:string>
+            </lom:version>
+            <lom:status>
+              <lom:source>LOMv1.0</lom:source>
+              <lom:value>final</lom:value>
+            </lom:status>
+          </lom:lifeCycle>
+          <lom:metaMetadata>
+            <lom:identifier>
+              <lom:entry>F8AF365B68FB4C8EB4C42FBC5D022848</lom:entry>
+            </lom:identifier>
+            <lom:contribute>
+              <lom:role>
+                <lom:source>LOMv1.0</lom:source>
+                <lom:value>creator</lom:value>
+              </lom:role>
+              <lom:entity>BEGIN:VCARD VERSION:2.1 FN:Aaron E. Silvers END:VCARD</lom:entity>
+            </lom:contribute>
+            <lom:metadataSchema>LOMv1.0</lom:metadataSchema>
+            <lom:metadataSchema>SCORM_CAM_v1.3</lom:metadataSchema>
+            <lom:language>en</lom:language>
+          </lom:metaMetadata>
+          <lom:technical>
+            <lom:format>webcontent</lom:format>
+            <lom:requirement>
+              <lom:orComposite>
+                <lom:type>
+                  <lom:source>LOMv1.0</lom:source>
+                  <lom:value>browser</lom:value>
+                </lom:type>
+                <lom:name>
+                  <lom:source>LOMv1.0</lom:source>
+                  <lom:value>ms-internet explorer</lom:value>
+                </lom:name>
+                <lom:minimumVersion>4.0</lom:minimumVersion>
+              </lom:orComposite>
+            </lom:requirement>
+            <lom:otherPlatformRequirements>
+              <lom:string>This content requires the use of the Macromedia Flash Player (version 7 or above)</lom:string>
+            </lom:otherPlatformRequirements>
+          </lom:technical>
+          <lom:educational>
+            <lom:language>en</lom:language>
+          </lom:educational>
+          <lom:rights>
+            <lom:cost>
+              <lom:source>LOMv1.0</lom:source>
+              <lom:value>no</lom:value>
+            </lom:cost>
+            <lom:copyrightAndOtherRestrictions>
+              <lom:source>LOMv1.0</lom:source>
+              <lom:value>yes</lom:value>
+            </lom:copyrightAndOtherRestrictions>
+            <lom:description>
+              <lom:string>Copyright 2005 Advanced Distributed Learning. All Rights Reserved</lom:string>
+            </lom:description>
+          </lom:rights>
+        </lom:lom>
+      </metadata>
+      <file href="02_tm_trackingModel.html" />
+      <file href="js/APIWrapper.js" />
+      <file href="js/courseFunctions.js" />
+      <file href="images/tm/tm1.jpg" />
+      <file href="images/tm/tm3.jpg" />
+      <file href="images/tm/tm6.jpg" />
+      <file href="images/tm/tm8.jpg" />
+      <file href="images/tm/tm13.jpg" />
+      <dependency identifierref="RES-E6C525FC-6B51-6E14-5B91-46B8F1D0A10A" />
+    </resource>
+    <resource identifier="RES-A083AD23-0D9D-5022-9B75-A4EE09A1C29C" type="webcontent" href="03_lc_limitConditions.html"
+      adlcp:scormType="sco">
+      <metadata>
+        <lom:lom>
+          <lom:general>
+            <lom:identifier>
+              <lom:entry>37A26EDFABC2409987921507C3F3B744</lom:entry>
+            </lom:identifier>
+            <lom:title>
+              <lom:string>Attempt Limit Conditions</lom:string>
+            </lom:title>
+            <lom:language>en</lom:language>
+            <lom:description>
+              <lom:string>Content explaining the SCORM Sequencing topics of Attempt Limits, including Limit Condition
+                Attempt Control and Limit Condition Attempt Limit.</lom:string>
+            </lom:description>
+            <lom:keyword>
+              <lom:string>attempt limits</lom:string>
+            </lom:keyword>
+            <lom:keyword>
+              <lom:string>limit condition attempt control</lom:string>
+            </lom:keyword>
+            <lom:keyword>
+              <lom:string>limit condition attempt limit</lom:string>
+            </lom:keyword>
+            <lom:keyword>
+              <lom:string>sequencing</lom:string>
+            </lom:keyword>
+            <lom:keyword>
+              <lom:string>scorm</lom:string>
+            </lom:keyword>
+            <lom:keyword>
+              <lom:string>learning management systems</lom:string>
+            </lom:keyword>
+          </lom:general>
+          <lom:lifeCycle>
+            <lom:version>
+              <lom:string>2005.11.18-1.0.0</lom:string>
+            </lom:version>
+            <lom:status>
+              <lom:source>LOMv1.0</lom:source>
+              <lom:value>final</lom:value>
+            </lom:status>
+            <lom:contribute>
+              <lom:role>
+                <lom:source>LOMv1.0</lom:source>
+                <lom:value>instructional designer</lom:value>
+              </lom:role>
+              <lom:entity>BEGIN:VCARD VERSION:2.1 FN:Cande Filip END:VCARD</lom:entity>
+              <lom:entity>BEGIN:VCARD VERSION:2.1 FN:Megan Beyer END:VCARD</lom:entity>
+            </lom:contribute>
+            <lom:contribute>
+              <lom:role>
+                <lom:source>LOMv1.0</lom:source>
+                <lom:value>graphical designer</lom:value>
+              </lom:role>
+              <lom:entity>BEGIN:VCARD VERSION:2.1 FN:April Interval END:VCARD</lom:entity>
+            </lom:contribute>
+            <lom:contribute>
+              <lom:role>
+                <lom:source>LOMv1.0</lom:source>
+                <lom:value>content provider</lom:value>
+              </lom:role>
+              <lom:entity>BEGIN:VCARD VERSION:2.1 FN:Griffin Wesler END:VCARD</lom:entity>
+              <lom:entity>BEGIN:VCARD VERSION:2.1 FN:Aaron E. Silvers END:VCARD</lom:entity>
+            </lom:contribute>
+            <lom:contribute>
+              <lom:role>
+                <lom:source>LOMv1.0</lom:source>
+                <lom:value>subject matter expert</lom:value>
+              </lom:role>
+              <lom:entity>BEGIN:VCARD VERSION:2.1 FN:Angelo Panar END:VCARD</lom:entity>
+              <lom:entity>BEGIN:VCARD VERSION:2.1 FN:Aaron E. Silvers END:VCARD</lom:entity>
+            </lom:contribute>
+          </lom:lifeCycle>
+          <lom:metaMetadata>
+            <lom:identifier>
+              <lom:entry>840D2031704C4375BCFDEE77484C2F8C</lom:entry>
+            </lom:identifier>
+            <lom:contribute>
+              <lom:role>
+                <lom:source>LOMv1.0</lom:source>
+                <lom:value>creator</lom:value>
+              </lom:role>
+              <lom:entity>BEGIN:VCARD VERSION:2.1 FN:Aaron E. Silvers END:VCARD</lom:entity>
+            </lom:contribute>
+            <lom:metadataSchema>LOMv1.0</lom:metadataSchema>
+            <lom:metadataSchema>SCORM_CAM_v1.3</lom:metadataSchema>
+            <lom:language>en</lom:language>
+          </lom:metaMetadata>
+          <lom:technical>
+            <lom:format>webcontent</lom:format>
+            <lom:requirement>
+              <lom:orComposite>
+                <lom:type>
+                  <lom:source>LOMv1.0</lom:source>
+                  <lom:value>browser</lom:value>
+                </lom:type>
+                <lom:name>
+                  <lom:source>LOMv1.0</lom:source>
+                  <lom:value>ms-internet explorer</lom:value>
+                </lom:name>
+                <lom:minimumVersion>4.0</lom:minimumVersion>
+              </lom:orComposite>
+            </lom:requirement>
+            <lom:otherPlatformRequirements>
+              <lom:string>This content requires the use of the Macromedia Flash Player (version 7 or above)</lom:string>
+            </lom:otherPlatformRequirements>
+          </lom:technical>
+          <lom:educational>
+            <lom:language>en</lom:language>
+          </lom:educational>
+          <lom:rights>
+            <lom:cost>
+              <lom:source>LOMv1.0</lom:source>
+              <lom:value>no</lom:value>
+            </lom:cost>
+            <lom:copyrightAndOtherRestrictions>
+              <lom:source>LOMv1.0</lom:source>
+              <lom:value>yes</lom:value>
+            </lom:copyrightAndOtherRestrictions>
+            <lom:description>
+              <lom:string>Copyright 2005 Advanced Distributed Learning. All Rights Reserved</lom:string>
+            </lom:description>
+          </lom:rights>
+        </lom:lom>
+      </metadata>
+      <file href="03_lc_limitConditions.html" />
+      <file href="js/APIWrapper.js" />
+      <file href="js/courseFunctions.js" />
+      <file href="images/lc/lc2.jpg" />
+      <dependency identifierref="RES-E6C525FC-6B51-6E14-5B91-46B8F1D0A10A" />
+    </resource>
+    <resource identifier="RES-D33C3500-4541-BB47-9774-0C815CFB30E9" type="webcontent" href="03_scm_overview.html"
+      adlcp:scormType="sco">
+      <metadata>
+        <lom:lom>
+          <lom:general>
+            <lom:identifier>
+              <lom:entry>277FE433984C43C6B30A9484ECD08BDA</lom:entry>
+            </lom:identifier>
+            <lom:title>
+              <lom:string>Sequencing Control Modes</lom:string>
+            </lom:title>
+            <lom:description>
+              <lom:string>Content explaining the SCORM Sequencing topics of control modes, including Choice, Choice
+                Exit, Flow, Forward Only and the two Current Attempt elements, Objective Status and Progress Status.</lom:string>
+            </lom:description>
+            <lom:keyword>
+              <lom:string>sub-activities</lom:string>
+            </lom:keyword>
+            <lom:keyword>
+              <lom:string>sequencing</lom:string>
+            </lom:keyword>
+            <lom:keyword>
+              <lom:string>control choice</lom:string>
+            </lom:keyword>
+            <lom:keyword>
+              <lom:string>control flow</lom:string>
+            </lom:keyword>
+            <lom:keyword>
+              <lom:string>choice exit</lom:string>
+            </lom:keyword>
+            <lom:keyword>
+              <lom:string>control flow forward only</lom:string>
+            </lom:keyword>
+            <lom:keyword>
+              <lom:string>current attempt objective status</lom:string>
+            </lom:keyword>
+            <lom:keyword>
+              <lom:string>current attempt progress status</lom:string>
+            </lom:keyword>
+          </lom:general>
+          <lom:lifeCycle>
+            <lom:version>
+              <lom:string>2005.11.18-1.0.0</lom:string>
+            </lom:version>
+            <lom:status>
+              <lom:source>LOMv1.0</lom:source>
+              <lom:value>final</lom:value>
+            </lom:status>
+            <lom:contribute>
+              <lom:role>
+                <lom:source>LOMv1.0</lom:source>
+                <lom:value>instructional designer</lom:value>
+              </lom:role>
+              <lom:entity>BEGIN:VCARD VERSION:2.1 FN:Cande Filip END:VCARD</lom:entity>
+              <lom:entity>BEGIN:VCARD VERSION:2.1 FN:Megan Beyer END:VCARD</lom:entity>
+            </lom:contribute>
+            <lom:contribute>
+              <lom:role>
+                <lom:source>LOMv1.0</lom:source>
+                <lom:value>graphical designer</lom:value>
+              </lom:role>
+              <lom:entity>BEGIN:VCARD VERSION:2.1 FN:April Interval END:VCARD</lom:entity>
+            </lom:contribute>
+            <lom:contribute>
+              <lom:role>
+                <lom:source>LOMv1.0</lom:source>
+                <lom:value>content provider</lom:value>
+              </lom:role>
+              <lom:entity>BEGIN:VCARD VERSION:2.1 FN:Griffin Wesler END:VCARD</lom:entity>
+              <lom:entity>BEGIN:VCARD VERSION:2.1 FN:Aaron E. Silvers END:VCARD</lom:entity>
+            </lom:contribute>
+            <lom:contribute>
+              <lom:role>
+                <lom:source>LOMv1.0</lom:source>
+                <lom:value>subject matter expert</lom:value>
+              </lom:role>
+              <lom:entity>BEGIN:VCARD VERSION:2.1 FN:Angelo Panar END:VCARD</lom:entity>
+              <lom:entity>BEGIN:VCARD VERSION:2.1 FN:Aaron E. Silvers END:VCARD</lom:entity>
+            </lom:contribute>
+          </lom:lifeCycle>
+          <lom:metaMetadata>
+            <lom:identifier>
+              <lom:entry>17653E0CDDBE41429D44EB1ABE62CCB9</lom:entry>
+            </lom:identifier>
+            <lom:contribute>
+              <lom:role>
+                <lom:source>LOMv1.0</lom:source>
+                <lom:value>creator</lom:value>
+              </lom:role>
+              <lom:entity>BEGIN:VCARD VERSION:2.1 FN:Aaron E. Silvers END:VCARD</lom:entity>
+            </lom:contribute>
+            <lom:metadataSchema>LOMv1.0</lom:metadataSchema>
+            <lom:metadataSchema>SCORM_CAM_v1.3</lom:metadataSchema>
+          </lom:metaMetadata>
+          <lom:technical>
+            <lom:format>webcontent</lom:format>
+            <lom:requirement>
+              <lom:orComposite>
+                <lom:type>
+                  <lom:source>LOMv1.0</lom:source>
+                  <lom:value>browser</lom:value>
+                </lom:type>
+                <lom:name>
+                  <lom:source>LOMv1.0</lom:source>
+                  <lom:value>ms-internet explorer</lom:value>
+                </lom:name>
+                <lom:minimumVersion>4.0</lom:minimumVersion>
+              </lom:orComposite>
+            </lom:requirement>
+            <lom:otherPlatformRequirements>
+              <lom:string>This content requires the use of the Macromedia Flash Player (version 7 or above)</lom:string>
+            </lom:otherPlatformRequirements>
+          </lom:technical>
+          <lom:rights>
+            <lom:cost>
+              <lom:source>LOMv1.0</lom:source>
+              <lom:value>no</lom:value>
+            </lom:cost>
+            <lom:copyrightAndOtherRestrictions>
+              <lom:source>LOMv1.0</lom:source>
+              <lom:value>yes</lom:value>
+            </lom:copyrightAndOtherRestrictions>
+            <lom:description>
+              <lom:string>Copyright 2005 Advanced Distributed Learning. All Rights Reserved</lom:string>
+            </lom:description>
+          </lom:rights>
+        </lom:lom>
+      </metadata>
+      <file href="03_scm_overview.html" />
+      <file href="js/APIWrapper.js" />
+      <file href="js/courseFunctions.js" />
+      <file href="images/scm/scm3.jpg" />
+      <file href="images/scm/scm4.swf" />
+      <file href="images/scm/scm5.jpg" />
+      <file href="images/scm/scm6.jpg" />
+      <file href="images/scm/scm7.jpg" />
+      <file href="images/scm/scm8.jpg" />
+      <file href="images/scm/scm9.jpg" />
+      <file href="images/scm/scm10.jpg" />
+      <dependency identifierref="RES-E6C525FC-6B51-6E14-5B91-46B8F1D0A10A" />
+    </resource>
+    <resource identifier="RES-1049C360-6473-4FBE-5C3D-2FB7894291FD" type="webcontent" href="03_cc_constrainedChoice.html"
+      adlcp:scormType="sco">
+      <metadata>
+        <lom:lom>
+          <lom:general>
+            <lom:identifier>
+              <lom:entry>4CEA6292D40043C6BE4828DB9B234246</lom:entry>
+            </lom:identifier>
+            <lom:title>
+              <lom:string language="en">Constrained Choice Control</lom:string>
+            </lom:title>
+            <lom:language>en</lom:language>
+            <lom:description>
+              <lom:string language="en">Content explaining the SCORM Sequencing topics of control choice modes,
+                including Constrained choice and Prevent Activation</lom:string>
+            </lom:description>
+            <lom:keyword>
+              <lom:string>Child activities; Sequencing; constrained choice; choice; prevent activation; parent
+                activities</lom:string>
+            </lom:keyword>
+            <lom:keyword>
+              <lom:string>leaf</lom:string>
+            </lom:keyword>
+            <lom:keyword>
+              <lom:string>learning activity</lom:string>
+            </lom:keyword>
+          </lom:general>
+          <lom:lifeCycle>
+            <lom:version>
+              <lom:string>2005.11.18-1.0.0</lom:string>
+            </lom:version>
+            <lom:status>
+              <lom:source>LOMv1.0</lom:source>
+              <lom:value>final</lom:value>
+            </lom:status>
+          </lom:lifeCycle>
+          <lom:metaMetadata>
+            <lom:identifier>
+              <lom:entry>F8AF365B68FB4C8EB4C42FBC5D022848</lom:entry>
+            </lom:identifier>
+            <lom:contribute>
+              <lom:role>
+                <lom:source>LOMv1.0</lom:source>
+                <lom:value>creator</lom:value>
+              </lom:role>
+              <lom:entity>BEGIN:VCARD VERSION:2.1 FN:Aaron E. Silvers END:VCARD</lom:entity>
+            </lom:contribute>
+            <lom:metadataSchema>LOMv1.0</lom:metadataSchema>
+            <lom:metadataSchema>SCORM_CAM_v1.3</lom:metadataSchema>
+            <lom:language>en</lom:language>
+          </lom:metaMetadata>
+          <lom:technical>
+            <lom:format>webcontent</lom:format>
+            <lom:requirement>
+              <lom:orComposite>
+                <lom:type>
+                  <lom:source>LOMv1.0</lom:source>
+                  <lom:value>browser</lom:value>
+                </lom:type>
+                <lom:name>
+                  <lom:source>LOMv1.0</lom:source>
+                  <lom:value>ms-internet explorer</lom:value>
+                </lom:name>
+                <lom:minimumVersion>4.0</lom:minimumVersion>
+              </lom:orComposite>
+            </lom:requirement>
+            <lom:otherPlatformRequirements>
+              <lom:string>This content requires the use of the Macromedia Flash Player (version 7 or above)</lom:string>
+            </lom:otherPlatformRequirements>
+          </lom:technical>
+          <lom:educational>
+            <lom:language>en</lom:language>
+          </lom:educational>
+          <lom:rights>
+            <lom:cost>
+              <lom:source>LOMv1.0</lom:source>
+              <lom:value>no</lom:value>
+            </lom:cost>
+            <lom:copyrightAndOtherRestrictions>
+              <lom:source>LOMv1.0</lom:source>
+              <lom:value>yes</lom:value>
+            </lom:copyrightAndOtherRestrictions>
+            <lom:description>
+              <lom:string>Copyright 2005 Advanced Distributed Learning. All Rights Reserved</lom:string>
+            </lom:description>
+          </lom:rights>
+        </lom:lom>
+      </metadata>
+      <file href="03_cc_constrainedChoice.html" />
+      <file href="js/APIWrapper.js" />
+      <file href="js/courseFunctions.js" />
+      <file href="images/cc/cc2.swf" />
+      <file href="images/cc/cc3.jpg" />
+      <file href="images/cc/cc4.jpg" />
+      <file href="images/cc/cc5.jpg" />
+    </resource>
+    <resource identifier="RES-7CE20F53-C192-51DF-873B-D1201ABE35DE" type="webcontent" href="03_src_sequencingRule.html"
+      adlcp:scormType="sco">
+      <metadata>
+        <lom:lom>
+          <lom:general>
+            <lom:identifier>
+              <lom:entry>34A03E45C64D4396914F581D8B333570</lom:entry>
+            </lom:identifier>
+            <lom:title>
+              <lom:string>Sequencing Rule Condition</lom:string>
+            </lom:title>
+            <lom:description>
+              <lom:string>Content explaining the SCORM Sequencing topics of Sequencing Rule Condition of Condition
+                Combination, Rule Conditions, Rule Condition Referenced Objectives, Rule Conditioned Measure Threshold,
+                Rule Condition Operator and Rule Action.</lom:string>
+            </lom:description>
+            <lom:keyword>
+              <lom:string>sequencing</lom:string>
+            </lom:keyword>
+            <lom:keyword>
+              <lom:string>sequencing rules</lom:string>
+            </lom:keyword>
+            <lom:keyword>
+              <lom:string>rule conditions</lom:string>
+            </lom:keyword>
+            <lom:keyword>
+              <lom:string>reference objectives</lom:string>
+            </lom:keyword>
+            <lom:keyword>
+              <lom:string>measure threshold</lom:string>
+            </lom:keyword>
+            <lom:keyword>
+              <lom:string>operator</lom:string>
+            </lom:keyword>
+            <lom:keyword>
+              <lom:string>action</lom:string>
+            </lom:keyword>
+          </lom:general>
+          <lom:lifeCycle>
+            <lom:version>
+              <lom:string>2005.11.18-1.0.0</lom:string>
+            </lom:version>
+            <lom:status>
+              <lom:source>LOMv1.0</lom:source>
+              <lom:value>final</lom:value>
+            </lom:status>
+            <lom:contribute>
+              <lom:role>
+                <lom:source>LOMv1.0</lom:source>
+                <lom:value>instructional designer</lom:value>
+              </lom:role>
+              <lom:entity>BEGIN:VCARD VERSION:2.1 FN:Cande Filip END:VCARD</lom:entity>
+              <lom:entity>BEGIN:VCARD VERSION:2.1 FN:Megan Beyer END:VCARD</lom:entity>
+            </lom:contribute>
+            <lom:contribute>
+              <lom:role>
+                <lom:source>LOMv1.0</lom:source>
+                <lom:value>graphical designer</lom:value>
+              </lom:role>
+              <lom:entity>BEGIN:VCARD VERSION:2.1 FN:April Interval END:VCARD</lom:entity>
+            </lom:contribute>
+            <lom:contribute>
+              <lom:role>
+                <lom:source>LOMv1.0</lom:source>
+                <lom:value>content provider</lom:value>
+              </lom:role>
+              <lom:entity>BEGIN:VCARD VERSION:2.1 FN:Griffin Wesler END:VCARD</lom:entity>
+              <lom:entity>BEGIN:VCARD VERSION:2.1 FN:Aaron E. Silvers END:VCARD</lom:entity>
+            </lom:contribute>
+            <lom:contribute>
+              <lom:role>
+                <lom:source>LOMv1.0</lom:source>
+                <lom:value>subject matter expert</lom:value>
+              </lom:role>
+              <lom:entity>BEGIN:VCARD VERSION:2.1 FN:Angelo Panar END:VCARD</lom:entity>
+              <lom:entity>BEGIN:VCARD VERSION:2.1 FN:Aaron E. Silvers END:VCARD</lom:entity>
+            </lom:contribute>
+          </lom:lifeCycle>
+          <lom:metaMetadata>
+            <lom:identifier>
+              <lom:entry>1DD96A37AD1B49F2A5319A41BC9BCB23</lom:entry>
+            </lom:identifier>
+            <lom:contribute>
+              <lom:role>
+                <lom:source>LOMv1.0</lom:source>
+                <lom:value>creator</lom:value>
+              </lom:role>
+              <lom:entity>BEGIN:VCARD VERSION:2.1 FN:Aaron E. Silvers END:VCARD</lom:entity>
+            </lom:contribute>
+            <lom:metadataSchema>LOMv1.0</lom:metadataSchema>
+            <lom:metadataSchema>SCORM_CAM_v1.3</lom:metadataSchema>
+          </lom:metaMetadata>
+          <lom:technical>
+            <lom:format>webcontent</lom:format>
+            <lom:requirement>
+              <lom:orComposite>
+                <lom:type>
+                  <lom:source>LOMv1.0</lom:source>
+                  <lom:value>browser</lom:value>
+                </lom:type>
+                <lom:name>
+                  <lom:source>LOMv1.0</lom:source>
+                  <lom:value>ms-internet explorer</lom:value>
+                </lom:name>
+                <lom:minimumVersion>4.0</lom:minimumVersion>
+              </lom:orComposite>
+            </lom:requirement>
+            <lom:otherPlatformRequirements>
+              <lom:string>This content requires the use of the Macromedia Flash Player (version 7 or above)</lom:string>
+            </lom:otherPlatformRequirements>
+          </lom:technical>
+          <lom:rights>
+            <lom:cost>
+              <lom:source>LOMv1.0</lom:source>
+              <lom:value>no</lom:value>
+            </lom:cost>
+            <lom:copyrightAndOtherRestrictions>
+              <lom:source>LOMv1.0</lom:source>
+              <lom:value>yes</lom:value>
+            </lom:copyrightAndOtherRestrictions>
+            <lom:description>
+              <lom:string>Copyright 2005 Advanced Distributed Learning. All Rights Reserved</lom:string>
+            </lom:description>
+          </lom:rights>
+        </lom:lom>
+      </metadata>
+      <file href="03_src_sequencingRule.html" />
+      <file href="js/APIWrapper.js" />
+      <file href="js/courseFunctions.js" />
+      <file href="images/src/src2.jpg" />
+      <file href="images/src/src3.jpg" />
+      <file href="images/src/src4.jpg" />
+      <file href="images/src/src8.jpg" />
+      <file href="images/src/src9.jpg" />
+      <file href="images/src/src10.jpg" />
+      <dependency identifierref="RES-E6C525FC-6B51-6E14-5B91-46B8F1D0A10A" />
+    </resource>
+    <resource identifier="RES-7E7A3EA4-0113-CA7D-17B0-7C71422E700B" type="webcontent" href="04_r_rollup.html"
+      adlcp:scormType="sco">
+      <metadata>
+        <lom:lom>
+          <lom:general>
+            <lom:identifier>
+              <lom:entry>B10742BCBD754080AF0574E2A001C054</lom:entry>
+            </lom:identifier>
+            <lom:title>
+              <lom:string>Starting and Stopping a Sequencing Session</lom:string>
+            </lom:title>
+            <lom:description>
+              <lom:string>Content explaining the SCORM Sequencing topic of rollup. The content contains information on
+                rollup, rollup measure and shared global objectives.</lom:string>
+            </lom:description>
+            <lom:keyword>
+              <lom:string>starting</lom:string>
+            </lom:keyword>
+            <lom:keyword>
+              <lom:string>stopping</lom:string>
+            </lom:keyword>
+            <lom:keyword>
+              <lom:string>sequencing session</lom:string>
+            </lom:keyword>
+            <lom:keyword>
+              <lom:string>navigation request</lom:string>
+            </lom:keyword>
+          </lom:general>
+          <lom:lifeCycle>
+            <lom:version>
+              <lom:string>2005.11.18-1.0.0</lom:string>
+            </lom:version>
+            <lom:status>
+              <lom:source>LOMv1.0</lom:source>
+              <lom:value>final</lom:value>
+            </lom:status>
+            <lom:contribute>
+              <lom:role>
+                <lom:source>LOMv1.0</lom:source>
+                <lom:value>instructional designer</lom:value>
+              </lom:role>
+              <lom:entity>BEGIN:VCARD VERSION:2.1 FN:Cande Filip END:VCARD</lom:entity>
+              <lom:entity>BEGIN:VCARD VERSION:2.1 FN:Megan Beyer END:VCARD</lom:entity>
+            </lom:contribute>
+            <lom:contribute>
+              <lom:role>
+                <lom:source>LOMv1.0</lom:source>
+                <lom:value>graphical designer</lom:value>
+              </lom:role>
+              <lom:entity>BEGIN:VCARD VERSION:2.1 FN:April Interval END:VCARD</lom:entity>
+            </lom:contribute>
+            <lom:contribute>
+              <lom:role>
+                <lom:source>LOMv1.0</lom:source>
+                <lom:value>content provider</lom:value>
+              </lom:role>
+              <lom:entity>BEGIN:VCARD VERSION:2.1 FN:Griffin Wesler END:VCARD</lom:entity>
+              <lom:entity>BEGIN:VCARD VERSION:2.1 FN:Aaron E. Silvers END:VCARD</lom:entity>
+            </lom:contribute>
+            <lom:contribute>
+              <lom:role>
+                <lom:source>LOMv1.0</lom:source>
+                <lom:value>subject matter expert</lom:value>
+              </lom:role>
+              <lom:entity>BEGIN:VCARD VERSION:2.1 FN:Angelo Panar END:VCARD</lom:entity>
+              <lom:entity>BEGIN:VCARD VERSION:2.1 FN:Aaron E. Silvers END:VCARD</lom:entity>
+            </lom:contribute>
+          </lom:lifeCycle>
+          <lom:metaMetadata>
+            <lom:identifier>
+              <lom:entry>2D361127E81643E1B5FDC5D8DE9747F2</lom:entry>
+            </lom:identifier>
+            <lom:contribute>
+              <lom:role>
+                <lom:source>LOMv1.0</lom:source>
+                <lom:value>creator</lom:value>
+              </lom:role>
+              <lom:entity>BEGIN:VCARD VERSION:2.1 FN:Aaron E. Silvers END:VCARD</lom:entity>
+            </lom:contribute>
+            <lom:metadataSchema>LOMv1.0</lom:metadataSchema>
+            <lom:metadataSchema>SCORM_CAM_v1.3</lom:metadataSchema>
+          </lom:metaMetadata>
+          <lom:technical>
+            <lom:format>webcontent</lom:format>
+            <lom:requirement>
+              <lom:orComposite>
+                <lom:type>
+                  <lom:source>LOMv1.0</lom:source>
+                  <lom:value>browser</lom:value>
+                </lom:type>
+                <lom:name>
+                  <lom:source>LOMv1.0</lom:source>
+                  <lom:value>ms-internet explorer</lom:value>
+                </lom:name>
+                <lom:minimumVersion>4.0</lom:minimumVersion>
+              </lom:orComposite>
+            </lom:requirement>
+            <lom:otherPlatformRequirements>
+              <lom:string>This content requires the use of the Macromedia Flash Player (version 7 or above)</lom:string>
+            </lom:otherPlatformRequirements>
+          </lom:technical>
+          <lom:rights>
+            <lom:cost>
+              <lom:source>LOMv1.0</lom:source>
+              <lom:value>no</lom:value>
+            </lom:cost>
+            <lom:copyrightAndOtherRestrictions>
+              <lom:source>LOMv1.0</lom:source>
+              <lom:value>yes</lom:value>
+            </lom:copyrightAndOtherRestrictions>
+            <lom:description>
+              <lom:string>Copyright 2005 Advanced Distributed Learning. All Rights Reserved</lom:string>
+            </lom:description>
+          </lom:rights>
+        </lom:lom>
+      </metadata>
+      <file href="04_r_rollup.html" />
+      <file href="js/APIWrapper.js" />
+      <file href="js/courseFunctions.js" />
+      <file href="images/r/r2.jpg" />
+      <file href="images/r/r3.jpg" />
+      <dependency identifierref="RES-E6C525FC-6B51-6E14-5B91-46B8F1D0A10A" />
+    </resource>
+    <resource identifier="RES-0A23028C-4AF5-1A9F-2D9E-6554F4F392EA" type="webcontent" href="04_od_objectiveDescription.html"
+      adlcp:scormType="sco">
+      <metadata>
+        <lom:lom>
+          <lom:general>
+            <lom:identifier>
+              <lom:entry>4CEA6292D40043C6BE4828DB9B234246</lom:entry>
+            </lom:identifier>
+            <lom:title>
+              <lom:string language="en">Objective Description</lom:string>
+            </lom:title>
+            <lom:language>en</lom:language>
+            <lom:description>
+              <lom:string language="en">Description of objective description including the elements Objective ID,
+                Objective Satisfied by Measure, Objective Minimum Satisfied for Normalized Measure and Objective
+                Contributes to Rollup</lom:string>
+            </lom:description>
+            <lom:keyword>
+              <lom:string>Activity tree; objective; global objective; local objective; shared objective; Objective ID;
+                Objective Satisfied by Measure; Objective Minimum Satisfied for Normalized Measure; Objective
+                Contributes to Rollup</lom:string>
+            </lom:keyword>
+            <lom:keyword>
+              <lom:string>leaf</lom:string>
+            </lom:keyword>
+            <lom:keyword>
+              <lom:string>learning activity</lom:string>
+            </lom:keyword>
+          </lom:general>
+          <lom:lifeCycle>
+            <lom:version>
+              <lom:string>2005.11.18-1.0.0</lom:string>
+            </lom:version>
+            <lom:status>
+              <lom:source>LOMv1.0</lom:source>
+              <lom:value>final</lom:value>
+            </lom:status>
+          </lom:lifeCycle>
+          <lom:metaMetadata>
+            <lom:identifier>
+              <lom:entry>F8AF365B68FB4C8EB4C42FBC5D022848</lom:entry>
+            </lom:identifier>
+            <lom:contribute>
+              <lom:role>
+                <lom:source>LOMv1.0</lom:source>
+                <lom:value>creator</lom:value>
+              </lom:role>
+              <lom:entity>BEGIN:VCARD VERSION:2.1 FN:Aaron E. Silvers END:VCARD</lom:entity>
+            </lom:contribute>
+            <lom:metadataSchema>LOMv1.0</lom:metadataSchema>
+            <lom:metadataSchema>SCORM_CAM_v1.3</lom:metadataSchema>
+            <lom:language>en</lom:language>
+          </lom:metaMetadata>
+          <lom:technical>
+            <lom:format>webcontent</lom:format>
+            <lom:requirement>
+              <lom:orComposite>
+                <lom:type>
+                  <lom:source>LOMv1.0</lom:source>
+                  <lom:value>browser</lom:value>
+                </lom:type>
+                <lom:name>
+                  <lom:source>LOMv1.0</lom:source>
+                  <lom:value>ms-internet explorer</lom:value>
+                </lom:name>
+                <lom:minimumVersion>4.0</lom:minimumVersion>
+              </lom:orComposite>
+            </lom:requirement>
+            <lom:otherPlatformRequirements>
+              <lom:string>This content requires the use of the Macromedia Flash Player (version 7 or above)</lom:string>
+            </lom:otherPlatformRequirements>
+          </lom:technical>
+          <lom:educational>
+            <lom:language>en</lom:language>
+          </lom:educational>
+          <lom:rights>
+            <lom:cost>
+              <lom:source>LOMv1.0</lom:source>
+              <lom:value>no</lom:value>
+            </lom:cost>
+            <lom:copyrightAndOtherRestrictions>
+              <lom:source>LOMv1.0</lom:source>
+              <lom:value>yes</lom:value>
+            </lom:copyrightAndOtherRestrictions>
+            <lom:description>
+              <lom:string>Copyright 2005 Advanced Distributed Learning. All Rights Reserved</lom:string>
+            </lom:description>
+          </lom:rights>
+        </lom:lom>
+      </metadata>
+      <file href="04_od_objectiveDescription.html" />
+      <file href="js/APIWrapper.js" />
+      <file href="js/courseFunctions.js" />
+      <file href="images/od/od2.jpg" />
+      <file href="images/od/od3.jpg" />
+      <file href="images/od/od4.jpg" />
+      <file href="images/od/od6.jpg" />
+      <file href="images/scm/scm8.jpg" />
+      <dependency identifierref="RES-E6C525FC-6B51-6E14-5B91-46B8F1D0A10A" />
+    </resource>
+    <resource identifier="RES-F813D8EC-1806-8653-B793-513E9AFC6D04" type="webcontent" href="04_rr_rollupRule.html"
+      adlcp:scormType="sco">
+      <metadata>
+        <lom:lom>
+          <lom:general>
+            <lom:identifier>
+              <lom:entry>4CEA6292D40043C6BE4828DB9B234246</lom:entry>
+            </lom:identifier>
+            <lom:title>
+              <lom:string language="en">Rollup Rule Descriptions</lom:string>
+            </lom:title>
+            <lom:language>en</lom:language>
+            <lom:description>
+              <lom:string language="en">Content explaining the SCORM Sequencing topic Rollup Rule Descriptions.
+                The content contains information on condition combination, rollup condition, rollup child activity set,
+                rollup condition operator and rollup actions.</lom:string>
+            </lom:description>
+            <lom:keyword>
+              <lom:string>Rollup rule descriptions; condition combination; rollup condition; rollup child activity set;
+                rollup condition operator; rollup actions</lom:string>
+            </lom:keyword>
+            <lom:keyword>
+              <lom:string>leaf</lom:string>
+            </lom:keyword>
+            <lom:keyword>
+              <lom:string>learning activity</lom:string>
+            </lom:keyword>
+          </lom:general>
+          <lom:lifeCycle>
+            <lom:version>
+              <lom:string>2005.11.18-1.0.0</lom:string>
+            </lom:version>
+            <lom:status>
+              <lom:source>LOMv1.0</lom:source>
+              <lom:value>final</lom:value>
+            </lom:status>
+          </lom:lifeCycle>
+          <lom:metaMetadata>
+            <lom:identifier>
+              <lom:entry>F8AF365B68FB4C8EB4C42FBC5D022848</lom:entry>
+            </lom:identifier>
+            <lom:contribute>
+              <lom:role>
+                <lom:source>LOMv1.0</lom:source>
+                <lom:value>creator</lom:value>
+              </lom:role>
+              <lom:entity>BEGIN:VCARD VERSION:2.1 FN:Aaron E. Silvers END:VCARD</lom:entity>
+            </lom:contribute>
+            <lom:metadataSchema>LOMv1.0</lom:metadataSchema>
+            <lom:metadataSchema>SCORM_CAM_v1.3</lom:metadataSchema>
+            <lom:language>en</lom:language>
+          </lom:metaMetadata>
+          <lom:technical>
+            <lom:format>webcontent</lom:format>
+            <lom:requirement>
+              <lom:orComposite>
+                <lom:type>
+                  <lom:source>LOMv1.0</lom:source>
+                  <lom:value>browser</lom:value>
+                </lom:type>
+                <lom:name>
+                  <lom:source>LOMv1.0</lom:source>
+                  <lom:value>ms-internet explorer</lom:value>
+                </lom:name>
+                <lom:minimumVersion>4.0</lom:minimumVersion>
+              </lom:orComposite>
+            </lom:requirement>
+            <lom:otherPlatformRequirements>
+              <lom:string>This content requires the use of the Macromedia Flash Player (version 7 or above)</lom:string>
+            </lom:otherPlatformRequirements>
+          </lom:technical>
+          <lom:educational>
+            <lom:language>en</lom:language>
+          </lom:educational>
+          <lom:rights>
+            <lom:cost>
+              <lom:source>LOMv1.0</lom:source>
+              <lom:value>no</lom:value>
+            </lom:cost>
+            <lom:copyrightAndOtherRestrictions>
+              <lom:source>LOMv1.0</lom:source>
+              <lom:value>yes</lom:value>
+            </lom:copyrightAndOtherRestrictions>
+            <lom:description>
+              <lom:string>Copyright 2005 Advanced Distributed Learning. All Rights Reserved</lom:string>
+            </lom:description>
+          </lom:rights>
+        </lom:lom>
+      </metadata>
+      <file href="04_rr_rollupRule.html" />
+      <file href="js/APIWrapper.js" />
+      <file href="js/courseFunctions.js" />
+      <file href="images/rr/rr1.jpg" />
+      <file href="images/rr/rr4.jpg" />
+      <file href="images/rr/rr5.jpg" />
+      <file href="images/rr/rr6.jpg" />
+      <file href="images/rr/rr8.jpg" />
+      <file href="images/rr/rr9.jpg" />
+      <dependency identifierref="RES-E6C525FC-6B51-6E14-5B91-46B8F1D0A10A" />
+    </resource>
+    <resource identifier="RES-884C6B7F-FA45-B872-AF75-7A2230757FEC" type="webcontent" href="05_conclusion.html"
+      adlcp:scormType="sco">
+      <metadata>
+        <lom:lom>
+          <lom:general>
+            <lom:identifier>
+              <lom:entry>3B9FF3B1F6C246E0B90FCEB29838FAFB</lom:entry>
+            </lom:identifier>
+            <lom:title>
+              <lom:string>Conclusion</lom:string>
+            </lom:title>
+            <lom:description>
+              <lom:string>Conclusion of the Sequencing Essentials content, with information on where to go for further
+                information on SCORM sequencing.</lom:string>
+            </lom:description>
+            <lom:keyword>
+              <lom:string>conclusion</lom:string>
+            </lom:keyword>
+          </lom:general>
+          <lom:lifeCycle>
+            <lom:version>
+              <lom:string>2005.11.18-1.0.0</lom:string>
+            </lom:version>
+            <lom:status>
+              <lom:source>LOMv1.0</lom:source>
+              <lom:value>final</lom:value>
+            </lom:status>
+            <lom:contribute>
+              <lom:role>
+                <lom:source>LOMv1.0</lom:source>
+                <lom:value>instructional designer</lom:value>
+              </lom:role>
+              <lom:entity>BEGIN:VCARD VERSION:2.1 FN:Cande Filip END:VCARD</lom:entity>
+              <lom:entity>BEGIN:VCARD VERSION:2.1 FN:Megan Beyer END:VCARD</lom:entity>
+            </lom:contribute>
+            <lom:contribute>
+              <lom:role>
+                <lom:source>LOMv1.0</lom:source>
+                <lom:value>graphical designer</lom:value>
+              </lom:role>
+              <lom:entity>BEGIN:VCARD VERSION:2.1 FN:April Interval END:VCARD</lom:entity>
+            </lom:contribute>
+            <lom:contribute>
+              <lom:role>
+                <lom:source>LOMv1.0</lom:source>
+                <lom:value>content provider</lom:value>
+              </lom:role>
+              <lom:entity>BEGIN:VCARD VERSION:2.1 FN:Griffin Wesler END:VCARD</lom:entity>
+              <lom:entity>BEGIN:VCARD VERSION:2.1 FN:Aaron E. Silvers END:VCARD</lom:entity>
+            </lom:contribute>
+            <lom:contribute>
+              <lom:role>
+                <lom:source>LOMv1.0</lom:source>
+                <lom:value>subject matter expert</lom:value>
+              </lom:role>
+              <lom:entity>BEGIN:VCARD VERSION:2.1 FN:Angelo Panar END:VCARD</lom:entity>
+              <lom:entity>BEGIN:VCARD VERSION:2.1 FN:Aaron E. Silvers END:VCARD</lom:entity>
+            </lom:contribute>
+          </lom:lifeCycle>
+          <lom:metaMetadata>
+            <lom:identifier>
+              <lom:entry>B8C6ACCD1A944B55A3394D0E5B2C781D</lom:entry>
+            </lom:identifier>
+            <lom:contribute>
+              <lom:role>
+                <lom:source>LOMv1.0</lom:source>
+                <lom:value>creator</lom:value>
+              </lom:role>
+              <lom:entity>BEGIN:VCARD VERSION:2.1 FN:Aaron E. Silvers END:VCARD</lom:entity>
+            </lom:contribute>
+            <lom:metadataSchema>LOMv1.0</lom:metadataSchema>
+            <lom:metadataSchema>SCORM_CAM_v1.3</lom:metadataSchema>
+          </lom:metaMetadata>
+          <lom:technical>
+            <lom:format>webcontent</lom:format>
+            <lom:requirement>
+              <lom:orComposite>
+                <lom:type>
+                  <lom:source>LOMv1.0</lom:source>
+                  <lom:value>browser</lom:value>
+                </lom:type>
+                <lom:name>
+                  <lom:source>LOMv1.0</lom:source>
+                  <lom:value>ms-internet explorer</lom:value>
+                </lom:name>
+                <lom:minimumVersion>4.0</lom:minimumVersion>
+              </lom:orComposite>
+            </lom:requirement>
+            <lom:otherPlatformRequirements>
+              <lom:string>This content requires the use of the Macromedia Flash Player (version 7 or above)</lom:string>
+            </lom:otherPlatformRequirements>
+          </lom:technical>
+          <lom:rights>
+            <lom:cost>
+              <lom:source>LOMv1.0</lom:source>
+              <lom:value>no</lom:value>
+            </lom:cost>
+            <lom:copyrightAndOtherRestrictions>
+              <lom:source>LOMv1.0</lom:source>
+              <lom:value>yes</lom:value>
+            </lom:copyrightAndOtherRestrictions>
+            <lom:description>
+              <lom:string>Copyright 2005 Advanced Distributed Learning. All Rights Reserved</lom:string>
+            </lom:description>
+          </lom:rights>
+        </lom:lom>
+      </metadata>
+      <file href="05_conclusion.html" />
+      <file href="js/APIWrapper.js" />
+      <file href="js/courseFunctions.js" />
+      <dependency identifierref="RES-E6C525FC-6B51-6E14-5B91-46B8F1D0A10A" />
+    </resource>
+    <resource identifier="RES-E6C525FC-6B51-6E14-5B91-46B8F1D0A10A" type="webcontent" adlcp:scormType="asset">
+      <file href="images/bottom.gif" />
+      <file href="images/next.gif" />
+      <file href="images/next_rollover.gif" />
+      <file href="images/previous.gif" />
+      <file href="images/previous_rollover.gif" />
+      <file href="images/top.gif" />
+      <file href="css/snstyle.css" />
+    </resource>
+    <resource identifier="SEQ01" type="webcontent" adlcp:scormType="sco" href="SequencingTest.htm" xml:base="resources/">
+      <file href="SequencingTest.htm" />
+      <dependency identifierref="LMSFNCTS01" />
+      <dependency identifierref="JAR01" />
+      <dependency identifierref="ABOUT01" />
+      <dependency identifierref="EMULATION01" />
+    </resource>
+  </resources>
+</manifest>

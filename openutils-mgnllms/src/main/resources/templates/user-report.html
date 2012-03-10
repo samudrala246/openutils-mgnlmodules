@@ -1,0 +1,19 @@
+[#assign cms=JspTaglibs["cms-taglib"]]
+[#assign lmsfn=JspTaglibs["lms-fn"]]
+<html>
+<body>
+[#assign query = page.@handle?substring(1)+"/users" ]
+[@cms.query var="users" repository="lms" nodeType="mgnl:contentNode" query="${query}" /]
+utenti: ${users?size} <br />
+[#list users as usersnode]
+  [#list usersnode?children as user]
+    ${user.@name}
+    ${user.status}
+    ${lmsfn}
+    [#assign userReport = lmsfn.userReport(user.@name, page.@uUID)] 
+    ${userReport.objectives?size}
+    <hr />
+  [/#list]
+[/#list]
+</body>
+</html>

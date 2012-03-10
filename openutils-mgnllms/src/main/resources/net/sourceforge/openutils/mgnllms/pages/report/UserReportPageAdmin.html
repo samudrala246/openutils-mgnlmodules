@@ -1,0 +1,162 @@
+[#macro boolval item=""] [#if !item?has_content] unknown [#else]
+${item?string("yes","no")} [/#if] [/#macro] [#macro redGreen n,total]
+[#if n/total == 1]
+<img class="table_img"
+	src="${this.request.contextPath}/.resources/lms/icons/accept.png"
+	alt="${n}/${total}" title="${n}/${total}" />
+[#else]
+<img class="table_img"
+	src="${this.request.contextPath}/.resources/lms/icons/delete.png"
+	alt="${n}/${total}" title="${n}/${total}" />
+[/#if] [/#macro]
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<head>
+<title>User Report Page Admin for course ${this.courseName}</title>
+<!-- BLUFF -->
+<script language="javascript" type="text/javascript"
+	src="${this.request.contextPath}/.resources/lms/js/bluff/js-class.js"></script>
+<script language="javascript" type="text/javascript"
+	src="${this.request.contextPath}/.resources/lms/js/bluff/bluff-min.js"></script>
+[#assign user_agent = this.request.getHeader("User-Agent")]
+[#if user_agent?contains("MSIE")]
+<script language="javascript" type="text/javascript"
+	src="${this.request.contextPath}/.resources/lms/js/bluff/excanvas.js"></script>
+[/#if]
+<!-- MOOTOOLS -->
+<script language="javascript" type="text/javascript"
+	src="${this.request.contextPath}/.resources/lms/js/mootools-1.2.3-core-nc.js"></script>
+<script language="javascript" type="text/javascript"
+	src="${this.request.contextPath}/.resources/lms/js/mootools-1.2.3.1-more.js"></script>
+<script language="javascript" type="text/javascript">
+     window.addEvent('domready', function() {
+      // create accordion
+      var accordion = new Accordion($$('.toggler'),$$('.element'), {
+    	 show: -1,
+         opacity: 0,
+         alwaysHide: true,
+         onActive: function(toggler) { toggler.setStyle('color', '#666'); },
+         onBackground: function(toggler) { toggler.setStyle('color', '#000'); }
+       });
+
+      [#list this.results as userReport]
+    	//Create progressGraph mini pie chart
+      	var ok = ${userReport.objectiveProgressStatus};
+      	var ko = ${userReport.objectives?size} - ${userReport.objectiveProgressStatus};
+      	var progressGraph = getMiniPieChart('progressGraph' + '${userReport.user}', ok, ko);
+        progressGraph.draw();
+
+      //Create satisfiedGraph mini pie chart
+        var ok = ${userReport.objectiveSatisfiedStatus};
+      	var ko = ${userReport.objectives?size} - ${userReport.objectiveSatisfiedStatus};
+      	var satisfiedGraph = getMiniPieChart('satisfiedGraph' + '${userReport.user}', ok, ko);
+      	satisfiedGraph.draw();
+      [/#list]
+    });
+
+    function getMiniPieChart(canvasId, okNumber, koNumber) {
+      var graph = new Bluff.Mini.Pie(canvasId, 150);
+      graph.hide_legend = true;
+      graph.hide_mini_legend = true;
+      graph.set_theme({
+        colors: ['#6F9736', '#A4493B', '#9C79A7', '#FDBFD5', '#2B7943', '#AEDDBC', '#CDE8A6'],
+        marker_color: 'black',
+        font_color: 'black',
+        background_colors: ['#CDE8A6', '#CDE8A6']
+      });
+      graph.data('OK', okNumber);
+      graph.data('KO', koNumber);
+     	  
+   	  return graph;
+    } 
+</script>
+<link
+	href="${this.request.contextPath}/.resources/admin-css/admin-all.css"
+	type="text/css" rel="stylesheet" charset="utf-8"></link>
+<link
+	href="${this.request.contextPath}/.resources/lms/css/lms-report.css"
+	type="text/css" rel="stylesheet" charset="utf-8"></link>
+</head>
+<body id="mgnl">
+<h3>Utenti</h3>
+<!-- USER HEADER-->
+<div class="title-header">
+<div class="status header" title="Objective progress status">Progress
+status</div>
+<div class="status header" title="Objective satisfied status">Satisfied
+status</div>
+<div class="user-report header" title="User identification code">User
+ID</div>
+<div class="clear"><!-- clear --></div>
+</div>
+[#list this.results as userReport]
+<!-- USER TOGGLER-->
+<div class="toggler">
+<div class="status"><canvas id="progressGraph${userReport.user}"><!-- mini pie chart --></canvas></div>
+<div class="status"><canvas id="satisfiedGraph${userReport.user}"><!-- mini pie chart --></canvas></div>
+<div class="user-report">${userReport.user}</div>
+<img
+	src="${this.request.contextPath}/.resources/controls/navigation/mgnlNavigationArrow.gif"
+	alt="open" />
+<div class="clear"><!-- clear --></div>
+</div>
+<!-- USER ELEMENTS -->
+<div class="element"><strong>Total objectives:</strong>
+${userReport.objectives?size} <br />
+<strong>Objective progress Status:</strong>
+${userReport.objectiveProgressStatus}<br />
+<strong> Objective satisfied Status:</strong>
+${userReport.objectiveSatisfiedStatus}
+<h3>Objectives</h3>
+<table class="data">
+	<thead>
+		<tr>
+			<th>id</th>
+			<th>progressStatus</th>
+			<th>satisfiedStatus</th>
+			<th>measureStatus</th>
+			<th>normalizedMeasure</th>
+		</tr>
+	</thead>
+	<tbody>
+		[#list userReport.objectives as obj]
+		<tr>
+			<td>${obj.id}</td>
+			<td>[@boolval item=(obj.progressStatus)/]</td>
+			<td>[@boolval item=(obj.satisfiedStatus)/]</td>
+			<td>[@boolval item=(obj.measureStatus)/]</td>
+			<td>${obj.normalizedMeasure!"unknown"}</td>
+		</tr>
+		[/#list]
+	</tbody>
+</table>
+<br />
+<h3>Activities</h3>
+<table class="data">
+	<thead>
+		<tr>
+			<th>Activity title</th>
+			<th>activityAbsoluteDuration</th>
+			<th>activityAttemptCount</th>
+			<th>activityExperiencedDuration</th>
+			<th>activityProgressStatus</th>
+			<th>Suspended</th>
+		</tr>
+	</thead>
+	<tbody>
+		[#list userReport.trackingModel as tm]
+		<tr>
+			<td>${tm.title?left_pad(0+(tm.title?length)+tm.level*2,"--")}</td>
+			<td>${tm.activityAbsoluteDuration!"unknown"}</td>
+			<td>${tm.activityAttemptCount!"unknown"}</td>
+			<td>${tm.activityExperiencedDuration!"unknown"}</td>
+			<td>[@boolval item=(tm.activityProgressStatus) /]</td>
+			<td>[@boolval item=(tm.activityIsSuspended) /]</td>
+		</tr>
+		[/#list]
+	</tbody>
+</table>
+</div>
+[/#list]
+</body>
+</html>

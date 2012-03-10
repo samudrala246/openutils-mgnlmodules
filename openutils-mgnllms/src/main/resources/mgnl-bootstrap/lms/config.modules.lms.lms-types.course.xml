@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sv:node sv:name="course"
+   xmlns:jcr="http://www.jcp.org/jcr/1.0"
+  xmlns:mgnl="http://www.magnolia.info/jcr/mgnl" xmlns:rep="internal" xmlns:mix="http://www.jcp.org/jcr/mix/1.0"
+  xmlns:nt="http://www.jcp.org/jcr/nt/1.0" xmlns:fn="http://www.w3.org/2005/xpath-functions"
+  xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:sv="http://www.jcp.org/jcr/sv/1.0"
+  xmlns:fn_old="http://www.w3.org/2004/10/xpath-functions" xmlns:jcrfn="http://www.jcp.org/jcr/xpath-functions/1.0">
+  <sv:property sv:name="jcr:primaryType" sv:type="Name">
+    <sv:value>mgnl:contentNode</sv:value>
+  </sv:property>
+  <sv:property sv:name="jcr:mixinTypes" sv:type="Name">
+    <sv:value>mix:lockable</sv:value>
+    <sv:value>mix:versionable</sv:value>
+  </sv:property>
+  <sv:property sv:name="jcr:uuid" sv:type="String">
+    <sv:value>428aad19-7fde-417d-9bd9-535a453a0656</sv:value>
+  </sv:property>
+  <sv:property sv:name="i18nBasename" sv:type="String">
+    <sv:value>net.sourceforge.openutils.mgnllms.lms.lang.messages</sv:value>
+  </sv:property>
+  <sv:property sv:name="dialog" sv:type="String">
+    <sv:value>courseDlg</sv:value>
+  </sv:property>
+  <sv:property sv:name="extensions" sv:type="String">
+    <sv:value></sv:value>
+  </sv:property>
+  <sv:property sv:name="handler" sv:type="String">
+    <sv:value>net.sourceforge.openutils.mgnllms.lms.types.impl.CourseTypeHandler</sv:value>
+  </sv:property>
+  <sv:property sv:name="label" sv:type="String">
+    <sv:value>Course</sv:value>
+  </sv:property>
+  <sv:property sv:name="menuIcon" sv:type="String">
+    <sv:value>/.resources/lms/icons/course.gif</sv:value>
+  </sv:property>
+  <sv:node sv:name="MetaData">
+    <sv:property sv:name="jcr:primaryType" sv:type="Name">
+      <sv:value>mgnl:metaData</sv:value>
+    </sv:property>
+    <sv:property sv:name="mgnl:activated" sv:type="Boolean">
+      <sv:value>false</sv:value>
+    </sv:property>
+    <sv:property sv:name="mgnl:activatorid" sv:type="String">
+      <sv:value>superuser</sv:value>
+    </sv:property>
+    <sv:property sv:name="mgnl:authorid" sv:type="String">
+      <sv:value>admin</sv:value>
+    </sv:property>
+    <sv:property sv:name="mgnl:creationdate" sv:type="Date">
+      <sv:value>2009-08-25T16:49:16.314Z</sv:value>
+    </sv:property>
+    <sv:property sv:name="mgnl:lastaction" sv:type="Date">
+      <sv:value>2009-08-25T16:51:17.750Z</sv:value>
+    </sv:property>
+    <sv:property sv:name="mgnl:lastmodified" sv:type="Date">
+      <sv:value>2009-08-25T15:09:57.547Z</sv:value>
+    </sv:property>
+  </sv:node>
+</sv:node>

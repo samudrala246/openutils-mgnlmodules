@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sv:node sv:name="user-report" xmlns:x2="http://schemas.microsoft.com/office/excel/2003/xml"
+  xmlns:fn_old="http://www.w3.org/2004/10/xpath-functions" xmlns:fn="http://www.w3.org/2005/xpath-functions"
+  xmlns:html="http://www.w3.org/TR/REC-html40" xmlns:jcr="http://www.jcp.org/jcr/1.0"
+  xmlns:mgnl="http://www.magnolia.info/jcr/mgnl" xmlns:jcrfn="http://www.jcp.org/jcr/xpath-functions/1.0"
+  xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns:rep="internal" xmlns:xs="http://www.w3.org/2001/XMLSchema"
+  xmlns:stringutils="xalan://org.apache.commons.lang.StringUtils"
+  xmlns:_pre="urn:schemas-microsoft-com:office:spreadsheet"
+  xmlns:jcrutils="xalan://it.openmindonline.urmetdomus.assembler.utils.Path" xmlns:sv="http://www.jcp.org/jcr/sv/1.0"
+  xmlns:mix="http://www.jcp.org/jcr/mix/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0"
+  xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <sv:property sv:name="jcr:primaryType" sv:type="Name">
+    <sv:value>mgnl:contentNode</sv:value>
+  </sv:property>
+  <sv:property sv:name="jcr:mixinTypes" sv:type="Name">
+    <sv:value>mix:lockable</sv:value>
+  </sv:property>
+  <sv:property sv:name="jcr:uuid" sv:type="String">
+    <sv:value>f7cffc0f-8b7c-411c-a932-981936179b50</sv:value>
+  </sv:property>
+  <sv:property sv:name="templatePath" sv:type="String">
+    <sv:value>/templates/user-report.html</sv:value>
+  </sv:property>
+  <sv:property sv:name="type" sv:type="String">
+    <sv:value>freemarker</sv:value>
+  </sv:property>
+  <sv:node sv:name="MetaData">
+    <sv:property sv:name="jcr:primaryType" sv:type="Name">
+      <sv:value>mgnl:metaData</sv:value>
+    </sv:property>
+    <sv:property sv:name="mgnl:authorid" sv:type="String">
+      <sv:value>superuser</sv:value>
+    </sv:property>
+    <sv:property sv:name="mgnl:creationdate" sv:type="Date">
+      <sv:value>2009-10-27T16:13:40.663+01:00</sv:value>
+    </sv:property>
+    <sv:property sv:name="mgnl:lastmodified" sv:type="Date">
+      <sv:value>2009-10-27T16:15:17.936+01:00</sv:value>
+    </sv:property>
+  </sv:node>
+</sv:node>

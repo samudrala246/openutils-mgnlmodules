@@ -1,0 +1,56 @@
+<taglib xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-jsptaglibrary_2_0.xsd"
+  version="2.0">
+  <description>Lms functions</description>
+  <display-name>lms functions</display-name>
+  <tlib-version>3.5</tlib-version>
+  <short-name>lmsfn</short-name>
+  <uri>lms-fn</uri>
+  <function>
+    <name>currentUser</name>
+    <function-class>net.sourceforge.openutils.mgnllms.lms.el.LmsElFunctions</function-class>
+    <function-signature>info.magnolia.cms.security.User currentUser()</function-signature>
+  </function>
+  <function>
+    <name>courseList</name>
+    <function-class>net.sourceforge.openutils.mgnllms.lms.el.LmsElFunctions</function-class>
+    <function-signature>java.util.Collection courseList()</function-signature>
+  </function>
+  <function>
+    <name>activityAttempted</name>
+    <function-class>net.sourceforge.openutils.mgnllms.lms.el.LmsElFunctions</function-class>
+    <function-signature>boolean activityAttempted(java.lang String, java.lang.String)</function-signature>
+  </function>
+  <function>
+    <name>activityIsSuspended</name>
+    <function-class>net.sourceforge.openutils.mgnllms.lms.el.LmsElFunctions</function-class>
+    <function-signature>boolean activityIsSuspended(java.lang.String, java.lang.String)</function-signature>
+  </function>
+  <function>
+    <name>suspendedActivity</name>
+    <function-class>net.sourceforge.openutils.mgnllms.lms.el.LmsElFunctions</function-class>
+    <function-signature>java.lang.String suspendedActivity(java.lang.String)</function-signature>
+  </function>
+  <function>
+    <name>hasSuspendedActivity</name>
+    <function-class>net.sourceforge.openutils.mgnllms.lms.el.LmsElFunctions</function-class>
+    <function-signature>boolean hasSuspendedActivity(java.lang.String)</function-signature>
+  </function>
+  <function>
+    <name>isCourseSatisfied</name>
+    <function-class>net.sourceforge.openutils.mgnllms.lms.el.LmsElFunctions</function-class>
+    <function-signature>boolean isCourseSatisfied(java.lang.String)</function-signature>
+  </function>
+  <tag-file>
+    <name>playerUrl</name>
+    <path>/META-INF/tags/playerUrl.tag</path>
+    <display-name>Player url tag</display-name>
+    <description>Url builder to launch courses</description>
+    <example>
+      <![CDATA[
+      <lmsfn:playerUrl course="{course}" target="blank">
+      <lmsfn:playerUrl course="{course}" target="popup">
+      ]]>
+    </example>
+  </tag-file>
+</taglib>
