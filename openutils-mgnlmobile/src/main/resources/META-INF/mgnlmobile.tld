@@ -1,0 +1,21 @@
+<taglib xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-jsptaglibrary_2_0.xsd"
+  version="2.0">
+  <description>Magnolia Mobile Tags and EL functions</description>
+  <display-name>Magnolia Mobile Tags and EL functions</display-name>
+  <tlib-version>1.0</tlib-version>
+  <short-name>mgnlmobile</short-name>
+  <uri>mgnlmobile</uri>
+  <tag>
+    <description><![CDATA[Adds the mobile preview launcher button to a parent bar. Must be nested into a mainBar to work.]]></description>
+    <name>preview</name>
+    <tag-class>net.sourceforge.openutils.mgnlmobile.tags.MobilePreviewButtonTag</tag-class>
+    <body-content>empty</body-content>
+    <attribute>
+      <description><![CDATA[Where to add this button. Can be "left" or "right". Default is "left".]]></description>
+      <name>position</name>
+      <required>true</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  </tag>
+</taglib>

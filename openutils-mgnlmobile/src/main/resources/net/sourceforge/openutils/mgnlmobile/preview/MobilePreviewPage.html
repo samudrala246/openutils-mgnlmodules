@@ -1,0 +1,27 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<#setting number_format="computer">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <link rel="stylesheet" type="text/css" href="${this.request.contextPath}/.resources/mgnlmobile/css/preview.css" />
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/mootools/1.2.4/mootools-yui-compressed.js"></script>
+    <script type="text/javascript" src="${this.request.contextPath}/.resources/mgnlmobile/js/preview.js"></script>
+    <script type="text/javascript"> 
+    window.addEvent('domready', function() {
+     new DevicePreview({ id: '${this.device.deviceId}',
+      image: '${this.request.contextPath}${this.device.previewImage}',
+      size: [${this.device.previewWidth},${this.device.previewHeight}], 
+      screen: { 
+         size: [${this.device.screenWidth},${this.device.screenHeight}], 
+         position:  [${this.device.screenLeft},${this.device.screenTop}] 
+      }
+     }, 
+    '${this.url}').show(); 
+
+     window.addEvent('unload', window.opener.closePreview);
+    }); 
+    </script>
+  </head>
+  <body>
+    <!-- xx -->
+  </body>
+</html>

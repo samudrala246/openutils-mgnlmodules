@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sv:node sv:name="apple_ipad_ver1" xmlns:sv="http://www.jcp.org/jcr/sv/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <sv:property sv:name="jcr:primaryType" sv:type="Name">
+    <sv:value>mgnl:contentNode</sv:value>
+  </sv:property>
+  <sv:property sv:name="jcr:mixinTypes" sv:type="Name">
+    <sv:value>mix:lockable</sv:value>
+  </sv:property>
+  <sv:property sv:name="jcr:uuid" sv:type="String">
+    <sv:value>d0fa45b9-ff0d-4c66-bd77-099b5ef5bf80</sv:value>
+  </sv:property>
+  <sv:property sv:name="deviceDescription" sv:type="String">
+    <sv:value>Apple iPad Version 1 Landscape</sv:value>
+  </sv:property>
+  <sv:property sv:name="jcr:createdBy" sv:type="String">
+    <sv:value>admin</sv:value>
+  </sv:property>
+  <sv:property sv:name="previewHeight" sv:type="String">
+    <sv:value>852</sv:value>
+  </sv:property>
+  <sv:property sv:name="previewImage" sv:type="String">
+    <sv:value>/.resources/mgnlmobile/images/ipad-landscape.png</sv:value>
+  </sv:property>
+  <sv:property sv:name="previewWidth" sv:type="String">
+    <sv:value>1108</sv:value>
+  </sv:property>
+  <sv:property sv:name="screenHeight" sv:type="String">
+    <sv:value>690</sv:value>
+  </sv:property>
+  <sv:property sv:name="screenLeft" sv:type="String">
+    <sv:value>43</sv:value>
+  </sv:property>
+  <sv:property sv:name="screenTop" sv:type="String">
+    <sv:value>120</sv:value>
+  </sv:property>
+  <sv:property sv:name="screenWidth" sv:type="String">
+    <sv:value>1024</sv:value>
+  </sv:property>
+  <sv:node sv:name="MetaData">
+    <sv:property sv:name="jcr:primaryType" sv:type="Name">
+      <sv:value>mgnl:metaData</sv:value>
+    </sv:property>
+    <sv:property sv:name="jcr:createdBy" sv:type="String">
+      <sv:value>admin</sv:value>
+    </sv:property>
+    <sv:property sv:name="mgnl:activated" sv:type="Boolean">
+      <sv:value>false</sv:value>
+    </sv:property>
+    <sv:property sv:name="mgnl:authorid" sv:type="String">
+      <sv:value>superuser</sv:value>
+    </sv:property>
+    <sv:property sv:name="mgnl:creationdate" sv:type="Date">
+      <sv:value>2010-07-05T19:31:41.726+02:00</sv:value>
+    </sv:property>
+    <sv:property sv:name="mgnl:lastmodified" sv:type="Date">
+      <sv:value>2010-08-26T12:59:39.430+02:00</sv:value>
+    </sv:property>
+  </sv:node>
+</sv:node>

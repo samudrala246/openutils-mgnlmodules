@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE module SYSTEM "module.dtd">
+<module>
+  <name>mobile</name>
+  <displayName>Magnolia Mobile</displayName>
+  <description>Magnolia Mobile Module</description>
+  <class>net.sourceforge.openutils.mgnlmobile.magnolia.MobileModule</class>
+  <versionHandler>net.sourceforge.openutils.mgnlmobile.magnolia.MobileModuleVersionHandler</versionHandler>
+  <version>${project.version}</version>
+  <properties>
+    <property>
+      <name>info.magnolia.module.templating.TemplateManager</name>
+      <value>net.sourceforge.openutils.mgnlmobile.templating.MobileTemplateManager</value>
+    </property>
+    <property>
+      <name>net.sourceforge.openutils.mgnlmobile.templating.MobileTemplate</name>
+      <value>net.sourceforge.openutils.mgnlmobile.templating.DefaultMobileTemplate</value>
+    </property>
+    <property>
+      <name>info.magnolia.module.templating.ParagraphManager</name>
+      <value>net.sourceforge.openutils.mgnlmobile.templating.MobileParagraphManager</value>
+    </property>
+    <property>
+      <name>net.sourceforge.openutils.mgnlmobile.templating.MobileParagraph</name>
+      <value>net.sourceforge.openutils.mgnlmobile.templating.DefaultMobileParagraph</value>
+    </property>
+    <property>
+      <name>net.sourceforge.openutils.mgnlmobile.filters.MobileWURFLManager</name>
+      <value>net.sourceforge.openutils.mgnlmobile.filters.DefaultMobileWURFLManager</value>
+    </property>
+  </properties>
+  <dependencies>
+    <dependency>
+      <name>adminInterface</name>
+      <version>4.0/*</version>
+    </dependency>
+    <dependency>
+      <name>templating</name>
+      <version>4.0/*</version>
+    </dependency>
+  </dependencies>
+</module>
