@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+  <!--
+  "type" attribute can be: add, remove, update or fix.
+-->
+<document>
+  <properties>
+    <title>Changes</title>
+    <author email="fgiust(at)users.sourceforge.net">Fabrizio Giustina</author>
+  </properties>
+  <body>
+    <release version="1.1" date="2009-08-20" description="">
+      <action type="fix" dev="fgiust">Print out the full stacktrace for exception thrown in groovy scripts.</action>
+      <action type="update" dev="fgiust">Update groovy dependency to version 1.6.3.</action>
+      <action type="update" dev="fgiust">Update magnolia dependency to version 4.1.</action>
+    </release>
+    <release version="1.0" date="2008-12-03" description="first release">
+      <action type="new" dev="fgiust">Initial public release.</action>
+    </release>
+  </body>
+</document>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE module SYSTEM "module.dtd" >
+<module>
+  <name>groovyshell</name>
+  <displayName>magnolia groovy shell module</displayName>
+  <description>magnolia groovy shell module</description>
+  <class>net.sourceforge.openutils.mgnlgroovy.lifecycle.GroovyShellModule</class>
+  <versionHandler>net.sourceforge.openutils.mgnlgroovy.setup.GroovyShellModuleVersionHandler</versionHandler>
+  <version>${project.version}</version>
+  <dependencies>
+    <dependency>
+      <name>adminInterface</name>
+      <version>3.1/*</version>
+    </dependency>
+  </dependencies>
+</module>

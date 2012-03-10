@@ -1,0 +1,15 @@
+html,body {
+  margin: 0;
+  font-family: "Courier New", Courier, monospace;
+  font-size: 11px;
+  color: white;
+  background: #000;
+}
+
+body {
+  padding-left: 10px;
+}
+
+.err {
+  color: #f00;
+}

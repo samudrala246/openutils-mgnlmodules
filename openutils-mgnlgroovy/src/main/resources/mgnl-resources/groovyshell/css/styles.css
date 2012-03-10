@@ -1,0 +1,20 @@
+.warningMsg {
+  border: 2px solid #FFD324;
+  padding: 10px 11px 8px 38px;
+  background: #FFF8BF url(images/warning.png) no-repeat scroll 13px 12px;
+  color: #B35F00;
+}
+
+#textarecontainer {
+  border: 1px solid #ccc !important;
+}
+
+.CodeMirror-line-numbers {
+  background-color: #eee;
+  text-align: right;
+  font-family: "DejaVu Sans Mono", courier, monospace;
+  font-size: 10pt;
+  color: #333;
+  line-height: 16px;
+  padding: .4em 3px;
+}

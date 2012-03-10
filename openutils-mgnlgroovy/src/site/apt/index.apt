@@ -1,0 +1,23 @@
+                                 --------------------------
+                                   openutils-mgnlgroovy
+                                 --------------------------
+                                     Fabrizio Giustina
+                                 --------------------------
+
+About openutils-mgnlgroovy
+
+ openutils-mgnlgroovy is a custom {{{http://www.magnolia-cms.com}magnolia}} module which adds a console for running groovy
+ scripts inside Magnolia's adminCentral interface
+
+ <<Requires Magnolia version 3.1 or higher (tested with 4.1.x)>>
+
+ The module needs to be installed as usual, by declaring an additional dependency into your pom or by manually dropping the jar
+ into Magnolia. If you are installing it manually, please note that you will also need to install other dependencies, see
+ the {{{dependencies.html}dependencies}} report for details
+
+More info about this module can be found in the {{{http://wiki.magnolia-cms.com/display/WIKI/Magnolia+groovy+shell+module}Magnolia Community Wiki}}
+
+
+Released versions
+
+ {{{http://www.mvnrepository.com/artifact/net.sourceforge.openutils/openutils-mgnlgroovy}http://www.mvnrepository.com/artifact/net.sourceforge.openutils/openutils-mgnlgroovy}}

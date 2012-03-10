@@ -1,0 +1,137 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <title>Groovy Shell Page</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link href="${this.request.contextPath}/.resources/groovyshell/css/bootstrap/jquery-ui-1.8.16.custom.css" type="text/css"
+      rel="stylesheet" />
+    <link href="${this.request.contextPath}/.resources/groovyshell/css/bootstrap/bootstrap.css" type="text/css"
+      rel="stylesheet" />
+    <link href="${this.request.contextPath}/.resources/groovyshell/css/bootstrap/jquery.layout.css" type="text/css"
+      rel="stylesheet" />
+    <link href="${this.request.contextPath}/.resources/groovyshell/css/bootstrap/jquery-ui-fileinput/enhanced.css"
+      type="text/css" rel="stylesheet" />
+    <link href="${this.request.contextPath}/.resources/groovyshell/css/editor.css" type="text/css" rel="stylesheet" />
+  </head>
+  <body>
+    <div id="container">
+      <div id="layout">
+        <div class="ui-layout-center">
+          <div id="editor">${this.groovyScript!''}</div>
+          <div class="functions">
+            <button class="button-run">Run (ctrl + enter)</button>
+            <button class="button-save">Save as...</button>
+          </div>
+        </div>
+        <iframe name="run" class="ui-layout-south console" frameborder="0"></iframe>
+      </div>
+      <iframe name="save" id="savefr"></iframe>
+      <form id="form-run" action="" method="POST" style="display: none" target="run">
+        <input type="hidden" id="command" name="command" value="run" />
+        <input type="hidden" class="groovyScript" name="groovyScript" value="" />
+      </form>
+      <form id="form-save" action="" method="POST" style="display: none" target="save">
+        <input type="hidden" id="command" name="command" value="save" />
+        <input type="hidden" class="groovyScript" name="groovyScript" value="" />
+      </form>
+    </div>
+    <div id="dialog-empty" title="Empty script">
+      <p>
+        <span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 50px 0;"></span>
+        Cannot execute action, the script is empty.
+      </p>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"><!-- --></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js" type="text/javascript"><!-- --></script>
+    <script src="http://layout.jquery-dev.net/lib/js/jquery.layout-latest.js" type="text/javascript"><!-- --></script>
+    <script src="${this.request.contextPath}/.resources/groovyshell/js/ace/ace.js" type="text/javascript"><!-- --></script>
+    <script src="${this.request.contextPath}/.resources/groovyshell/js/ace/mode-groovy.js" type="text/javascript" charset="utf-8"><!--  --></script>
+    <script src="${this.request.contextPath}/.resources/groovyshell/js/ace/theme-eclipse.js" type="text/javascript" charset="utf-8"><!--  --></script>
+    <script type="text/javascript">
+      // <![CDATA[
+(function(){ 
+    var editor, resizeTo, onresize = function() { 
+        if (resizeTo) { clearTimeout(resizeTo); } 
+        resizeTo = setTimeout(function(){
+            editor.resize(); 
+            editor.renderer.updateFull(); 
+        }, 10); 
+    } 
+    var checkScript = function() {
+      var script = editor.getSession().getValue();
+      if (script.trim().length > 0) {
+        $(".groovyScript").val(script);
+        return true;
+      } else {
+        dialogEmpty.dialog("open");
+        return false;
+      }
+    }
+    var dialogEmpty = $("#dialog-empty").dialog({
+      autoOpen: false,
+      modal: true,
+      resizable: false,
+      buttons: {
+        Ok: function() {
+          $( this ).dialog( "close" );
+        }
+      }
+    });
+    $("#layout").layout({ 
+        south: { size: 150, onresize_end: onresize, onshow_end: onresize, onhide_end: onresize, onopen_end: onresize, onclose_end: onresize } 
+    });
+    $(".button-run").button({
+      icons: {
+        primary: "ui-icon-play"
+      },
+      text: false
+    }).click(function(){
+      if (checkScript()) {
+        $("#form-run").submit();
+      }
+    });
+    $(".button-save").button({
+      icons: {
+        primary: "ui-icon-disk"
+      },
+      text: false
+    }).click(function(){
+      if (checkScript()) {
+        $("#form-save").submit();
+      }
+    });
+    //$(document).ready(function(){ 
+    editor = ace.edit("editor"); 
+    editor.setTheme("ace/theme/eclipse");
+    var GroovyMode = require("ace/mode/groovy").Mode; 
+    editor.getSession().setMode(new GroovyMode()); 
+    editor.commands.addCommand({
+      name: "save",
+      bindKey: {
+          win: "Ctrl-S",
+          mac: "Command-S",
+          sender: "editor"
+      },
+      exec: function() {
+          alert("Fake Save File");
+      }
+    });
+    editor.commands.addCommand({
+      name: "run",
+      bindKey: {
+          win: "Ctrl-Return",
+          mac: "Command-Return",
+          sender: "editor"
+      },
+      exec: function() {
+          $(".button-run").click();
+      }
+    });
+    $(window).resize(onresize);
+    $(window).resize(); 
+    //}); 
+})();
+// ]]>
+    </script>
+  </body>
+</html>
