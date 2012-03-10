@@ -19,7 +19,9 @@
 
 package net.sourceforge.openutils.mgnlcontextmenu.tags;
 
+import info.magnolia.cms.security.Permission;
 import info.magnolia.context.MgnlContext;
+import info.magnolia.jcr.util.NodeUtil;
 
 import java.io.IOException;
 
@@ -64,7 +66,7 @@ public class LinksTag extends TagSupport
     public int doStartTag() throws JspException
     {
         String ctx = MgnlContext.getContextPath();
-        boolean canEdit = CmsFunctions.canEdit();
+        boolean canEdit = canEdit();
         JspWriter out = pageContext.getOut();
         try
         {
@@ -108,6 +110,11 @@ public class LinksTag extends TagSupport
             throw new JspException(e);
         }
         return EVAL_PAGE;
+    }
+
+    private boolean canEdit()
+    {
+        return NodeUtil.isGranted(MgnlContext.getAggregationState().getMainContent().getJCRNode(), Permission.SET);
     }
 
     /**

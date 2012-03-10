@@ -19,7 +19,9 @@
 
 package net.sourceforge.openutils.mgnlcontextmenu.tags;
 
+import info.magnolia.cms.security.Permission;
 import info.magnolia.context.MgnlContext;
+import info.magnolia.jcr.util.NodeUtil;
 
 import java.io.IOException;
 import java.util.List;
@@ -48,7 +50,7 @@ public class ScriptTag extends TagSupport
     @Override
     public int doStartTag() throws JspException
     {
-        if (CmsFunctions.canEdit())
+        if (canEdit())
         {
             JspWriter out = pageContext.getOut();
             try
@@ -144,6 +146,11 @@ public class ScriptTag extends TagSupport
             }
         }
         return "{" + sb + "}";
+    }
+
+    private boolean canEdit()
+    {
+        return NodeUtil.isGranted(MgnlContext.getAggregationState().getMainContent().getJCRNode(), Permission.SET);
     }
 
 }

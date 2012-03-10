@@ -20,7 +20,9 @@
 package net.sourceforge.openutils.mgnlcontextmenu.tags;
 
 import info.magnolia.cms.core.Content;
+import info.magnolia.cms.security.Permission;
 import info.magnolia.context.MgnlContext;
+import info.magnolia.jcr.util.NodeUtil;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -110,8 +112,8 @@ public class ElementTag extends BodyTagSupport
     @Override
     public int doStartTag() throws JspException
     {
-        Content node = this.node != null ? this.node : CmsFunctions.currentParagraph();
-        boolean readonly = this.readonly || !CmsFunctions.canEdit();
+        Content node = this.node != null ? this.node : currentParagraph();
+        boolean readonly = this.readonly || !canEdit();
         if (!readonly)
         {
             if (StringUtils.isEmpty(wrapper))
@@ -153,8 +155,8 @@ public class ElementTag extends BodyTagSupport
     @Override
     public int doEndTag() throws JspException
     {
-        Content node = this.node != null ? this.node : CmsFunctions.currentParagraph();
-        boolean readonly = this.readonly || !CmsFunctions.canEdit();
+        Content node = this.node != null ? this.node : currentParagraph();
+        boolean readonly = this.readonly || !canEdit();
         if (!readonly)
         {
             try
@@ -192,6 +194,16 @@ public class ElementTag extends BodyTagSupport
         ElementInfo info = new ElementInfo(path, elementId);
         infos.add(info);
         return info;
+    }
+
+    private boolean canEdit()
+    {
+        return NodeUtil.isGranted(MgnlContext.getAggregationState().getMainContent().getJCRNode(), Permission.SET);
+    }
+
+    private Content currentParagraph()
+    {
+        return MgnlContext.getAggregationState().getCurrentContent();
     }
 
     /**
