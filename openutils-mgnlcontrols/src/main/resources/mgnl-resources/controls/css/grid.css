@@ -1,0 +1,18 @@
+.x-form-field-wrap .x-form-link-trigger {
+  background-image: url(img/link-trigger.gif);
+  cursor: pointer;
+}
+
+.x-form-field-wrap .x-form-fckedit-trigger {
+  background-image: url(img/fckedit-trigger.gif);
+  cursor: pointer;
+}
+
+.x-form-field-wrap .x-form-fileupload-trigger {
+  background-image: url(img/fileupload-trigger.gif);
+  cursor: pointer;
+}
+
+.x-form-field-wrap .x-form-color-trigger {
+	background-image: url(img/color-trigger.gif);
+}

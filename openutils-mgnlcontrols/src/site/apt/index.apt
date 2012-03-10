@@ -1,0 +1,24 @@
+                                 --------------------------
+                                   openutils-mgnlcontrols
+                                 --------------------------
+                                     Fabrizio Giustina
+                                 --------------------------
+
+About openutils-mgnlcontrols
+
+ openutils-mgnlcontrols is a custom {{{http://www.magnolia.info}magnolia}} module which adds useful controls (at this time one)
+ that can be used in magnolia dialogs.
+
+ <<This module requires magnolia 3.5.x, and will not work on any earlier version!>>
+
+ The module needs to be installed as usual, by declaring an additional dependency into your pom or by manually dropping the jar
+ into magnolia. If you are installing it manually, please note that you will also need to install
+ {{{http://openutils.sourceforge.net/openutils-mgnltasks}openutils-mgnltasks}} and {{{http://openutils.sourceforge.net/openutils-mgnlext}openutils-mgnlext}}
+
+ After installing the openutils-mgnlcontrols module, you will be able to use the new control types in dialogs. See the
+ {{{grid.html}grid control documentation}} for details.
+
+
+Released versions
+
+ {{{http://www.mvnrepository.com/artifact/net.sourceforge.openutils/openutils-mgnlcontrols}http://www.mvnrepository.com/artifact/net.sourceforge.openutils/openutils-mgnlcontrols}}

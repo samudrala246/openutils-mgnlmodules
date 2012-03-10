@@ -1,0 +1,59 @@
+                                 --------------------------
+                                   openutils-mgnlcontrols
+                                 --------------------------
+                                     Fabrizio Giustina
+                                 --------------------------
+
+The grid control
+
+ The grid control is a {{{http://extjs.com/}extjs}} powered spreadsheet like grid that can be used in magnolia dialogs.
+
+ In order to use it you need to configure a control with the controlType property set to "grid" and declare the number/name of the grid columns and the number of rows.
+
+ The image below shows how the control looks in a dialog:
+
+[images/grid.png]
+
+
+Saving data
+
+ The grid control save all its content as a single fields (a newline/tab delimited string). You will need to parse this
+ value in your jsp templates.
+
+
+Configuration
+
+ This is a sample control configuration, you should find it pretty self-explanatory
+
+
+[images/grid-config.png]
+
+Supported editors (column types)
+
+ The grid control supports the following editors (can be configured using the "type" property in each column):
+
+
+ * (no type): default, text field
+
+ * checkbox: a checkbox field which saves a true/false value
+
+ * link: a text fields with a button that can be used to insert an internal link
+
+ * combo: a list of predefined values (configured in the "options" node)
+
+ * date: a date selector
+
+
+Hacking it
+
+ The grid editor is actually implemented as a freemarker control, so it can easily be modified and improved.
+ The freemarker template is named dialogs/grid.ftl: you can copy it to your webapp (into the webapp classpath) in order
+ to modify it as needed.
+
+ If you spend time in improving it (for example adding more editors) and you are interested in contributing your code
+ to the project, please let us know, we will be happy to accept your contribution!
+
+
+
+
+

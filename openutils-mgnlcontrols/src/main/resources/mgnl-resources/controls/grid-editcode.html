@@ -1,0 +1,73 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <title>Edit Code</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <script type="text/javascript" src="../../.magnolia/pages/javascript.js"></script>
+    <script type="text/javascript" src="../../.resources/admin-js/dialogs/dialogs.js"></script>
+    <link rel="stylesheet" type="text/css" href="../../.resources/admin-css/admin-all.css" />
+
+    <script type="text/javascript" src="../../.resources/js/codemirror/codemirror-min.js"></script>
+    <style type="text/css">
+      .CodeMirror-line-numbers {
+        background-color: #eee;
+        text-align: right;
+        font-family: monospace;
+        font-size: 10pt;
+        color: #aaa;
+        line-height: 16px;
+        padding: .4em;
+        width: 2.2em;
+      }
+    </style>
+    <script type="text/javascript">
+var editor;
+MgnlDHTMLUtil.addOnLoad(function(){
+  document.getElementById("grid").value = window.opener.getEditCodeValue().replace(/&amp;/g, "&").replace(/&quot;/g, "\"").replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/\\(.)/g, function(all, c) {
+    switch(c){
+      case "\\":
+        return "\\";
+      case "t":
+        return "\t";
+      case "n":
+        return "\n";
+      case "r":
+        return "\r";
+      default:
+        return all;
+    }
+  });
+  editor = CodeMirror.fromTextArea("grid", {
+    path: "../../.resources/js/codemirror/",
+    textWrapping: false,
+    height: "400px",
+    basefiles: ["codemirror-base.min.js"],
+    parserfile: ["allinone.js"],
+    stylesheet: ["../../.resources/js/codemirror/css/jscolors.css","../../.resources/js/codemirror/css/csscolors.css","../../.resources/js/codemirror/css/xmlcolors.css","../../.resources/js/codemirror/css/freemarkercolors.css","../../.resources/js/codemirror/css/groovycolors.css"],
+    lineNumbers:true,
+    initCallback:function(e){ 
+      e.setParser('HTMLMixedParser');
+      e.focus();
+    }
+  });
+});
+function getValue() {
+  return editor.getCode().replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/\\/g, "\\\\").replace(/\t/g, "\\t").replace(/\n/g, "\\n").replace(/\r/g, "\\r");
+}
+  </script>
+  </head>
+  <body style="padding:0;margin:0">
+    <h1 style="background-color:#F0F2E6; color:#396101; font-size:11pt; border-bottom:1px solid #999;margin:0;padding:3px 10px">Edit Code</h1>
+    <div style="margin: 10px;">
+      <div class="editorWrapper" style="border: 1px solid #999; padding: 3px;">
+        <textarea class="mgnlDialogControlEdit" cols="30" rows="20" id="grid" name="grid" style="display: none;"></textarea>
+      </div>
+    </div>
+    <div class="mgnlDialogTabsetSaveBar">
+      <span class="mgnlControlButton" onclick="window.opener.setEditCodeValue(getValue()); mgnlShiftPushButtonClick(this); window.opener.focus(); window.close();" onmouseout="mgnlShiftPushButtonOut(this);"
+        onmousedown="mgnlShiftPushButtonDown(this);">
+        OK
+      </span>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <title>FCK Editor</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <script type="text/javascript" src="../../.magnolia/pages/javascript.js"></script>
+    <script type="text/javascript" src="../../.resources/admin-js/dialogs/dialogs.js"></script>
+    <link rel="stylesheet" type="text/css" href="../../.resources/admin-css/admin-all.css" />
+
+    <script type="text/javascript" src="../../.resources/fckeditor/fckeditor.js"></script>
+  </head>
+  <body style="padding:0;margin:0">
+    <script type="text/javascript">
+var urlParams={};
+var t=document.location.search.substr(1).split('&');
+for (var i=0;i<t.length;i++) {
+  var s=t[i].split('=');
+  urlParams[decodeURIComponent(s[0])]=decodeURIComponent(s[1]);
+}
+if( window.MgnlFCKConfigs == null)
+    window.MgnlFCKConfigs = new Object();
+MgnlFCKConfigs.grid = new Object();
+var contextPath = window.opener.getFckEditorContextPath();
+MgnlFCKConfigs.grid.contextPath = contextPath;
+MgnlFCKConfigs.grid.css = '/.resources/fckeditor/custom/css/magnoliaStandard.css';
+MgnlFCKConfigs.grid.fonts = '';
+MgnlFCKConfigs.grid.fontSizes = '';
+MgnlFCKConfigs.grid.colors = '';
+MgnlFCKConfigs.grid.styles = '';
+MgnlFCKConfigs.grid.templates = '';
+MgnlFCKConfigs.grid.enterMode = urlParams['enterMode'] || 'p';
+MgnlFCKConfigs.grid.shiftEnterMode = 'br';
+MgnlFCKConfigs.grid.lists = true;
+MgnlFCKConfigs.grid.alignment = false;
+MgnlFCKConfigs.grid.tables = false;
+MgnlFCKConfigs.grid.images = false;
+MgnlFCKConfigs.grid.source = true;
+var fckInstance = new FCKeditor( 'grid' );
+fckInstance.Value = window.opener.getFckEditorValue();
+fckInstance.BasePath = contextPath + '/.resources/fckeditor/';
+fckInstance.Config['CustomConfigurationsPath'] = contextPath + '/.resources/fckeditor/custom/config/magnoliaStandard.js';
+fckInstance.ToolbarSet = 'MagnoliaStandard';
+fckInstance.Create();
+    </script>
+    <div class="mgnlDialogTabsetSaveBar">
+      <span class="mgnlControlButton" onclick="window.opener.setFckEditorValue(FCKeditorAPI.GetInstance('grid').GetXHTML(true)); mgnlShiftPushButtonClick(this); window.opener.focus(); window.close();" onmouseout="mgnlShiftPushButtonOut(this);"
+        onmousedown="mgnlShiftPushButtonDown(this);">
+        OK
+      </span>
+    </div>
+  </body>
+</html>

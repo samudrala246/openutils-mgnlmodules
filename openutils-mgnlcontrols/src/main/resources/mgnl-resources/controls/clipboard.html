@@ -1,0 +1,31 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <title>Paste from spreadsheet</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <script type="text/javascript" src="../../.magnolia/pages/javascript.js"></script>
+    <script type="text/javascript" src="../../.resources/admin-js/dialogs/dialogs.js"></script>
+    <link rel="stylesheet" type="text/css" href="../../.resources/admin-css/admin-all.css" />
+    <script type="text/javascript">
+var urlParams={};
+var t=document.location.search.substr(1).split('&');
+for (var i=0;i<t.length;i++) {
+  var s=t[i].split('=');
+  urlParams[decodeURIComponent(s[0])]=decodeURIComponent(s[1]);
+}
+    </script>
+  </head>
+  <body style="padding:0;margin:0">
+    <h1 style="background-color:#F0F2E6; color:#396101; font-size:11pt; border-bottom:1px solid #999;margin:0;padding:3px 10px">Paste from spreadsheet</h1>
+    <p style="margin: 10px;font-size:9pt">Please paste inside the following box using the keyboard (<strong>Ctrl+V</strong>) and hit <strong>OK</strong>.</p>
+    <p style="margin: 10px">
+    <textarea id="clipboard" name="clipboard" rows="4" cols="20" style="width: 100%;border: 1px solid #999"></textarea>
+    </p>
+    <div class="mgnlDialogTabsetSaveBar">
+      <span class="mgnlControlButton" onclick="opener.window.gridPaste(urlParams['name'], urlParams['expand'] == 'true'), document.getElementById('clipboard').value); mgnlShiftPushButtonClick(this); window.top.close();" onmouseout="mgnlShiftPushButtonOut(this);"
+        onmousedown="mgnlShiftPushButtonDown(this);">
+        OK
+      </span>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <title>File upload</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <script type="text/javascript" src="../../.magnolia/pages/javascript.js"></script>
+    <script type="text/javascript" src="../../.resources/admin-js/dialogs/dialogs.js"></script>
+    <script type="text/javascript">
+function OnUploadCompleted(errorNumber, fileUrl, fileName, customMsg) {
+    switch (errorNumber) {
+      case 0:
+        alert("Your file has been successfully uploaded");
+        break;
+      default:
+        alert("Error on file upload. Error number: " + errorNumber);
+        return;
+    }
+    window.opener.setFileValue(fileUrl);
+    window.opener.focus();
+    window.close();
+}
+    </script>
+    <link rel="stylesheet" type="text/css" href="../../.resources/admin-css/admin-all.css" />
+  </head>
+  <body style="padding:0;margin:0">
+    <h1
+      style="background-color:#F0F2E6; color:#396101; font-size:11pt; border-bottom:1px solid #999;margin:0;padding:3px 10px">
+      File upload
+    </h1>
+
+    <div id="divUpload">
+      <form
+        action="../../.magnolia/fckeditor/upload?repository=website&amp;path=/temp/it/home/quick-answers&amp;nodeCollection=main&amp;node=0&amp;name=text&amp;type=file"
+        enctype="multipart/form-data" target="UploadWindow" method="post" id="frmUpload">
+        <span fcklang="DlgLnkUpload">Carica</span>
+        <br />
+        <input type="file" name="NewFile" size="40" style="width: 100%;" id="txtUploadFile" />
+        <br />
+        <br />
+        <input type="submit" fcklang="DlgLnkBtnUpload" value="Invia al Server" id="btnUpload" />
+        <script type="text/javascript">
+          // <!--
+            document.write('<iframe name="UploadWindow" style="display: none" src="javascript: void(0);"><\/iframe>');
+            // -->
+        </script>
+      </form>
+    </div>
+  </body>
+</html>

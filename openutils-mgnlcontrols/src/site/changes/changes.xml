@@ -1,0 +1,56 @@
+<?xml version="1.0"?>
+  <!--
+  "type" attribute can be: add, remove, update or fix.
+-->
+<document>
+  <properties>
+    <title>Changes</title>
+    <author email="fgiust(at)users.sourceforge.net">Fabrizio Giustina</author>
+  </properties>
+  <body>
+    <release version="4.0.8" date="2009-09-25" description="">
+      <action type="fix" dev="molaschi">Changes to media field to best handle thumbnails by using a virtual uri /thumbnail/[media UUID]</action>
+    </release>
+    <release version="4.0.3" date="2009-09-25" description="">
+      <action type="fix" dev="dfghi">Corrected pom dependency to mgnltasks</action>
+    </release>
+    <release version="4.0.1" date="2009-06-04" description="">
+      <action type="add" dev="fgiust">Added a new mehod addToParameters in ConfigurableFreemarkerDialog that can be
+        overridden to supply custom values to the freemarker template</action>
+      <action type="fix" dev="fgiust">Update handling of multi-value properties in ConfigurableFreemarkerDialog to
+        magnolia 4.0</action>
+    </release>
+    <release version="4.0" date="2009-04-09" description="">
+      <action type="update" dev="fgiust">Update magnolia dependencies to version 4.0.</action>
+      <action type="fix" dev="fgiust">Fixed bug for column size on ie6 (see http://extjs.com/forum/showthread.php?p=151624
+        )</action>
+      <action type="add" dev="fgiust">Added functionality to move rows in grid</action>
+      <action type="add" dev="fgiust">New "date" type in grid</action>
+      <action type="add" dev="fgiust">Misc fixes to "clear all" and "paste" features</action>
+    </release>
+    <release version="3.5.5" date="2008-07-29" description="">
+      <action type="fix" dev="fgiust">grid control now works properly also with fields containing non-standard chars in
+        their name</action>
+    </release>
+    <release version="3.5.4" date="2008-07-21" description="">
+      <action type="fix" dev="fgiust">esternal javascript are now included only once when using multiple grid controls in
+        the same dialog</action>
+      <action type="add" dev="fgiust">New "combo" control type handled by grid</action>
+    </release>
+    <release version="3.5.3" date="2008-07-13" description="">
+      <action type="update" dev="fgiust">Extjs has been moved to openutils-mgnlext, which is now a required dependency
+      </action>
+    </release>
+    <release version="3.5.2" date="2008-06-26" description="">
+      <action type="fix" dev="fgiust">Cleanup bootstrap files (removed useless namespaces)</action>
+      <action type="fix" dev="fgiust">fixed a javascript error on ext which sometimes popped up on dalog loading</action>
+    </release>
+    <release version="3.5.1" date="2008-06-23" description="">
+      <action type="new" dev="fgiust">Handling of "link" and "checkbox" column types.</action>
+    </release>
+    <release version="3.5" date="2008-06-20" description="first release">
+      <action type="new" dev="fgiust">Initial public release. Version numbering starts from 3.5 to match the compatible
+        magnolia version.</action>
+    </release>
+  </body>
+</document>
