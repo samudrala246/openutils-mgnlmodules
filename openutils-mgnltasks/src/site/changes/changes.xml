@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+  <!--
+  "type" attribute can be: add, remove, update or fix.
+-->
+<document>
+  <properties>
+    <title>Changes</title>
+    <author email="fgiust(at)users.sourceforge.net">Fabrizio Giustina</author>
+  </properties>
+  <body>
+    <release version="4.0.1" date="2009-05-02" description="">
+      <action type="add" dev="fgiust">new tasks: CreateMissingPropertyTask, DirectoryBootstrapTask</action>
+    </release>
+    <release version="4.0" date="2009-03-12" description="">
+      <action type="update" dev="fgiust">Updated to magnolia 4.0. This release will not work correctly with previous
+        versions. Please note that previous 3.x releases don't fully work with magnolia 4.0 either.</action>
+      <action type="add" dev="fgiust">new tasks: ConditionalTask, ExistenceConditionalBootstrapTask</action>
+    </release>
+    <release version="3.5.5" date="2008-07-27" description="">
+      <action type="add" dev="fgiust">new tasks: AddPermissionTask, CreateDefaultRepositoryAclForAllUsersTask</action>
+    </release>
+    <release version="3.5.5" date="2008-07-27" description="">
+      <action type="add" dev="fgiust">new tasks: AddPermissionTask, CreateDefaultRepositoryAclForAllUsersTask</action>
+    </release>
+    <release version="3.5.4" date="2008-07-24" description="">
+      <action type="add" dev="fgiust">new tasks: CheckMissingTemplatesTask, CheckMissingParagraphsTask,
+        ReplaceTemplateTask</action>
+    </release>
+    <release version="3.5.3" date="2008-06-24" description="">
+      <action type="add" dev="fgiust">new CheckAndCreateRoleTask and CheckAndCreateGroupTask</action>
+      <action type="update" dev="fgiust">AnonymousUserSetupTask now also takes care of changing permissions on URIs
+      </action>
+    </release>
+    <release version="3.5.2" date="2008-06-08" description="">
+      <action type="add" dev="fgiust">Added [modulename].update.disabled property in SimpleModuleVersionHandler that can
+        be set to true in order to disable module configuration updates</action>
+      <action type="add" dev="fgiust">Added it.openutils.mgnltasks.DisableSubscribersTask</action>
+    </release>
+    <release version="3.5.1" date="2008-04-28" description="3.5.1">
+      <action type="add" dev="fgiust">Added UpdateModuleVersionTask.</action>
+      <action type="add" dev="fgiust">Added SimpleModuleVersionHandler.</action>
+    </release>
+    <release version="3.5" date="2008-04-27" description="first release">
+      <action type="add" dev="fgiust">First public release. The version is labeled "3.5" in order to make clear which
+        version of magnolia is required.</action>
+    </release>
+  </body>
+</document>

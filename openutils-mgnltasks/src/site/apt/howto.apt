@@ -1,0 +1,85 @@
+                                 --------------------------
+                                      O p e n u t i l s
+                                 --------------------------
+                                      Fabrizio Giustina
+                                 --------------------------
+
+Usage
+
+ You can subclass openutils' SimpleModuleVersionHandler in order to get a fully functional module version handler ready.
+
+ SimpleModuleVersionHandler will by default take care of (read carefully!):
+
+ * Re-bootstrapping all its configuration (config workspace) when the version number changes
+
+ * Update the module version in the jcr repository
+
+ []
+
+
+ In addition to this, you can override the getStartupTasks() method and, by using the standard tasks provided by
+ magnolia itself or openutils-mgnltasks, perform all the sorts of initialization/configuration/checks you may need.
+
+ See the example below for an inspiration on how you could setup your content modules:
+
+
++------------------------------------------------+
+
+public class MymoduleModuleVersionHandler extends SimpleModuleVersionHandler
+{
+
+    public List<Task> getStartupTasks(InstallContext installContext)
+    {
+
+        boolean admin = SystemProperty.getBooleanProperty("magnolia.bootstrap.authorInstance");
+        boolean develop = SystemProperty.getBooleanProperty("magnolia.develop");
+
+        List<Task> tasks = new ArrayList<Task>();
+
+        // allow access for public or development instances only
+        tasks.add(new AnonymousUserSetupTask(!admin || develop));
+
+        // configure the smtp from magnolia.properties
+        String smtp = SystemProperty.getProperty("mail.host");
+        if (StringUtils.isNotEmpty(smtp))
+        {
+            tasks.add(new SetPropertyTask("config", "/modules/mail/config/smtp", "smtpServer", smtp));
+        }
+
+        // sort dialogs and paragraphs by name, templates by title
+        tasks.add(new NodeSortTask("config", "/modules/mymodule/dialogs"));
+        tasks.add(new NodeSortTask("config", "/modules/mymodule/paragraphs"));
+        tasks.add(new NodeSortTask("config", "/modules/mymodule/templates", "title"));
+
+        // don't use COS
+        tasks.add(new SetPropertyTask(
+            "config",
+            "/server/filters/multipartRequest",
+            "class",
+            "info.magnolia.cms.filters.MultipartRequestFilter"));
+
+        // we want to be able to set a different default page in magnolia.properties
+        String defaultpage = !admin || develop
+            ? "redirect:" + SystemProperty.getProperty("magnolia.defaultpage")
+            : "redirect:/.magnolia/pages/adminCentral.html";
+        tasks.add(new SetPropertyTask(
+            "config",
+            "/modules/adminInterface/virtualURIMapping/default",
+            "toURI",
+            defaultpage));
+
+        // adds a new admin user if missing
+        tasks.add(new CheckAndCreateUserTask("/admin/admin", "/mgnl-bootstrap/users/users.admin.admin.xml"));
+
+        // disable any subscriber during development
+        if (develop || !admin)
+        {
+            tasks.add(new DisableSubscribersTask());
+        }
+
+        return tasks;
+    }
+
+}
+
++------------------------------------------------+

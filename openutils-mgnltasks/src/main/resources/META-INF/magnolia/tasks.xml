@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE module SYSTEM "module.dtd">
+<module>
+  <name>tasks</name>
+  <displayName>Openutils magnolia tasks</displayName>
+  <description>A collection of useful magnolia update tasks that can be reused in custom modules</description>
+  <version>${project.version}</version>
+</module>

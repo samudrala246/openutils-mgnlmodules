@@ -1,0 +1,22 @@
+                                 --------------------------
+                                      O p e n u t i l s
+                                 --------------------------
+                                      Fabrizio Giustina
+                                 --------------------------
+
+openutils-mgnltasks
+
+ Openutils-mgnltasks is a collection of {{{http://www.magnolia.info}magnolia}} update tasks that can be reused in custom
+ magnolia modules.
+
+ Most of them are useful to handle the bootstrap or configuration of simple content modules. See the full list and
+ description in {{{apidocs/index.html}javadocs}}.
+
+ Openutils-mgnltasks is licensed under GPLv3 (forced by the fact that magnolia 3.5 is GPLv3)
+
+
+Released versions
+
+ {{{http://www.mvnrepository.com/artifact/net.sourceforge.openutils/openutils-mgnltasks}http://www.mvnrepository.com/artifact/net.sourceforge.openutils/openutils-mgnltasks}}
+
+ 3.5.x versions are compatible with magnolia 3.5.x and 3.6.x. 4.x versions requires magnolia 4.0.
