@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<taglib xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-jsptaglibrary_2_0.xsd"
+  version="2.0">
+  <description>TagCloud tag library</description>
+  <display-name>TagCloud tags</display-name>
+  <tlib-version>1.1</tlib-version>
+  <short-name>tagcloud</short-name>
+  <uri>http://net.sourceforge.openutils/mgnlTagCloud</uri>
+  <tag-file>
+    <description>
+    <![CDATA[
+    Renders a tag cloud. <br/>
+
+    The following properties are supported:
+    <table>
+      <tr>
+        <th>Property</th>
+        <th>Required</th>
+        <th>Description</th>
+      </tr>
+      <tr>
+        <td>
+          name
+        </td>
+        <td>
+          false
+        </td>
+        <td>
+          name of configured tagcloud
+        </td>
+      </tr>
+      <tr>
+        <td>
+          repository (default: "website")
+        </td>
+        <td>
+          false
+        </td>
+        <td>
+          name of repository
+        </td>
+      </tr>
+      <tr>
+        <td>
+          path (default: "/")
+        </td>
+        <td>
+          false 
+        </td>
+        <td>
+          jcr path under which count tags
+        </td>
+      </tr>
+      <tr>
+        <td>
+          property (default: "tags")
+        </td>
+        <td>
+          false
+        </td>
+        <td>
+          name of nodedata in which tags are stored
+        </td>
+      </tr>
+      <tr>
+        <td>
+          count (default: 20)
+        </td>
+        <td>
+          false
+        </td>
+        <td>
+          number of tags to extract starting from most used to less used 
+        </td>
+      </tr>
+      <tr>
+        <td>
+          cache (default: true)
+        </td>
+        <td>
+          false
+        </td>
+        <td>
+          if true the request for this tagcloud is cached and refreshed automatically on repository updates
+        </td>
+      </tr>
+      <tr>
+        <td>
+          orderby (default: "name asc")
+        </td>
+        <td>
+          false
+        </td>
+        <td>
+          specify tags order in the form "type[ asc|desc]" where type could be one of <i>name</i>, <i>count</i>.<br/>
+          Valid values are:<br/>
+           orderby="name" or orderby="name asc": sort by tag name ascending<br/>
+           orderby="name desc": sort by tag name descending<br/>
+           orderby="count" or orderby="count asc": sort by tag hits ascending<br/>
+           orderby="count desc": sort by tag hits descending
+        </td>
+      </tr>
+      <tr>
+        <td>
+          id
+        </td>
+        <td>
+          false
+        </td>
+        <td>
+          id of enclosing div element
+        </td>
+      </tr>
+      <tr>
+        <td>
+          cssclass (default: "tagcloud")
+        </td>
+        <td>
+          false
+        </td>
+        <td>
+          css class of enclosing div element
+        </td>
+      </tr>
+      <tr>
+        <td>
+          steps (default: 10)
+        </td>
+        <td>
+          false
+        </td>
+        <td>
+          used to compute how many different css class to apply to tag. For example if steps = 8 css classes applied to tags goes from "tagsize0" for tag with the lowest count to "tagsize8" for the tag with biggest count.
+        </td>
+      </tr>
+      <tr>
+        <td>
+          cssprefix (default: "tagsize")
+        </td>
+        <td>
+          false
+        </td>
+        <td>
+          set the name of css class applied to tag span element for size. For example if cssprefix = "sizeoftag" the result is ...&lt;span class="tag sizeoftag8"&gt;mgnlMedia&lt;/span&gt;&lt;span class="tag sizeoftag10"&gt;openutils&lt;/span&gt;...  
+        </td>
+      </tr>
+      <tr>
+        <td>
+          url
+        </td>
+        <td>
+          false
+        </td>
+        <td>
+          if url is not empty, a link element is created around each tag and the href links to url + tag.<br/>
+          For example if url = "http://www.google.com/search&q=" the result is ...&lt;span class="tag tagsize8"&gt;&lt;a href="http://www.google.com/search?q=mgnlMedia"&gt;mgnlMedia&lt;/a&gt;&lt;/span&gt;&lt;span class="tag sizeoftag10"&gt;&lt;a href="http://www.google.com/search?q=openutils"&gt;openutils&lt;/a&gt;&lt;/span&gt;...
+        </td>
+      </tr>
+    </table>
+
+    Using <strong>name</strong> attribute make tag to ignore repository, path, property, count and cache attributes.
+    ]]>
+    </description>
+    <name>tagcloud</name>
+    <path>/META-INF/tags/tagcloud/tagcloud.tag</path>
+    <example>
+      <![CDATA[
+      <tagcloud:tagcloud name="mystoredtagcloud" orderby="count desc" id="tagclouddiv1" url="/searchbytag/" />
+      ]]>
+    </example>
+  </tag-file>
+  <function>
+    <description>Get a tag cloud configured in adminCentral (which caches values and updates on repository operations)</description>
+    <name>named</name>
+    <function-class>net.sourceforge.openutils.mgnltagcloud.el.TagCloudElFunctions</function-class>
+    <function-signature>info.util.Map named(java.lang.String)</function-signature>
+    <example>
+      <![CDATA[
+      <c:set var="tagCloud" value="${tagcloud:named('articles')}" />
+      <c:forEach var="tag" items="${tagCloud}">
+        <span class="tag${tag.value}">${tag.key}</span>
+      </c:forEach>
+      ]]>
+    </example>
+  </function>
+  <function>
+    <description>Create a tag cloud, cache it, and link it to repository events for updates</description>
+    <name>cached</name>
+    <function-class>net.sourceforge.openutils.mgnltagcloud.el.TagCloudElFunctions</function-class>
+    <function-signature>info.util.Map cached(java.lang.String, java.lang.String, java.lang.String, int)</function-signature>
+    <example>
+      <![CDATA[
+      <c:set var="tagCloud" value="${tagcloud:cached('website', '/site/contens/articles', 'tags', 20)}" />
+      <c:forEach var="tag" items="${tagCloud}">
+        <span class="tag${tag.value}">${tag.key}</span>
+      </c:forEach>
+      ]]>
+    </example>
+  </function>
+  <function>
+    <description>Calculate tag cloud, without caching it. Each call to notcached will calculate tags from lucene indicies</description>
+    <name>notcached</name>
+    <function-class>net.sourceforge.openutils.mgnltagcloud.el.TagCloudElFunctions</function-class>
+    <function-signature>info.util.Map notcached(java.lang.String, java.lang.String, java.lang.String, int)</function-signature>
+    <example>
+      <![CDATA[
+      <c:set var="tagCloud" value="${tagcloud:notcached('website', '/site/contens/articles', 'tags', 20)}" />
+      <c:forEach var="tag" items="${tagCloud}">
+        <span class="tag${tag.value}">${tag.key}</span>
+      </c:forEach>
+      ]]>
+    </example>
+  </function>
+  <function>
+    <description>Get a map with some properties of passed tag cloud: min which holds the number of hits for the less used tag, max which holds the number of hits for the most used tag. Could be useful for normalization work.</description>
+    <name>props</name>
+    <function-class>net.sourceforge.openutils.mgnltagcloud.el.TagCloudElFunctions</function-class>
+    <function-signature>info.util.Map props(java.util.Map)</function-signature>
+    <example>
+      <![CDATA[
+      <c:set var="tagCloud" value="${tagcloud:cached('website', '/site/contens/articles', 'tags', 20)}" />
+      <c:set var="tagCloudProps" value="${tagcloud:props(tagCloud)}" />
+      Minimum hits for a tag: <c:out value="${tagCloudProps.min}" /><br/>
+      Maximum hits for a tag: <c:out value="${tagCloudProps.max}" />
+      ]]>
+    </example>
+  </function>
+  <function>
+    <description>Sort a tag cloud by tag names. If the second parameter is true, the sort order is ascending otherwise descending. </description>
+    <name>sortbyname</name>
+    <function-class>net.sourceforge.openutils.mgnltagcloud.el.TagCloudElFunctions</function-class>
+    <function-signature>info.util.Map sortbyname(java.util.Map, boolean)</function-signature>
+    <example>
+      <![CDATA[
+      <c:set var="tagCloud" value="${tagcloud:cached('website', '/site/contens/articles', 'tags', 20)}" />
+      <c:set var="sortedTagCloud" value="${tagcloud:sortbyname(tagCloud, false)}" />
+      ]]>
+    </example>
+  </function>
+  <function>
+    <description>Sort a tag cloud by tag count. If the second parameter is true, the sort order is ascending otherwise descending. </description>
+    <name>sortbycount</name>
+    <function-class>net.sourceforge.openutils.mgnltagcloud.el.TagCloudElFunctions</function-class>
+    <function-signature>info.util.Map sortbycount(java.util.Map, boolean)</function-signature>
+    <example>
+      <![CDATA[
+      <c:set var="tagCloud" value="${tagcloud:cached('website', '/site/contens/articles', 'tags', 20)}" />
+      <c:set var="sortedTagCloud" value="${tagcloud:sortbycount(tagCloud, true)}" />
+      ]]>
+    </example>
+  </function>
+</taglib>

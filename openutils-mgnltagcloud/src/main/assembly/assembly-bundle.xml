@@ -1,0 +1,36 @@
+<assembly>
+  <id>bundle</id>
+  <formats>
+    <format>zip</format>
+  </formats>
+  <includeBaseDirectory>false</includeBaseDirectory>
+  <fileSets>
+    <fileSet>
+      <filtered>true</filtered>
+      <outputDirectory>/</outputDirectory>
+      <lineEnding>crlf</lineEnding>
+      <directory>${basedir}/src/main/bundle</directory>
+      <includes>
+        <include>*</include>
+      </includes>
+    </fileSet>
+    <fileSet>
+      <directory>.</directory>
+      <outputDirectory>/sources/</outputDirectory>
+      <includes>
+        <include>src/**/*</include>
+        <include>pom.xml</include>
+      </includes>
+    </fileSet>
+  </fileSets>
+  <dependencySets>
+    <dependencySet>
+      <outputDirectory>bin</outputDirectory>
+      <includes>
+        <include>net.sourceforge.openutils:*</include>
+        <include>com.browseengine.bobo:*</include>
+        <include>fastutil:*</include>
+      </includes>
+    </dependencySet>
+  </dependencySets>
+</assembly>
