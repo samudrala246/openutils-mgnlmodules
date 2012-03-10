@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE module SYSTEM "module.dtd" >
+<module>
+  <name>dev</name>
+  <displayName>dev</displayName>
+  <versionHandler>info.magnolia.module.development.DevModuleVersionHandler</versionHandler>
+  <version>${project.version}</version>
+  <dependencies>
+    <dependency>
+      <name>adminInterface</name>
+      <version>1.0/*</version>
+      <optional>true</optional>
+    </dependency>
+  </dependencies>
+</module>
