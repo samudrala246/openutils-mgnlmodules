@@ -24,7 +24,6 @@ import info.magnolia.cms.core.Content;
 import info.magnolia.context.MgnlContext;
 import info.magnolia.module.mail.MailTemplate;
 import info.magnolia.module.mail.templates.impl.FreemarkerEmail;
-import info.magnolia.module.templating.MagnoliaTemplatingUtilities;
 
 import java.io.StringWriter;
 import java.io.Writer;

@@ -24,11 +24,8 @@ import info.magnolia.cms.core.ItemType;
 import info.magnolia.cms.core.NodeData;
 import info.magnolia.context.MgnlContext;
 import info.magnolia.context.WebContext;
-import info.magnolia.module.templating.Paragraph;
-import info.magnolia.module.templating.ParagraphRenderer;
-import info.magnolia.module.templating.RenderException;
-import info.magnolia.module.templating.RenderableDefinition;
-import info.magnolia.module.templating.renderers.JspTemplateRenderer;
+import info.magnolia.rendering.engine.RenderException;
+import info.magnolia.rendering.template.RenderableDefinition;
 
 import java.io.IOException;
 import java.io.Writer;

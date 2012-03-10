@@ -20,7 +20,6 @@
 package it.openutils.mgnlutils.templating;
 
 import info.magnolia.cms.core.Content;
-import info.magnolia.module.templating.Template;
 
 import java.util.HashSet;
 import java.util.Set;

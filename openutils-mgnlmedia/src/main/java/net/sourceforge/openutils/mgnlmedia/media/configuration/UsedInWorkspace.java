@@ -19,8 +19,8 @@
 
 package net.sourceforge.openutils.mgnlmedia.media.configuration;
 
-import info.magnolia.cms.beans.config.ContentRepository;
 import info.magnolia.cms.core.ItemType;
+import info.magnolia.repository.RepositoryConstants;
 
 
 /**
@@ -30,7 +30,7 @@ import info.magnolia.cms.core.ItemType;
 public class UsedInWorkspace
 {
 
-    public static final UsedInWorkspace DEFAULT_WEBSITE = new UsedInWorkspace(ContentRepository.WEBSITE);
+    public static final UsedInWorkspace DEFAULT_WEBSITE = new UsedInWorkspace(RepositoryConstants.WEBSITE);
 
     private String workspaceName;
 

@@ -19,13 +19,13 @@
 
 package net.sourceforge.openutils.mgnlcontrols.configuration;
 
-import info.magnolia.cms.beans.config.ContentRepository;
 import info.magnolia.cms.core.Content;
 import info.magnolia.cms.i18n.Messages;
 import info.magnolia.cms.security.AccessDeniedException;
 import info.magnolia.cms.util.ContentUtil;
 import info.magnolia.cms.util.NodeDataUtil;
 import info.magnolia.context.MgnlContext;
+import info.magnolia.repository.RepositoryConstants;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -86,7 +86,7 @@ public class UUIDLinkGridColumnType extends AbstractGridColumnType
     {
         String repository = StringUtils.defaultIfEmpty(
             NodeDataUtil.getString(colConfig, "repository"),
-            ContentRepository.WEBSITE);
+            RepositoryConstants.WEBSITE);
         for (int index = 0; index < column.length; index++)
         {
 
@@ -111,7 +111,7 @@ public class UUIDLinkGridColumnType extends AbstractGridColumnType
     {
         String repository = StringUtils.defaultIfEmpty(
             NodeDataUtil.getString(colConfig, "repository"),
-            ContentRepository.WEBSITE);
+            RepositoryConstants.WEBSITE);
         for (int index = 0; index < column.length; index++)
         {
             if (!StringUtils.isEmpty(column[index]))

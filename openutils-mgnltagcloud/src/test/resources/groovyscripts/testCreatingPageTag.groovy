@@ -12,7 +12,7 @@ import info.magnolia.cms.util.ContentUtil;
 import info.magnolia.cms.util.NodeDataUtil;
 import info.magnolia.context.MgnlContext;
 
-HierarchyManager hm = MgnlContext.getSystemContext().getHierarchyManager(ContentRepository.WEBSITE)
+HierarchyManager hm = MgnlContext.getSystemContext().getHierarchyManager(RepositoryConstants.WEBSITE)
 for (int i = 0; i < 300; i++) {
 	content = ContentUtil.getOrCreateContent(hm.getContent("/test"), Path.getValidatedLabel("u" + i), ItemType.CONTENT)
 	content.getMetaData().setTemplate("temp")

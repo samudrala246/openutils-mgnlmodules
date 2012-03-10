@@ -19,9 +19,9 @@
 
 package net.sourceforge.openutils.mgnlmobile.magnolia;
 
-import net.sourceforge.openutils.mgnlmobile.preview.MobilePreviewManager;
 import info.magnolia.module.ModuleLifecycle;
 import info.magnolia.module.ModuleLifecycleContext;
+import net.sourceforge.openutils.mgnlmobile.preview.MobilePreviewManager;
 
 
 /**

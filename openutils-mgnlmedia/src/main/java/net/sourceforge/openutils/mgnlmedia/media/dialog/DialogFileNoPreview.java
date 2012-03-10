@@ -19,13 +19,10 @@
 
 package net.sourceforge.openutils.mgnlmedia.media.dialog;
 
-import info.magnolia.api.MgnlException;
-import info.magnolia.cms.beans.config.MIMEMapping;
 import info.magnolia.cms.beans.runtime.Document;
 import info.magnolia.cms.beans.runtime.MultipartForm;
 import info.magnolia.cms.gui.control.File;
 import info.magnolia.cms.gui.dialog.DialogFile;
-import info.magnolia.cms.gui.misc.CssConstants;
 import info.magnolia.cms.gui.misc.Spacer;
 import info.magnolia.cms.i18n.Messages;
 import info.magnolia.cms.i18n.MessagesManager;

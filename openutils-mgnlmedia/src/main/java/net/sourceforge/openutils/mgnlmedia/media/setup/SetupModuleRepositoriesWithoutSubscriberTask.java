@@ -19,9 +19,6 @@
 
 package net.sourceforge.openutils.mgnlmedia.media.setup;
 
-import java.util.Collection;
-import java.util.List;
-
 import info.magnolia.cms.beans.config.ContentRepository;
 import info.magnolia.cms.security.Permission;
 import info.magnolia.cms.security.Role;
@@ -32,6 +29,9 @@ import info.magnolia.module.delta.AbstractTask;
 import info.magnolia.module.delta.TaskExecutionException;
 import info.magnolia.module.model.ModuleDefinition;
 import info.magnolia.module.model.RepositoryDefinition;
+
+import java.util.Collection;
+import java.util.List;
 
 
 /**

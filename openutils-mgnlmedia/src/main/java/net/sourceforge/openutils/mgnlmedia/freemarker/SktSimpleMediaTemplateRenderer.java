@@ -22,9 +22,9 @@ package net.sourceforge.openutils.mgnlmedia.freemarker;
 import freemarker.ext.beans.BeansWrapper;
 import freemarker.template.TemplateModelException;
 import info.magnolia.cms.core.Content;
-import info.magnolia.module.templating.RenderableDefinition;
-import info.magnolia.module.templating.RenderingModel;
 import info.magnolia.module.templatingkit.renderers.STKTemplateRenderer;
+import info.magnolia.rendering.model.RenderingModel;
+import info.magnolia.rendering.template.RenderableDefinition;
 
 import java.util.Map;
 

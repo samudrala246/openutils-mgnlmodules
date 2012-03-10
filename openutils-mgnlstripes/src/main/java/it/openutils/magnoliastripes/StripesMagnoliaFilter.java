@@ -27,7 +27,6 @@ import info.magnolia.cms.filters.WebContainerResources;
 import info.magnolia.cms.util.RequestHeaderUtil;
 import info.magnolia.cms.util.ServletUtils;
 import info.magnolia.context.MgnlContext;
-import info.magnolia.context.RepositoryAcquiringStrategy;
 import info.magnolia.context.WebContext;
 import info.magnolia.context.WebContextImpl;
 import info.magnolia.objectfactory.Components;

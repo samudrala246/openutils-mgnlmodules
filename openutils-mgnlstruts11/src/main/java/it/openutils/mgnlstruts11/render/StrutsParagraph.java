@@ -19,7 +19,6 @@
 
 package it.openutils.mgnlstruts11.render;
 
-import info.magnolia.module.templating.Paragraph;
 
 
 /**

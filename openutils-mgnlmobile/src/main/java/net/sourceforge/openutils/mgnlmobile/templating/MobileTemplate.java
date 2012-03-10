@@ -19,7 +19,6 @@
 
 package net.sourceforge.openutils.mgnlmobile.templating;
 
-import info.magnolia.module.templating.Template;
 import net.sourceforge.wurfl.core.Device;
 
 

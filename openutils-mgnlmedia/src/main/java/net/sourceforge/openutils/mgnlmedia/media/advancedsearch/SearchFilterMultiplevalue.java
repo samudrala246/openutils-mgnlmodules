@@ -24,10 +24,10 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.commons.lang.StringUtils;
-
 import net.sourceforge.openutils.mgnlcriteria.jcr.query.criterion.Criterion;
 import net.sourceforge.openutils.mgnlcriteria.jcr.query.criterion.Restrictions;
+
+import org.apache.commons.lang.StringUtils;
 
 
 /**

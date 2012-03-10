@@ -22,10 +22,10 @@ package net.sourceforge.openutils.mgnlmedia.media.crop;
 import java.awt.image.BufferedImage;
 import java.util.Map;
 
-import org.apache.commons.lang.StringUtils;
-
 import net.sourceforge.openutils.mgnlmedia.media.processors.ResizeCropCenteredImageResolutionProcessor;
 import net.sourceforge.openutils.mgnlmedia.media.utils.ImageUtils;
+
+import org.apache.commons.lang.StringUtils;
 
 
 /**

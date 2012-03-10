@@ -27,6 +27,7 @@ import info.magnolia.cms.core.search.QueryManager;
 import info.magnolia.module.InstallContext;
 import info.magnolia.module.delta.AbstractRepositoryTask;
 import info.magnolia.module.delta.TaskExecutionException;
+import info.magnolia.repository.RepositoryConstants;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -104,7 +105,7 @@ public abstract class BaseCheckMissingTask extends AbstractRepositoryTask
     private void checkInvalidPages(InstallContext installContext, List<String> templates) throws RepositoryException,
         InvalidQueryException
     {
-        HierarchyManager hm = installContext.getHierarchyManager(ContentRepository.WEBSITE);
+        HierarchyManager hm = installContext.getHierarchyManager(RepositoryConstants.WEBSITE);
 
         QueryManager qm = hm.getQueryManager();
 

@@ -19,12 +19,12 @@
 
 package net.sourceforge.openutils.mgnlmedia.media.crop;
 
-import info.magnolia.cms.beans.config.ContentRepository;
 import info.magnolia.cms.core.Content;
 import info.magnolia.cms.core.HierarchyManager;
 import info.magnolia.cms.core.NodeData;
 import info.magnolia.cms.util.NodeDataUtil;
 import info.magnolia.context.MgnlContext;
+import info.magnolia.repository.RepositoryConstants;
 
 import java.io.IOException;
 
@@ -66,7 +66,7 @@ public class PzcServlet extends HttpServlet
         String repository = req.getParameter("repository");
         if (StringUtils.isBlank(repository))
         {
-            repository = ContentRepository.WEBSITE;
+            repository = RepositoryConstants.WEBSITE;
         }
 
         HierarchyManager hm = MgnlContext.getHierarchyManager(repository);

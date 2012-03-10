@@ -19,8 +19,6 @@
 
 package net.sourceforge.openutils.mgnlmobile.templating;
 
-import info.magnolia.module.templating.Template;
-
 import java.util.HashMap;
 import java.util.Map;
 

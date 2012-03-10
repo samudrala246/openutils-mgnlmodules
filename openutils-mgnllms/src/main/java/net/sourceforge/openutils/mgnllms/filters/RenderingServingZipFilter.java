@@ -23,7 +23,7 @@ import info.magnolia.cms.core.AggregationState;
 import info.magnolia.cms.core.HierarchyManager;
 import info.magnolia.cms.core.NodeData;
 import info.magnolia.context.MgnlContext;
-import info.magnolia.module.templating.RenderingFilter;
+import info.magnolia.rendering.engine.RenderingFilter;
 
 import java.io.File;
 import java.io.FileOutputStream;

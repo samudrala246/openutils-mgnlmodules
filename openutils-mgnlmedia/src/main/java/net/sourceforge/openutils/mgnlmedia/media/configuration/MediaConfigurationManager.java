@@ -19,7 +19,6 @@
 
 package net.sourceforge.openutils.mgnlmedia.media.configuration;
 
-import info.magnolia.cms.beans.config.ContentRepository;
 import info.magnolia.cms.beans.config.ObservedManager;
 import info.magnolia.cms.beans.config.URI2RepositoryManager;
 import info.magnolia.cms.beans.config.URI2RepositoryMapping;
@@ -33,6 +32,7 @@ import info.magnolia.cms.util.FactoryUtil;
 import info.magnolia.cms.util.NodeDataUtil;
 import info.magnolia.content2bean.Content2BeanUtil;
 import info.magnolia.context.MgnlContext;
+import info.magnolia.repository.RepositoryConstants;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -201,7 +201,7 @@ public class MediaConfigurationManager extends ObservedManager
      */
     public List<String> getUsedInWebPages(String uuid) throws InvalidQueryException, RepositoryException
     {
-        return MediaUsedInManager.getInstance().getUsedInWorkspacePaths(uuid, ContentRepository.WEBSITE);
+        return MediaUsedInManager.getInstance().getUsedInWorkspacePaths(uuid, RepositoryConstants.WEBSITE);
     }
 
     /**

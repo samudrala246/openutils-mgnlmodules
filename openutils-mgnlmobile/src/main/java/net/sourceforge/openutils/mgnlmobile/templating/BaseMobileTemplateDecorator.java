@@ -20,9 +20,8 @@
 package net.sourceforge.openutils.mgnlmobile.templating;
 
 import info.magnolia.cms.core.Content;
-import info.magnolia.module.templating.RenderableDefinition;
-import info.magnolia.module.templating.RenderingModel;
-import info.magnolia.module.templating.Template;
+import info.magnolia.rendering.model.RenderingModel;
+import info.magnolia.rendering.template.RenderableDefinition;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.Map;

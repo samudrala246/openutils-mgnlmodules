@@ -27,6 +27,7 @@ import info.magnolia.cms.core.Path;
 import info.magnolia.cms.util.ClasspathResourcesUtil;
 import info.magnolia.cms.util.ContentUtil;
 import info.magnolia.context.MgnlContext;
+import info.magnolia.repository.RepositoryConstants;
 import info.magnolia.test.RepositoryTestCase;
 
 import java.util.Map;
@@ -90,11 +91,11 @@ public class TagCloudManagerTest extends RepositoryTestCase
     public void testPerformanceTagCloud()
     {
         long time = System.currentTimeMillis();
-        Map<String, Integer> tags = TagCloudElFunctions.notcached(ContentRepository.WEBSITE, "/", "tags", 10);
+        Map<String, Integer> tags = TagCloudElFunctions.notcached(RepositoryConstants.WEBSITE, "/", "tags", 10);
         log.debug("Time: " + (System.currentTimeMillis() - time));
         log.debug("Map: {}", tags);
         time = System.currentTimeMillis();
-        tags = TagCloudElFunctions.notcached(ContentRepository.WEBSITE, "/", "tags", 12);
+        tags = TagCloudElFunctions.notcached(RepositoryConstants.WEBSITE, "/", "tags", 12);
         log.debug("Time: " + (System.currentTimeMillis() - time));
         log.debug("Map: {}", tags);
     }
@@ -106,7 +107,7 @@ public class TagCloudManagerTest extends RepositoryTestCase
     public void testGetTagCloudByPath()
     {
         long time = System.currentTimeMillis();
-        Map<String, Integer> tags = TagCloudElFunctions.notcached(ContentRepository.WEBSITE, pathList[0], "tags", 2);
+        Map<String, Integer> tags = TagCloudElFunctions.notcached(RepositoryConstants.WEBSITE, pathList[0], "tags", 2);
         log.debug("Time: " + (System.currentTimeMillis() - time));
         log.debug("PathMap freq: {}", tags);
         assertEquals(nodesNumber, tags.get("tag1 tag4"));
@@ -119,12 +120,12 @@ public class TagCloudManagerTest extends RepositoryTestCase
     public void testGetCachedTagCloud()
     {
         long time = System.currentTimeMillis();
-        Map<String, Integer> tags = TagCloudElFunctions.cached(ContentRepository.WEBSITE, pathList[1], "tags", 2);
+        Map<String, Integer> tags = TagCloudElFunctions.cached(RepositoryConstants.WEBSITE, pathList[1], "tags", 2);
         log.debug("Time: " + (System.currentTimeMillis() - time));
         log.debug("tagCloud freq: {}", tags);
         assertEquals(nodesNumber, tags.get("tag2"));
         time = System.currentTimeMillis();
-        tags = TagCloudElFunctions.cached(ContentRepository.WEBSITE, pathList[1], "tags", 1);
+        tags = TagCloudElFunctions.cached(RepositoryConstants.WEBSITE, pathList[1], "tags", 1);
         log.debug("Time: " + (System.currentTimeMillis() - time));
         log.debug("tagCloud freq: {}", tags);
         assertEquals(nodesNumber, tags.get("tag1 tag4"));
@@ -136,7 +137,7 @@ public class TagCloudManagerTest extends RepositoryTestCase
     @Test
     public void testSortByName()
     {
-        Map<String, Integer> tags = TagCloudElFunctions.cached(ContentRepository.WEBSITE, "/", "tags", 2);
+        Map<String, Integer> tags = TagCloudElFunctions.cached(RepositoryConstants.WEBSITE, "/", "tags", 2);
         Map<String, Integer> orderedTags = TagCloudElFunctions.sortbyname(tags, false);
         log.debug("Tags: {}", tags);
         log.debug("Ordered Tags: {}", orderedTags);
@@ -150,7 +151,7 @@ public class TagCloudManagerTest extends RepositoryTestCase
     @Test
     public void testSortByCount()
     {
-        Map<String, Integer> tags = TagCloudElFunctions.cached(ContentRepository.WEBSITE, "/site", "tags", 10);
+        Map<String, Integer> tags = TagCloudElFunctions.cached(RepositoryConstants.WEBSITE, "/site", "tags", 10);
         log.debug("Tags: {}", tags);
         Map<String, Integer> countedTags = TagCloudElFunctions.sortbycount(tags, false);
         log.debug("Tags: {}", countedTags);
@@ -202,7 +203,7 @@ public class TagCloudManagerTest extends RepositoryTestCase
     @Test
     public void testGetTagCloudProperties()
     {
-        Map<String, Integer> tags = TagCloudElFunctions.notcached(ContentRepository.WEBSITE, "/", "tags", 10);
+        Map<String, Integer> tags = TagCloudElFunctions.notcached(RepositoryConstants.WEBSITE, "/", "tags", 10);
         log.debug("Tags: {}", tags);
 
         Map<String, Integer> mapProperties = TagCloudElFunctions.props(tags);
@@ -218,7 +219,7 @@ public class TagCloudManagerTest extends RepositoryTestCase
     {
         super.setUp();
 
-        hm = MgnlContext.getInstance().getHierarchyManager(ContentRepository.WEBSITE);
+        hm = MgnlContext.getInstance().getHierarchyManager(RepositoryConstants.WEBSITE);
 
         // Create content structure
         Content contentRoot = ContentUtil.getOrCreateContent(

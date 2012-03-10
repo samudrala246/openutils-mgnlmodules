@@ -21,7 +21,6 @@ package net.sourceforge.openutils.mgnltagcloud.module;
 
 import info.magnolia.module.ModuleLifecycle;
 import info.magnolia.module.ModuleLifecycleContext;
-
 import net.sourceforge.openutils.mgnltagcloud.manager.TagCloudManager;
 
 import org.slf4j.Logger;

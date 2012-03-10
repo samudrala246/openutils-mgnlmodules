@@ -25,8 +25,6 @@ import info.magnolia.module.admininterface.DialogHandlerManager;
 import info.magnolia.module.admininterface.DialogMVCHandler;
 import info.magnolia.module.admininterface.InvalidDialogHandlerException;
 import info.magnolia.module.admininterface.TemplatedMVCHandler;
-import info.magnolia.module.templating.Paragraph;
-import info.magnolia.module.templating.ParagraphManager;
 import it.openutils.magnoliastripes.MgnlActionResolver;
 
 import java.util.Set;

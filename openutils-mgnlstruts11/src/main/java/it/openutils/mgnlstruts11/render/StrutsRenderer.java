@@ -22,8 +22,6 @@ package it.openutils.mgnlstruts11.render;
 import info.magnolia.cms.core.Content;
 import info.magnolia.context.MgnlContext;
 import info.magnolia.context.WebContext;
-import info.magnolia.module.templating.Paragraph;
-import info.magnolia.module.templating.ParagraphRenderer;
 import info.magnolia.voting.voters.DontDispatchOnForwardAttributeVoter;
 import it.openutils.mgnlstruts11.process.MgnlMultipartRequestHandler;
 import it.openutils.mgnlstruts11.process.MgnlRequestProcessor;

@@ -24,8 +24,6 @@ import info.magnolia.cms.core.ItemType;
 import info.magnolia.cms.util.ContentUtil;
 import info.magnolia.content2bean.Content2BeanException;
 import info.magnolia.content2bean.Content2BeanUtil;
-import info.magnolia.module.templating.Template;
-import info.magnolia.module.templating.TemplateManager;
 
 import java.util.ArrayList;
 import java.util.Collection;

@@ -19,8 +19,6 @@
 
 package it.openutils.magnoliastripes;
 
-import info.magnolia.module.templating.Paragraph;
-import info.magnolia.module.templating.ParagraphManager;
 import it.openutils.magnoliastripes.annotations.Dialog;
 
 import java.util.HashSet;

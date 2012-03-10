@@ -21,9 +21,8 @@ package net.sourceforge.openutils.mgnlrules.samples.render;
 
 import info.magnolia.cms.core.Content;
 import info.magnolia.cms.util.NodeDataUtil;
-import info.magnolia.module.templating.RenderException;
-import info.magnolia.module.templating.RenderableDefinition;
-import info.magnolia.module.templating.paragraphs.JspParagraphRenderer;
+import info.magnolia.rendering.engine.RenderException;
+import info.magnolia.rendering.template.RenderableDefinition;
 
 import java.io.Writer;
 import java.util.Map;

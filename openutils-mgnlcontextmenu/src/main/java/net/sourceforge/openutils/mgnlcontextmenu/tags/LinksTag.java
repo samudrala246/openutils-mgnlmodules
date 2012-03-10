@@ -19,7 +19,6 @@
 
 package net.sourceforge.openutils.mgnlcontextmenu.tags;
 
-import info.magnolia.cms.taglibs.CmsFunctions;
 import info.magnolia.context.MgnlContext;
 
 import java.io.IOException;

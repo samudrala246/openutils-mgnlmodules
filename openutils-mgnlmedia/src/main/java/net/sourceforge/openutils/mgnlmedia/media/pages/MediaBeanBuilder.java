@@ -19,12 +19,12 @@
 
 package net.sourceforge.openutils.mgnlmedia.media.pages;
 
-import info.magnolia.cms.beans.config.ContentRepository;
 import info.magnolia.cms.beans.config.URI2RepositoryManager;
 import info.magnolia.cms.core.Content;
 import info.magnolia.cms.exchange.ActivationManagerFactory;
 import info.magnolia.cms.security.Permission;
 import info.magnolia.cms.util.NodeDataUtil;
+import info.magnolia.repository.RepositoryConstants;
 
 import java.util.List;
 import java.util.Map;
@@ -100,7 +100,7 @@ public class MediaBeanBuilder implements Function<Content, MediaBean>
                 && ActivationManagerFactory.getActivationManager().hasAnyActiveSubscriber());
 
             Map<String, List<String>> workspacePaths = MediaUsedInManager.getInstance().getUsedInPaths(media.getUUID());
-            mb.getUsedInWebPages().addAll(workspacePaths.get(ContentRepository.WEBSITE));
+            mb.getUsedInWebPages().addAll(workspacePaths.get(RepositoryConstants.WEBSITE));
             for (Map.Entry<String, List<String>> entry : workspacePaths.entrySet())
             {
                 String repository = entry.getKey();

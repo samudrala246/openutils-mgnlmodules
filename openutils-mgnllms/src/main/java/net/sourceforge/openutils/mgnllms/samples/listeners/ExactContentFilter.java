@@ -20,8 +20,8 @@
 package net.sourceforge.openutils.mgnllms.samples.listeners;
 
 import info.magnolia.cms.core.Content;
-import info.magnolia.cms.core.ItemType;
 import info.magnolia.cms.core.Content.ContentFilter;
+import info.magnolia.cms.core.ItemType;
 
 import javax.jcr.RepositoryException;
 

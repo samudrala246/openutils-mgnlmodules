@@ -19,7 +19,7 @@
 
 package net.sourceforge.openutils.mgnltagcloud.bean;
 
-import info.magnolia.cms.beans.config.ContentRepository;
+import info.magnolia.repository.RepositoryConstants;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -35,7 +35,7 @@ import org.apache.commons.lang.builder.HashCodeBuilder;
 public class TagCloud
 {
 
-    private String repository = ContentRepository.WEBSITE;
+    private String repository = RepositoryConstants.WEBSITE;
 
     private String path = "/";
 

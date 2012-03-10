@@ -19,7 +19,6 @@
 
 package it.openutils.magnoliastripes;
 
-import info.magnolia.module.templating.ParagraphManager;
 
 
 /**

@@ -19,9 +19,6 @@
 
 package it.openutils.mgnlstruts11.render;
 
-import info.magnolia.module.templating.Paragraph;
-import info.magnolia.module.templating.ParagraphManager;
-
 import java.util.LinkedHashSet;
 import java.util.Set;
 

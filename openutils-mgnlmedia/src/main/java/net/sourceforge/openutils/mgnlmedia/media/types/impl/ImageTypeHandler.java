@@ -32,7 +32,6 @@ import net.sourceforge.openutils.mgnlmedia.media.utils.IcoUtils;
 import net.sourceforge.openutils.mgnlmedia.media.utils.ImageUtils;
 
 import org.apache.commons.io.IOUtils;
-import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
 import org.devlib.schmidt.imageinfo.ImageInfo;
 import org.slf4j.Logger;

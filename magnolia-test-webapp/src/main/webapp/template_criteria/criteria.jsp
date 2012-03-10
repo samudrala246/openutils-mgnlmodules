@@ -40,7 +40,7 @@
       <jsp:scriptlet><![CDATA[
 Criteria criteria = JCRCriteriaFactory
   .createCriteria()
-  .setWorkspace(ContentRepository.WEBSITE)
+  .setWorkspace(RepositoryConstants.WEBSITE)
   .setBasePath("/Criteria/pets")
   .add(Restrictions.eq("@jcr:primaryType", ItemType.CONTENT.getSystemName()))
   .addOrder(Order.asc("@birthDate"));

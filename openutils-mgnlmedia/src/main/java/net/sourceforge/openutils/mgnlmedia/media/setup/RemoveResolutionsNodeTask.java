@@ -19,10 +19,6 @@
 
 package net.sourceforge.openutils.mgnlmedia.media.setup;
 
-import java.util.Collection;
-
-import javax.jcr.RepositoryException;
-
 import info.magnolia.cms.core.Content;
 import info.magnolia.cms.core.HierarchyManager;
 import info.magnolia.cms.core.ItemType;
@@ -32,6 +28,11 @@ import info.magnolia.cms.core.search.QueryResult;
 import info.magnolia.module.InstallContext;
 import info.magnolia.module.delta.AbstractTask;
 import info.magnolia.module.delta.TaskExecutionException;
+
+import java.util.Collection;
+
+import javax.jcr.RepositoryException;
+
 import net.sourceforge.openutils.mgnlmedia.media.configuration.MediaConfigurationManager;
 import net.sourceforge.openutils.mgnlmedia.media.lifecycle.MediaModule;
 

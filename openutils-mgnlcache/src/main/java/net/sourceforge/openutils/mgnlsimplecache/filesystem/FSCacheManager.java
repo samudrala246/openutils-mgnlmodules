@@ -19,10 +19,10 @@
 
 package net.sourceforge.openutils.mgnlsimplecache.filesystem;
 
-import info.magnolia.cms.beans.config.ContentRepository;
 import info.magnolia.cms.core.Path;
 import info.magnolia.cms.util.MBeanUtil;
 import info.magnolia.cms.util.ObservationUtil;
+import info.magnolia.repository.RepositoryConstants;
 import info.magnolia.voting.Voter;
 
 import java.io.File;
@@ -410,7 +410,7 @@ public class FSCacheManager implements CacheManager, FSCacheManagerMBean, EventL
         // start observing repositories
         if (repositoryUrls.size() == 0)
         {
-            repositoryUrls.add(ContentRepository.WEBSITE);
+            repositoryUrls.add(RepositoryConstants.WEBSITE);
         }
         for (String repositoryUrl : repositoryUrls)
         {

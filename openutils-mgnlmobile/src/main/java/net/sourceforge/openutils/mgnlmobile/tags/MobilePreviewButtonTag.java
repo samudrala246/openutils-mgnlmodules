@@ -19,8 +19,6 @@
 
 package net.sourceforge.openutils.mgnlmobile.tags;
 
-import info.magnolia.cms.taglibs.BarTag;
-
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.TagSupport;
 

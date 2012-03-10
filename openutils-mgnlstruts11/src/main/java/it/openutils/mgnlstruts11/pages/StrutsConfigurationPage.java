@@ -25,7 +25,6 @@ import info.magnolia.module.admininterface.DialogHandlerManager;
 import info.magnolia.module.admininterface.DialogMVCHandler;
 import info.magnolia.module.admininterface.InvalidDialogHandlerException;
 import info.magnolia.module.admininterface.TemplatedMVCHandler;
-import info.magnolia.module.templating.ParagraphManager;
 import it.openutils.mgnlstruts11.render.StrutsParagraph;
 import it.openutils.mgnlstruts11.render.StrutsParagraphRegister;
 

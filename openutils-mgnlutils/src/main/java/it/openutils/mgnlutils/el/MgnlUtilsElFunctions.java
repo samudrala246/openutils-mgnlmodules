@@ -19,7 +19,6 @@
 
 package it.openutils.mgnlutils.el;
 
-import info.magnolia.cms.beans.config.ContentRepository;
 import info.magnolia.cms.beans.config.ServerConfiguration;
 import info.magnolia.cms.core.Content;
 import info.magnolia.cms.core.HierarchyManager;
@@ -37,6 +36,7 @@ import info.magnolia.context.WebContext;
 import info.magnolia.jaas.principal.EntityImpl;
 import info.magnolia.link.LinkException;
 import info.magnolia.link.LinkUtil;
+import info.magnolia.repository.RepositoryConstants;
 
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Field;
@@ -228,7 +228,7 @@ public final class MgnlUtilsElFunctions
         try
         {
             cleanedurl = MgnlContext.getContextPath()
-                + LinkUtil.convertUUIDtoURI(cleanedurl, ContentRepository.WEBSITE);
+                + LinkUtil.convertUUIDtoURI(cleanedurl, RepositoryConstants.WEBSITE);
         }
         catch (LinkException e)
         {
@@ -647,7 +647,7 @@ public final class MgnlUtilsElFunctions
         try
         {
             url = MgnlContext.getContextPath()
-                + LinkUtil.convertUUIDtoURI(uuid, StringUtils.isNotBlank(repo) ? repo : ContentRepository.WEBSITE);
+                + LinkUtil.convertUUIDtoURI(uuid, StringUtils.isNotBlank(repo) ? repo : RepositoryConstants.WEBSITE);
         }
         catch (LinkException e)
         {

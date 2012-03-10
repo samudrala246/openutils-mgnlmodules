@@ -19,13 +19,13 @@
 
 package net.sourceforge.openutils.mgnlmedia.media.configuration;
 
-import info.magnolia.cms.beans.config.ContentRepository;
 import info.magnolia.cms.beans.config.ObservedManager;
 import info.magnolia.cms.core.Content;
 import info.magnolia.cms.core.ItemType;
 import info.magnolia.cms.util.FactoryUtil;
 import info.magnolia.content2bean.Content2BeanException;
 import info.magnolia.content2bean.Content2BeanUtil;
+import info.magnolia.repository.RepositoryConstants;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -126,7 +126,7 @@ public class MediaUsedInManager extends ObservedManager
         UsedInWorkspace uiw = usedInWorkspaceMap.get(workspaceName);
         if (uiw == null)
         {
-            if (ContentRepository.WEBSITE.equals(workspaceName) && usedInWorkspaceMap.isEmpty())
+            if (RepositoryConstants.WEBSITE.equals(workspaceName) && usedInWorkspaceMap.isEmpty())
             {
                 // backward compatibility
                 uiw = UsedInWorkspace.DEFAULT_WEBSITE;

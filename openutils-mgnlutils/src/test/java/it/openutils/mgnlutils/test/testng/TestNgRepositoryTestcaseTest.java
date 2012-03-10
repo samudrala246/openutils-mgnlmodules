@@ -19,11 +19,11 @@
 
 package it.openutils.mgnlutils.test.testng;
 
-import info.magnolia.cms.beans.config.ContentRepository;
 import info.magnolia.cms.core.Content;
 import info.magnolia.cms.core.HierarchyManager;
 import info.magnolia.context.MgnlContext;
 import info.magnolia.module.ModuleRegistry;
+import info.magnolia.repository.RepositoryConstants;
 import it.openutils.mgnlutils.test.ModuleConfiguration;
 import it.openutils.mgnlutils.test.RepositoryTestConfiguration;
 import it.openutils.mgnlutils.test.TestModule;
@@ -45,7 +45,7 @@ public class TestNgRepositoryTestcaseTest extends TestNgRepositoryTestcase
     @Test
     public void repositoryTestConfigurationTest() throws RepositoryException
     {
-        HierarchyManager hm = MgnlContext.getHierarchyManager(ContentRepository.WEBSITE);
+        HierarchyManager hm = MgnlContext.getHierarchyManager(RepositoryConstants.WEBSITE);
         Assert.assertNotNull(hm);
 
         Content pets = hm.getContent("/pets");

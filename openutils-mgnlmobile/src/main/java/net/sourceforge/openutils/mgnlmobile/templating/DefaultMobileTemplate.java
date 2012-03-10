@@ -22,9 +22,9 @@ package net.sourceforge.openutils.mgnlmobile.templating;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.apache.commons.collections.MapUtils;
-
 import net.sourceforge.wurfl.core.Device;
+
+import org.apache.commons.collections.MapUtils;
 
 
 /**

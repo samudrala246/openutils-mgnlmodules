@@ -26,8 +26,6 @@ import net.sourceforge.openutils.mgnlmobile.filters.MobileFilter;
 
 import org.apache.commons.collections.MapUtils;
 
-import info.magnolia.module.templating.Paragraph;
-
 /**
  * @author molaschi
  * @version $Id: $

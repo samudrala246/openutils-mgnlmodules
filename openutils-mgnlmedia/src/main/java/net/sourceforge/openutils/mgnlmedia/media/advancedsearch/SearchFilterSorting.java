@@ -21,9 +21,9 @@ package net.sourceforge.openutils.mgnlmedia.media.advancedsearch;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.commons.lang.StringUtils;
-
 import net.sourceforge.openutils.mgnlmedia.media.pages.SortMode;
+
+import org.apache.commons.lang.StringUtils;
 
 
 /**

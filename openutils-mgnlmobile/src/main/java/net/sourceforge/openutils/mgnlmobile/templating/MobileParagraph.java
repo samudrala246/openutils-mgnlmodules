@@ -20,7 +20,6 @@
 package net.sourceforge.openutils.mgnlmobile.templating;
 
 import net.sourceforge.wurfl.core.Device;
-import info.magnolia.module.templating.Paragraph;
 
 
 /**

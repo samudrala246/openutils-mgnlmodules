@@ -19,9 +19,9 @@
 
 package net.sourceforge.openutils.mgnlmedia.media.dialog;
 
-import java.util.Calendar;
-
 import info.magnolia.cms.gui.dialog.DialogStatic;
+
+import java.util.Calendar;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.time.FastDateFormat;

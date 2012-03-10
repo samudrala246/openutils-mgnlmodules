@@ -19,13 +19,11 @@
 
 package net.sourceforge.openutils.mgnlmobile.templating;
 
-import net.sourceforge.openutils.mgnlmobile.filters.MobileFilter;
 import info.magnolia.cms.core.Content;
 import info.magnolia.cms.util.ContentUtil;
 import info.magnolia.content2bean.Content2BeanException;
 import info.magnolia.content2bean.Content2BeanUtil;
-import info.magnolia.module.templating.Paragraph;
-import info.magnolia.module.templating.ParagraphManager;
+import net.sourceforge.openutils.mgnlmobile.filters.MobileFilter;
 
 
 /**

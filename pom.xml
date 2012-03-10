@@ -17,7 +17,6 @@
     </plugins>
   </build>
   <modules>
-    <module>openutils-mgnlspring</module>
     <module>openutils-mgnlstripes</module>
     <module>openutils-mgnltasks</module>
     <module>openutils-mgnlbootstrapsync</module>
