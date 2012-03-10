@@ -1,0 +1,32 @@
+                                 --------------------------
+                                   openutils-mgnlspring
+                                 --------------------------
+                                     Fabrizio Giustina
+                                 --------------------------
+
+About openutils-mgnlspring
+
+ openutils-mgnlspring is a custom {{{http://www.magnolia.info}magnolia}} module which integrates the
+ {{{http://mc4j.org/confluence/display/stripes/Home}Spring}} MVC framework.
+
+ This module will allow you to use Spring controllers as a Magnolia paragraph.
+
+ <<This module requires magnolia 3.5.x, and will not work on any earlier version!>>
+
+Configuration
+
+ <<todo>>
+
+ The mgnlspring integration requires setting up a "bridge paragraph" using the supplied tag (content bridge tag) which
+ will forward any request to the specified controller.
+
+ This module have been developed initially on magnolia 2 and spring 1.x, and updated to work on the latest magnolia/spring revision.
+ We are aware this integration is not so well designed and up-to-date as the most recent {{{http://openutils.sourceforge.net/openutils-mgnlstripes/index.html}magnolia-stripes}}
+ integration, so of you are looking for a way to integrate a mvc framework into a magnolia application we suggest to look
+ at mgnlstripes-instead.
+
+Released versions
+
+ {{{http://www.mvnrepository.com/artifact/net.sourceforge.openutils/openutils-mgnlspring}http://www.mvnrepository.com/artifact/net.sourceforge.openutils/openutils-mgnlspring}}
+
+
