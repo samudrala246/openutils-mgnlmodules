@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE module SYSTEM "module.dtd">
+<module>
+  <name>bootstrapsync</name>
+  <displayName>bootstrapsync</displayName>
+  <description>Bootstrap Synchronizer</description>
+  <class>it.openutils.mgnlbootstrapsync.lifecycle.BootstrapSyncModuleLifecycle</class>
+  <version>${project.version}</version>
+</module>

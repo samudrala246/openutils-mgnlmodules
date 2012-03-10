@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+  <!--
+  "type" attribute can be: add, remove, update or fix.
+-->
+<document>
+  <properties>
+    <title>Changes</title>
+    <author email="fgiust(at)users.sourceforge.net">Fabrizio Giustina</author>
+  </properties>
+  <body>
+    <release version="0.3" date="2009-08-17" description="">
+      <action type="add" dev="lucaboati">Add default node types for users, userroles and usergroups repository</action>
+      <action type="fix" dev="lucaboati">Avoid {repository}.xml bootstrapping</action>
+      <action type="fix" dev="lucaboati">fix BootstrapSyncRepositoryWatch constructor</action>
+    </release>
+    <release version="0.2" date="2008-07-01" description="">
+      <action type="update" dev="lucaboati">Stable release for Magnolia 4.x</action>
+    </release>
+    <release version="0.1" date="2008-05-07" description="">
+      <action type="add" dev="fgiust">first alpha release</action>
+    </release>
+  </body>
+</document>

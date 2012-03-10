@@ -1,0 +1,78 @@
+                                 --------------------------
+                                   openutils-mgnlbootstrapsync
+                                 --------------------------
+                                     Manuel Molaschi
+                                 --------------------------
+
+About openutils-mgnlbootstrapsync
+
+ openutils-mgnlbootstrapsync is a custom {{{http://www.magnolia.info}magnolia}} module.
+
+ After installed into magnolia, this module will allow you to automatically export to filesystem your changes in magnolia repositories.
+
+ <<This module requires magnolia 3.1-m3, and will not work on any earlier version!>>
+
+ The module is intended to be used during development only, and it's mostly useful when developing in team in order to
+ assure that any configuration change is exported and checked in into svn.
+
+
+Configuration
+
+ First of all drop the openutils-mgnlbootstrapsync jar into WEB-INF/lib, or (better) if you are using maven
+ just declare the following dependency:
+
++----------------------------------------------+
+    <dependency>
+        <groupId>net.sourceforge.openutils</groupId>
+        <artifactId>openutils-mgnlbootstrapsync</artifactId>
+        <version>(see last released version)</version>
+    </dependency>
++----------------------------------------------+
+
+ Then configure the magnolia environment.properties files (usually in WEB-INF/config/default folder) as follows:
+
++----------------------------------------------+
+ #activate bootstrap synchronization
+ magnolia.bootstrapSync=true
+
+ #list repositories you want to configure
+ magnolia.bootstrapSync.repositories=config,website,users
+
+ #set path of folder export to
+ magnolia.bootstrapSync.config.exportPath=....path of folder to export to....
+ magnolia.bootstrapSync.website.exportPath=....path of folder to export to....
+ magnolia.bootstrapSync.users.exportPath=....path of folder to export to....
+
+ #set root nodes to export: every change in this and subnodes will export [repository].[path.to.node].xml
+ #you can use * wildcards
+ magnolia.bootstrapSync.config.exportRoots=/server/filters/servlets/*,\
+  /server/filters/cms/*,\
+  /server/filters/*,\
+  /server/MIMEMapping/*,\
+  /modules/templating/*/*/*,\
+  /modules/*
+ magnolia.bootstrapSync.website.exportRoots=/homepage,/help,/newsletter
+ magnolia.bootstrapSync.users.exportRoots=/*
+
+ #mgnl:content is the default nodeType
+ magnolia.bootstrapSync.users.nodeType=mgnl:user
++----------------------------------------------+
+
+ The bootstrap sync module is suggested to be used with a memory-only jackrabbit configuration, so that each developer
+ can be easily keep its own magnolia repository in sync with the bootstrap from svn.
+
++----------------------------------------------+
+
+magnolia.repositories.jackrabbit.config=WEB-INF/config/repo-conf/jackrabbit-memory-search.xml
+
++----------------------------------------------+
+
+
+
+Released versions
+
+ {{{http://www.mvnrepository.com/artifact/net.sourceforge.openutils/openutils-mgnlbootstrapsync}http://www.mvnrepository.com/artifact/net.sourceforge.openutils/openutils-mgnlbootstrapsync}}
+
+
+
+
