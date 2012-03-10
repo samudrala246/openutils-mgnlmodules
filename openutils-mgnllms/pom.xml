@@ -177,6 +177,12 @@
     <!-- to be released before the final 4.3 version -->
     <dependency>
       <groupId>javax.servlet</groupId>
+      <artifactId>servlet-api</artifactId>
+      <version>2.4</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>javax.servlet</groupId>
       <artifactId>jsp-api</artifactId>
       <version>2.0</version>
       <scope>provided</scope>
@@ -195,20 +201,7 @@
       </exclusions>
     </dependency>
   </dependencies>
-  <repositories>
-    <repository>
-      <id>repository.openmindonline.it</id>
-      <name>openmindonline repository</name>
-      <url>http://repository.openmindonline.it</url>
-      <releases>
-        <enabled>true</enabled>
-      </releases>
-      <snapshots>
-        <enabled>false</enabled>
-      </snapshots>
-    </repository>
-  </repositories>
   <properties>
-    <magnolia.version>4.4.1</magnolia.version>
+    <magnolia.version>4.5</magnolia.version>
   </properties>
 </project>

@@ -87,11 +87,13 @@
       <artifactId>magnolia-module-admininterface</artifactId>
       <version>${magnolia.version}</version>
     </dependency>
+    <!--
     <dependency>
       <groupId>info.magnolia</groupId>
       <artifactId>magnolia-taglib-cms</artifactId>
       <version>${magnolia.version}</version>
     </dependency>
+    -->
     <dependency>
       <groupId>info.magnolia</groupId>
       <artifactId>magnolia-gui</artifactId>
@@ -128,8 +130,14 @@
         </exclusion>
       </exclusions>
     </dependency>
+    <dependency>
+      <groupId>javax.servlet</groupId>
+      <artifactId>servlet-api</artifactId>
+      <version>2.4</version>
+      <scope>provided</scope>
+    </dependency>
   </dependencies>
   <properties>
-    <magnolia.version>4.4.1</magnolia.version>
+    <magnolia.version>4.5</magnolia.version>
   </properties>
 </project>

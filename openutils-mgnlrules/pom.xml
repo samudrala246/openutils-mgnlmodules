@@ -146,6 +146,6 @@
     </repository>
   </repositories>
   <properties>
-    <magnolia.version>4.4.1</magnolia.version>
+    <magnolia.version>4.5</magnolia.version>
   </properties>
 </project>

@@ -63,12 +63,18 @@
         </exclusion>
       </exclusions>
     </dependency>
+    <dependency>
+      <groupId>javax.servlet</groupId>
+      <artifactId>servlet-api</artifactId>
+      <version>2.4</version>
+      <scope>provided</scope>
+    </dependency>
   </dependencies>
   <repositories>
     <repository>
-      <id>repository.magnolia.info</id>
+      <id>repository.magnolia-cms.com</id>
       <name>magnolia repository</name>
-      <url>http://svn.magnolia.info/maven/m2</url>
+      <url>http://nexus.magnolia-cms.com/content/groups/public</url>
       <releases>
         <enabled>true</enabled>
       </releases>
@@ -89,6 +95,6 @@
     </repository>
   </repositories>
   <properties>
-    <magnolia.version>4.4.1</magnolia.version>
+    <magnolia.version>4.5</magnolia.version>
   </properties>
 </project>
