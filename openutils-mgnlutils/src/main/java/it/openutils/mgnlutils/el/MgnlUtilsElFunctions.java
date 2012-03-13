@@ -23,6 +23,7 @@ import info.magnolia.cms.beans.config.ServerConfiguration;
 import info.magnolia.cms.core.Content;
 import info.magnolia.cms.core.HierarchyManager;
 import info.magnolia.cms.core.ItemType;
+import info.magnolia.cms.core.MgnlNodeType;
 import info.magnolia.cms.core.Path;
 import info.magnolia.cms.core.SystemProperty;
 import info.magnolia.cms.i18n.I18nContentSupportFactory;
@@ -340,7 +341,7 @@ public final class MgnlUtilsElFunctions
 
         if (content != null)
         {
-            count = content.getChildren(ItemType.CONTENT).size();
+            count = content.getChildren(MgnlNodeType.NT_CONTENT).size();
         }
 
         return count;
@@ -356,7 +357,7 @@ public final class MgnlUtilsElFunctions
 
         if (content != null)
         {
-            return content.getChildren(ItemType.CONTENT);
+            return content.getChildren(MgnlNodeType.NT_CONTENT);
         }
 
         return null;

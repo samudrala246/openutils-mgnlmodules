@@ -9,7 +9,7 @@
   <packaging>jar</packaging>
   <artifactId>openutils-mgnlutils</artifactId>
   <name>Generic utilities for Magnolia CMS</name>
-  <version>1.1.0-SNAPSHOT</version>
+  <version>5.0.0-SNAPSHOT</version>
   <inceptionYear>2009</inceptionYear>
   <description>A collection of Magnolia utilities and extensions</description>
   <url>http://www.openmindlab.com/lab/products/mgnlutils.html</url>

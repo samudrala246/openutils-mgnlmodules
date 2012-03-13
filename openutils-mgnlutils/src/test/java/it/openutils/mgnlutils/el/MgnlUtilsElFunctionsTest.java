@@ -49,9 +49,9 @@ import org.testng.annotations.Test;
 public class MgnlUtilsElFunctionsTest extends TestNgRepositoryTestcase
 {
 
-    LocaleDefinition en = new LocaleDefinition("en", null, true);
+    LocaleDefinition en = LocaleDefinition.make("en", null, true);
 
-    LocaleDefinition it = new LocaleDefinition("it", null, true);
+    LocaleDefinition it = LocaleDefinition.make("it", null, true);
 
     @Test
     public void testSplitAndTokenize() throws Exception

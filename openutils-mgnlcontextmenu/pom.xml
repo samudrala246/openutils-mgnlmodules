@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <parent>
     <groupId>net.sourceforge.openutils</groupId>
     <artifactId>openutils-parent</artifactId>
@@ -11,7 +12,7 @@
   <artifactId>openutils-mgnlcontextmenu</artifactId>
   <name>ContextMenu Module for Magnolia CMS</name>
   <description>A magnolia module for editing content via context menu</description>
-  <version>1.0.1-SNAPSHOT</version>
+  <version>5.0.0-SNAPSHOT</version>
   <inceptionYear>2010</inceptionYear>
   <licenses>
     <license>
@@ -111,12 +112,12 @@
     <dependency>
       <groupId>net.sourceforge.openutils</groupId>
       <artifactId>openutils-mgnlcontrols</artifactId>
-      <version>4.1.1</version>
+      <version>5.0.0-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>net.sourceforge.openutils</groupId>
       <artifactId>openutils-mgnlutils</artifactId>
-      <version>1.0.7</version>
+      <version>5.0.0-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>net.sourceforge.openutils</groupId>
@@ -126,7 +127,7 @@
     <dependency>
       <groupId>net.sourceforge.openutils</groupId>
       <artifactId>openutils-mgnlmedia</artifactId>
-      <version>4.3.0</version>
+      <version>5.0.0-SNAPSHOT</version>
       <optional>true</optional>
     </dependency>
     <dependency>

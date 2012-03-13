@@ -10,7 +10,7 @@
   <packaging>jar</packaging>
   <artifactId>openutils-mgnltasks</artifactId>
   <name>Tasks for for Magnolia CMS</name>
-  <version>4.1.3-SNAPSHOT</version>
+  <version>5.0.0-SNAPSHOT</version>
   <description>A collection of useful magnolia update tasks that can be reused in custom modules</description>
   <inceptionYear>2008</inceptionYear>
   <scm>

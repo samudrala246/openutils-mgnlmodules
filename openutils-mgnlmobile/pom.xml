@@ -87,13 +87,6 @@
       <artifactId>magnolia-module-admininterface</artifactId>
       <version>${magnolia.version}</version>
     </dependency>
-    <!--
-    <dependency>
-      <groupId>info.magnolia</groupId>
-      <artifactId>magnolia-taglib-cms</artifactId>
-      <version>${magnolia.version}</version>
-    </dependency>
-    -->
     <dependency>
       <groupId>info.magnolia</groupId>
       <artifactId>magnolia-gui</artifactId>
@@ -113,7 +106,7 @@
     <dependency>
       <groupId>net.sourceforge.openutils</groupId>
       <artifactId>openutils-mgnltasks</artifactId>
-      <version>4.1.2</version>
+      <version>5.0.0-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>net.sourceforge.wurfl</groupId>

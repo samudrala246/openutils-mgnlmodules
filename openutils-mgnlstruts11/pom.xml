@@ -11,7 +11,7 @@
   <packaging>jar</packaging>
   <name>Struts 1.1 module for Magnolia CMS</name>
   <description>A module for for Magnolia CMS that let you use the Struts 1.1 framework inside Magnolia</description>
-  <version>4.0.2-SNAPSHOT</version>
+  <version>5.0.0-SNAPSHOT</version>
   <licenses>
     <license>
       <name>GPLv3</name>
@@ -96,7 +96,7 @@
     <dependency>
       <groupId>net.sourceforge.openutils</groupId>
       <artifactId>openutils-mgnltasks</artifactId>
-      <version>4.1.0</version>
+      <version>5.0.0-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>struts</groupId>

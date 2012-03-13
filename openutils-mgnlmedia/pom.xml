@@ -10,7 +10,7 @@
   <artifactId>openutils-mgnlmedia</artifactId>
   <name>SimpleMedia Module for Magnolia CMS</name>
   <description>SimpleMedia Module for Magnolia CMS: a module for Magnolia CMS for easier management of multimedia assets.</description>
-  <version>4.5.1-SNAPSHOT</version>
+  <version>5.0.0-SNAPSHOT</version>
   <inceptionYear>2008</inceptionYear>
   <licenses>
     <license>
@@ -112,12 +112,12 @@
     <dependency>
       <groupId>net.sourceforge.openutils</groupId>
       <artifactId>openutils-mgnltasks</artifactId>
-      <version>4.1.2</version>
+      <version>5.0.0-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>net.sourceforge.openutils</groupId>
       <artifactId>openutils-mgnlcontrols</artifactId>
-      <version>4.1.2</version>
+      <version>5.0.0-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>net.sourceforge.openutils</groupId>
@@ -127,7 +127,7 @@
     <dependency>
       <groupId>net.sourceforge.openutils</groupId>
       <artifactId>openutils-mgnlutils</artifactId>
-      <version>1.0.7</version>
+  <version>5.0.0-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>net.sourceforge.openutils</groupId>
@@ -170,7 +170,7 @@
     <dependency>
       <groupId>net.sourceforge.openutils</groupId>
       <artifactId>openutils-mgnlcriteria</artifactId>
-      <version>3.3.1</version>
+  <version>5.0.0-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>javax.servlet</groupId>

@@ -20,6 +20,7 @@
 package it.openutils.mgnlutils.templating;
 
 import info.magnolia.cms.core.Content;
+import info.magnolia.rendering.template.configured.ConfiguredTemplateDefinition;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -52,7 +53,7 @@ import org.slf4j.LoggerFactory;
  * @author fgiust
  * @version $Id$
  */
-public class ExtendedTemplate extends Template
+public class ExtendedTemplate extends ConfiguredTemplateDefinition
 {
 
     private String parentPath;
