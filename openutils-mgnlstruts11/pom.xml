@@ -115,6 +115,6 @@
     </dependency>
   </dependencies>
   <properties>
-    <magnolia.version>4.5</magnolia.version>
+    <magnolia.version>4.5.1</magnolia.version>
   </properties>
 </project>
