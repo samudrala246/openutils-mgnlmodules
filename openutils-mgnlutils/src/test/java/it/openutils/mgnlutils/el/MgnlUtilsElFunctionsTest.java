@@ -20,10 +20,13 @@
 package it.openutils.mgnlutils.el;
 
 import info.magnolia.cms.beans.config.ServerConfiguration;
+import info.magnolia.cms.beans.config.URI2RepositoryManager;
 import info.magnolia.cms.i18n.DefaultI18nContentSupport;
 import info.magnolia.cms.i18n.I18nContentSupportFactory;
 import info.magnolia.cms.i18n.LocaleDefinition;
 import info.magnolia.context.MgnlContext;
+import info.magnolia.link.LinkTransformerManager;
+import info.magnolia.test.ComponentsTestUtil;
 import info.magnolia.test.mock.MockWebContext;
 import it.openutils.mgnlutils.test.ModuleConfiguration;
 import it.openutils.mgnlutils.test.RepositoryTestConfiguration;
@@ -128,6 +131,10 @@ public class MgnlUtilsElFunctionsTest extends TestNgRepositoryTestcase
             MgnlContext.getInstance().setLocale(new Locale(""));
         }
 
-    }
+        // info.magnolia.link.BaseLinkTest.setUp()
+        // not configured in the repository
+        ComponentsTestUtil.setImplementation(URI2RepositoryManager.class, URI2RepositoryManager.class);
+        ComponentsTestUtil.setInstance(LinkTransformerManager.class, new LinkTransformerManager());
 
+    }
 }
