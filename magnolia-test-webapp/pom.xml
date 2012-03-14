@@ -21,6 +21,11 @@
     </dependency>
     <dependency>
       <groupId>info.magnolia</groupId>
+      <artifactId>magnolia-rendering</artifactId>
+      <version>${magnolia.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>info.magnolia</groupId>
       <artifactId>magnolia-module-admininterface</artifactId>
       <version>${magnolia.version}</version>
     </dependency>
@@ -82,7 +87,7 @@
     <dependency>
       <groupId>info.magnolia</groupId>
       <artifactId>magnolia-module-dms</artifactId>
-      <version>1.5.2</version>
+      <version>1.6</version>
     </dependency>
     <dependency>
       <groupId>taglibs</groupId>
