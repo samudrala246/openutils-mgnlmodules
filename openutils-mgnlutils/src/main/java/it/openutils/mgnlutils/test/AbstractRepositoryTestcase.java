@@ -27,13 +27,43 @@ import info.magnolia.cms.core.SystemProperty;
 import info.magnolia.cms.util.ClasspathResourcesUtil;
 import info.magnolia.cms.util.ContentUtil;
 import info.magnolia.content2bean.Content2BeanException;
+import info.magnolia.content2bean.Content2BeanProcessor;
 import info.magnolia.content2bean.Content2BeanUtil;
+import info.magnolia.content2bean.TypeMapping;
+import info.magnolia.content2bean.impl.Content2BeanProcessorImpl;
+import info.magnolia.content2bean.impl.TypeMappingImpl;
 import info.magnolia.context.MgnlContext;
 import info.magnolia.context.SystemContext;
 import info.magnolia.context.SystemRepositoryStrategy;
 import info.magnolia.importexport.BootstrapUtil;
+import info.magnolia.init.MagnoliaConfigurationProperties;
+import info.magnolia.init.properties.ClasspathPropertySource;
+import info.magnolia.init.properties.InitPathsPropertySource;
+import info.magnolia.init.properties.ModulePropertiesSource;
 import info.magnolia.module.ModuleLifecycle;
+import info.magnolia.module.ModuleManagementException;
+import info.magnolia.module.ModuleManager;
+import info.magnolia.module.ModuleManagerImpl;
 import info.magnolia.module.ModuleRegistry;
+import info.magnolia.module.ModuleRegistryImpl;
+import info.magnolia.module.model.ModuleDefinition;
+import info.magnolia.module.model.reader.BetwixtModuleDefinitionReader;
+import info.magnolia.module.model.reader.DependencyCheckerImpl;
+import info.magnolia.objectfactory.Components;
+import info.magnolia.objectfactory.DefaultComponentProvider;
+import info.magnolia.objectfactory.configuration.ComponentConfiguration;
+import info.magnolia.objectfactory.configuration.ComponentProviderConfiguration;
+import info.magnolia.objectfactory.configuration.ComponentProviderConfigurationBuilder;
+import info.magnolia.objectfactory.configuration.ConfiguredComponentConfiguration;
+import info.magnolia.objectfactory.configuration.ImplementationConfiguration;
+import info.magnolia.objectfactory.configuration.InstanceConfiguration;
+import info.magnolia.objectfactory.configuration.ProviderConfiguration;
+import info.magnolia.repository.DefaultRepositoryManager;
+import info.magnolia.repository.RepositoryManager;
+import info.magnolia.test.ComponentsTestUtil;
+import info.magnolia.test.FixedModuleDefinitionReader;
+import info.magnolia.test.TestMagnoliaConfigurationProperties;
+import info.magnolia.test.TestMagnoliaInitPaths;
 import info.magnolia.test.mock.MockContext;
 import info.magnolia.test.mock.MockUtil;
 
@@ -43,6 +73,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -169,10 +200,65 @@ public abstract class AbstractRepositoryTestcase
         MgnlContext.setInstance(null);
     }
 
-    private void initDefaultImplementations() throws IOException
-    {
-        PropertiesInitializer.getInstance().loadBeanProperties();
-        PropertiesInitializer.getInstance().loadAllModuleProperties();
+    // info.magnolia.test.MgnlTestCase.initDefaultImplementations()
+    private void initDefaultImplementations() throws IOException, ModuleManagementException {
+        final List<ModuleDefinition> modules = getModuleDefinitionsForTests();
+        final ModuleRegistry mr = new ModuleRegistryImpl();
+        ModuleManagerImpl mm = new ModuleManagerImpl(null, new FixedModuleDefinitionReader(modules), mr, new DependencyCheckerImpl());
+        mm.loadDefinitions();
+
+        final TestMagnoliaConfigurationProperties configurationProperties = new TestMagnoliaConfigurationProperties(
+                new ModulePropertiesSource(mr),
+                new ClasspathPropertySource("/test-magnolia.properties"),
+                new InitPathsPropertySource(new TestMagnoliaInitPaths())
+        );
+        SystemProperty.setMagnoliaConfigurationProperties(configurationProperties);
+
+        ComponentsTestUtil.setInstance(ModuleManager.class, mm);
+        ComponentsTestUtil.setInstance(ModuleRegistry.class, mr);
+        ComponentsTestUtil.setInstance(MagnoliaConfigurationProperties.class, configurationProperties);
+
+        ComponentsTestUtil.setImplementation(RepositoryManager.class, DefaultRepositoryManager.class);
+
+        ComponentProviderConfigurationBuilder configurationBuilder = new ComponentProviderConfigurationBuilder();
+        ComponentProviderConfiguration configuration = configurationBuilder.getComponentsFromModules("system", mr.getModuleDefinitions());
+        configuration.combine(configurationBuilder.getComponentsFromModules("main", mr.getModuleDefinitions()));
+
+        // Content2BeanProcessorImpl uses dependency injection and since we don't have that with MockComponentProvider we
+        // need to manually create this object and replace the component configuration read from core.xml
+        final TypeMappingImpl typeMapping = new TypeMappingImpl();
+        configuration.registerInstance(TypeMapping.class, typeMapping);
+        configuration.registerInstance(Content2BeanProcessor.class, new Content2BeanProcessorImpl(typeMapping));
+
+        for (Map.Entry<Class, ComponentConfiguration> entry : configuration.getComponents().entrySet()) {
+            ComponentConfiguration value = entry.getValue();
+            if (value instanceof ImplementationConfiguration) {
+                ImplementationConfiguration config = (ImplementationConfiguration) value;
+                ComponentsTestUtil.setImplementation(config.getType(), config.getImplementation());
+            } else if (value instanceof InstanceConfiguration) {
+                InstanceConfiguration config = (InstanceConfiguration) value;
+                ComponentsTestUtil.setInstance(config.getType(), config.getInstance());
+            } else if (value instanceof ProviderConfiguration) {
+                ProviderConfiguration config = (ProviderConfiguration) value;
+                ComponentsTestUtil.setImplementation(config.getType(), config.getProviderClass());
+            } else if (value instanceof ConfiguredComponentConfiguration) {
+                ConfiguredComponentConfiguration config = (ConfiguredComponentConfiguration) value;
+                ComponentsTestUtil.setConfigured(config.getType(), config.getWorkspace(), config.getPath(), config.isObserved());
+            }
+        }
+
+        for (Map.Entry<Class<?>, Class<?>> entry : configuration.getTypeMapping().entrySet()) {
+            ComponentsTestUtil.setImplementation((Class)entry.getKey(), (Class)entry.getValue());
+        }
+    }
+
+    // info.magnolia.test.MgnlTestCase.getModuleDefinitionsForTests()
+    /**
+     * Override this method to provide the appropriate list of modules your tests need.
+     */
+    protected List<ModuleDefinition> getModuleDefinitionsForTests() throws ModuleManagementException {
+        final ModuleDefinition core = new BetwixtModuleDefinitionReader().readFromResource("/META-INF/magnolia/core.xml");
+        return Collections.singletonList(core);
     }
 
     /**
@@ -209,7 +295,8 @@ public abstract class AbstractRepositoryTestcase
     protected void modifyContextesToUseRealRepository()
     {
         SystemContext systemContext = MgnlContext.getSystemContext();
-        SystemRepositoryStrategy repositoryStrategy = new SystemRepositoryStrategy(systemContext);
+        RepositoryManager repositoryManager = Components.getComponent(RepositoryManager.class);
+        SystemRepositoryStrategy repositoryStrategy = new SystemRepositoryStrategy(repositoryManager);
 
         ((MockContext) systemContext).setRepositoryStrategy(repositoryStrategy);
         ((MockContext) MgnlContext.getInstance()).setRepositoryStrategy(repositoryStrategy);
