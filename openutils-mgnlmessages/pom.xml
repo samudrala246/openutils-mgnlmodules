@@ -11,7 +11,7 @@
   <artifactId>openutils-mgnlmessages</artifactId>
   <name>Messages Module for Magnolia CMS</name>
   <description>Manage your translations from the Magnolia admin interface</description>
-  <version>4.2.4-SNAPSHOT</version>
+  <version>5.0.0-SNAPSHOT</version>
   <licenses>
     <license>
       <name>GPLv3</name>
