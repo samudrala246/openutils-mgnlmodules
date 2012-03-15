@@ -20,11 +20,15 @@
 package it.openutils.mgnlutils.templating;
 
 import info.magnolia.cms.core.Content;
+import info.magnolia.cms.util.ContentUtil;
+import info.magnolia.rendering.template.TemplateAvailability;
+import info.magnolia.rendering.template.TemplateDefinition;
 import info.magnolia.rendering.template.configured.ConfiguredTemplateDefinition;
 
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.jcr.Node;
 import javax.jcr.RepositoryException;
 
 import org.apache.commons.lang.StringUtils;
@@ -155,76 +159,85 @@ public class ExtendedTemplate extends ConfiguredTemplateDefinition
      * {@inheritDoc}
      */
     @Override
-    public boolean isAvailable(Content node)
+    public TemplateAvailability getTemplateAvailability()
     {
-        boolean available = super.isAvailable(node);
-
-        if (!available)
+        final TemplateAvailability x = super.getTemplateAvailability();
+        return new TemplateAvailability()
         {
-            return false;
-        }
-
-        if (repositories != null && !repositories.isEmpty())
-        {
-            try
+            
+            public boolean isAvailable(Node content, TemplateDefinition templateDefinition)
             {
-                if (!repositories.contains(node.getWorkspace().getName()))
+                boolean available = x != null ? !x.isAvailable(content, templateDefinition) : true;
+
+                if (!available)
                 {
                     return false;
                 }
-            }
-            catch (RepositoryException e)
-            {
-                // ignore, should never happen
-            }
-        }
 
-        if (available && (levels != null && !levels.isEmpty()))
-        {
-            try
-            {
-                int currentLevel = node.getLevel();
-                if (!levels.contains(currentLevel))
+                Content node = ContentUtil.asContent(content);
+                if (repositories != null && !repositories.isEmpty())
                 {
-                    return false;
-                }
-            }
-            catch (RepositoryException e)
-            {
-                // ignore, should never happen
-            }
-        }
-
-        if (available && StringUtils.isNotBlank(parentPath))
-        {
-            if (!StringUtils.contains(node.getHandle(), parentPath))
-            {
-                return false;
-            }
-        }
-
-        if (available && (parentTemplates != null && !parentTemplates.isEmpty()))
-        {
-            try
-            {
-                Content parent = node.getParent();
-                while (parent.getLevel() > 0)
-                {
-                    if (parentTemplates.contains(parent.getTemplate()))
+                    try
                     {
-                        return true;
+                        if (!repositories.contains(node.getWorkspace().getName()))
+                        {
+                            return false;
+                        }
                     }
-                    parent = parent.getParent();
+                    catch (RepositoryException e)
+                    {
+                        // ignore, should never happen
+                    }
                 }
-            }
-            catch (RepositoryException e)
-            {
-                log.warn("Error checking parent: " + e.getMessage(), e);
-            }
-            return false;
-        }
 
-        return true;
+                if (available && (levels != null && !levels.isEmpty()))
+                {
+                    try
+                    {
+                        int currentLevel = node.getLevel();
+                        if (!levels.contains(currentLevel))
+                        {
+                            return false;
+                        }
+                    }
+                    catch (RepositoryException e)
+                    {
+                        // ignore, should never happen
+                    }
+                }
+
+                if (available && StringUtils.isNotBlank(parentPath))
+                {
+                    if (!StringUtils.contains(node.getHandle(), parentPath))
+                    {
+                        return false;
+                    }
+                }
+
+                if (available && (parentTemplates != null && !parentTemplates.isEmpty()))
+                {
+                    try
+                    {
+                        Content parent = node.getParent();
+                        while (parent.getLevel() > 0)
+                        {
+                            if (parentTemplates.contains(parent.getTemplate()))
+                            {
+                                return true;
+                            }
+                            parent = parent.getParent();
+                        }
+                    }
+                    catch (RepositoryException e)
+                    {
+                        log.warn("Error checking parent: " + e.getMessage(), e);
+                    }
+                    return false;
+                }
+
+                return true;
+            }
+        };
     }
 
 }
