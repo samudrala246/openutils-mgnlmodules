@@ -26,6 +26,7 @@ import info.magnolia.context.MgnlContext;
 import info.magnolia.rendering.model.RenderingModel;
 import info.magnolia.rendering.model.RenderingModelImpl;
 
+import javax.jcr.Node;
 import javax.jcr.RepositoryException;
 
 import org.apache.commons.lang.StringUtils;
@@ -48,7 +49,7 @@ public class AutoGenerateTemplateModel extends RenderingModelImpl<ExtendedTempla
      * @param definition
      * @param parent
      */
-    public AutoGenerateTemplateModel(Content content, ExtendedTemplate definition, RenderingModel parent)
+    public AutoGenerateTemplateModel(Node content, ExtendedTemplate definition, RenderingModel parent)
     {
         super(content, definition, parent);
     }
@@ -86,7 +87,7 @@ public class AutoGenerateTemplateModel extends RenderingModelImpl<ExtendedTempla
                 Content paragraph;
                 try
                 {
-                    paragraph = ContentUtil.createPath(content, parDef[0], ItemType.CONTENTNODE, true);
+                    paragraph = ContentUtil.createPath(ContentUtil.asContent(content), parDef[0], ItemType.CONTENTNODE, true);
                     if (StringUtils.isEmpty(paragraph.getTemplate()))
                     {
                         paragraph.getMetaData().setTemplate(parDef[1]);
