@@ -19,6 +19,12 @@
 
 package it.openutils.magnoliastripes;
 
+import info.magnolia.objectfactory.Components;
+import info.magnolia.registry.RegistrationException;
+import info.magnolia.rendering.template.TemplateDefinition;
+import info.magnolia.rendering.template.configured.ConfiguredTemplateDefinition;
+import info.magnolia.rendering.template.registry.TemplateDefinitionProvider;
+import info.magnolia.rendering.template.registry.TemplateDefinitionRegistry;
 import it.openutils.magnoliastripes.annotations.Dialog;
 
 import java.util.HashSet;
@@ -49,7 +55,7 @@ public class MgnlActionResolver extends NameBasedActionResolver
     /**
      * Configured Stripes paragraphs.
      */
-    private static Set<Paragraph> paragraphs = new HashSet<Paragraph>();
+    private static Set<TemplateDefinition> paragraphs = new HashSet<TemplateDefinition>();
 
     /**
      * {@inheritDoc}
@@ -120,31 +126,57 @@ public class MgnlActionResolver extends NameBasedActionResolver
      */
     private void collectStripesParagraphs(String paragraphName, String dialogName, String binding)
     {
-        Paragraph paragraph = new Paragraph();
+        final ConfiguredTemplateDefinition paragraph = new ConfiguredTemplateDefinition();
 
         paragraph.setName(paragraphName);
         paragraph.setTitle("paragraph." + paragraphName + ".title");
         paragraph.setDescription("paragraph." + paragraphName + ".description");
         paragraph.setDialog(dialogName);
-        paragraph.setTemplatePath(binding);
-        paragraph.setType("stripes");
+        paragraph.setTemplateScript(binding);
+        paragraph.setRenderType("stripes");
         paragraph.setI18nBasename(StripesModule.getInstance().getI18nbasename());
         paragraphs.add(paragraph);
 
         log.info("Registering stripes paragraph {} with dialog {}", paragraph.getName(), paragraph.getDialog()); //$NON-NLS-1$ /$NON-NLS-2$
-        ParagraphManager.getInstance().getParagraphs().put(paragraph.getName(), paragraph);
+        // ParagraphManager.getInstance().getParagraphs().put(paragraph.getName(), paragraph);
+        Components.getComponent(TemplateDefinitionRegistry.class).register(new TemplateDefinitionProvider()
+        {
+            
+            public TemplateDefinition getTemplateDefinition() throws RegistrationException
+            {
+                return paragraph;
+            }
+            
+            public String getId()
+            {
+                return paragraph.getName();
+            }
+        });
     }
 
     public static void registerParagraphs()
     {
-        for (Paragraph paragraph : paragraphs)
+        for (final TemplateDefinition paragraph : paragraphs)
         {
             log.info("Registering stripes paragraph {}", paragraph.getName()); //$NON-NLS-1$
-            ParagraphManager.getInstance().getParagraphs().put(paragraph.getName(), paragraph);
+            // ParagraphManager.getInstance().getParagraphs().put(paragraph.getName(), paragraph);
+            Components.getComponent(TemplateDefinitionRegistry.class).register(new TemplateDefinitionProvider()
+            {
+                
+                public TemplateDefinition getTemplateDefinition() throws RegistrationException
+                {
+                    return paragraph;
+                }
+                
+                public String getId()
+                {
+                    return paragraph.getName();
+                }
+            });
         }
     }
 
-    public static Set<Paragraph> getParagraphs()
+    public static Set<TemplateDefinition> getParagraphs()
     {
         return paragraphs;
     }
