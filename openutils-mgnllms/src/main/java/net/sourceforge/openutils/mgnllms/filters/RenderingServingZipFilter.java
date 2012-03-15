@@ -23,7 +23,9 @@ import info.magnolia.cms.core.AggregationState;
 import info.magnolia.cms.core.HierarchyManager;
 import info.magnolia.cms.core.NodeData;
 import info.magnolia.context.MgnlContext;
+import info.magnolia.rendering.engine.RenderingEngine;
 import info.magnolia.rendering.engine.RenderingFilter;
+import info.magnolia.rendering.template.registry.TemplateDefinitionRegistry;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -60,6 +62,11 @@ public class RenderingServingZipFilter extends RenderingFilter
      * Logger.
      */
     private Logger log = LoggerFactory.getLogger(RenderingServingZipFilter.class);
+
+    public RenderingServingZipFilter(RenderingEngine renderingEngine, TemplateDefinitionRegistry templateDefinitionRegistry)
+    {
+        super(renderingEngine, templateDefinitionRegistry);
+    }
 
     /**
      * {@inheritDoc}
