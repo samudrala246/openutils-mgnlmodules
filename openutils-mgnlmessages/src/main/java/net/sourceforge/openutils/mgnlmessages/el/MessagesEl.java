@@ -23,6 +23,7 @@ import info.magnolia.cms.i18n.I18nContentSupportFactory;
 import info.magnolia.cms.i18n.MessagesManager;
 import info.magnolia.cms.security.Permission;
 import info.magnolia.context.MgnlContext;
+import info.magnolia.module.templating.MagnoliaTemplatingUtilities;
 
 import java.text.MessageFormat;
 
