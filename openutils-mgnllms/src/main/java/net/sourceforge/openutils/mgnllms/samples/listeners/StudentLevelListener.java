@@ -130,7 +130,7 @@ public class StudentLevelListener extends EmptyCourseEventListener
     {
         PrincipalCollection principalList = null;
 
-        for (Principal p : MgnlContext.getUser().getSubject().getPrincipals())
+        for (Principal p : MgnlContext.getSubject().getPrincipals())
         {
             if (p instanceof PrincipalCollection)
             {
