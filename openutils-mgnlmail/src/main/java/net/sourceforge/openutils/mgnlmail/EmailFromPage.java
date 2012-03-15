@@ -20,14 +20,18 @@
 package net.sourceforge.openutils.mgnlmail;
 
 import freemarker.template.Template;
-import info.magnolia.cms.core.Content;
 import info.magnolia.context.MgnlContext;
 import info.magnolia.module.mail.MailTemplate;
 import info.magnolia.module.mail.templates.impl.FreemarkerEmail;
+import info.magnolia.objectfactory.Components;
+import info.magnolia.rendering.engine.AppendableOnlyOutputProvider;
+import info.magnolia.rendering.engine.RenderingEngine;
 
 import java.io.StringWriter;
 import java.io.Writer;
 import java.util.Map;
+
+import javax.jcr.Node;
 
 import org.apache.commons.lang.StringUtils;
 
@@ -52,8 +56,8 @@ public class EmailFromPage extends FreemarkerEmail
 
         final String pageUrl = this.getTemplate().getTemplateFile();
 
-        Content mailNode = MgnlContext.getHierarchyManager("email").getContent(pageUrl);
-        MagnoliaTemplatingUtilities.getInstance().renderTemplate(mailNode, writer);
+        Node mailNode = MgnlContext.getJCRSession("email").getNode(pageUrl);
+        Components.getSingleton(RenderingEngine.class).render(mailNode, new AppendableOnlyOutputProvider(writer));
 
         String pageContent = writer.toString();
 
