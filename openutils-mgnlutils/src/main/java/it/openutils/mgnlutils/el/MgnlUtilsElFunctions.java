@@ -912,7 +912,7 @@ public final class MgnlUtilsElFunctions
     @SuppressWarnings("unchecked")
     public static Map<String, Object> userProperties()
     {
-        Subject subject = MgnlContext.getUser().getSubject();
+        Subject subject = MgnlContext.getSubject();
 
         Set<Entity> principalDetails = subject.getPrincipals(Entity.class);
         Iterator<Entity> entityIterator = principalDetails.iterator();
