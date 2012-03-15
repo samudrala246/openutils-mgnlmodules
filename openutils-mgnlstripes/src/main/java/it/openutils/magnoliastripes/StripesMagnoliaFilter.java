@@ -26,6 +26,7 @@ import info.magnolia.cms.filters.MgnlFilter;
 import info.magnolia.cms.filters.WebContainerResources;
 import info.magnolia.cms.util.RequestHeaderUtil;
 import info.magnolia.cms.util.ServletUtils;
+import info.magnolia.context.JCRSessionStrategy;
 import info.magnolia.context.MgnlContext;
 import info.magnolia.context.WebContext;
 import info.magnolia.context.WebContextImpl;
@@ -126,7 +127,7 @@ public class StripesMagnoliaFilter extends StripesFilter implements MgnlFilter
             {
                 // be sure that the request wrapper gets setted in mgnlcontext too
                 WebContext webContext = (WebContext) MgnlContext.getInstance();
-                RepositoryAcquiringStrategy strategy = ((WebContextImpl) webContext).getRepositoryStrategy();
+                JCRSessionStrategy strategy = ((WebContextImpl) webContext).getRepositoryStrategy();
                 webContext.init(servletRequest, webContext.getResponse(), webContext.getServletContext());
                 ((WebContextImpl) webContext).setRepositoryStrategy(strategy);
             }
