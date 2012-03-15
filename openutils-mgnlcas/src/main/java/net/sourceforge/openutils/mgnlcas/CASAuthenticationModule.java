@@ -19,6 +19,7 @@
 
 package net.sourceforge.openutils.mgnlcas;
 
+import info.magnolia.cms.security.Realm;
 import info.magnolia.cms.security.User;
 import info.magnolia.cms.security.auth.Entity;
 import info.magnolia.cms.security.auth.GroupList;
@@ -226,7 +227,8 @@ public class CASAuthenticationModule extends AbstractLoginModule implements Logi
         // this.pswd = ((PasswordCallback) callbacks[1]).getPassword();
         if (this.useRealmCallback)
         {
-            this.realm = StringUtils.defaultIfEmpty(realmCallback.getRealm(), this.realm);
+            this.realm = StringUtils.isBlank(realmCallback.getRealm()) ? this.realm : Realm.Factory
+                .newRealm(realmCallback.getRealm());
         }
 
         String ticket = ticketCallback.getText();

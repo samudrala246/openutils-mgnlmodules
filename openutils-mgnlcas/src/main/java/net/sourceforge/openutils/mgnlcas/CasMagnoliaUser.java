@@ -55,7 +55,6 @@ public class CasMagnoliaUser extends ExternalUser
         final Set<Entity> principalDetails = subject.getPrincipals(Entity.class);
         final Iterator<Entity> entityIterator = principalDetails.iterator();
         this.userDetails = entityIterator.next();
-        setSubject(subject);
     }
 
     /**

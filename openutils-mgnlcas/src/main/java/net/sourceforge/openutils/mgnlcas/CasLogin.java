@@ -165,7 +165,6 @@ public class CasLogin extends LoginHandlerBase implements LoginHandler
 
             if (user != null)
             {
-                user.setSubject(subject);
             }
             else
             {
@@ -173,7 +172,7 @@ public class CasLogin extends LoginHandlerBase implements LoginHandler
                     .error("Unable to obtain a user from userManager, maybe the external user manager is not configured for the cas realm?");
             }
 
-            return new LoginResult(LoginResult.STATUS_SUCCEEDED, user);
+            return new LoginResult(LoginResult.STATUS_SUCCEEDED, subject);
         }
         catch (LoginException e)
         {
