@@ -4,7 +4,7 @@
     <sv:value>mgnl:contentNode</sv:value>
   </sv:property>
   <sv:property sv:name="jcr:uuid" sv:type="String">
-    <sv:value>42369a0d-1d6c-469b-b17d-dc5171435db9</sv:value>
+    <sv:value>26a1d019-e5a3-4efa-a604-445b0816c3e1</sv:value>
   </sv:property>
   <sv:property sv:name="class" sv:type="String">
     <sv:value>it.openutils.magnoliastripes.StripesRenderer</sv:value>
