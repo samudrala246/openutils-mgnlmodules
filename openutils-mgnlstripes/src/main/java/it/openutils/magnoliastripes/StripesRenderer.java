@@ -24,7 +24,9 @@ import info.magnolia.cms.core.ItemType;
 import info.magnolia.cms.core.NodeData;
 import info.magnolia.context.MgnlContext;
 import info.magnolia.context.WebContext;
+import info.magnolia.rendering.context.RenderingContext;
 import info.magnolia.rendering.engine.RenderException;
+import info.magnolia.rendering.renderer.JspRenderer;
 import info.magnolia.rendering.template.RenderableDefinition;
 
 import java.io.IOException;
@@ -35,6 +37,7 @@ import java.util.Iterator;
 import java.util.Locale;
 import java.util.Map;
 
+import javax.jcr.Node;
 import javax.jcr.PathNotFoundException;
 import javax.jcr.RepositoryException;
 import javax.servlet.ServletContext;
@@ -76,7 +79,7 @@ import org.slf4j.LoggerFactory;
  * @author fgiust
  * @version $Id$
  */
-public class StripesRenderer extends JspTemplateRenderer implements ParagraphRenderer
+public class StripesRenderer extends JspRenderer //implements ParagraphRenderer
 {
 
     private StripesDispatcherServlet stripesDispatcherServlet = new StripesDispatcherServlet();
@@ -89,21 +92,9 @@ public class StripesRenderer extends JspTemplateRenderer implements ParagraphRen
     /**
      * {@inheritDoc}
      */
-    public void render(Content content, Paragraph paragraph, Writer out) throws RenderException, IOException
-    {
-        try
-        {
-            render(content, (RenderableDefinition) paragraph, out);
-        }
-        finally
-        {
-            out.flush();
-        }
-    }
-
     @Override
-    protected void onRender(Content content, RenderableDefinition definition, Writer out, Map ctx, String templatePath)
-        throws RenderException
+    protected void onRender(Node content, RenderableDefinition definition, RenderingContext renderingCtx,
+        Map<String, Object> ctx, String templateScript) throws RenderException
     {
 
         Map<String, String[]> templateDataMap = contentToMap(getTemplateContent());
@@ -113,7 +104,7 @@ public class StripesRenderer extends JspTemplateRenderer implements ParagraphRen
 
         try
         {
-            renderCommon(definition.getTemplatePath(), nodeDataMap, out);
+            renderCommon(definition.getTemplateScript(), nodeDataMap, (Writer) renderingCtx.getOutputProvider().getAppendable());
         }
         catch (IOException e)
         {
