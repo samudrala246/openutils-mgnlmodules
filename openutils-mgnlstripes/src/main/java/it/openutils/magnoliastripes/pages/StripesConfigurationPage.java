@@ -25,6 +25,10 @@ import info.magnolia.module.admininterface.DialogHandlerManager;
 import info.magnolia.module.admininterface.DialogMVCHandler;
 import info.magnolia.module.admininterface.InvalidDialogHandlerException;
 import info.magnolia.module.admininterface.TemplatedMVCHandler;
+import info.magnolia.objectfactory.Components;
+import info.magnolia.registry.RegistrationException;
+import info.magnolia.rendering.template.TemplateDefinition;
+import info.magnolia.rendering.template.registry.TemplateDefinitionRegistry;
 import it.openutils.magnoliastripes.MgnlActionResolver;
 
 import java.util.Set;
@@ -53,7 +57,7 @@ public class StripesConfigurationPage extends TemplatedMVCHandler
         super(name, request, response);
     }
 
-    public Set<Paragraph> getStripesParagraphs()
+    public Set<TemplateDefinition> getStripesParagraphs()
     {
         return MgnlActionResolver.getParagraphs();
     }
@@ -67,14 +71,21 @@ public class StripesConfigurationPage extends TemplatedMVCHandler
             "it.openutils.magnoliastripes" });
     }
 
-    public ParagraphManager getParagraphManager()
+    public TemplateDefinitionRegistry getTemplateDefinitionRegistry()
     {
-        return ParagraphManager.getInstance();
+        return Components.getComponent(TemplateDefinitionRegistry.class);
     }
 
     public boolean isDialogConfigured(String paragraphName)
     {
-        Paragraph paragraph = getParagraphManager().getParagraphs().get(paragraphName);
+        TemplateDefinition paragraph = null;
+        try
+        {
+            paragraph = getTemplateDefinitionRegistry().getTemplateDefinition(paragraphName);
+        }
+        catch (RegistrationException e)
+        {
+        }
         if (paragraph != null)
         {
             String dialogName = paragraph.getDialog();
@@ -98,7 +109,14 @@ public class StripesConfigurationPage extends TemplatedMVCHandler
 
     public String getDialogPath(String paragraphName)
     {
-        Paragraph paragraph = getParagraphManager().getParagraphs().get(paragraphName);
+        TemplateDefinition paragraph = null;
+        try
+        {
+            paragraph = getTemplateDefinitionRegistry().getTemplateDefinition(paragraphName);
+        }
+        catch (RegistrationException e)
+        {
+        }
         if (paragraph != null)
         {
             String dialogName = paragraph.getDialog();
