@@ -121,7 +121,7 @@ public class StripesRenderer extends JspRenderer //implements ParagraphRenderer
             for (Iterator iterator = ancestors.iterator(); iterator.hasNext();)
             {
                 Content ancestor = (Content) iterator.next();
-                if (ancestor.getItemType().equals(ItemType.CONTENT))
+                if (ancestor.getItemType().equals(ItemType.PAGE))
                 {
                     return ancestor;
                 }
