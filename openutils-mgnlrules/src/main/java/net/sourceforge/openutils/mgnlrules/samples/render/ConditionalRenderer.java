@@ -19,14 +19,15 @@
 
 package net.sourceforge.openutils.mgnlrules.samples.render;
 
-import info.magnolia.cms.core.Content;
-import info.magnolia.cms.util.NodeDataUtil;
-import info.magnolia.module.templating.RenderException;
-import info.magnolia.module.templating.RenderableDefinition;
-import info.magnolia.module.templating.paragraphs.JspParagraphRenderer;
+import info.magnolia.jcr.util.PropertyUtil;
+import info.magnolia.rendering.context.RenderingContext;
+import info.magnolia.rendering.engine.RenderException;
+import info.magnolia.rendering.renderer.JspRenderer;
+import info.magnolia.rendering.template.RenderableDefinition;
 
-import java.io.Writer;
 import java.util.Map;
+
+import javax.jcr.Node;
 
 import net.sourceforge.openutils.mgnlrules.el.ExpressionsElFunctions;
 
@@ -37,29 +38,29 @@ import net.sourceforge.openutils.mgnlrules.el.ExpressionsElFunctions;
  * @author dschivo
  * @version $Id$
  */
-public class ConditionalRenderer extends JspParagraphRenderer
+public class ConditionalRenderer extends JspRenderer
 {
 
     /**
      * {@inheritDoc}
      */
     @Override
-    protected void onRender(Content content, RenderableDefinition definition, Writer out, Map ctx, String templatePath)
-        throws RenderException
+    protected void onRender(Node content, RenderableDefinition definition, RenderingContext renderingCtx,
+        Map<String, Object> ctx, String templateScript) throws RenderException
     {
-        String expression = NodeDataUtil.getString(content, "renderCondition");
+        String expression = PropertyUtil.getString(content, "renderCondition");
         try
         {
             // expression evaluation without a pageContext
             String result = ExpressionsElFunctions.evaluate(expression);
             if ("true".equals(result))
             {
-                super.onRender(content, definition, out, ctx, templatePath);
+                super.onRender(content, definition, renderingCtx, ctx, templateScript);
             }
         }
         catch (Exception e)
         {
-            throw new RenderException("Can't render paragraph template " + templatePath, e);
+            throw new RenderException("Can't render paragraph template " + templateScript, e);
         }
     }
 
