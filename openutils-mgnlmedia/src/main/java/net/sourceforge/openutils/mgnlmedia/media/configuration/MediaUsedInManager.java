@@ -36,6 +36,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import javax.inject.Singleton;
 import javax.jcr.RepositoryException;
 import javax.jcr.query.InvalidQueryException;
 
@@ -54,6 +55,7 @@ import org.slf4j.LoggerFactory;
  * @author dschivo
  * @version $Id$
  */
+@Singleton
 public class MediaUsedInManager extends ObservedManager
 {
 
