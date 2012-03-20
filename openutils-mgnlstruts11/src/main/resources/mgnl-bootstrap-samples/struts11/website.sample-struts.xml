@@ -29,10 +29,10 @@
       <sv:value>2012-03-20T16:20:13.674+01:00</sv:value>
     </sv:property>
     <sv:property sv:name="mgnl:lastmodified" sv:type="Date">
-      <sv:value>2012-03-20T16:21:38.194+01:00</sv:value>
+      <sv:value>2012-03-20T17:08:46.653+01:00</sv:value>
     </sv:property>
     <sv:property sv:name="mgnl:template" sv:type="String">
-      <sv:value>sampleStruts</sv:value>
+      <sv:value>struts11:pages/samplestruts</sv:value>
     </sv:property>
   </sv:node>
   <sv:node sv:name="main">
