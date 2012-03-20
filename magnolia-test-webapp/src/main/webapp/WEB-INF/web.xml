@@ -38,6 +38,27 @@
     <servlet-name>StripesDispatcher</servlet-name>
     <url-pattern>*.action</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <servlet-name>action</servlet-name>
+    <servlet-class>it.openutils.mgnlstruts11.render.MgnlStrutsServlet</servlet-class>
+    <init-param>
+      <param-name>debug</param-name>
+      <param-value>4</param-value>
+    </init-param>
+    <init-param>
+      <param-name>config</param-name>
+      <param-value>/WEB-INF/struts-config.xml</param-value>
+    </init-param>
+    <init-param>
+      <param-name>detail</param-name>
+      <param-value>1</param-value>
+    </init-param>
+    <load-on-startup>2</load-on-startup>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>action</servlet-name>
+    <url-pattern>/do/*</url-pattern>
+  </servlet-mapping>
   <listener>
     <listener-class>info.magnolia.cms.servlets.MgnlServletContextListener</listener-class>
   </listener>
