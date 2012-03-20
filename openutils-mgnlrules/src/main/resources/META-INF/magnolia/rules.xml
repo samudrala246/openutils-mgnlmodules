@@ -7,4 +7,11 @@
   <class>net.sourceforge.openutils.mgnlrules.module.RuleModule</class>
     <versionHandler>net.sourceforge.openutils.mgnlrules.setup.RuleModuleVersionHandler</versionHandler>
   <version>${project.version}</version>
+  <components>
+    <id>main</id>
+    <component>
+      <type>net.sourceforge.openutils.mgnlrules.configuration.ExpressionLibraryManager</type>
+      <implementation>net.sourceforge.openutils.mgnlrules.configuration.ExpressionLibraryManager</implementation>
+    </component>
+  </components>
 </module>

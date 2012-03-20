@@ -29,6 +29,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import javax.inject.Singleton;
+
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,6 +40,7 @@ import org.slf4j.LoggerFactory;
  * @author dschivo
  * @version $Id$
  */
+@Singleton
 public class ExpressionLibraryManager extends ObservedManager
 {
 
