@@ -84,11 +84,13 @@
       <artifactId>magnolia-module-standard-templating-kit</artifactId>
       <version>${stk.version}</version>
     </dependency>
+    <!-- info.magnolia.module.model.reader.ModuleDependencyException: Module Magnolia Standard Templating Kit Demo Project (version 2.0.0) is dependent on categorization version null, which was not found.
     <dependency>
       <groupId>info.magnolia</groupId>
       <artifactId>magnolia-demo-project</artifactId>
       <version>${stk.version}</version>
     </dependency>
+    -->
     <dependency>
       <groupId>javax.servlet</groupId>
       <artifactId>servlet-api</artifactId>
