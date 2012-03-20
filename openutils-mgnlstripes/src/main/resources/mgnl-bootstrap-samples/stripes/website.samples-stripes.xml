@@ -1,104 +1,104 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<sv:node sv:name="sample-struts" xmlns:sv="http://www.jcp.org/jcr/sv/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<sv:node sv:name="samples-stripes" xmlns:sv="http://www.jcp.org/jcr/sv/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <sv:property sv:name="jcr:primaryType" sv:type="Name">
-    <sv:value>mgnl:content</sv:value>
+    <sv:value>mgnl:page</sv:value>
   </sv:property>
   <sv:property sv:name="jcr:mixinTypes" sv:type="Name" sv:multiple="true">
     <sv:value>mix:lockable</sv:value>
   </sv:property>
   <sv:property sv:name="jcr:uuid" sv:type="String">
-    <sv:value>cbedb34d-53c3-4e69-968b-47e7707202c0</sv:value>
+    <sv:value>33b0769d-7b15-4f7e-80c7-19f936d276d3</sv:value>
   </sv:property>
   <sv:property sv:name="jcr:createdBy" sv:type="String">
-    <sv:value>admin</sv:value>
+    <sv:value>superuser</sv:value>
   </sv:property>
   <sv:property sv:name="title" sv:type="String">
-    <sv:value>Struts sample</sv:value>
+    <sv:value>Stripes sample</sv:value>
   </sv:property>
   <sv:node sv:name="MetaData">
     <sv:property sv:name="jcr:primaryType" sv:type="Name">
       <sv:value>mgnl:metaData</sv:value>
     </sv:property>
     <sv:property sv:name="jcr:createdBy" sv:type="String">
-      <sv:value>admin</sv:value>
+      <sv:value>superuser</sv:value>
     </sv:property>
     <sv:property sv:name="mgnl:authorid" sv:type="String">
       <sv:value>superuser</sv:value>
     </sv:property>
     <sv:property sv:name="mgnl:creationdate" sv:type="Date">
-      <sv:value>2012-03-20T16:20:13.674+01:00</sv:value>
+      <sv:value>2012-03-20T17:19:23.972+01:00</sv:value>
     </sv:property>
     <sv:property sv:name="mgnl:lastmodified" sv:type="Date">
-      <sv:value>2012-03-20T17:20:43.005+01:00</sv:value>
+      <sv:value>2012-03-20T17:19:56.971+01:00</sv:value>
     </sv:property>
     <sv:property sv:name="mgnl:template" sv:type="String">
-      <sv:value>struts11:pages/samplestruts</sv:value>
+      <sv:value>stripes:pages/samplestripes</sv:value>
     </sv:property>
   </sv:node>
   <sv:node sv:name="main">
     <sv:property sv:name="jcr:primaryType" sv:type="Name">
-      <sv:value>mgnl:contentNode</sv:value>
+      <sv:value>mgnl:area</sv:value>
     </sv:property>
     <sv:property sv:name="jcr:mixinTypes" sv:type="Name" sv:multiple="true">
       <sv:value>mix:lockable</sv:value>
     </sv:property>
     <sv:property sv:name="jcr:uuid" sv:type="String">
-      <sv:value>98b8e4a9-a136-4270-916b-d57106274b7d</sv:value>
+      <sv:value>80877779-bbce-4f43-8fd3-8ffce20a36ab</sv:value>
     </sv:property>
     <sv:property sv:name="jcr:createdBy" sv:type="String">
-      <sv:value>admin</sv:value>
+      <sv:value>superuser</sv:value>
     </sv:property>
     <sv:node sv:name="MetaData">
       <sv:property sv:name="jcr:primaryType" sv:type="Name">
         <sv:value>mgnl:metaData</sv:value>
       </sv:property>
       <sv:property sv:name="jcr:createdBy" sv:type="String">
-        <sv:value>admin</sv:value>
+        <sv:value>superuser</sv:value>
       </sv:property>
       <sv:property sv:name="mgnl:authorid" sv:type="String">
         <sv:value>superuser</sv:value>
       </sv:property>
       <sv:property sv:name="mgnl:creationdate" sv:type="Date">
-        <sv:value>2012-03-20T16:20:30.925+01:00</sv:value>
+        <sv:value>2012-03-20T17:19:56.969+01:00</sv:value>
       </sv:property>
       <sv:property sv:name="mgnl:lastmodified" sv:type="Date">
-        <sv:value>2012-03-20T17:20:43.005+01:00</sv:value>
+        <sv:value>2012-03-20T17:19:56.971+01:00</sv:value>
       </sv:property>
     </sv:node>
     <sv:node sv:name="0">
       <sv:property sv:name="jcr:primaryType" sv:type="Name">
-        <sv:value>mgnl:contentNode</sv:value>
+        <sv:value>mgnl:component</sv:value>
       </sv:property>
       <sv:property sv:name="jcr:mixinTypes" sv:type="Name" sv:multiple="true">
         <sv:value>mix:lockable</sv:value>
       </sv:property>
       <sv:property sv:name="jcr:uuid" sv:type="String">
-        <sv:value>71bb0191-53e5-4853-bdff-3b732d366aa6</sv:value>
+        <sv:value>6138bf07-0cd3-4456-be9d-acdcd7d4509c</sv:value>
       </sv:property>
       <sv:property sv:name="jcr:createdBy" sv:type="String">
-        <sv:value>admin</sv:value>
+        <sv:value>superuser</sv:value>
       </sv:property>
       <sv:property sv:name="text" sv:type="String">
-        <sv:value>Hello Struts!</sv:value>
+        <sv:value>Hello Stripes!</sv:value>
       </sv:property>
       <sv:node sv:name="MetaData">
         <sv:property sv:name="jcr:primaryType" sv:type="Name">
           <sv:value>mgnl:metaData</sv:value>
         </sv:property>
         <sv:property sv:name="jcr:createdBy" sv:type="String">
-          <sv:value>admin</sv:value>
+          <sv:value>superuser</sv:value>
         </sv:property>
         <sv:property sv:name="mgnl:authorid" sv:type="String">
           <sv:value>superuser</sv:value>
         </sv:property>
         <sv:property sv:name="mgnl:creationdate" sv:type="Date">
-          <sv:value>2012-03-20T16:20:30.925+01:00</sv:value>
+          <sv:value>2012-03-20T17:19:56.970+01:00</sv:value>
         </sv:property>
         <sv:property sv:name="mgnl:lastmodified" sv:type="Date">
-          <sv:value>2012-03-20T17:20:43.004+01:00</sv:value>
+          <sv:value>2012-03-20T17:19:56.970+01:00</sv:value>
         </sv:property>
         <sv:property sv:name="mgnl:template" sv:type="String">
-          <sv:value>samplestruts</sv:value>
+          <sv:value>samplestripes</sv:value>
         </sv:property>
       </sv:node>
     </sv:node>
