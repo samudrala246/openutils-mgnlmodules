@@ -2,8 +2,9 @@
 <!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN" "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
 <struts-config>
   <action-mappings>
-    <action name="sample" type="it.openutils.magnoliastruts.samples.SampleStrutsAction" validate="false" path="/sample">
-      <forward name="sample" path="/templates/samples-struts/paragraph.jsp" redirect="true" />
+    <action name="samplestruts" type="it.openutils.mgnlstruts11.samples.SampleStrutsAction" validate="false" path="/samplestruts">
+      <forward name="sample" path="/templates/samples-struts11/paragraph.jsp" redirect="true" />
     </action>
   </action-mappings>
+  <controller processorClass="it.openutils.mgnlstruts11.process.MgnlRequestProcessor" />
 </struts-config>
