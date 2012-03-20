@@ -30,6 +30,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
+import javax.inject.Singleton;
 import javax.jcr.RepositoryException;
 
 import net.sourceforge.openutils.mgnlmedia.media.processors.FitInAndFillWithBandsImageResolutionProcessor;
@@ -78,6 +79,7 @@ import org.apache.commons.lang.StringUtils;
  * @author molaschi
  * @version $Id: $
  */
+@Singleton
 public class ImageProcessorsManager extends ObservedManager
 {
 

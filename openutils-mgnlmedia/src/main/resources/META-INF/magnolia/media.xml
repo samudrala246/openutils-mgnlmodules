@@ -13,6 +13,10 @@
       <type>net.sourceforge.openutils.mgnlmedia.media.configuration.MediaConfigurationManager</type>
       <implementation>net.sourceforge.openutils.mgnlmedia.media.configuration.MediaConfigurationManager</implementation>
     </component>
+    <component>
+      <type>net.sourceforge.openutils.mgnlmedia.media.configuration.ImageProcessorsManager</type>
+      <implementation>net.sourceforge.openutils.mgnlmedia.media.configuration.ImageProcessorsManager</implementation>
+    </component>
   </components>
   <dependencies>
     <dependency>
