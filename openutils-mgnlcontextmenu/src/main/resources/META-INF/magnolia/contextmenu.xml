@@ -7,4 +7,11 @@
   <class>net.sourceforge.openutils.mgnlcontextmenu.module.ContextMenuModule</class>
     <versionHandler>net.sourceforge.openutils.mgnlcontextmenu.setup.ContextMenuModuleVersionHandler</versionHandler>
   <version>${project.version}</version>
+  <components>
+    <id>main</id>
+    <component>
+      <type>net.sourceforge.openutils.mgnlcontextmenu.configuration.ContextMenuManager</type>
+      <implementation>net.sourceforge.openutils.mgnlcontextmenu.configuration.ContextMenuManager</implementation>
+    </component>
+  </components>
 </module>

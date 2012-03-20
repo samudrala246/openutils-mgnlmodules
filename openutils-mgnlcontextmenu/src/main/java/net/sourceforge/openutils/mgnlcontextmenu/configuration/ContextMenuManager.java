@@ -29,6 +29,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import javax.inject.Singleton;
 import javax.jcr.RepositoryException;
 
 import org.slf4j.Logger;
@@ -39,6 +40,7 @@ import org.slf4j.LoggerFactory;
  * Observes the contextMenus node in the configuration workspace, and exposes menu definitions.
  * @author dschivo
  */
+@Singleton
 public class ContextMenuManager extends ObservedManager
 {
 
