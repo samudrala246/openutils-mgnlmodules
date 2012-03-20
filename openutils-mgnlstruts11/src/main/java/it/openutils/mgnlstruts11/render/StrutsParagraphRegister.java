@@ -19,6 +19,12 @@
 
 package it.openutils.mgnlstruts11.render;
 
+import info.magnolia.objectfactory.Components;
+import info.magnolia.registry.RegistrationException;
+import info.magnolia.rendering.template.TemplateDefinition;
+import info.magnolia.rendering.template.registry.TemplateDefinitionProvider;
+import info.magnolia.rendering.template.registry.TemplateDefinitionRegistry;
+
 import java.util.LinkedHashSet;
 import java.util.Set;
 
@@ -97,29 +103,55 @@ public class StrutsParagraphRegister
     @SuppressWarnings("unchecked")
     private static void collectParagraphs(String name, String path, String strutsType)
     {
-        StrutsParagraph paragraph = new StrutsParagraph();
+        final StrutsParagraph paragraph = new StrutsParagraph();
 
         paragraph.setName(name);
         paragraph.setTitle("paragraph." + name + ".title");
         paragraph.setDescription("paragraph." + name + ".description");
         paragraph.setDialog(name);
-        paragraph.setTemplatePath(path);
-        paragraph.setType("struts");
+        paragraph.setTemplateScript(path);
+        paragraph.setRenderType("struts");
         paragraph.setStrutsType(strutsType);
         paragraph.setI18nBasename("it.openutils.mgnlstruts11.messages");
         paragraphs.add(paragraph);
 
         log.info("Registering struts paragraph " + paragraph.getName());
-        ParagraphManager.getInstance().getParagraphs().put(paragraph.getName(), paragraph);
+        // ParagraphManager.getInstance().getParagraphs().put(paragraph.getName(), paragraph);
+        Components.getComponent(TemplateDefinitionRegistry.class).register(new TemplateDefinitionProvider()
+        {
+            
+            public TemplateDefinition getTemplateDefinition() throws RegistrationException
+            {
+                return paragraph;
+            }
+            
+            public String getId()
+            {
+                return paragraph.getName();
+            }
+        });
     }
 
     @SuppressWarnings("unchecked")
     public static void registerParagraphs()
     {
-        for (Paragraph paragraph : paragraphs)
+        for (final TemplateDefinition paragraph : paragraphs)
         {
             log.info("Registering struts paragraph " + paragraph.getName());
-            ParagraphManager.getInstance().getParagraphs().put(paragraph.getName(), paragraph);
+            // ParagraphManager.getInstance().getParagraphs().put(paragraph.getName(), paragraph);
+            Components.getComponent(TemplateDefinitionRegistry.class).register(new TemplateDefinitionProvider()
+            {
+                
+                public TemplateDefinition getTemplateDefinition() throws RegistrationException
+                {
+                    return paragraph;
+                }
+                
+                public String getId()
+                {
+                    return paragraph.getName();
+                }
+            });
         }
     }
 
