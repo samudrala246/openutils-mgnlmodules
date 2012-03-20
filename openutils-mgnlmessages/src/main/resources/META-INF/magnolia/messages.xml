@@ -13,6 +13,13 @@
       <value>net.sourceforge.openutils.mgnlmessages.i18n.MultiBundleMgnlMessagesManager</value>
     </property>
   </properties>
+  <components>
+    <id>main</id>
+    <component>
+      <type>net.sourceforge.openutils.mgnlmessages.configuration.MessagesConfigurationManager</type>
+      <implementation>net.sourceforge.openutils.mgnlmessages.configuration.MessagesConfigurationManager</implementation>
+    </component>
+  </components>
   <dependencies>
     <dependency>
       <name>adminInterface</name>

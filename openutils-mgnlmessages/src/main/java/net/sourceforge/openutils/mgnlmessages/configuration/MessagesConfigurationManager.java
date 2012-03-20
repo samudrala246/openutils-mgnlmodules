@@ -37,6 +37,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 
+import javax.inject.Singleton;
 import javax.jcr.RepositoryException;
 
 import net.sourceforge.openutils.mgnlmessages.lifecycle.MessagesModuleLifecycle;
@@ -47,6 +48,7 @@ import org.apache.commons.lang.StringUtils;
 /**
  * @author molaschi
  */
+@Singleton
 public class MessagesConfigurationManager extends ObservedManager
 {
 
