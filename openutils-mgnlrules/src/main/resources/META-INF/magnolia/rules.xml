@@ -13,5 +13,9 @@
       <type>net.sourceforge.openutils.mgnlrules.configuration.ExpressionLibraryManager</type>
       <implementation>net.sourceforge.openutils.mgnlrules.configuration.ExpressionLibraryManager</implementation>
     </component>
+    <component>
+      <type>net.sourceforge.openutils.mgnlrules.configuration.ExpressionFunctionManager</type>
+      <implementation>net.sourceforge.openutils.mgnlrules.configuration.ExpressionFunctionManager</implementation>
+    </component>
   </components>
 </module>
