@@ -19,10 +19,12 @@
 
 package it.openutils.mgnlstruts11.setup;
 
+import info.magnolia.cms.core.SystemProperty;
 import info.magnolia.module.DefaultModuleVersionHandler;
 import info.magnolia.module.InstallContext;
 import info.magnolia.module.delta.AddMimeMappingTask;
 import info.magnolia.module.delta.Task;
+import it.openutils.mgnltasks.SamplesExtractionTask;
 
 import java.util.List;
 
@@ -43,6 +45,11 @@ public class MgnlStrutsModuleVersionHandler extends DefaultModuleVersionHandler
     {
 
         List<Task> tasks = super.getBasicInstallTasks(installContext);
+
+        if (SystemProperty.getBooleanProperty(SystemProperty.MAGNOLIA_BOOTSTRAP_SAMPLES))
+        {
+            tasks.add(new SamplesExtractionTask());
+        }
 
         tasks.add(new AddMimeMappingTask("do", "text/plain", "/.resources/file-icons/htm.png"));
 
