@@ -26,6 +26,10 @@
       <type>net.sourceforge.openutils.mgnllms.module.LMSConfigurationModuleManager</type>
       <implementation>net.sourceforge.openutils.mgnllms.module.LMSConfigurationModuleManager</implementation>
     </component>
+    <component>
+      <type>net.sourceforge.openutils.mgnllms.module.LmsTypesManager</type>
+      <implementation>net.sourceforge.openutils.mgnllms.module.LmsTypesManager</implementation>
+    </component>
   </components>
   <dependencies>
     <dependency>

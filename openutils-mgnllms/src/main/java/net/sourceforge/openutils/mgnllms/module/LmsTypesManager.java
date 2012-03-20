@@ -38,6 +38,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.inject.Singleton;
 import javax.jcr.RepositoryException;
 
 import net.sourceforge.openutils.mgnllms.lms.configuration.LmsTypeConfiguration;
@@ -53,6 +54,7 @@ import org.slf4j.LoggerFactory;
 /**
  * @author luca boati
  */
+@Singleton
 public class LmsTypesManager extends ObservedManager
 {
 
