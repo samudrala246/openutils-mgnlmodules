@@ -7,6 +7,13 @@
   <class>net.sourceforge.openutils.mgnltagcloud.module.TagCloudModule</class>
     <versionHandler>net.sourceforge.openutils.mgnltagcloud.setup.TagCloudModuleVersionHandler</versionHandler>
   <version>${project.version}</version>
+  <components>
+    <id>main</id>
+    <component>
+      <type>net.sourceforge.openutils.mgnltagcloud.manager.TagCloudManager</type>
+      <implementation>net.sourceforge.openutils.mgnltagcloud.manager.TagCloudManager</implementation>
+    </component>
+  </components>
   <dependencies>
     <dependency>
       <name>adminInterface</name>

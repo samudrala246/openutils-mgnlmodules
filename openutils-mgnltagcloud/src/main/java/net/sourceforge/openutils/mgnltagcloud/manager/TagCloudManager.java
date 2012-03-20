@@ -33,6 +33,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.inject.Singleton;
 import javax.jcr.RepositoryException;
 import javax.jcr.Session;
 import javax.jcr.observation.EventListener;
@@ -66,6 +67,7 @@ import com.browseengine.bobo.facets.impl.MultiValueFacetHandler;
  * @author molaschi
  * @version $Id$
  */
+@Singleton
 public class TagCloudManager extends ObservedManager
 {
 
