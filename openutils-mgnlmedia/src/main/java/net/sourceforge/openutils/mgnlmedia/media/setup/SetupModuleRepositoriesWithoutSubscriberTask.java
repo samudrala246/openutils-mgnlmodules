@@ -22,6 +22,7 @@ package net.sourceforge.openutils.mgnlmedia.media.setup;
 import info.magnolia.cms.beans.config.ContentRepository;
 import info.magnolia.cms.security.Permission;
 import info.magnolia.cms.security.Role;
+import info.magnolia.cms.security.RoleManager;
 import info.magnolia.cms.security.Security;
 import info.magnolia.importexport.Bootstrapper;
 import info.magnolia.module.InstallContext;
@@ -90,8 +91,9 @@ public class SetupModuleRepositoriesWithoutSubscriberTask extends AbstractTask
 
     private void grantRepositoryToSuperuser(String workspace)
     {
-        final Role superuser = Security.getRoleManager().getRole("superuser");
-        superuser.addPermission(workspace, "/*", Permission.ALL);
+        RoleManager roleMan = Security.getRoleManager();
+        final Role superuser = roleMan.getRole("superuser");
+        roleMan.addPermission(superuser, workspace, "/*", Permission.ALL);
     }
 
 }
