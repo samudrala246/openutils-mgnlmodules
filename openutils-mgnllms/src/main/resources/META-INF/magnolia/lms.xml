@@ -20,6 +20,13 @@
       <value>net.sourceforge.openutils.mgnllms.managers.impl.MagnoliaLearnerActivitiesManager</value>
     </property>
   </properties>
+  <components>
+    <id>main</id>
+    <component>
+      <type>net.sourceforge.openutils.mgnllms.module.LMSConfigurationModuleManager</type>
+      <implementation>net.sourceforge.openutils.mgnllms.module.LMSConfigurationModuleManager</implementation>
+    </component>
+  </components>
   <dependencies>
     <dependency>
       <name>adminInterface</name>

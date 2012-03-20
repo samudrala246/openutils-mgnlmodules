@@ -29,6 +29,7 @@ import info.magnolia.objectfactory.Components;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Singleton;
 import javax.jcr.RepositoryException;
 
 import net.sourceforge.openutils.mgnllms.listeners.CourseEventListener;
@@ -38,6 +39,7 @@ import net.sourceforge.openutils.mgnllms.listeners.CourseEventListener;
  * @author molaschi
  * @version $Id: $
  */
+@Singleton
 public class LMSConfigurationModuleManager extends ObservedManager implements CourseEventListener
 {
 
