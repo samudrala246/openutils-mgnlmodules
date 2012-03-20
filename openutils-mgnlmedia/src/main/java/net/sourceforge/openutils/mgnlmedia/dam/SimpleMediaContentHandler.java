@@ -27,7 +27,9 @@ import info.magnolia.module.templatingkit.dam.Asset;
 import info.magnolia.module.templatingkit.dam.AssetNotFoundException;
 import info.magnolia.module.templatingkit.dam.DAMException;
 import info.magnolia.module.templatingkit.dam.handlers.DMSDAMHandler;
+import info.magnolia.templating.functions.TemplatingFunctions;
 
+import javax.inject.Inject;
 import javax.jcr.ItemNotFoundException;
 import javax.jcr.RepositoryException;
 
@@ -42,6 +44,15 @@ import net.sourceforge.openutils.mgnlmedia.media.types.impl.BaseTypeHandler;
 public class SimpleMediaContentHandler extends DMSDAMHandler
 {
 
+    private final TemplatingFunctions templatingFunctions;
+
+    @Inject
+    public SimpleMediaContentHandler(TemplatingFunctions templatingFunctions)
+    {
+        super(templatingFunctions);
+        this.templatingFunctions = templatingFunctions;
+    }
+
     @Override
     public Asset getAssetByKey(String key) throws DAMException
     {
@@ -52,7 +63,7 @@ public class SimpleMediaContentHandler extends DMSDAMHandler
             {
                 Content node = hm.getContentByUUID(key);
                 final NodeData binaryNodeData = node.getNodeData(BaseTypeHandler.ORGINAL_NODEDATA_NAME);
-                return new SimpleMediaAsset(this, node, binaryNodeData);
+                return new SimpleMediaAsset(this, node, binaryNodeData, templatingFunctions);
             }
             catch (ItemNotFoundException e)
             {
