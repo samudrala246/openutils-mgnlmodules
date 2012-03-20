@@ -104,7 +104,7 @@ public class StripesRenderer extends JspRenderer //implements ParagraphRenderer
 
         try
         {
-            renderCommon(definition.getTemplateScript(), nodeDataMap, (Writer) renderingCtx.getOutputProvider().getAppendable());
+            renderCommon(definition.getTemplateScript(), nodeDataMap, renderingCtx.getAppendable());
         }
         catch (IOException e)
         {
