@@ -19,11 +19,11 @@
 
 package net.sourceforge.openutils.mgnlmessages.el;
 
+import info.magnolia.cms.beans.config.ServerConfiguration;
 import info.magnolia.cms.i18n.I18nContentSupportFactory;
 import info.magnolia.cms.i18n.MessagesManager;
 import info.magnolia.cms.security.Permission;
 import info.magnolia.context.MgnlContext;
-import info.magnolia.module.templating.MagnoliaTemplatingUtilities;
 
 import java.text.MessageFormat;
 
@@ -71,7 +71,7 @@ public class MessagesEl
     public static String messageSimple(String key, Object[] arguments)
     {
         if (MgnlContext.getAggregationState().getMainContent() != null
-            && MagnoliaTemplatingUtilities.getInstance().isEditMode()
+            && (ServerConfiguration.getInstance().isAdmin() && !MgnlContext.getAggregationState().isPreviewMode())
             && MgnlContext.getAggregationState().getMainContent().isGranted(Permission.WRITE)) // equivalent of
                                                                                                // CmsFunctions.canEdit()
         {
