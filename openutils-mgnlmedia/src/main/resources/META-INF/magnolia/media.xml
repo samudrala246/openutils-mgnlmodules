@@ -7,6 +7,13 @@
   <class>net.sourceforge.openutils.mgnlmedia.media.lifecycle.MediaModule</class>
   <versionHandler>net.sourceforge.openutils.mgnlmedia.media.setup.MediaModuleVersionHandler</versionHandler>
   <version>${project.version}</version>
+  <components>
+    <id>main</id>
+    <component>
+      <type>net.sourceforge.openutils.mgnlmedia.media.configuration.MediaConfigurationManager</type>
+      <implementation>net.sourceforge.openutils.mgnlmedia.media.configuration.MediaConfigurationManager</implementation>
+    </component>
+  </components>
   <dependencies>
     <dependency>
       <name>adminInterface</name>

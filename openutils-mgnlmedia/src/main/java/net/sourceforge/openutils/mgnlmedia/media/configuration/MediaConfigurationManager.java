@@ -41,6 +41,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.inject.Singleton;
 import javax.jcr.RepositoryException;
 import javax.jcr.query.InvalidQueryException;
 
@@ -65,6 +66,7 @@ import org.slf4j.LoggerFactory;
  * </ul>
  * @author molaschi
  */
+@Singleton
 public class MediaConfigurationManager extends ObservedManager
 {
 
