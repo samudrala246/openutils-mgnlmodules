@@ -30,6 +30,8 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
+import javax.inject.Singleton;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -39,6 +41,7 @@ import org.slf4j.LoggerFactory;
  * @author dschivo
  * @version $Id$
  */
+@Singleton
 public class GridColumnTypeManager extends ObservedManager
 {
 

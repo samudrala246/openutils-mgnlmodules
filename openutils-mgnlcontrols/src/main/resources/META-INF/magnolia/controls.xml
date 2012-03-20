@@ -7,6 +7,13 @@
   <class>net.sourceforge.openutils.mgnlcontrols.lifecycle.ControlsModule</class>
   <versionHandler>net.sourceforge.openutils.mgnlcontrols.setup.ControlsModuleVersionHandler</versionHandler>
   <version>${project.version}</version>
+  <components>
+    <id>main</id>
+    <component>
+      <type>net.sourceforge.openutils.mgnlcontrols.configuration.GridColumnTypeManager</type>
+      <implementation>net.sourceforge.openutils.mgnlcontrols.configuration.GridColumnTypeManager</implementation>
+    </component>
+  </components>
   <dependencies>
     <dependency>
       <name>adminInterface</name>
