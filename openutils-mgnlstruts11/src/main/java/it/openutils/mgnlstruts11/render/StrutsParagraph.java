@@ -19,13 +19,15 @@
 
 package it.openutils.mgnlstruts11.render;
 
+import info.magnolia.rendering.template.configured.ConfiguredTemplateDefinition;
+
 
 
 /**
  * @author fgiust
  * @version $Id$
  */
-public class StrutsParagraph extends Paragraph
+public class StrutsParagraph extends ConfiguredTemplateDefinition
 {
 
     public static String PARAGRAPHTYPE_ACTION = "action";
