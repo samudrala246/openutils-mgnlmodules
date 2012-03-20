@@ -12,14 +12,14 @@
   <sv:property sv:name="jcr:createdBy" sv:type="String">
     <sv:value>admin</sv:value>
   </sv:property>
-  <sv:property sv:name="templatePath" sv:type="String">
+  <sv:property sv:name="renderType" sv:type="String">
+    <sv:value>jsp</sv:value>
+  </sv:property>
+  <sv:property sv:name="templateScript" sv:type="String">
     <sv:value>/templates/samples-struts11/template.jsp</sv:value>
   </sv:property>
   <sv:property sv:name="title" sv:type="String">
     <sv:value>Struts sample template</sv:value>
-  </sv:property>
-  <sv:property sv:name="type" sv:type="String">
-    <sv:value>jsp</sv:value>
   </sv:property>
   <sv:property sv:name="visible" sv:type="String">
     <sv:value>true</sv:value>
@@ -41,7 +41,7 @@
       <sv:value>2008-09-23T16:56:46.344+02:00</sv:value>
     </sv:property>
     <sv:property sv:name="mgnl:lastmodified" sv:type="Date">
-      <sv:value>2012-03-20T16:01:03.755+01:00</sv:value>
+      <sv:value>2012-03-20T17:01:43.593+01:00</sv:value>
     </sv:property>
   </sv:node>
 </sv:node>
