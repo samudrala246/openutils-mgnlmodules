@@ -25,6 +25,8 @@ import info.magnolia.module.admininterface.DialogHandlerManager;
 import info.magnolia.module.admininterface.DialogMVCHandler;
 import info.magnolia.module.admininterface.InvalidDialogHandlerException;
 import info.magnolia.module.admininterface.TemplatedMVCHandler;
+import info.magnolia.objectfactory.Components;
+import info.magnolia.rendering.template.registry.TemplateDefinitionRegistry;
 import it.openutils.mgnlstruts11.render.StrutsParagraph;
 import it.openutils.mgnlstruts11.render.StrutsParagraphRegister;
 
@@ -68,9 +70,9 @@ public class StrutsConfigurationPage extends TemplatedMVCHandler
             "info.magnolia.module.admininterface.messages_templating" });
     }
 
-    public ParagraphManager getParagraphManager()
+    public TemplateDefinitionRegistry getTemplateDefinitionRegistry()
     {
-        return ParagraphManager.getInstance();
+        return Components.getComponent(TemplateDefinitionRegistry.class);
     }
 
     public boolean isDialogConfigured(String dialogName)
