@@ -22,6 +22,7 @@ package net.sourceforge.openutils.mgnllms.samples.listeners;
 import info.magnolia.cms.beans.config.ContentRepository;
 import info.magnolia.cms.core.Content;
 import info.magnolia.cms.core.ItemType;
+import info.magnolia.cms.security.ACLImpl;
 import info.magnolia.cms.security.AccessDeniedException;
 import info.magnolia.cms.security.Permission;
 import info.magnolia.cms.security.PermissionImpl;
@@ -34,9 +35,9 @@ import info.magnolia.cms.util.SimpleUrlPattern;
 import info.magnolia.cms.util.UrlPattern;
 import info.magnolia.context.MgnlContext;
 import info.magnolia.context.MgnlContext.VoidOp;
-import info.magnolia.jaas.principal.ACLImpl;
 
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.Iterator;
 
 import javax.jcr.PathNotFoundException;
@@ -168,16 +169,15 @@ public class StudentLevelListener extends EmptyCourseEventListener
             // other role
             if (!principalList.contains(name))
             {
-                acl = new ACLImpl();
+                acl = new ACLImpl(name, new ArrayList<Permission>());
                 principalList.add(acl);
             }
             else
             {
                 acl = (ACL) principalList.get(name);
             }
-            acl.setName(name);
-            acl.setRepository(repositoryName);
-            acl.setWorkspace(workspaceName);
+            // acl.setRepository(repositoryName);
+            // acl.setWorkspace(workspaceName);
 
             // add acl
             Iterator permissionIterator = aclEntry.getChildren().iterator();
@@ -189,7 +189,7 @@ public class StudentLevelListener extends EmptyCourseEventListener
                 Permission permission = new PermissionImpl();
                 permission.setPattern(p);
                 permission.setPermissions(map.getNodeData("permissions").getLong());
-                acl.addPermission(permission);
+                acl.getList().add(permission);
             }
         }
 
