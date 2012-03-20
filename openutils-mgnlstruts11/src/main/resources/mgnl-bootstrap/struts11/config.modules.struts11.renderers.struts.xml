@@ -4,14 +4,29 @@
     <sv:value>mgnl:contentNode</sv:value>
   </sv:property>
   <sv:property sv:name="jcr:uuid" sv:type="String">
-    <sv:value>42369a0d-1d6c-469c-b17d-dc5171435db9</sv:value>
+    <sv:value>cf1d7934-5775-4c06-a1ac-b020cd7e870b</sv:value>
   </sv:property>
   <sv:property sv:name="class" sv:type="String">
     <sv:value>it.openutils.mgnlstruts11.render.StrutsRenderer</sv:value>
   </sv:property>
+  <sv:property sv:name="jcr:createdBy" sv:type="String">
+    <sv:value>admin</sv:value>
+  </sv:property>
+  <sv:property sv:name="name" sv:type="String">
+    <sv:value>struts</sv:value>
+  </sv:property>
+  <sv:property sv:name="renderer" sv:type="String">
+    <sv:value>it.openutils.mgnlstruts11.render.StrutsRenderer</sv:value>
+  </sv:property>
+  <sv:property sv:name="type" sv:type="String">
+    <sv:value>struts</sv:value>
+  </sv:property>
   <sv:node sv:name="MetaData">
     <sv:property sv:name="jcr:primaryType" sv:type="Name">
       <sv:value>mgnl:metaData</sv:value>
+    </sv:property>
+    <sv:property sv:name="jcr:createdBy" sv:type="String">
+      <sv:value>admin</sv:value>
     </sv:property>
     <sv:property sv:name="mgnl:activated" sv:type="Boolean">
       <sv:value>false</sv:value>
@@ -29,7 +44,7 @@
       <sv:value>2007-07-23T22:39:14.178+01:00</sv:value>
     </sv:property>
     <sv:property sv:name="mgnl:lastmodified" sv:type="Date">
-      <sv:value>2007-07-23T22:39:40.986+01:00</sv:value>
+      <sv:value>2012-03-20T17:00:49.343+01:00</sv:value>
     </sv:property>
   </sv:node>
 </sv:node>
