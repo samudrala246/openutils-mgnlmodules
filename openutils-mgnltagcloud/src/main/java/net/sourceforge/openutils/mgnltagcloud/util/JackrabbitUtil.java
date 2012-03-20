@@ -28,6 +28,7 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Singleton;
 import javax.jcr.RepositoryException;
 import javax.jcr.Session;
 import javax.jcr.query.InvalidQueryException;
@@ -52,6 +53,7 @@ import org.slf4j.LoggerFactory;
  * @author molaschi
  * @version $Id$
  */
+@Singleton
 public class JackrabbitUtil implements InstanceFactory
 {
 

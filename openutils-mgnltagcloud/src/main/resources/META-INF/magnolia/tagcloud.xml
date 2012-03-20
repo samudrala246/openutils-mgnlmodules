@@ -13,6 +13,10 @@
       <type>net.sourceforge.openutils.mgnltagcloud.manager.TagCloudManager</type>
       <implementation>net.sourceforge.openutils.mgnltagcloud.manager.TagCloudManager</implementation>
     </component>
+    <component>
+      <type>net.sourceforge.openutils.mgnltagcloud.util.JackrabbitUtil</type>
+      <implementation>net.sourceforge.openutils.mgnltagcloud.util.JackrabbitUtil</implementation>
+    </component>
   </components>
   <dependencies>
     <dependency>
