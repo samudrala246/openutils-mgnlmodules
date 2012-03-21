@@ -10,7 +10,7 @@
     <sv:value>33b0769d-7b15-4f7e-80c7-19f936d276d3</sv:value>
   </sv:property>
   <sv:property sv:name="jcr:createdBy" sv:type="String">
-    <sv:value>superuser</sv:value>
+    <sv:value>admin</sv:value>
   </sv:property>
   <sv:property sv:name="title" sv:type="String">
     <sv:value>Stripes sample</sv:value>
@@ -20,7 +20,7 @@
       <sv:value>mgnl:metaData</sv:value>
     </sv:property>
     <sv:property sv:name="jcr:createdBy" sv:type="String">
-      <sv:value>superuser</sv:value>
+      <sv:value>admin</sv:value>
     </sv:property>
     <sv:property sv:name="mgnl:authorid" sv:type="String">
       <sv:value>superuser</sv:value>
@@ -29,7 +29,7 @@
       <sv:value>2012-03-20T17:19:23.972+01:00</sv:value>
     </sv:property>
     <sv:property sv:name="mgnl:lastmodified" sv:type="Date">
-      <sv:value>2012-03-20T17:19:56.971+01:00</sv:value>
+      <sv:value>2012-03-21T15:58:51.696+01:00</sv:value>
     </sv:property>
     <sv:property sv:name="mgnl:template" sv:type="String">
       <sv:value>stripes:pages/samplestripes</sv:value>
@@ -46,14 +46,14 @@
       <sv:value>80877779-bbce-4f43-8fd3-8ffce20a36ab</sv:value>
     </sv:property>
     <sv:property sv:name="jcr:createdBy" sv:type="String">
-      <sv:value>superuser</sv:value>
+      <sv:value>admin</sv:value>
     </sv:property>
     <sv:node sv:name="MetaData">
       <sv:property sv:name="jcr:primaryType" sv:type="Name">
         <sv:value>mgnl:metaData</sv:value>
       </sv:property>
       <sv:property sv:name="jcr:createdBy" sv:type="String">
-        <sv:value>superuser</sv:value>
+        <sv:value>admin</sv:value>
       </sv:property>
       <sv:property sv:name="mgnl:authorid" sv:type="String">
         <sv:value>superuser</sv:value>
@@ -62,7 +62,7 @@
         <sv:value>2012-03-20T17:19:56.969+01:00</sv:value>
       </sv:property>
       <sv:property sv:name="mgnl:lastmodified" sv:type="Date">
-        <sv:value>2012-03-20T17:19:56.971+01:00</sv:value>
+        <sv:value>2012-03-21T15:58:51.696+01:00</sv:value>
       </sv:property>
     </sv:node>
     <sv:node sv:name="0">
@@ -73,13 +73,13 @@
         <sv:value>mix:lockable</sv:value>
       </sv:property>
       <sv:property sv:name="jcr:uuid" sv:type="String">
-        <sv:value>6138bf07-0cd3-4456-be9d-acdcd7d4509c</sv:value>
+        <sv:value>7acc82be-44e0-408a-a7de-503f18592527</sv:value>
       </sv:property>
       <sv:property sv:name="jcr:createdBy" sv:type="String">
         <sv:value>superuser</sv:value>
       </sv:property>
       <sv:property sv:name="text" sv:type="String">
-        <sv:value>Hello Stripes!</sv:value>
+        <sv:value>Hello world!</sv:value>
       </sv:property>
       <sv:node sv:name="MetaData">
         <sv:property sv:name="jcr:primaryType" sv:type="Name">
@@ -92,13 +92,13 @@
           <sv:value>superuser</sv:value>
         </sv:property>
         <sv:property sv:name="mgnl:creationdate" sv:type="Date">
-          <sv:value>2012-03-20T17:19:56.970+01:00</sv:value>
+          <sv:value>2012-03-21T15:58:51.695+01:00</sv:value>
         </sv:property>
         <sv:property sv:name="mgnl:lastmodified" sv:type="Date">
-          <sv:value>2012-03-20T17:19:56.970+01:00</sv:value>
+          <sv:value>2012-03-21T15:58:51.696+01:00</sv:value>
         </sv:property>
         <sv:property sv:name="mgnl:template" sv:type="String">
-          <sv:value>samplestripes</sv:value>
+          <sv:value>stripes:samplestripes</sv:value>
         </sv:property>
       </sv:node>
     </sv:node>

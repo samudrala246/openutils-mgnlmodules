@@ -2,6 +2,5 @@
   xmlns:fmt="http://java.sun.com/jsp/jstl/fmt" xmlns:fn="http://java.sun.com/jsp/jstl/functions" xmlns:cms="http://magnolia-cms.com/taglib/templating-components/cms"
   xmlns:cmsfn="http://magnolia-cms.com/taglib/templating-components/cmsfn">
   <jsp:directive.page contentType="text/html; charset=UTF-8" session="false" />
-  <cms:setNode var="content" />
   ${content.text}
 </jsp:root>
