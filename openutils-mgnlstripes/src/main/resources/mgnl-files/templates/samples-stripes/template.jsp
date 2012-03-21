@@ -8,19 +8,12 @@
   <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
     <head>
       <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-      <title>${actpage.title}</title>
-      <cms:links />
+      <title>${content.title}</title>
+      <cms:init />
     </head>
     <body>
-      <cms:mainBar dialog="o-page-home" />
-      <h1>${actpage.title}</h1>
-      <div>
-        <cms:contentNodeIterator contentNodeCollectionName="main">
-          <cms:editBar />
-          <cms:includeTemplate />
-        </cms:contentNodeIterator>
-        <cms:newBar contentNodeCollectionName="main" paragraph="samplestripes" />
-      </div>
+      <h1>${content.title}</h1>
+      <cms:area name="main" />
     </body>
   </html>
 </jsp:root>
