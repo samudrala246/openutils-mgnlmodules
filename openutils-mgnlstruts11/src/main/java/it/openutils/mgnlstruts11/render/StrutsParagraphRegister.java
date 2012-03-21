@@ -105,6 +105,7 @@ public class StrutsParagraphRegister
     {
         final StrutsParagraph paragraph = new StrutsParagraph();
 
+        paragraph.setId("struts:" + name);
         paragraph.setName(name);
         paragraph.setTitle("paragraph." + name + ".title");
         paragraph.setDescription("paragraph." + name + ".description");

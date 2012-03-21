@@ -128,6 +128,7 @@ public class MgnlActionResolver extends NameBasedActionResolver
     {
         final ConfiguredTemplateDefinition paragraph = new ConfiguredTemplateDefinition();
 
+        paragraph.setId("stripes:" + paragraphName);
         paragraph.setName(paragraphName);
         paragraph.setTitle("paragraph." + paragraphName + ".title");
         paragraph.setDescription("paragraph." + paragraphName + ".description");
