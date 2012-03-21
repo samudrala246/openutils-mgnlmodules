@@ -29,7 +29,7 @@
       <sv:value>2012-03-20T16:20:13.674+01:00</sv:value>
     </sv:property>
     <sv:property sv:name="mgnl:lastmodified" sv:type="Date">
-      <sv:value>2012-03-20T17:20:43.005+01:00</sv:value>
+      <sv:value>2012-03-21T16:06:41.109+01:00</sv:value>
     </sv:property>
     <sv:property sv:name="mgnl:template" sv:type="String">
       <sv:value>struts11:pages/samplestruts</sv:value>
@@ -62,43 +62,43 @@
         <sv:value>2012-03-20T16:20:30.925+01:00</sv:value>
       </sv:property>
       <sv:property sv:name="mgnl:lastmodified" sv:type="Date">
-        <sv:value>2012-03-20T17:20:43.005+01:00</sv:value>
+        <sv:value>2012-03-21T16:06:41.108+01:00</sv:value>
       </sv:property>
     </sv:node>
     <sv:node sv:name="0">
       <sv:property sv:name="jcr:primaryType" sv:type="Name">
-        <sv:value>mgnl:contentNode</sv:value>
+        <sv:value>mgnl:component</sv:value>
       </sv:property>
       <sv:property sv:name="jcr:mixinTypes" sv:type="Name" sv:multiple="true">
         <sv:value>mix:lockable</sv:value>
       </sv:property>
       <sv:property sv:name="jcr:uuid" sv:type="String">
-        <sv:value>71bb0191-53e5-4853-bdff-3b732d366aa6</sv:value>
+        <sv:value>ec08d245-4be1-4aa6-9997-8cfecbc2b2c9</sv:value>
       </sv:property>
       <sv:property sv:name="jcr:createdBy" sv:type="String">
-        <sv:value>admin</sv:value>
+        <sv:value>superuser</sv:value>
       </sv:property>
       <sv:property sv:name="text" sv:type="String">
-        <sv:value>Hello Struts!</sv:value>
+        <sv:value>Hello world!</sv:value>
       </sv:property>
       <sv:node sv:name="MetaData">
         <sv:property sv:name="jcr:primaryType" sv:type="Name">
           <sv:value>mgnl:metaData</sv:value>
         </sv:property>
         <sv:property sv:name="jcr:createdBy" sv:type="String">
-          <sv:value>admin</sv:value>
+          <sv:value>superuser</sv:value>
         </sv:property>
         <sv:property sv:name="mgnl:authorid" sv:type="String">
           <sv:value>superuser</sv:value>
         </sv:property>
         <sv:property sv:name="mgnl:creationdate" sv:type="Date">
-          <sv:value>2012-03-20T16:20:30.925+01:00</sv:value>
+          <sv:value>2012-03-21T16:06:41.107+01:00</sv:value>
         </sv:property>
         <sv:property sv:name="mgnl:lastmodified" sv:type="Date">
-          <sv:value>2012-03-20T17:20:43.004+01:00</sv:value>
+          <sv:value>2012-03-21T16:06:41.108+01:00</sv:value>
         </sv:property>
         <sv:property sv:name="mgnl:template" sv:type="String">
-          <sv:value>samplestruts</sv:value>
+          <sv:value>struts11:samplestruts</sv:value>
         </sv:property>
       </sv:node>
     </sv:node>

@@ -23,7 +23,7 @@ import info.magnolia.context.MgnlContext;
 import info.magnolia.context.WebContext;
 import info.magnolia.rendering.context.RenderingContext;
 import info.magnolia.rendering.engine.RenderException;
-import info.magnolia.rendering.renderer.Renderer;
+import info.magnolia.rendering.renderer.JspRenderer;
 import info.magnolia.rendering.template.RenderableDefinition;
 import info.magnolia.voting.voters.DontDispatchOnForwardAttributeVoter;
 import it.openutils.mgnlstruts11.process.MgnlMultipartRequestHandler;
@@ -33,6 +33,7 @@ import it.openutils.mgnlstruts11.process.MgnlStrutsUtils;
 import java.io.IOException;
 import java.util.Map;
 
+import javax.jcr.Node;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -53,7 +54,7 @@ import org.slf4j.LoggerFactory;
  * @author fgiust
  * @version $Id$
  */
-public class StrutsRenderer implements Renderer
+public class StrutsRenderer extends JspRenderer
 {
 
     public static final String PARAGRAPH_PATH = MgnlRequestProcessor.class.getName() + ".path";
@@ -66,9 +67,10 @@ public class StrutsRenderer implements Renderer
     /**
      * {@inheritDoc}
      */
-    public void render(RenderingContext ctx, Map<String, Object> contextObjects) throws RenderException
+    @Override
+    protected void onRender(Node content, RenderableDefinition definition, RenderingContext renderingCtx,
+        Map<String, Object> ctx, String templateScript) throws RenderException
     {
-
         WebContext wc = ((WebContext) MgnlContext.getInstance());
 
         HttpServletRequest request = wc.getRequest();
@@ -98,14 +100,14 @@ public class StrutsRenderer implements Renderer
         // force magnolia multipart handler
         request.setAttribute(Globals.MULTIPART_KEY, MgnlMultipartRequestHandler.class.getName());
 
-        RenderableDefinition paragraph = ctx.getRenderableDefinition();
+        RenderableDefinition paragraph = definition;
         if (paragraph instanceof StrutsParagraph
             && StrutsParagraph.PARAGRAPHTYPE_FORWARD.equals(((StrutsParagraph) paragraph).getStrutsType())
             && actionParameter == null)
         {
             try
             {
-                wc.include(paragraph.getTemplateScript(), ctx.getAppendable());
+                wc.include(paragraph.getTemplateScript(), renderingCtx.getAppendable());
             }
             catch (ServletException e)
             {
@@ -155,7 +157,7 @@ public class StrutsRenderer implements Renderer
                         {
                             log.info("Found global config: " + actionParameter + " -> " + forwardConfig.getPath());
                             request.setAttribute(PARAGRAPH_PATH, forwardConfig.getPath());
-                            wc.include(forwardConfig.getPath(), ctx.getAppendable());
+                            wc.include(forwardConfig.getPath(), renderingCtx.getAppendable());
                         }
                         catch (ServletException e)
                         {
