@@ -150,7 +150,7 @@ public class MgnlActionResolver extends NameBasedActionResolver
             
             public String getId()
             {
-                return paragraph.getName();
+                return paragraph.getId();
             }
         });
     }

@@ -105,7 +105,7 @@ public class StrutsParagraphRegister
     {
         final StrutsParagraph paragraph = new StrutsParagraph();
 
-        paragraph.setId("struts:" + name);
+        paragraph.setId("struts11:" + name);
         paragraph.setName(name);
         paragraph.setTitle("paragraph." + name + ".title");
         paragraph.setDescription("paragraph." + name + ".description");
@@ -128,7 +128,7 @@ public class StrutsParagraphRegister
             
             public String getId()
             {
-                return paragraph.getName();
+                return paragraph.getId();
             }
         });
     }

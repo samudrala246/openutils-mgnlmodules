@@ -160,7 +160,7 @@
             <sv:value>f534d8d2-26af-4b4d-bd0b-ffeb5ae919a5</sv:value>
           </sv:property>
           <sv:property sv:name="id" sv:type="String">
-            <sv:value>stripes:samplestruts</sv:value>
+            <sv:value>struts11:samplestruts</sv:value>
           </sv:property>
           <sv:property sv:name="jcr:createdBy" sv:type="String">
             <sv:value>superuser</sv:value>
@@ -182,7 +182,7 @@
               <sv:value>2012-03-21T07:32:14.200+01:00</sv:value>
             </sv:property>
             <sv:property sv:name="mgnl:lastmodified" sv:type="Date">
-              <sv:value>2012-03-21T15:04:43.207+01:00</sv:value>
+              <sv:value>2012-03-21T15:10:53.888+01:00</sv:value>
             </sv:property>
           </sv:node>
         </sv:node>
