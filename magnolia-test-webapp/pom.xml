@@ -265,7 +265,7 @@
     </dependencies>
   </dependencyManagement>
   <properties>
-    <magnolia.version>4.5.1</magnolia.version>
+    <magnolia.version>4.5.2</magnolia.version>
     <stk.version>2.0</stk.version>
     <jackrabbit.version>2.4.0</jackrabbit.version>
   </properties>
