@@ -20,7 +20,7 @@
 package net.sourceforge.openutils.mgnlmedia.media.utils;
 
 import info.magnolia.cms.core.NodeData;
-import info.magnolia.cms.util.FactoryUtil;
+import info.magnolia.test.ComponentsTestUtil;
 
 import java.awt.image.BufferedImage;
 import java.io.BufferedOutputStream;
@@ -51,14 +51,7 @@ public class ImageUtilsTest
     @BeforeMethod
     public void setup()
     {
-        FactoryUtil.setInstanceFactory(ImageProcessorsManager.class, new FactoryUtil.InstanceFactory()
-        {
-
-            public Object newInstance()
-            {
-                return new ImageProcessorsManagerMock();
-            }
-        });
+        ComponentsTestUtil.setInstance(ImageProcessorsManager.class, new ImageProcessorsManagerMock());
     }
 
     /**
