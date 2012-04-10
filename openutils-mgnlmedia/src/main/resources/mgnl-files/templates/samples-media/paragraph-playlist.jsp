@@ -4,7 +4,7 @@
   xmlns:mu="mgnlutils">
   <jsp:directive.page contentType="text/html; charset=UTF-8" session="false" />
   <div class="textImage">
-    <cms:setNode var="playlistNode" path="${content.playlist}" repository="playlists" />
+    <c:set var="playlistNode" value="${mu:node(content.playlist, 'playlists')}" />
     <div>
       <h3>${playlistNode.title}</h3>
       <div>
