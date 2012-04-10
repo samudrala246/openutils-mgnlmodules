@@ -3,6 +3,7 @@
   xmlns:cmsfn="http://magnolia-cms.com/taglib/templating-components/cmsfn" xmlns:media="http://net.sourceforge.openutils/mgnlMedia"
   xmlns:mu="mgnlutils">
   <jsp:directive.page contentType="text/html; charset=UTF-8" session="false" />
+  <c:set var="node" value="${mu:node(content, 'website')}" />
   <table cellspacing="0" border="1">
     <thead>
       <tr>
@@ -10,7 +11,7 @@
       </tr>
     </thead>
     <tbody>
-      <c:forEach var="row" items="${mu:splitAndTokenize(content.grid)}">
+      <c:forEach var="row" items="${mu:splitAndTokenize(node.grid)}">
         <tr>
           <td>
             <media:media item="${row[0]}" />
