@@ -160,7 +160,7 @@
             <sv:value>a2749c2c-746d-4a53-b9b7-bfef92c88896</sv:value>
           </sv:property>
           <sv:property sv:name="id" sv:type="String">
-            <sv:value>media:samples-media</sv:value>
+            <sv:value>media:components/samples-media</sv:value>
           </sv:property>
           <sv:property sv:name="jcr:createdBy" sv:type="String">
             <sv:value>admin</sv:value>
@@ -182,7 +182,7 @@
               <sv:value>2012-03-21T07:32:14.200+01:00</sv:value>
             </sv:property>
             <sv:property sv:name="mgnl:lastmodified" sv:type="Date">
-              <sv:value>2012-04-10T10:05:21.369+02:00</sv:value>
+              <sv:value>2012-04-10T10:11:00.864+02:00</sv:value>
             </sv:property>
           </sv:node>
         </sv:node>
@@ -197,7 +197,7 @@
             <sv:value>168c261f-8667-4b09-9072-394d247abcf8</sv:value>
           </sv:property>
           <sv:property sv:name="id" sv:type="String">
-            <sv:value>media:samples-mediatag</sv:value>
+            <sv:value>media:components/samples-mediatag</sv:value>
           </sv:property>
           <sv:property sv:name="jcr:createdBy" sv:type="String">
             <sv:value>admin</sv:value>
@@ -219,7 +219,7 @@
               <sv:value>2012-03-21T07:32:14.200+01:00</sv:value>
             </sv:property>
             <sv:property sv:name="mgnl:lastmodified" sv:type="Date">
-              <sv:value>2012-04-10T10:05:38.088+02:00</sv:value>
+              <sv:value>2012-04-10T10:11:06.865+02:00</sv:value>
             </sv:property>
           </sv:node>
         </sv:node>
@@ -234,7 +234,7 @@
             <sv:value>027921f8-b52d-4a59-9c53-140a71b496c0</sv:value>
           </sv:property>
           <sv:property sv:name="id" sv:type="String">
-            <sv:value>media:samples-playlist</sv:value>
+            <sv:value>media:components/samples-playlist</sv:value>
           </sv:property>
           <sv:property sv:name="jcr:createdBy" sv:type="String">
             <sv:value>admin</sv:value>
@@ -256,7 +256,7 @@
               <sv:value>2012-03-21T07:32:14.200+01:00</sv:value>
             </sv:property>
             <sv:property sv:name="mgnl:lastmodified" sv:type="Date">
-              <sv:value>2012-04-10T10:05:53.528+02:00</sv:value>
+              <sv:value>2012-04-10T10:11:10.495+02:00</sv:value>
             </sv:property>
           </sv:node>
         </sv:node>
@@ -271,7 +271,7 @@
             <sv:value>359a80b7-4dce-40bb-b2ef-c87dfb0a32c9</sv:value>
           </sv:property>
           <sv:property sv:name="id" sv:type="String">
-            <sv:value>media:samples-media-grid</sv:value>
+            <sv:value>media:components/samples-media-grid</sv:value>
           </sv:property>
           <sv:property sv:name="jcr:createdBy" sv:type="String">
             <sv:value>admin</sv:value>
@@ -293,7 +293,7 @@
               <sv:value>2012-03-21T07:32:14.200+01:00</sv:value>
             </sv:property>
             <sv:property sv:name="mgnl:lastmodified" sv:type="Date">
-              <sv:value>2012-04-10T10:06:09.055+02:00</sv:value>
+              <sv:value>2012-04-10T10:11:13.334+02:00</sv:value>
             </sv:property>
           </sv:node>
         </sv:node>
