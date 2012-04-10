@@ -188,7 +188,7 @@ public class TagCloudManager extends ObservedManager
 
             // configure bobo for faceted search
             MultiValueFacetHandler tagsHandler = new MultiValueFacetHandler(propertyName);
-            List<FacetHandler> handlerList = Arrays.asList(new FacetHandler[]{tagsHandler });
+            List<FacetHandler<?>> handlerList = Arrays.asList(new FacetHandler<?>[]{tagsHandler });
             BoboIndexReader boboReader = HierarchyBoboIndexReader.getInstance(ir, handlerList);
 
             // get query
