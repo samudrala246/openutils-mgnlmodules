@@ -128,7 +128,7 @@ public class TagCloudManagerTest extends RepositoryTestCase
         log.debug("tagCloud freq: {}", tags);
         assertEquals(nodesNumber, tags.get("tag2"));
         time = System.currentTimeMillis();
-        tags = TagCloudElFunctions.cached(RepositoryConstants.WEBSITE, pathList[1], "tags", 1);
+        tags = TagCloudElFunctions.cached(RepositoryConstants.WEBSITE, pathList[1], "tags", 2);
         log.debug("Time: " + (System.currentTimeMillis() - time));
         log.debug("tagCloud freq: {}", tags);
         assertEquals(nodesNumber, tags.get("tag1 tag4"));
