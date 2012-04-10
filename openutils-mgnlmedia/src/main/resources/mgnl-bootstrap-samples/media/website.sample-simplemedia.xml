@@ -68,7 +68,7 @@
   </sv:node>
   <sv:node sv:name="main">
     <sv:property sv:name="jcr:primaryType" sv:type="Name">
-      <sv:value>mgnl:contentNode</sv:value>
+      <sv:value>mgnl:area</sv:value>
     </sv:property>
     <sv:property sv:name="jcr:mixinTypes" sv:type="Name" sv:multiple="true">
       <sv:value>mix:lockable</sv:value>
@@ -422,7 +422,7 @@ e8726d5f-99b0-4f3c-97e5-68a7a3ea6bd0
     </sv:node>
     <sv:node sv:name="main">
       <sv:property sv:name="jcr:primaryType" sv:type="Name">
-        <sv:value>mgnl:contentNode</sv:value>
+        <sv:value>mgnl:area</sv:value>
       </sv:property>
       <sv:property sv:name="jcr:mixinTypes" sv:type="Name" sv:multiple="true">
         <sv:value>mix:lockable</sv:value>
@@ -567,7 +567,7 @@ e8726d5f-99b0-4f3c-97e5-68a7a3ea6bd0
     </sv:node>
     <sv:node sv:name="main">
       <sv:property sv:name="jcr:primaryType" sv:type="Name">
-        <sv:value>mgnl:contentNode</sv:value>
+        <sv:value>mgnl:area</sv:value>
       </sv:property>
       <sv:property sv:name="jcr:mixinTypes" sv:type="Name" sv:multiple="true">
         <sv:value>mix:lockable</sv:value>
