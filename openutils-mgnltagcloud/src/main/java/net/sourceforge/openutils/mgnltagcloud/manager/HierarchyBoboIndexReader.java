@@ -51,7 +51,7 @@ public class HierarchyBoboIndexReader extends BoboIndexReader implements Hierarc
         Collection<FacetHandler<?>> facetHandlers,
         WorkArea workArea) throws IOException
     {
-        super(indexReader, facetHandlers, null, workArea);
+        super(indexReader, facetHandlers, null, workArea, false);
         resolver = (HierarchyResolver) indexReader;
     }
 
