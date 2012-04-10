@@ -46,12 +46,14 @@ pzc: apply zoom and crop to image as specified by the pzc parameter (value must 
     <c:if test="${empty property}">
       <c:set var="property" value="media" />
     </c:if>
-    <cms:out var="item" contentNode="${node}" nodeDataName="${property}" />
+    <c:set var="item" value="${node[property]}" />
     <c:if test="${empty width}">
-      <cms:out var="width" contentNode="${node}" nodeDataName="${property}_width" />
+      <c:set var="widthProperty" value="${property}_width" />
+      <c:set var="width" value="${node[widthProperty]}" />
     </c:if>
     <c:if test="${empty height}">
-      <cms:out var="height" contentNode="${node}" nodeDataName="${property}_height" />
+      <c:set var="heightProperty" value="${property}_height" />
+      <c:set var="height" value="${node[heightProperty]}" />
     </c:if>
   </c:if>
   <c:set value="${10000}" var="bigValue" />
@@ -72,7 +74,7 @@ pzc: apply zoom and crop to image as specified by the pzc parameter (value must 
   <c:set value="${media:node(item)}" var="mediaNode" />
   <c:choose>
     <c:when test="${!empty mediaNode}">
-      <cms:setNode var="media" content="${mediaNode}" />
+      <c:set var="media" value="${media:node(mediaNode)}" />
       <c:choose>
         <c:when test="${crop and (media.type eq 'image' or media.type eq 'wallpaper' or videoImagePreview)}">
           <media:crop item="${media}" width="${width}" height="${height}" property="${cropProperty}" jquery="${cropJquery}" jqueryui="${cropJqueryUI}" loadjs="${cropJs}" />

@@ -1,6 +1,7 @@
 <jsp:root version="2.0" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:cms="http://magnolia-cms.com/taglib/templating-components/cms"
   xmlns:c="urn:jsptld:http://java.sun.com/jsp/jstl/core" xmlns:media="http://net.sourceforge.openutils/mgnlMedia"
-  xmlns:cmsfn="http://magnolia-cms.com/taglib/templating-components/cmsfn" xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+  xmlns:cmsfn="http://magnolia-cms.com/taglib/templating-components/cmsfn" xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+  xmlns:mu="mgnlutils">
   <jsp:directive.attribute name="property" required="true" rtexprvalue="true" type="java.lang.String" />
   <jsp:directive.attribute name="width" required="true" rtexprvalue="true" type="java.lang.Integer" />
   <jsp:directive.attribute name="height" required="true" rtexprvalue="true" type="java.lang.Integer" />
@@ -17,7 +18,7 @@
   <c:if test="${empty node}">
     <c:set var="node" value="${content.handle}" />
   </c:if>
-  <cms:setNode path="${node}" var="pzcNode" />
+  <c:set value="${mu:node(node, 'website')}" var="pzcNode" />
   <c:if test="${empty item}">
     <c:set var="item" value="${pzcNode[property]}" />
   </c:if>
