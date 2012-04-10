@@ -50,8 +50,9 @@ import org.apache.jackrabbit.core.query.lucene.SearchIndex;
 import org.apache.lucene.index.IndexReader;
 import org.apache.lucene.search.Query;
 
-import com.browseengine.bobo.api.BoboBrowser;
 import com.browseengine.bobo.api.BoboIndexReader;
+import com.browseengine.bobo.api.BoboSubBrowser;
+import com.browseengine.bobo.api.Browsable;
 import com.browseengine.bobo.api.BrowseException;
 import com.browseengine.bobo.api.BrowseFacet;
 import com.browseengine.bobo.api.BrowseRequest;
@@ -211,7 +212,7 @@ public class TagCloudManager extends ObservedManager
 
             br.setFacetSpec(propertyName, tagsSpec);
 
-            BoboBrowser browser = new BoboBrowser(boboReader);
+            Browsable browser = new BoboSubBrowser(boboReader);
 
             // perform browse
             BrowseResult result = browser.browse(br);
