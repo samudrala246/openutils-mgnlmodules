@@ -29,12 +29,14 @@ import info.magnolia.cms.core.SystemProperty;
 import info.magnolia.cms.i18n.I18nContentSupportFactory;
 import info.magnolia.cms.i18n.I18nContentWrapper;
 import info.magnolia.cms.i18n.MessagesManager;
+import info.magnolia.cms.security.Permission;
 import info.magnolia.cms.security.User;
 import info.magnolia.cms.security.auth.Entity;
 import info.magnolia.cms.util.NodeMapWrapper;
 import info.magnolia.context.MgnlContext;
 import info.magnolia.context.WebContext;
 import info.magnolia.jaas.principal.EntityImpl;
+import info.magnolia.jcr.util.NodeUtil;
 import info.magnolia.link.LinkException;
 import info.magnolia.link.LinkUtil;
 import info.magnolia.repository.RepositoryConstants;
@@ -981,6 +983,11 @@ public final class MgnlUtilsElFunctions
         {
             MgnlContext.getAggregationState().setCurrentContent(content);
         }
+    }
+
+    // magnolia-templating-compatibility-taglib-cms: info.magnolia.cms.taglibs.CmsFunctions.canEdit()
+    public static boolean canEdit() {
+        return NodeUtil.isGranted(MgnlContext.getAggregationState().getMainContent().getJCRNode(), Permission.SET);
     }
 
 }

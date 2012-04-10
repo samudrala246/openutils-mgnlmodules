@@ -338,5 +338,11 @@ mu:isLine('aaa\nbb\nc', 'b') = false]]></example>
     <function-class>it.openutils.mgnlutils.el.MgnlUtilsElFunctions</function-class>
     <function-signature>void setActivePage(info.magnolia.cms.core.Content)</function-signature>
   </function>
+  <function>
+    <name>canEdit</name>
+    <description>Check if the current user can edit the active page</description>
+    <function-class>it.openutils.mgnlutils.el.MgnlUtilsElFunctions</function-class>
+    <function-signature>boolean canEdit()</function-signature>
+  </function>
   <!-- please don't add new funtions without a meaningfull <description> -->
 </taglib>
