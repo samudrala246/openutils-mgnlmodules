@@ -11,7 +11,7 @@
   <jsp:directive.attribute name="jquery" required="false" rtexprvalue="true" type="java.lang.Boolean" />
   <jsp:directive.attribute name="loadjs" required="false" rtexprvalue="true" type="java.lang.Boolean" />
   <jsp:directive.attribute name="isEditMode" required="false" rtexprvalue="true" type="java.lang.Boolean" />
-  <c:set var="isEditMode" value="${empty isEditMode ? mgnl.editMode and cmsfn:canEdit() : isEditMode}" />
+  <c:set var="isEditMode" value="${empty isEditMode ? mgnl.editMode and mu:canEdit() : isEditMode}" />
   <c:if test="${isEditMode}">
     <c:set var="uuidBrandLink" value="uuid=${param.uuid}&amp;" />
   </c:if>
@@ -47,7 +47,7 @@
       </c:if>
       <c:choose>
         <c:when
-          test="${((mgnl.editMode and cmsfn:canEdit()) or (not empty isEditMode and isEditMode)) and param.pzcId eq pzcId}">
+          test="${((mgnl.editMode and mu:canEdit()) or (not empty isEditMode and isEditMode)) and param.pzcId eq pzcId}">
           <c:set var="cropScriptRequired" value="${true}" scope="request" />
           <c:set var="size" value="${media:size(media:node(item), 'original')}" />
           <c:if test="${empty pzcProperties}">
@@ -95,7 +95,7 @@
             <c:set var="res" value="${res};pzc=${pzcProperties},quality=1" />
           </c:if>
           <c:choose>
-            <c:when test="${((mgnl.editMode and cmsfn:canEdit()) or (not empty isEditMode and isEditMode))}">
+            <c:when test="${((mgnl.editMode and mu:canEdit()) or (not empty isEditMode and isEditMode))}">
               <div id="${pzcId}"
                 style="overflow:hidden;width:${width}px;height:${height}px;border:0;margin:0;padding:0;position:relative">
                 <img src="${appCtx}${media:urlres(media:node(item), res)}" />
