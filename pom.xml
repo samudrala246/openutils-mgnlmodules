@@ -35,7 +35,7 @@
     <module>openutils-mgnlrules</module>
     <module>openutils-mgnlcontextmenu</module>
     <module>openutils-mgnllms</module>
-    <module>openutils-mgnlmobile</module>
+<!--    <module>openutils-mgnlmobile</module> -->
     <module>openutils-mgnlmail</module>
     <module>magnolia-test-webapp</module>
   </modules>
