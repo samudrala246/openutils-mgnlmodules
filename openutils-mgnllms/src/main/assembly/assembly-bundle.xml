@@ -1,5 +1,5 @@
 <assembly>
-  <id>bundle</id>
+  <id>for-magnolia-4.5-bundle</id>
   <formats>
     <format>zip</format>
   </formats>
