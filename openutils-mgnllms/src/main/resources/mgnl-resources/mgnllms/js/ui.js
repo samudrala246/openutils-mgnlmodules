@@ -33,7 +33,7 @@ function init(manifest, context) {
 		initialize: function(options) {
 			this.setOptions(options);
 			this.options.play=new Element('img',{
-				src:".resources/lms/icons/play.png"
+				src:".resources/mgnllms/icons/play.png"
 			});
 		},
 		start: function(node) {
@@ -64,7 +64,7 @@ function init(manifest, context) {
 					current.owner.nodes[i].selected(null,true);
 			}else{
 				if (current)
-					$('scormFrame').src = ".resources/lms/termine.html";
+					$('scormFrame').src = ".resources/mgnllms/termine.html";
 					current=null;
 			}
 		},

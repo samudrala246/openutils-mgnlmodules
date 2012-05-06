@@ -125,6 +125,11 @@ public class MessagesEditPage extends TemplatedMVCHandler
             locales = MessagesConfigurationManager.getAvaiableLocales();
 
             Locale loc = this.request.getLocale();
+            if (locales != null && !locales.isEmpty() && !locales.contains(loc))
+            {
+                // MESSAGES-17 Dropdown options may not contain the selected language
+                loc = locales.get(0);
+            }
             currentLanguage = loc.getLanguage();
             if (loc.getCountry() != null && loc.getCountry().length() > 0)
             {

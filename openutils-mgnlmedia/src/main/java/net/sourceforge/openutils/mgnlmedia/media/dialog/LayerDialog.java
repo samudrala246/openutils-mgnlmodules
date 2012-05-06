@@ -20,6 +20,8 @@
 package net.sourceforge.openutils.mgnlmedia.media.dialog;
 
 import info.magnolia.cms.gui.control.Button;
+import info.magnolia.cms.gui.control.ButtonSet;
+import info.magnolia.cms.gui.control.ControlImpl;
 import info.magnolia.cms.gui.dialog.Dialog;
 import info.magnolia.cms.gui.misc.CssConstants;
 import info.magnolia.cms.gui.misc.Sources;
@@ -82,6 +84,8 @@ public class LayerDialog extends Dialog
         out.write(new Sources(this.getRequest().getContextPath()).getHtmlCss());
         out.write("<script type=\"text/javascript\">\n"); //$NON-NLS-1$
 
+        // MAGNOLIA-3846
+        out.write("mgnl.util.DHTMLUtil.addOnLoad(function(){\n");
         // out.write("window.onresize = eventHandlerOnResize;\n"); //$NON-NLS-1$
         out.write("parent.setLayerTitle('"
             + this.getMessage(this.getConfigValue("label", MessagesManager.get("dialog.editTitle")))
@@ -91,10 +95,44 @@ public class LayerDialog extends Dialog
             + "," //$NON-NLS-1$
             + this.getConfigValue("height", DIALOGSIZE_NORMAL_HEIGHT) //$NON-NLS-1$
             + ");\n"); //$NON-NLS-1$
+        // MEDIA-278
+        out.write("mgnlDialogResizeTabs('" + getId() + "');"); //$NON-NLS-1$ //$NON-NLS-2$
+        out.write("mgnlDialogShiftTab('" + getId() + "',false,0);\n"); //$NON-NLS-1$ //$NON-NLS-2$
+        out.write("});");
         out.write("</script>\n"); //$NON-NLS-1$
 
         this.drawJavascriptSources(out);
         this.drawCssSources(out);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected void drawHtmlPostSubsTabSet(Writer out) throws IOException
+    {
+     // TabSet stuff
+        String id = this.getId();
+        out.write("<div class=\"" + CssConstants.CSSCLASS_TABSETBUTTONBAR + "\">\n"); //$NON-NLS-1$ //$NON-NLS-2$
+        out.write("<table cellpadding=\"0\" cellspacing=\"0\" border=\"0\" width=\"100%\"><tr><td  class=\"" //$NON-NLS-1$
+            + CssConstants.CSSCLASS_TABSETBUTTONBAR
+            + "\">"); //$NON-NLS-1$
+        if (this.getOptions().size() != 0) {
+            ButtonSet control = new ButtonSet();
+            ((Button) this.getOptions().get(0)).setState(ControlImpl.BUTTONSTATE_PUSHED);
+            control.setButtons(this.getOptions());
+            control.setName(this.getId());
+            control.setSaveInfo(false);
+            control.setButtonType(ControlImpl.BUTTONTYPE_PUSHBUTTON);
+            out.write(control.getHtml());
+        }
+        out.write("</td></tr></table>\n</div>\n"); //$NON-NLS-1$
+        // MEDIA-278
+        // out.write("<script type=\"text/javascript\">"); //$NON-NLS-1$
+        // out.write("mgnlDialogResizeTabs('" + id + "');"); //$NON-NLS-1$ //$NON-NLS-2$
+        // out.write("mgnlDialogShiftTab('" + id + "',false,0)"); //$NON-NLS-1$ //$NON-NLS-2$
+        // out.write("</script>\n"); //$NON-NLS-1$
+        // end TabSet stuff
     }
 
 }

@@ -19,7 +19,7 @@ classDef("mgnl.lms", {
 
   createNew : function(path, dialog) {
     mgnlOpenWindow(".magnolia/dialogs/" + dialog + ".html?mgnlPath=" + path
-        + "&mgnlNode=mgnlNew&mgnlRepository=lms");// parent.OpenWindow
+        + "&mgnlNode=mgnlNew&mgnlRepository=scorm");// parent.OpenWindow
   },
 
   // check if it is a folder
@@ -56,7 +56,7 @@ classDef("mgnl.lms", {
    //     + "&mgnlRepository=lms" ,800, 600);
 
    // commentami prima del rilascio, usami solo per i test
-    var w=window.open(contextPath+"/.magnolia/pages/scormplayer.html?mgnlPath=" + path+ "&mgnlRepository=lms");
+    var w=window.open(contextPath+"/.magnolia/pages/scormplayer.html?mgnlPath=" + path+ "&mgnlRepository=scorm");
     if (w) w.focus();
 
   },
@@ -84,6 +84,4 @@ classDef("mgnl.lms", {
 		    if (w) w.focus();
 
 	}
-  	
 });
-

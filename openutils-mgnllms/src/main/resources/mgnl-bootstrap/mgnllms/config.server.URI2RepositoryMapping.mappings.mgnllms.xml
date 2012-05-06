@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<sv:node sv:name="scorm"
+<sv:node sv:name="mgnllms"
    xmlns:jcr="http://www.jcp.org/jcr/1.0"
   xmlns:mgnl="http://www.magnolia.info/jcr/mgnl" xmlns:rep="internal" xmlns:mix="http://www.jcp.org/jcr/mix/1.0"
   xmlns:nt="http://www.jcp.org/jcr/nt/1.0" xmlns:fn="http://www.w3.org/2005/xpath-functions"
@@ -8,27 +8,23 @@
   <sv:property sv:name="jcr:primaryType" sv:type="Name">
     <sv:value>mgnl:contentNode</sv:value>
   </sv:property>
-  <sv:property sv:name="jcr:mixinTypes" sv:type="Name">
-    <sv:value>mix:lockable</sv:value>
-    <sv:value>mix:versionable</sv:value>
-  </sv:property>
   <sv:property sv:name="jcr:uuid" sv:type="String">
-    <sv:value>03e8c64c-67a1-43e4-a372-d1d2147e0f43</sv:value>
+    <sv:value>32c6faa9-67d0-4c7f-4aa8-ea79648bb952</sv:value>
+  </sv:property>
+  <sv:property sv:name="URIPrefix" sv:type="String">
+    <sv:value>/scorm</sv:value>
+  </sv:property>
+  <sv:property sv:name="class" sv:type="String">
+    <sv:value>net.sourceforge.openutils.mgnllms.lms.uri.LmsURI2RepositoryMapping</sv:value>
+  </sv:property>
+  <sv:property sv:name="handlePrefix" sv:type="String">
+    <sv:value/>
   </sv:property>
   <sv:property sv:name="i18nBasename" sv:type="String">
     <sv:value>net.sourceforge.openutils.mgnllms.lms.lang.messages</sv:value>
   </sv:property>
-  <sv:property sv:name="dialog" sv:type="String">
-    <sv:value>scormDlg</sv:value>
-  </sv:property>
-  <sv:property sv:name="handler" sv:type="String">
-    <sv:value>net.sourceforge.openutils.mgnllms.lms.types.impl.ScormTypeHandler</sv:value>
-  </sv:property>
-  <sv:property sv:name="label" sv:type="String">
-    <sv:value>Scorm</sv:value>
-  </sv:property>
-  <sv:property sv:name="menuIcon" sv:type="String">
-    <sv:value>/.resources/lms/icons/scorm.gif</sv:value>
+  <sv:property sv:name="repository" sv:type="String">
+    <sv:value>lms</sv:value>
   </sv:property>
   <sv:node sv:name="MetaData">
     <sv:property sv:name="jcr:primaryType" sv:type="Name">
@@ -44,13 +40,13 @@
       <sv:value>superuser</sv:value>
     </sv:property>
     <sv:property sv:name="mgnl:creationdate" sv:type="Date">
-      <sv:value>2009-08-25T16:49:16.314Z</sv:value>
+      <sv:value>2008-08-26T14:34:41.439+02:00</sv:value>
     </sv:property>
     <sv:property sv:name="mgnl:lastaction" sv:type="Date">
-      <sv:value>2009-08-25T16:31:39.551Z</sv:value>
+      <sv:value>2008-08-26T09:38:36.516Z</sv:value>
     </sv:property>
     <sv:property sv:name="mgnl:lastmodified" sv:type="Date">
-      <sv:value>2009-08-25T16:35:07.793Z</sv:value>
+      <sv:value>2008-08-26T09:39:08.616Z</sv:value>
     </sv:property>
   </sv:node>
 </sv:node>

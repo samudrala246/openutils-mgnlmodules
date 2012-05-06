@@ -1,7 +1,7 @@
 /**
  *
  * E-learning Module for Magnolia CMS (http://www.openmindlab.com/lab/products/lms.html)
- * Copyright(C) 2010-2012, Openmind S.r.l. http://www.openmindonline.it
+ * Copyright(C) 2010-2011, Openmind S.r.l. http://www.openmindonline.it
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -52,13 +52,13 @@ public class LmsModuleTreeMVCHandler extends AdminTreeMVCHandler
         super.renderHeaderIncludes(html);
         html.append("<script type=\"text/javascript\" src=\""
             + this.getRequest().getContextPath()
-            + "/.resources/lms/js/lms.js\"><!-- --></script>");
+            + "/.resources/mgnllms/js/lms.js\"><!-- --></script>");
         html.append("<script type=\"text/javascript\" src=\""
             + this.getRequest().getContextPath()
-            + "/.resources/lms/js/conditions.js\"><!-- --></script>");
+            + "/.resources/mgnllms/js/conditions.js\"><!-- --></script>");
         html.append("<link rel=\"stylesheet\" href=\""
             + this.getRequest().getContextPath()
-            + "/.resources/lms/css/override.css\"><!-- --></script>");
+            + "/.resources/mgnllms/css/override.css\"><!-- --></script>");
     }
 
     /**

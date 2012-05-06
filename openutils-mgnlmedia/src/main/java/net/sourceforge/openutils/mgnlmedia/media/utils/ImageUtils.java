@@ -56,27 +56,27 @@ import javax.imageio.ImageIO;
 import javax.imageio.ImageTypeSpecifier;
 import javax.imageio.ImageWriteParam;
 import javax.imageio.ImageWriter;
+import javax.imageio.plugins.jpeg.JPEGImageWriteParam;
 import javax.imageio.stream.ImageOutputStream;
+import javax.jcr.Node;
 import javax.jcr.PropertyType;
 import javax.jcr.RepositoryException;
-import javax.jcr.lock.Lock;
 
 import net.sourceforge.openutils.mgnlmedia.media.configuration.ImageProcessorsManager;
 import net.sourceforge.openutils.mgnlmedia.media.configuration.MediaConfigurationManager;
 import net.sourceforge.openutils.mgnlmedia.media.configuration.MediaTypeConfiguration;
 import net.sourceforge.openutils.mgnlmedia.media.lifecycle.MediaModule;
 import net.sourceforge.openutils.mgnlmedia.media.processors.ImagePostProcessor;
+import net.sourceforge.openutils.mgnlmedia.media.tags.el.MediaEl;
 import net.sourceforge.openutils.mgnlmedia.media.types.impl.BaseTypeHandler;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.ClassUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.math.NumberUtils;
+import org.apache.jackrabbit.util.Locked;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import com.sun.image.codec.jpeg.JPEGEncodeParam;
-import com.sun.image.codec.jpeg.JPEGImageEncoder;
 
 
 /**
@@ -120,6 +120,8 @@ public final class ImageUtils
     public static String RESOLUTION_PROPERTY = "resolution";
 
     private static final String[] extensions = new String[]{"jpg", "jpeg", "gif", "png", "ico" };
+
+    private static int currentWorkingThreads = 0;
 
     static
     {
@@ -512,8 +514,9 @@ public final class ImageUtils
      * @throws RepositoryException exception in jcr operations
      * @throws IOException exception converting image to jpg
      */
-    public static NodeData saveResolution(BufferedImage image, Content saveTo, String name, String extension,
-        float quality, boolean forceProgressive) throws RepositoryException, IOException
+    public static NodeData saveResolution(final BufferedImage image, final Content saveTo, final String name,
+        final String extension, final float quality, final boolean forceProgressive) throws RepositoryException,
+        IOException
     {
 
         Content resolutions = getResolutionsNode(saveTo);
@@ -530,86 +533,128 @@ public final class ImageUtils
             resolution = "res-" + image.getWidth() + "x" + image.getHeight();
         }
 
-        String originalRes = resolution;
-        resolution = getResolutionPath(resolution);
+        final String resolutionNodeName = getResolutionPath(resolution);
+        final Content resolutionsFinal = resolutions;
 
-        // max wait 5 secs
-        Lock lock = resolutions.lock(false, true, 5000);
+        Node resolutionsJcrNode = resolutions.getJCRNode();
 
+        Object ret;
         try
         {
-
-            if (resolutions.hasNodeData(resolution))
-            {
-                NodeData nd = resolutions.getNodeData(resolution);
-                nd.delete();
-                resolutions.save();
-            }
-
-            // don't remove deprecated method call, needed for magnolia 4.0 compatibility
-            final NodeData nd = resolutions.createNodeData(resolution, PropertyType.BINARY);
-            final PipedInputStream stream = new PipedInputStream();
-            PipedOutputStream outputstream = new PipedOutputStream(stream);
-
-            log.debug("setting value to {}", nd.getHandle());
-
-            Thread t = new Thread(new Runnable()
+            ret = new Locked()
             {
 
-                /**
-                 * {@inheritDoc}
-                 */
-                public void run()
+                @Override
+                protected Object run(Node resolutionsJcrNode) throws RepositoryException
                 {
+                    NodeData ndtemp;
+                    boolean existing = false;
+                    if (resolutionsFinal.hasNodeData(resolutionNodeName))
+                    {
+                        ndtemp = resolutionsFinal.getNodeData(resolutionNodeName);
+                        existing = true;
+                    }
+                    else
+                    {
+                        // don't remove deprecated method call, needed for magnolia 4.0 compatibility
+                        ndtemp = resolutionsFinal.createNodeData(resolutionNodeName, PropertyType.BINARY);
+                    }
+                    log.debug("setting value to {}", ndtemp.getHandle());
+
+                    final NodeData nd = ndtemp;
+                    final PipedInputStream stream = new PipedInputStream();
+                    PipedOutputStream outputstream = null;
+                    Thread t = null;
+                    long count = 0;
+
                     try
                     {
-                        nd.setValue(stream);
+                        outputstream = new PipedOutputStream(stream);
+                        t = new Thread(new Runnable()
+                        {
+
+                            /**
+                             * {@inheritDoc}
+                             */
+                            public void run()
+                            {
+                                try
+                                {
+                                    nd.setValue(stream);
+                                }
+                                catch (RepositoryException e)
+                                {
+                                    log.error(e.getMessage(), e);
+                                }
+                            }
+
+                        });
+                        t.start();
+
+                        count = getStream(image, extension, quality, forceProgressive, outputstream);
                     }
-                    catch (RepositoryException e)
+                    catch (IOException e)
                     {
                         // TODO Auto-generated catch block
-                        log.error(e.getMessage(), e);
+                        e.printStackTrace();
                     }
+
+                    IOUtils.closeQuietly(outputstream);
+                    try
+                    {
+                        t.join();
+                    }
+                    catch (InterruptedException e)
+                    {
+                        log.warn(e.getMessage(), e);
+                    }
+
+                    IOUtils.closeQuietly(stream);
+
+                    String mimetype = "image/" + extension;
+                    if ("jpg".equals(extension))
+                    {
+                        mimetype = "image/jpeg";
+                    }
+                    nd.setAttribute(ImageUtils.RESOLUTION_PROPERTY, resolutionNodeName);
+                    nd.setAttribute(FileProperties.PROPERTY_EXTENSION, extension);
+                    nd.setAttribute(FileProperties.PROPERTY_FILENAME, saveTo.getName());
+                    nd.setAttribute(FileProperties.PROPERTY_CONTENTTYPE, mimetype);
+                    nd.setAttribute(
+                        FileProperties.PROPERTY_LASTMODIFIED,
+                        GregorianCalendar.getInstance(TimeZone.getDefault()));
+                    nd.setAttribute(FileProperties.PROPERTY_WIDTH, "" + image.getWidth());
+                    nd.setAttribute(FileProperties.PROPERTY_HEIGHT, "" + image.getHeight());
+
+                    nd.setAttribute(FileProperties.PROPERTY_SIZE, "" + count);
+
+                    if (existing)
+                    {
+                        nd.save();
+                    }
+                    else
+                    {
+                        resolutionsFinal.save();
+                    }
+
+                    return nd;
                 }
-
-            });
-            t.start();
-
-            long count = getStream(image, extension, quality, forceProgressive, outputstream);
-            IOUtils.closeQuietly(outputstream);
-            try
-            {
-                t.join();
-            }
-            catch (InterruptedException e)
-            {
-                log.warn(e.getMessage(), e);
-            }
-
-            IOUtils.closeQuietly(stream);
-
-            String mimetype = "image/" + extension;
-            if ("jpg".equals(extension))
-            {
-                mimetype = "image/jpeg";
-            }
-            nd.setAttribute(ImageUtils.RESOLUTION_PROPERTY, originalRes);
-            nd.setAttribute(FileProperties.PROPERTY_EXTENSION, extension);
-            nd.setAttribute(FileProperties.PROPERTY_FILENAME, saveTo.getName());
-            nd.setAttribute(FileProperties.PROPERTY_CONTENTTYPE, mimetype);
-            nd.setAttribute(FileProperties.PROPERTY_LASTMODIFIED, GregorianCalendar.getInstance(TimeZone.getDefault()));
-            nd.setAttribute(FileProperties.PROPERTY_WIDTH, "" + image.getWidth());
-            nd.setAttribute(FileProperties.PROPERTY_HEIGHT, "" + image.getHeight());
-
-            nd.setAttribute(FileProperties.PROPERTY_SIZE, "" + count);
-
-            resolutions.save();
-
-            return nd;
+            }.with(resolutionsJcrNode, false, 5000);
         }
-        finally
+        catch (InterruptedException e)
         {
-            resolutions.unlock();
+            MgnlContext.getHierarchyManager("media").refresh(false);
+            ret = Locked.TIMED_OUT;
+        }
+        if (ret == Locked.TIMED_OUT)
+        {
+            // do whatever you think is appropriate in this case
+            return null;
+        }
+        else
+        {
+            // get the value
+            return (NodeData) ret;
         }
 
     }
@@ -649,14 +694,27 @@ public final class ImageUtils
         {
             if (extension.equals("jpg"))
             {
-                JPEGImageEncoder encoder = com.sun.image.codec.jpeg.JPEGCodec.createJPEGEncoder(out);
+                JPEGImageWriteParam iwparam = new JPEGImageWriteParam(null);
+
                 if (quality != 1.0f)
                 {
-                    JPEGEncodeParam param = encoder.getDefaultJPEGEncodeParam(image);
-                    param.setQuality(quality, true);
-                    encoder.setJPEGEncodeParam(param);
+                    iwparam.setCompressionMode(ImageWriteParam.MODE_EXPLICIT);
+                    iwparam.setCompressionType("JPEG");
+                    iwparam.setCompressionQuality(quality);
                 }
-                encoder.encode(image);
+                else
+                {
+                    iwparam.setCompressionMode(ImageWriteParam.MODE_COPY_FROM_METADATA);
+                }
+
+                ImageWriter iw = ImageIO.getImageWritersByFormatName("jpg").next();
+                ImageOutputStream ios = ImageIO.createImageOutputStream(out);
+                iw.setOutput(ios);
+                iw.write(null, new IIOImage(image, null, null), iwparam);
+                iw.dispose();
+                ios.close();
+
+                image.flush();
             }
             else
             {
@@ -793,7 +851,7 @@ public final class ImageUtils
 
     public static boolean checkOrCreateResolution(final Content media, final String resolutionTarget,
         String nodeDataName, final boolean lazy)
-        {
+    {
 
         Content resolutions = getResolutionsNode(media);
 
@@ -915,22 +973,36 @@ public final class ImageUtils
                         outputextension = "jpg";
                     }
 
-                    BufferedImage original = createBufferedImage(image);
-
+                    BufferedImage original = null;
+                    BufferedImage img = null;
                     Map<String, String> params = parseParameters(resolutionstring);
+
                     if (lazy)
                     {
                         params.put("skipRendering", "true");
                     }
 
-                    BufferedImage img;
-                    try
+                    synchronized (MediaEl.module().getLocks().nextLock())
                     {
-                        img = ImageUtils.getImageForResolution(original, resolutionstring, params);
-                    }
-                    catch (IllegalArgumentException e)
-                    {
-                        throw new RuntimeException(e);
+                        currentWorkingThreads++;
+                        if (log.isDebugEnabled())
+                        {
+                            log.debug("Current working resizing thread: {}", currentWorkingThreads);
+                        }
+                        original = createBufferedImage(image);
+
+                        try
+                        {
+                            img = ImageUtils.getImageForResolution(original, resolutionstring, params);
+                        }
+                        catch (IllegalArgumentException e)
+                        {
+                            throw new RuntimeException(e);
+                        }
+                        finally
+                        {
+                            currentWorkingThreads--;
+                        }
                     }
 
                     try

@@ -103,6 +103,10 @@ var Store = new Class( {
 		validatorUndefinedGetValue(cmiKey)
 		validatorWriteOnly(cmiKey);
 		validatorAdlDataReadSharedDataFalse.run(cmiKey,this);
+		
+		/*
+		 * TODO: valutare di aggiungere ad ogni richiesta di ._children il .join(',') alla lista di ritorno
+		 */
 
 		/* 4.2.4.1 Completion Status Evaluation */
 		if (cmiKey == "cmi.completion_status"){
@@ -347,7 +351,7 @@ var Interactions = new Class({
 		},
 		_children : [ "id", "type", "objectives", "timestamp",
 				"correct_responses", "weighting", "learner_response",
-				"result", "latency", "description" ]
+				"result", "latency", "description" ].join(',')
 	});
 
 var Data = new Class({

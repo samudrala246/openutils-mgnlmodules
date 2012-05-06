@@ -2,11 +2,11 @@
 ${item?string("yes","no")} [/#if] [/#macro] [#macro redGreen n,total]
 [#if n/total == 1]
 <img class="table_img"
-	src="${this.request.contextPath}/.resources/lms/icons/accept.png"
+	src="${this.request.contextPath}/.resources/mgnllms/icons/accept.png"
 	alt="${n}/${total}" title="${n}/${total}" />
 [#else]
 <img class="table_img"
-	src="${this.request.contextPath}/.resources/lms/icons/delete.png"
+	src="${this.request.contextPath}/.resources/mgnllms/icons/delete.png"
 	alt="${n}/${total}" title="${n}/${total}" />
 [/#if] [/#macro]
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
@@ -15,19 +15,19 @@ ${item?string("yes","no")} [/#if] [/#macro] [#macro redGreen n,total]
 <title>User Report Page Admin for course ${this.courseName}</title>
 <!-- BLUFF -->
 <script language="javascript" type="text/javascript"
-	src="${this.request.contextPath}/.resources/lms/js/bluff/js-class.js"></script>
+	src="${this.request.contextPath}/.resources/mgnllms/js/bluff/js-class.js"></script>
 <script language="javascript" type="text/javascript"
-	src="${this.request.contextPath}/.resources/lms/js/bluff/bluff-min.js"></script>
+	src="${this.request.contextPath}/.resources/mgnllms/js/bluff/bluff-min.js"></script>
 [#assign user_agent = this.request.getHeader("User-Agent")]
 [#if user_agent?contains("MSIE")]
 <script language="javascript" type="text/javascript"
-	src="${this.request.contextPath}/.resources/lms/js/bluff/excanvas.js"></script>
+	src="${this.request.contextPath}/.resources/mgnllms/js/bluff/excanvas.js"></script>
 [/#if]
 <!-- MOOTOOLS -->
 <script language="javascript" type="text/javascript"
-	src="${this.request.contextPath}/.resources/lms/js/mootools-1.2.3-core-nc.js"></script>
+	src="${this.request.contextPath}/.resources/mgnllms/js/mootools-1.2.3-core-nc.js"></script>
 <script language="javascript" type="text/javascript"
-	src="${this.request.contextPath}/.resources/lms/js/mootools-1.2.3.1-more.js"></script>
+	src="${this.request.contextPath}/.resources/mgnllms/js/mootools-1.2.3.1-more.js"></script>
 <script language="javascript" type="text/javascript">
      window.addEvent('domready', function() {
       // create accordion
@@ -74,7 +74,7 @@ ${item?string("yes","no")} [/#if] [/#macro] [#macro redGreen n,total]
 	href="${this.request.contextPath}/.resources/admin-css/admin-all.css"
 	type="text/css" rel="stylesheet" charset="utf-8"></link>
 <link
-	href="${this.request.contextPath}/.resources/lms/css/lms-report.css"
+	href="${this.request.contextPath}/.resources/mgnllms/css/lms-report.css"
 	type="text/css" rel="stylesheet" charset="utf-8"></link>
 </head>
 <body id="mgnl">

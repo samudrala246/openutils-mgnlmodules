@@ -1,7 +1,7 @@
 /**
  *
  * E-learning Module for Magnolia CMS (http://www.openmindlab.com/lab/products/lms.html)
- * Copyright(C) 2010-2012, Openmind S.r.l. http://www.openmindonline.it
+ * Copyright(C) 2010-2011, Openmind S.r.l. http://www.openmindonline.it
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -19,9 +19,13 @@
 
 package net.sourceforge.openutils.mgnllms.pages.lms;
 
+import info.magnolia.cms.beans.config.URI2RepositoryManager;
+import info.magnolia.cms.beans.config.URI2RepositoryMapping;
 import info.magnolia.cms.util.AlertUtil;
 import info.magnolia.context.MgnlContext;
 import info.magnolia.module.admininterface.TemplatedMVCHandler;
+
+import java.text.MessageFormat;
 
 import javax.jcr.RepositoryException;
 import javax.servlet.http.HttpServletRequest;
@@ -75,8 +79,9 @@ public class ScormPlayerPage extends TemplatedMVCHandler
     {
         try
         {
-
-            Manifest manifestFromXml = JaxbUtils.getManifest(mgnlPath, mgnlRepository);
+            URI2RepositoryMapping mapping = URI2RepositoryManager.getInstance().getMapping(
+                MessageFormat.format("/{0}/{1}", mgnlRepository, mgnlPath));
+            Manifest manifestFromXml = JaxbUtils.getManifest(mgnlPath, mapping.getRepository());
 
             JsonConfig jc = new JsonConfig();
             manifest = JSONSerializer.toJSON(manifestFromXml, jc).toString();

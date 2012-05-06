@@ -84,10 +84,29 @@ public class ComboGridColumnType extends AbstractGridColumnType
         options.add("lazyRender: true");
         options.add("listClass: 'x-combo-list-small'");
 
-        column.put("editor", "new Ed(new "
-            + ("true".equals(String.valueOf(colMap.get("pipe"))) ? "PipeComboBox" : "fm.ComboBox")
-            + "({"
-            + StringUtils.join(options, ",")
-            + "}))");
+        if ("true".equals(String.valueOf(colMap.get("showLabel"))))
+        {
+            column.put(
+                "editor",
+                "(function() { window.gridComboColumnTypeTmp = new "
+                    + ("true".equals(String.valueOf(colMap.get("pipe"))) ? "PipeComboBox" : "fm.ComboBox")
+                    + "({"
+                    + StringUtils.join(options, ",")
+                    + "}); return new Ed(gridComboColumnTypeTmp); })()");
+            column.put("renderer", "(function(combo){"
+                + "    return function(value){"
+                + "        var record = combo.findRecord(combo.valueField, value);"
+                + "        return record ? record.get(combo.displayField) : combo.valueNotFoundText;"
+                + "    }"
+                + "})(window.gridComboColumnTypeTmp)");
+        }
+        else
+        {
+            column.put("editor", "new Ed(new "
+                + ("true".equals(String.valueOf(colMap.get("pipe"))) ? "PipeComboBox" : "fm.ComboBox")
+                + "({"
+                + StringUtils.join(options, ",")
+                + "}))");
+        }
     }
 }

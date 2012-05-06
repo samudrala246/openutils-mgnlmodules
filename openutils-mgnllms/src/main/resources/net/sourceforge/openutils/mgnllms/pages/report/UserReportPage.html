@@ -2,11 +2,11 @@
 ${item?string("yes","no")} [/#if] [/#macro] [#macro redGreen n,total]
 [#if n/total == 1]
 <img class="table_img"
-	src="${this.request.contextPath}/.resources/lms/icons/accept.png"
+	src="${this.request.contextPath}/.resources/mgnllms/icons/accept.png"
 	alt="${n}/${total}" title="${n}/${total}" />
 [#else]
 <img class="table_img"
-	src="${this.request.contextPath}/.resources/lms/icons/delete.png"
+	src="${this.request.contextPath}/.resources/mgnllms/icons/delete.png"
 	alt="${n}/${total}" title="${n}/${total}" />
 [/#if] [/#macro]
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
@@ -14,13 +14,13 @@ ${item?string("yes","no")} [/#if] [/#macro] [#macro redGreen n,total]
 <head>
 <!--
 <script type="text/javascript"
-	src="${this.request.contextPath}/.resources/lms/js/mootools-1.2.3-core-nc.js"></script>
+	src="${this.request.contextPath}/.resources/mgnllms/js/mootools-1.2.3-core-nc.js"></script>
 <script type="text/javascript"
-	src="${this.request.contextPath}/.resources/lms/js/mootools-1.2.3.1-more.js"></script>
+	src="${this.request.contextPath}/.resources/mgnllms/js/mootools-1.2.3.1-more.js"></script>
 <script type="text/javascript"
-	src="${this.request.contextPath}/.resources/lms/js/jxlib/jxlib.standalone.uncompressed.js"></script>
+	src="${this.request.contextPath}/.resources/mgnllms/js/jxlib/jxlib.standalone.uncompressed.js"></script>
 <script type="text/javascript"
-	src="${this.request.contextPath}/.resources/lms/js/userReportScript.js"></script>
+	src="${this.request.contextPath}/.resources/mgnllms/js/userReportScript.js"></script>
 <script type="text/javascript">
      /*<![CDATA[*/
       window.addEvent('load', function(){

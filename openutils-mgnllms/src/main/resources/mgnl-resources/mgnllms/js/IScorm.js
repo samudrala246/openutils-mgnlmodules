@@ -71,10 +71,10 @@ var IScorm = new Class({
 					index:index,
 					item:item,
 					play: new Element('img',{
-						src: contextPath + ".resources/lms/icons/play.png"
+						src: contextPath + ".resources/mgnllms/icons/play.png"
 					}),
 					pause: new Element('img',{
-						src: contextPath + ".resources/lms/icons/pause.png"
+						src: contextPath + ".resources/mgnllms/icons/pause.png"
 					}),
 				},
 		};

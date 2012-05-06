@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<sv:node sv:name="lms" xmlns:sv="http://www.jcp.org/jcr/sv/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<sv:node sv:name="mgnllms" xmlns:sv="http://www.jcp.org/jcr/sv/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <sv:property sv:name="jcr:primaryType" sv:type="Name">
     <sv:value>mgnl:contentNode</sv:value>
   </sv:property>
@@ -10,7 +10,7 @@
     <sv:value>net.sourceforge.openutils.mgnllms.lms.lang.messages</sv:value>
   </sv:property>
   <sv:property sv:name="icon" sv:type="String">
-    <sv:value>/.resources/lms/icons/ico-24-lms.png</sv:value>
+    <sv:value>/.resources/mgnllms/icons/ico-24-lms.png</sv:value>
   </sv:property>
   <sv:property sv:name="jcr:createdBy" sv:type="String">
     <sv:value>admin</sv:value>
@@ -58,7 +58,7 @@
       <sv:value>49c87d8a-b657-43fd-98ec-6fb7da7371c3</sv:value>
     </sv:property>
     <sv:property sv:name="icon" sv:type="String">
-      <sv:value>/.resources/lms/icons/ico-16-list.png</sv:value>
+      <sv:value>/.resources/mgnllms/icons/ico-16-list.png</sv:value>
     </sv:property>
     <sv:property sv:name="jcr:createdBy" sv:type="String">
       <sv:value>admin</sv:value>
@@ -101,7 +101,7 @@
       <sv:value>c603cf3a-eb5c-29bb-82de-15418920d188</sv:value>
     </sv:property>
     <sv:property sv:name="icon" sv:type="String">
-      <sv:value>/.resources/lms/icons/ico-16-tree.png</sv:value>
+      <sv:value>/.resources/mgnllms/icons/ico-16-tree.png</sv:value>
     </sv:property>
     <sv:property sv:name="jcr:createdBy" sv:type="String">
       <sv:value>admin</sv:value>

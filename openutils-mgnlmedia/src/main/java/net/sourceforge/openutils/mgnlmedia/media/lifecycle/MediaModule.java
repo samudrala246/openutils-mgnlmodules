@@ -33,6 +33,7 @@ import net.sourceforge.openutils.mgnlmedia.media.configuration.ImageProcessorsMa
 import net.sourceforge.openutils.mgnlmedia.media.configuration.MediaConfigurationManager;
 import net.sourceforge.openutils.mgnlmedia.media.configuration.MediaTypeConfiguration;
 import net.sourceforge.openutils.mgnlmedia.media.configuration.MediaUsedInManager;
+import net.sourceforge.openutils.mgnlmedia.media.utils.LockUtils;
 import net.sourceforge.openutils.mgnlmedia.media.zip.ZipImporter;
 import net.sourceforge.openutils.mgnlmedia.playlist.pages.PlaylistLink;
 import net.sourceforge.openutils.mgnlmedia.playlist.pages.PlaylistTrackExtensionContributor;
@@ -79,6 +80,10 @@ public class MediaModule implements ModuleLifecycle
     private List playlistLinks = new ArrayList();
 
     private boolean lazyResolutionCreation;
+
+    private int maxConcurrentThreads = 4;
+
+    private LockUtils locks = new LockUtils(4);
 
     /**
      * Constructor
@@ -270,7 +275,6 @@ public class MediaModule implements ModuleLifecycle
         this.playlistTrackExtensionContributors.add(contributor);
     }
 
-    
     /**
      * Returns the playlistLinks.
      * @return the playlistLinks
@@ -279,7 +283,7 @@ public class MediaModule implements ModuleLifecycle
     {
         return playlistLinks;
     }
-    
+
     /**
      * Sets the playlistLinks.
      * @param playlistLinks the playlistLinks to set
@@ -288,7 +292,7 @@ public class MediaModule implements ModuleLifecycle
     {
         this.playlistLinks = playlistLinks;
     }
-    
+
     public void addPlaylistLink(PlaylistLink playlistLink)
     {
         this.playlistLinks.add(playlistLink);
@@ -310,5 +314,33 @@ public class MediaModule implements ModuleLifecycle
     public void setLazyResolutionCreation(boolean lazyResolutionCreation)
     {
         this.lazyResolutionCreation = lazyResolutionCreation;
+    }
+
+    /**
+     * Returns the maxConcurrentThreads.
+     * @return the maxConcurrentThreads
+     */
+    public int getMaxConcurrentThreads()
+    {
+        return maxConcurrentThreads;
+    }
+
+    /**
+     * Sets the maxConcurrentThreads.
+     * @param maxConcurrentThreads the maxConcurrentThreads to set
+     */
+    public void setMaxConcurrentThreads(int maxConcurrentThreads)
+    {
+        this.maxConcurrentThreads = maxConcurrentThreads;
+        locks = new LockUtils(maxConcurrentThreads);
+    }
+
+    /**
+     * Returns the locks.
+     * @return the locks
+     */
+    public LockUtils getLocks()
+    {
+        return locks;
     }
 }

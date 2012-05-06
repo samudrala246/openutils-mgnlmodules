@@ -1,7 +1,7 @@
 /**
  *
  * E-learning Module for Magnolia CMS (http://www.openmindlab.com/lab/products/lms.html)
- * Copyright(C) 2010-2012, Openmind S.r.l. http://www.openmindonline.it
+ * Copyright(C) 2010-2011, Openmind S.r.l. http://www.openmindonline.it
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -56,7 +56,7 @@ public class LmsModuleTreeConfiguration extends AbstractTreeConfiguration
 
         ContextMenuItem menuNewPage = new ContextMenuItem("newFolder");
         menuNewPage.setLabel(msgs.get("tree.config.menu.newFolder")); //$NON-NLS-1$
-        menuNewPage.setIcon(request.getContextPath() + "/.resources/lms/icons/folder16.gif"); //$NON-NLS-1$
+        menuNewPage.setIcon(request.getContextPath() + "/.resources/mgnllms/icons/folder16.gif"); //$NON-NLS-1$
         menuNewPage.setOnclick(tree.getJavascriptTree()
             + ".createNode('" + LmsTypesManager.FOLDER.getSystemName() + "');"); //$NON-NLS-1$ //$NON-NLS-2$
         menuNewPage.addJavascriptCondition("new mgnlTreeMenuItemConditionSelectedNotScormNode("
@@ -101,7 +101,7 @@ public class LmsModuleTreeConfiguration extends AbstractTreeConfiguration
 
         ContextMenuItem menuSimulate = new ContextMenuItem("simulate");
         menuSimulate.setLabel(msgs.get("lms.menu.simulate")); //$NON-NLS-1$
-        menuSimulate.setIcon(request.getContextPath() + "/.resources/lms/icons/browse16.gif"); //$NON-NLS-1$
+        menuSimulate.setIcon(request.getContextPath() + "/.resources/mgnllms/icons/browse16.gif"); //$NON-NLS-1$
         menuSimulate.setOnclick("mgnl.lms.simulate(" + tree.getJavascriptTree() + ".selectedNode.id);");
         menuSimulate.addJavascriptCondition("new mgnlTreeMenuItemConditionSelectedNotRoot("
             + tree.getJavascriptTree()
@@ -121,7 +121,7 @@ public class LmsModuleTreeConfiguration extends AbstractTreeConfiguration
 
         // ContextMenuItem menuUserReport = new ContextMenuItem("userReport");
         //        menuUserReport.setLabel(msgs.get("lms.menu.userreport")); //$NON-NLS-1$
-        //        menuUserReport.setIcon(request.getContextPath() + "/.resources/lms/icons/browse16.gif"); //$NON-NLS-1$
+        //        menuUserReport.setIcon(request.getContextPath() + "/.resources/mgnllms/icons/browse16.gif"); //$NON-NLS-1$
         // menuUserReport.setOnclick("mgnl.lms.userreport(" + tree.getJavascriptTree() + ".selectedNode.id);");
         // menuUserReport.addJavascriptCondition("new mgnlTreeMenuItemConditionSelectedNotRoot("
         // + tree.getJavascriptTree()
@@ -138,7 +138,7 @@ public class LmsModuleTreeConfiguration extends AbstractTreeConfiguration
 
         ContextMenuItem menuUserReportAdmin = new ContextMenuItem("userReportAdmin");
         menuUserReportAdmin.setLabel(msgs.get("lms.menu.userreportadmin")); //$NON-NLS-1$
-        menuUserReportAdmin.setIcon(request.getContextPath() + "/.resources/lms/icons/browse16.gif"); //$NON-NLS-1$
+        menuUserReportAdmin.setIcon(request.getContextPath() + "/.resources/mgnllms/icons/browse16.gif"); //$NON-NLS-1$
         menuUserReportAdmin.setOnclick("mgnl.lms.userreportadmin(" + tree.getJavascriptTree() + ".selectedNode.id);");
         menuUserReportAdmin.addJavascriptCondition("new mgnlTreeMenuItemConditionSelectedNotRoot("
             + tree.getJavascriptTree()
@@ -304,8 +304,8 @@ public class LmsModuleTreeConfiguration extends AbstractTreeConfiguration
     {
         final Messages msgs = getMessages();
 
-        tree.addItemType(LmsTypesManager.FOLDER.getSystemName(), "/.resources/lms/icons/folder16.gif");
-        tree.addItemType(LmsTypesManager.COURSE.getSystemName(), "/.resources/lms/icons/course.gif");
+        tree.addItemType(LmsTypesManager.FOLDER.getSystemName(), "/.resources/mgnllms/icons/folder16.gif");
+        tree.addItemType(LmsTypesManager.COURSE.getSystemName(), "/.resources/mgnllms/icons/course.gif");
 
         TreeColumn column0 = TreeColumn.createLabelColumn(tree, msgs.get("tree.lms.folders"), true);
         column0.setWidth(4);

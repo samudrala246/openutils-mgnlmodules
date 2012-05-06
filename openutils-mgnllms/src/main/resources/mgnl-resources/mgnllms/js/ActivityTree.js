@@ -1506,10 +1506,10 @@ var ActivityTree = new Class({
 					index:this.index,
 					item:this.organization,
 					play: new Element('img',{
-						src: contextPath + ".resources/lms/icons/play.png"
+						src: contextPath + ".resources/mgnllms/icons/play.png"
 					}),
 					pause: new Element('img',{
-						src: contextPath + ".resources/lms/icons/pause.png"
+						src: contextPath + ".resources/mgnllms/icons/pause.png"
 					}),
 				},
 		};

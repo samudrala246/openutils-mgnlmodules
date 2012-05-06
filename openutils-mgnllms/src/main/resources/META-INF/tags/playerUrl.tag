@@ -7,7 +7,7 @@
     description="target" />
   <jsp:directive.attribute name="classCss" required="false" rtexprvalue="true" type="java.lang.String"
     description="css class" />
-  <c:set var="url"><![CDATA[${pageContext.request.contextPath}/lms/player${course.handle}]]></c:set>
+  <c:set var="url"><![CDATA[${pageContext.request.contextPath}/mgnllms/player${course.handle}]]></c:set>
   <c:if test="${not lmsfn:isCourseSatisfied(course.UUID)}">
     <c:choose>
       <c:when test="${target eq 'popup'}">

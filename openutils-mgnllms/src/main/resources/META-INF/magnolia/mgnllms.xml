@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE module SYSTEM "module.dtd">
 <module>
-  <name>lms</name>
+  <name>mgnllms</name>
   <displayName>Openutils Magnolia LMS Module</displayName>
   <class>net.sourceforge.openutils.mgnllms.module.LMSModule</class>
   <versionHandler>net.sourceforge.openutils.mgnllms.module.LMSModuleVersionHandler</versionHandler>
@@ -20,17 +20,6 @@
       <value>net.sourceforge.openutils.mgnllms.managers.impl.MagnoliaLearnerActivitiesManager</value>
     </property>
   </properties>
-  <components>
-    <id>main</id>
-    <component>
-      <type>net.sourceforge.openutils.mgnllms.module.LMSConfigurationModuleManager</type>
-      <implementation>net.sourceforge.openutils.mgnllms.module.LMSConfigurationModuleManager</implementation>
-    </component>
-    <component>
-      <type>net.sourceforge.openutils.mgnllms.module.LmsTypesManager</type>
-      <implementation>net.sourceforge.openutils.mgnllms.module.LmsTypesManager</implementation>
-    </component>
-  </components>
   <dependencies>
     <dependency>
       <name>adminInterface</name>
@@ -47,7 +36,7 @@
       <workspaces>
         <workspace>lms</workspace>
       </workspaces>
-      <nodeTypeFile>/mgnl-nodetypes/lms/magnolia-nodetypes.xml</nodeTypeFile>
+      <nodeTypeFile>/mgnl-nodetypes/mgnllms/magnolia-nodetypes.xml</nodeTypeFile>
     </repository>
   </repositories>
 </module>
