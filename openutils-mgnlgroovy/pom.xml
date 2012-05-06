@@ -91,7 +91,7 @@
     <dependency>
       <groupId>net.sourceforge.openutils</groupId>
       <artifactId>openutils-mgnltasks</artifactId>
-      <version>5.0.</version>
+      <version>5.0.0</version>
     </dependency>
     <dependency>
       <groupId>javax.servlet</groupId>
