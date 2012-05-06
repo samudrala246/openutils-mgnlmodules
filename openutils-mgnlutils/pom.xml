@@ -9,7 +9,7 @@
   <packaging>jar</packaging>
   <artifactId>openutils-mgnlutils</artifactId>
   <name>Generic utilities for Magnolia CMS</name>
-  <version>5.0.0</version>
+  <version>5.0.1-SNAPSHOT</version>
   <inceptionYear>2009</inceptionYear>
   <description>A collection of Magnolia utilities and extensions</description>
   <url>http://www.openmindlab.com/lab/products/mgnlutils.html</url>
@@ -24,9 +24,9 @@
     </license>
   </licenses>
   <scm>
-    <connection>scm:svn:https://openutils.svn.sourceforge.net/svnroot/openutils/tags/openutils-mgnlutils-5.0.0</connection>
-    <developerConnection>scm:svn:https://openutils.svn.sourceforge.net/svnroot/openutils/tags/openutils-mgnlutils-5.0.0 </developerConnection>
-    <url>scm:svn:https://openutils.svn.sourceforge.net/svnroot/openutils/tags/openutils-mgnlutils-5.0.0</url>
+    <connection>scm:svn:https://openutils.svn.sourceforge.net/svnroot/openutils/magnoliamodules/trunk/openutils-mgnlutils</connection>
+    <developerConnection>scm:svn:https://openutils.svn.sourceforge.net/svnroot/openutils/magnoliamodules/trunk/openutils-mgnlutils </developerConnection>
+    <url>http://openutils.svn.sourceforge.net/viewcvs.cgi/openutils/trunk/openutils-mgnlutils</url>
   </scm>
   <build>
     <resources>
