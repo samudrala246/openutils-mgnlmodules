@@ -33,46 +33,7 @@
   <dependencies>
     <dependency>
       <name>core</name>
-      <version>4.4/*</version>
+      <version>4.5/*</version>
     </dependency>
-  <!--
-    <dependency>
-      <name>adminInterface</name>
-      <version>4.4/*</version>
-    </dependency>
-    <dependency>
-      <name>cache</name>
-      <version>4.4/*</version>
-    </dependency>
-    <dependency>
-      <name>fckEditor</name>
-      <version>4.4/*</version>
-    </dependency>
-    <dependency>
-      <name>resources</name>
-      <version>1.3/*</version>
-    </dependency>
-    <dependency>
-      <name>inplace-templating</name>
-      <version>1.2/*</version>
-    </dependency>
-    <dependency>
-      <name>dms</name>
-      <version>1.5/*</version>
-    </dependency>
-    <dependency>
-      <name>data</name>
-      <version>1.6/*</version>
-    </dependency>
-    <dependency>
-      <name>rssaggregator</name>
-      <version>1.1/*</version>
-    </dependency>
-    <dependency>
-      <name>public-user-registration</name>
-      <version>1.2/*</version>
-      <optional>true</optional>
-    </dependency>
-     -->
   </dependencies>
 </module>

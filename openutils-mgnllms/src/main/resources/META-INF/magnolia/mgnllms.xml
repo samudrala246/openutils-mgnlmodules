@@ -23,11 +23,11 @@
   <dependencies>
     <dependency>
       <name>adminInterface</name>
-      <version>4.3/*</version>
+      <version>4.5/*</version>
     </dependency>
     <dependency>
       <name>templating</name>
-      <version>4.3/*</version>
+      <version>4.5/*</version>
     </dependency>
   </dependencies>
   <repositories>
