@@ -19,10 +19,10 @@
 
 package net.sourceforge.openutils.mgnlgroovy.lifecycle;
 
+import groovy.lang.GroovySystem;
 import info.magnolia.module.ModuleLifecycle;
 import info.magnolia.module.ModuleLifecycleContext;
 
-import org.codehaus.groovy.runtime.InvokerHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -38,7 +38,7 @@ public class GroovyShellModule implements ModuleLifecycle
 
     public void start(ModuleLifecycleContext moduleLifecycleContext)
     {
-        log.info("starting GroovyShellModule. Groovy version is " + InvokerHelper.getVersion());
+        log.info("starting GroovyShellModule. Groovy version is " + GroovySystem.getVersion());
 
     }
 

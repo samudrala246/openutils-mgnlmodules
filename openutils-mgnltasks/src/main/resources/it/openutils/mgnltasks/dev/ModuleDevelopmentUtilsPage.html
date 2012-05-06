@@ -1,0 +1,76 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <title>Development utils</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link href="${this.request.contextPath}/.resources/admin-css/admin-all.css" type="text/css" rel="stylesheet" />
+  </head>
+  <body id="mgnl">
+    [#if message?exists]
+      <pre>${message}</pre>
+      <hr />
+    [/#if]
+    <form action="" method="post">
+      <input type="hidden" name="command" value="backup" />
+      <input type="hidden" name="rootdir" id="backup-rootdir" value="${this.rootdir}" class="text" />
+      <div class="pageframe">
+        <h3>Backup</h3>
+        <h3>Standard configuration</h3>
+        <div class="formelement">
+          <label for="website">Media</label>
+          <input type="checkbox" name="media" id="media" checked="checked" />
+        </div>
+        <div class="formelement">
+          <label for="data">Data</label>
+          <input type="checkbox" name="data" id="data" checked="checked" />
+        </div>
+        <div class="formelement">
+          <label for="website">Website</label>
+          <input type="checkbox" name="website" id="website" checked="checked" />
+        </div>
+        <div class="formelement">
+          <label for="users">Users</label>
+          <input type="checkbox" name="users" id="users" [#if this.users] checked="checked" [/#if] />
+        </div>
+        <div class="formelement">
+          <label for="groups">Groups</label>
+          <input type="checkbox" name="groups" id="groups" [#if this.groups] checked="checked" [/#if] />
+        </div>
+        <div class="formelement">
+          <label for="roles">Roles</label>
+          <input type="checkbox" name="roles" id="roles" [#if this.roles] checked="checked" [/#if] />
+        </div>
+        <h3>Templating</h3>
+        <div class="formelement">
+          <label for="backup-module">Module</label>
+          <select name="module" id="backup-module">
+            [#list this.modules as item]
+            <option [#if this.module=item] selected="selected" [/#if]>${item}</option>
+            [/#list]
+          </select>
+        </div>
+        <div class="formelement">
+          <label for="templates">Templates</label>
+          <input type="checkbox" name="templates" id="templates" checked="checked" />
+        </div>
+        <div class="formelement">
+          <label for="paragraphs">Paragraphs</label>
+          <input type="checkbox" name="paragraphs" id="paragraphs" checked="checked" />
+        </div>
+        <div class="formelement">
+          <label for="dialogs">Dialogs</label>
+          <input type="checkbox" name="dialogs" id="dialogs"checked="checked" />
+        </div>
+        <div class="formelement">
+          <label for="pages">Pages</label>
+          <input type="checkbox" name="pages" id="pages" [#if this.pages] checked="checked" [/#if] />
+        </div>
+        <div class="formelement">
+          <label for="virtualURIs">Virtual URIs</label>
+          <input type="checkbox" name="virtualURIs" id="virtualURIs" [#if this.virtualURIs] checked="checked" [/#if] />
+        </div>
+        <input type="submit" value="backup" class="mgnlControlButton" />
+      </div>
+    </form>
+  </body>
+</html>

@@ -153,7 +153,12 @@ public class RepositoryMessagesImpl extends AbstractMessagesImpl
             {
                 if (c.getNodeDataCollection().size() > 0)
                 {
-                    keys.add(StringUtils.replace(c.getHandle(), "/", ".").substring(1));
+                    // fix for NPE found in logs... not sure why, but it can happen
+                    String key = StringUtils.substring(StringUtils.replace(c.getHandle(), "/", "."), 1);
+                    if (StringUtils.isNotEmpty(key))
+                    {
+                        keys.add(key);
+                    }
                 }
             }
         }

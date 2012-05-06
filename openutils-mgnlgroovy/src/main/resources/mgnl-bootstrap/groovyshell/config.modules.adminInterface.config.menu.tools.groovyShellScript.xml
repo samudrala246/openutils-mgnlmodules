@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<sv:node sv:name="groovyShell" xmlns:sv="http://www.jcp.org/jcr/sv/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<sv:node sv:name="groovyShellScript" xmlns:sv="http://www.jcp.org/jcr/sv/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <sv:property sv:name="jcr:primaryType" sv:type="Name">
     <sv:value>mgnl:contentNode</sv:value>
   </sv:property>
   <sv:property sv:name="jcr:uuid" sv:type="String">
-    <sv:value>15ee1ea1-90f6-4555-9473-2e02c52a4016</sv:value>
+    <sv:value>15ee1ea1-90f6-4555-9473-2e02c52a4017</sv:value>
   </sv:property>
   <sv:property sv:name="icon" sv:type="String">
     <sv:value>/.resources/groovyshell/icons/groovy-small.png</sv:value>
@@ -16,7 +16,7 @@
     <sv:value>Groovy Shell</sv:value>
   </sv:property>
   <sv:property sv:name="onclick" sv:type="String">
-    <sv:value>window.open('/.magnolia/pages/groovyShell.html');</sv:value>
+    <sv:value>window.open(contextPath + '/.magnolia/pages/groovyShellScript.html');</sv:value>
   </sv:property>
   <sv:node sv:name="MetaData">
     <sv:property sv:name="jcr:primaryType" sv:type="Name">

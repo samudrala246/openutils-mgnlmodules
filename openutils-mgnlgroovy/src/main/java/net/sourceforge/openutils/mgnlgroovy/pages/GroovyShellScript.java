@@ -45,8 +45,7 @@ import org.slf4j.LoggerFactory;
 
 
 /**
- * A basic Groovy shell to be embedded in Magnolia.
- * @author fgrilli
+ * @author Manuel Molaschi
  * @version $Id$
  */
 public class GroovyShellScript extends TemplatedMVCHandler

@@ -32,6 +32,7 @@ import java.util.List;
 import java.util.Set;
 
 import org.apache.commons.lang.ObjectUtils;
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -113,14 +114,24 @@ public class SimpleModuleVersionHandler extends DefaultModuleVersionHandler
             List<Delta> deltas = super.getDeltas(ctx, from);
 
             // adding the (module)-nooverwrite in addiction to the standard bootstrap directory
-            deltas.get(0).getTasks().add(
-                new BootstrapMissingNodesTask(ctx.getCurrentModuleDefinition().getName() + "-nooverwrite"));
+            deltas
+                .get(0)
+                .getTasks()
+                .add(new BootstrapMissingNodesTask(ctx.getCurrentModuleDefinition().getName() + "-nooverwrite"));
 
             // only for development, add the (module)-dev bootstrap directory
             if (SystemProperty.getBooleanProperty("magnolia.develop"))
             {
-                deltas.get(0).getTasks().add(
-                    new BootstrapMissingNodesTask(ctx.getCurrentModuleDefinition().getName() + "-dev"));
+                if (StringUtils.isEmpty(SystemProperty.getProperty("magnolia.bootstrapdev"))
+                    || StringUtils.contains(SystemProperty.getProperty("magnolia.bootstrapdev"), ctx
+                        .getCurrentModuleDefinition()
+                        .getName()))
+                {
+                    deltas
+                        .get(0)
+                        .getTasks()
+                        .add(new BootstrapMissingNodesTask(ctx.getCurrentModuleDefinition().getName() + "-dev"));
+                }
             }
 
             return deltas;

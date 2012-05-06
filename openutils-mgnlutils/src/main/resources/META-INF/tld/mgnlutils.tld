@@ -327,22 +327,114 @@ mu:isLine('aaa\nbb\nc', 'b') = false]]></example>
     <function-signature>java.util.Map userProperties()</function-signature>
   </function>
   <function>
-    <name>pagePropertyInherited</name>
     <description>Returns the value of a page property, by iterating on active page ancestor till a value is found</description>
+    <name>pagePropertyInherited</name>
     <function-class>it.openutils.mgnlutils.el.MgnlUtilsElFunctions</function-class>
     <function-signature>java.lang.String pagePropertyInherited( java.lang.String)</function-signature>
   </function>
   <function>
-    <name>setActivePage</name>
     <description>Sets the given content as the active page, calling MgnlContext.getAggregationState().setCurrentContent)</description>
+    <name>setActivePage</name>
     <function-class>it.openutils.mgnlutils.el.MgnlUtilsElFunctions</function-class>
     <function-signature>void setActivePage(info.magnolia.cms.core.Content)</function-signature>
   </function>
   <function>
-    <name>canEdit</name>
+    <description>Get a Content node by its UUID. Internally uses JCR Criteria. Params are UUID and repository name.</description>
+    <name>contentByUUID</name>
+    <function-class>it.openutils.mgnlutils.el.MgnlUtilsElFunctions</function-class>
+    <function-signature>info.magnolia.cms.core.Content contentByUUID(java.lang.String, java.lang.String)</function-signature>
+  </function>
+  <function>
+    <description>Check if the current user belongs the given role</description>
+    <name>userHasRole</name>
+    <function-class>it.openutils.mgnlutils.el.MgnlUtilsElFunctions</function-class>
+    <function-signature>boolean userHasRole(java.lang.String)</function-signature>
+  </function>
+  <function>
+    <description>Check if the current user belongs the given group</description>
+    <name>userHasGroup</name>
+    <function-class>it.openutils.mgnlutils.el.MgnlUtilsElFunctions</function-class>
+    <function-signature>boolean userHasGroup(java.lang.String)</function-signature>
+  </function>
+  <function>
+    <description>Returns the current active page (can be set using the loadPage tag).</description>
+    <name>currentPage</name>
+    <function-class>it.openutils.mgnlutils.el.MgnlUtilsElFunctions</function-class>
+    <function-signature>info.magnolia.cms.core.Content currentPage()</function-signature>
+  </function>
+  <function>
+    <description>Returns the main loaded page (doesn't change when using the loadPage tag).</description>
+    <name>mainPage</name>
+    <function-class>it.openutils.mgnlutils.el.MgnlUtilsElFunctions</function-class>
+    <function-signature>info.magnolia.cms.core.Content mainPage()</function-signature>
+  </function>
+  <function>
+    <description>Returns the current paragraph.</description>
+    <name>currentParagraph</name>
+    <function-class>it.openutils.mgnlutils.el.MgnlUtilsElFunctions</function-class>
+    <function-signature>info.magnolia.cms.core.Content currentParagraph()</function-signature>
+  </function>
+  <function>
+    <description>Returns the value of a system property</description>
+    <name>systemProperty</name>
+    <function-class>it.openutils.mgnlutils.el.MgnlUtilsElFunctions</function-class>
+    <function-signature>java.lang.String systemProperty(java.lang.String)</function-signature>
+  </function>
+  <function>
+    <description>Returns the system properties</description>
+    <name>systemProperties</name>
+    <function-class>it.openutils.mgnlutils.el.MgnlUtilsElFunctions</function-class>
+    <function-signature>java.util.Properties systemProperties()</function-signature>
+  </function>
+  <function>
+    <description>Check if a user is currently logged in (not anonymous)</description>
+    <name>isLoggedIn</name>
+    <function-class>it.openutils.mgnlutils.el.MgnlUtilsElFunctions</function-class>
+    <function-signature>boolean isLoggedIn()</function-signature>
+  </function>
+  <function>
     <description>Check if the current user can edit the active page</description>
+    <name>canEdit</name>
     <function-class>it.openutils.mgnlutils.el.MgnlUtilsElFunctions</function-class>
     <function-signature>boolean canEdit()</function-signature>
+  </function>
+  <function>
+    <description>
+      Check if the current page is open in editing mode. Shortcut for checking if the server is admin, preview unset,
+      permissions to modify the page available for the current user.
+    </description>
+    <name>editMode</name>
+    <function-class>it.openutils.mgnlutils.el.MgnlUtilsElFunctions</function-class>
+    <function-signature>boolean isEditMode()</function-signature>
+  </function>
+  <function>
+    <description>
+      <![CDATA[
+     Find and load the first parent page containing a named node.
+     This function can be useful while building pages that should inherit a paragraph from parent pages.
+     Loaded page must be unloaded using the <cms:unloadPage /> tag.
+     Sample use:
+     <pre>
+ <c:if test="${cmsfn:firstPageWithNode("node", 3)}">
+      content inherited from page ${cmsfn:currentPage().handle}.html
+   <<cms:includeTemplate contentNodeName="node" />
+   <cms:unloadPage />
+ </c:if>
+ </pre>
+ ]]>
+    </description>
+    <name>firstPageWithNode</name>
+    <function-class>it.openutils.mgnlutils.el.MgnlUtilsElFunctions</function-class>
+    <function-signature>boolean firstPageWithNode(java.lang.String,int)</function-signature>
+  </function>
+  <function>
+    <description>
+      Function to iterate over a node Data that has "checkbox" as control type, for example.
+      See http://jira.magnolia-cms.com/browse/MAGNOLIA-1969
+    </description>
+    <name>nodeDataIterator</name>
+    <function-class>it.openutils.mgnlutils.el.MgnlUtilsElFunctions</function-class>
+    <function-signature>java.util.Collection nodeDataIterator(info.magnolia.cms.core.Content, java.lang.String)</function-signature>
   </function>
   <!-- please don't add new funtions without a meaningfull <description> -->
 </taglib>

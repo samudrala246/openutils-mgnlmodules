@@ -32,6 +32,8 @@ import java.awt.image.Raster;
 import java.awt.image.WritableRaster;
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.Iterator;
 
 import javax.imageio.ImageIO;
@@ -44,7 +46,6 @@ import org.slf4j.LoggerFactory;
 
 import com.drew.imaging.jpeg.JpegProcessingException;
 import com.drew.imaging.jpeg.JpegSegmentReader;
-import com.sun.image.codec.jpeg.ImageFormatException;
 
 
 /**
@@ -221,12 +222,38 @@ public class JpegUtils
                     try
                     {
                         // see MEDIA-72, we need the sun codec to make this work properly
-                        return com.sun.image.codec.jpeg.JPEGCodec.createJPEGDecoder(is4).decodeAsBufferedImage();
+
+                        Class< ? > sunjpegcodec = Class.forName("com.sun.image.codec.jpeg.JPEGCodec");
+                        Method createJPEGDecoderMethod = sunjpegcodec.getMethod("createJPEGDecoder", InputStream.class);
+                        Object jpegDecoder = createJPEGDecoderMethod.invoke(null, is4);
+                        Method decodeAsBufferedImageMethod = jpegDecoder.getClass().getMethod(
+                            "decodeAsBufferedImage",
+                            new Class[0]);
+                        BufferedImage result = (BufferedImage) decodeAsBufferedImageMethod.invoke(jpegDecoder, null);
+
+                        return result;
                     }
-                    catch (ImageFormatException ife)
+                    catch (ClassNotFoundException e)
                     {
-                        // ImageFormatException: Can't construct a BufferedImage for given COLOR_ID
-                        // try also with CMYK?
+                        log.info("com.sun.image.codec.jpeg.JPEGCodec not available, can't process non-standard jpeg");
+                        return createJPEG4(raster, ycckProfile);
+                    }
+                    catch (NoSuchMethodException e)
+                    {
+                        log.info("com.sun.image.codec.jpeg.JPEGCodec not available, can't process non-standard jpeg");
+                        return createJPEG4(raster, ycckProfile);
+                    }
+                    catch (IllegalAccessException e)
+                    {
+                        // should never happen
+                        log.error(e.getMessage(), e);
+                        return createJPEG4(raster, ycckProfile);
+                    }
+                    catch (InvocationTargetException e)
+                    {
+                        log.debug(e.getTargetException().getMessage(), e.getTargetException());
+                        // Icom.sun.image.codec,jpeg.ImageFormatException: Can't construct a BufferedImage for given
+                        // COLOR_ID try also with CMYK?
                         return createJPEG4(raster, ycckProfile);
                     }
                     finally

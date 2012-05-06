@@ -20,16 +20,19 @@
 package it.openutils.mgnlutils.el;
 
 import info.magnolia.cms.beans.config.ServerConfiguration;
+import info.magnolia.cms.core.AggregationState;
 import info.magnolia.cms.core.Content;
 import info.magnolia.cms.core.HierarchyManager;
 import info.magnolia.cms.core.ItemType;
 import info.magnolia.cms.core.MgnlNodeType;
+import info.magnolia.cms.core.NodeData;
 import info.magnolia.cms.core.Path;
 import info.magnolia.cms.core.SystemProperty;
 import info.magnolia.cms.i18n.I18nContentSupportFactory;
 import info.magnolia.cms.i18n.I18nContentWrapper;
 import info.magnolia.cms.i18n.MessagesManager;
 import info.magnolia.cms.security.Permission;
+import info.magnolia.cms.security.SecurityUtil;
 import info.magnolia.cms.security.User;
 import info.magnolia.cms.security.auth.Entity;
 import info.magnolia.cms.util.NodeMapWrapper;
@@ -52,12 +55,16 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Properties;
 import java.util.Set;
 
 import javax.jcr.ItemNotFoundException;
 import javax.jcr.RepositoryException;
 import javax.security.auth.Subject;
 import javax.servlet.http.HttpServletRequest;
+
+import net.sourceforge.openutils.mgnlcriteria.jcr.query.JCRCriteriaFactory;
+import net.sourceforge.openutils.mgnlcriteria.jcr.query.criterion.Restrictions;
 
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
@@ -985,9 +992,189 @@ public final class MgnlUtilsElFunctions
         }
     }
 
-    // magnolia-templating-compatibility-taglib-cms: info.magnolia.cms.taglibs.CmsFunctions.canEdit()
-    public static boolean canEdit() {
+    /**
+     * Check if the current user can edit the active page.
+     * @return true if the current user can edit the active page.
+     */
+    public static boolean canEdit()
+    {
         return NodeUtil.isGranted(MgnlContext.getAggregationState().getMainContent().getJCRNode(), Permission.SET);
+    }
+
+    /**
+     * Get a Content node by its UUID. Internally uses JCR Criteria.
+     * @param uuid content UUID
+     * @param repo workspace name
+     * @return Content or null if not found
+     */
+    public static Content contentByUUID(String uuid, String repo)
+    {
+        if (StringUtils.isBlank(uuid))
+        {
+            return null;
+        }
+        return JCRCriteriaFactory
+            .createCriteria()
+            .setWorkspace(repo)
+            .add(Restrictions.eq("@jcr:uuid", uuid))
+            .execute()
+            .getFirstResult();
+    }
+
+    /**
+     * Check if the current user belongs the given role
+     * @param role role name
+     * @return true if the user belongs to the role
+     */
+    public static boolean userHasRole(String role)
+    {
+        return MgnlContext.getUser().getAllRoles().contains(role);
+    }
+
+    /**
+     * Check if the current user belongs the given group
+     * @param group group name
+     * @return true if the user belongs to the group
+     */
+    public static boolean userHasGroup(String group)
+    {
+        return MgnlContext.getUser().getAllGroups().contains(group);
+    }
+
+    /**
+     * Returns the current active page (can be set using the loadPage tag).
+     * @return current page
+     */
+    public static Content currentPage()
+    {
+        return MgnlContext.getAggregationState().getCurrentContent();
+    }
+
+    /**
+     * Returns the main loaded page (doesn't change when using the loadPage tag).
+     * @return loaded page
+     */
+    public static Content mainPage()
+    {
+        return MgnlContext.getAggregationState().getMainContent();
+    }
+
+    /**
+     * Returns the current paragraph.
+     * @return current paragraph
+     */
+    public static Content currentParagraph()
+    {
+        return MgnlContext.getAggregationState().getCurrentContent();
+    }
+
+    /**
+     * Returns the value of a system property.
+     * @param key property key
+     * @return property value
+     */
+    public static String systemProperty(String key)
+    {
+        return SystemProperty.getProperty(key);
+    }
+
+    /**
+     * Returns the system properties.
+     * @return Property instance
+     */
+    public static Properties systemProperties()
+    {
+        return SystemProperty.getProperties();
+    }
+
+    /**
+     * Check if a user is currently logged in (not anonymous).
+     * @return true if a user is currently logged in.
+     */
+    public static boolean isLoggedIn()
+    {
+        return SecurityUtil.isAuthenticated();
+    }
+
+    /**
+     * Check if the current page is open in editing mode. Shortcut for checking if the server is admin, preview unset,
+     * permissions to modify the page available for the current user.
+     * @return true if the page is open in edit mode and user has permissions to edit
+     */
+    public static boolean isEditMode()
+    {
+        final AggregationState aggregationState = MgnlContext.getAggregationState();
+        Content activePage = aggregationState.getMainContent();
+        return ServerConfiguration.getInstance().isAdmin()
+            && !aggregationState.isPreviewMode()
+            && activePage != null
+            && activePage.isGranted(Permission.SET);
+    }
+
+    /**
+     * Find and load the first parent page containing a named node. This function can be useful while building pages
+     * that should inherit a paragraph from parent pages. Loaded page must be unloaded using the
+     * <code>&lt;cms:unloadPage /></code> tag. Sample use:
+     * 
+     * <pre>
+     * &lt;c:if test="${cmsfn:firstPageWithNode("column", 3)}">
+     *      content inherited from page ${cmsfn:currentPage().handle}.html
+     *   &lt;cms:contentNodeIterator contentNodeCollectionName="column">
+     *     &lt;cms:includeTemplate />
+     *   &lt;/cms:contentNodeIterator>
+     *   &lt;cms:unloadPage />
+     * &lt;/c:if>
+     * </pre>
+     * @param nodeName paragraph name
+     * @param minlevel level at which we will stop also if no page is found
+     * @return <code>true</code> if a page has been found and loaded, <code>false</code> otherwise
+     */
+    public static boolean firstPageWithNode(String nodeName, int minlevel)
+    {
+        Content actpage = MgnlContext.getAggregationState().getCurrentContent();
+        if (actpage == null)
+        {
+            actpage = MgnlContext.getAggregationState().getMainContent();
+        }
+
+        try
+        {
+            while (actpage.getLevel() > minlevel)
+            {
+                actpage = actpage.getParent();
+
+                if (actpage.hasContent(nodeName))
+                {
+                    MgnlContext.getAggregationState().setCurrentContent(actpage);
+                    return true;
+                }
+            }
+        }
+        catch (RepositoryException e)
+        {
+            log.error("Error looking for node " + nodeName + " in " + actpage.getHandle(), e);
+        }
+
+        return false;
+    }
+
+    /**
+     * Function to iterate over a node Data that has "checkbox" as control type, for example. See
+     * http://jira.magnolia-cms.com/browse/MAGNOLIA-1969
+     */
+    public static Collection<NodeData> nodeDataIterator(Content c, String collection)
+    {
+        try
+        {
+            return c.getContent(collection).getNodeDataCollection();
+        }
+        catch (RepositoryException e)
+        {
+            log.error(
+                "Error when getting nodedata collection from " + c + " / " + collection + " :" + e.getMessage(),
+                e);
+            return null;
+        }
     }
 
 }

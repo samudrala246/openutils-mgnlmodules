@@ -77,20 +77,19 @@ public class MediaURI2RepositoryMapping extends URI2RepositoryMapping
             }
         }
 
+        if (uri == null)
+        {
+            return null;
+        }
+
         return cleanHandle(uri);
     }
 
     /**
-     * Clean a handle. Remove double / and add always a leading /
-     * @param handle
-     * @return
+     * Clean a handle. Remove double / and add always a leading /.
      */
     private String cleanHandle(String handle)
     {
-        if (handle == null)
-        {
-            return null;
-        }
         if (!handle.startsWith("/"))
         {
             handle = "/" + handle;

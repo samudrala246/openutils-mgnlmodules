@@ -19,14 +19,31 @@
 
 package net.sourceforge.openutils.mgnlgroovy.setup;
 
+import info.magnolia.module.InstallContext;
+import info.magnolia.module.delta.Task;
+import it.openutils.mgnltasks.DeleteNodeTask;
 import it.openutils.mgnltasks.SimpleModuleVersionHandler;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
- * @author fgrilli
- * @version $Id: GroovyShellModuleVersionHandler.java 5308 2008-10-31 14:59:23Z federico.grilli $
+ * @author fgiust
+ * @version $Id: $
  */
 public class GroovyShellModuleVersionHandler extends SimpleModuleVersionHandler
 {
 
+    @Override
+    public List<Task> getStartupTasks(InstallContext installContext)
+    {
+
+        List<Task> tasks = new ArrayList<Task>();
+
+        tasks.add(new DeleteNodeTask("config", "/modules/adminIterface/config/menu/tools/groovyShell"));
+        tasks.add(new DeleteNodeTask("config", "/modules/groovyshell/pages/groovyShell"));
+
+        return tasks;
+    }
 }
