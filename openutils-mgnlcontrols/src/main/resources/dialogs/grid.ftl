@@ -303,7 +303,8 @@ Ext.onReady(function(){
       iconCls: 'button-insert-row',
       handler: function() {
         gridInsertRow(grid, ${(!addRowsEnabled)?string});
-      }
+      },
+      disabled: ${(!addRowsEnabled)?string}
     }, {
       text: '',
       tooltip: 'Remove row',
@@ -311,7 +312,8 @@ Ext.onReady(function(){
       iconCls: 'button-remove-row',
       handler: function() {
         gridRemoveRow(grid, ${(!addRowsEnabled)?string});
-      }
+      },
+      disabled: ${(!addRowsEnabled)?string}
     }],
     [#if (configuration.height??)]
     height: ${configuration.height},
