@@ -43,9 +43,20 @@ public class ComboGridColumnType extends AbstractGridColumnType
     @Override
     public String getHeadSnippet()
     {
-        return "<script type=\"text/javascript\" src=\""
-            + MgnlContext.getContextPath()
-            + "/.resources/controls/js/PipeComboBox.js\"></script>";
+        StringBuilder result = new StringBuilder(super.getHeadSnippet());
+        result.append("<script type=\"text/javascript\" src=\"");
+        result.append(MgnlContext.getContextPath());
+            result.append("/.resources/controls/js/PipeComboBox.js\"></script>");
+        // Combobox must be patched because of a bug. For reference, see:
+        // http://www.sencha.com/forum/showthread.php?17465-1.1.1-Local-ComboBox-data-store-filter-not-cleared-on-call-to-setValue%28%29
+        result.append("var PatchedComboBox = Ext.extend(Ext.form.ComboBox, {");
+        result.append("  setValue: function(v) {");
+        result.append("    this.store.clearFilter();");
+        result.append("    PatchedComboBox.superclass.setValue.call(this, v);");
+        result.append("  }");
+        result.append("});\n");
+        result.append("</script>");
+        return result.toString();
     }
 
     /**
@@ -89,7 +100,7 @@ public class ComboGridColumnType extends AbstractGridColumnType
             column.put(
                 "editor",
                 "(function() { window.gridComboColumnTypeTmp = new "
-                    + ("true".equals(String.valueOf(colMap.get("pipe"))) ? "PipeComboBox" : "fm.ComboBox")
+                    + ("true".equals(String.valueOf(colMap.get("pipe"))) ? "PipeComboBox" : "PatchedComboBox")
                     + "({"
                     + StringUtils.join(options, ",")
                     + "}); return new Ed(gridComboColumnTypeTmp); })()");
@@ -103,7 +114,7 @@ public class ComboGridColumnType extends AbstractGridColumnType
         else
         {
             column.put("editor", "new Ed(new "
-                + ("true".equals(String.valueOf(colMap.get("pipe"))) ? "PipeComboBox" : "fm.ComboBox")
+                + ("true".equals(String.valueOf(colMap.get("pipe"))) ? "PipeComboBox" : "PatchedComboBox")
                 + "({"
                 + StringUtils.join(options, ",")
                 + "}))");
