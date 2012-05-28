@@ -196,6 +196,8 @@ Ext.onReady(function(){
   var rows = hidden.value.split(/\r?\n/);
   
   [#assign addRowsEnabled = (configuration['addRowsEnabled']!false)?string == 'true']
+  [#assign pasteFromExcelEnabled = (configuration['pasteFromExcelEnabled']!true)?string == 'true']
+  [#assign clearAllEnabled = (configuration['clearAllEnabled']!true)?string == 'true']
   [#assign cfgRows = configuration.rows!10]
   [#if (addRowsEnabled)]
   var numOfRows= Math.max(${cfgRows}, rows.length);
@@ -271,7 +273,8 @@ Ext.onReady(function(){
             }
           }
         }
-      }
+      },
+      disabled: ${(!clearAllEnabled)?string}
     }, {
       text: 'Paste from spreadsheet',
       tooltip: 'Paste from spreadsheet',
@@ -279,7 +282,8 @@ Ext.onReady(function(){
       iconCls: 'button-paste',
       handler: function() {
         mgnlOpenWindow('/.resources/controls/clipboard.html?name=${name}&expand=${addRowsEnabled?string}', 320, 200);
-      }
+      },
+      disabled: ${(!pasteFromExcelEnabled)?string}
     }, {
       text: '',
       tooltip: 'Move row up',
