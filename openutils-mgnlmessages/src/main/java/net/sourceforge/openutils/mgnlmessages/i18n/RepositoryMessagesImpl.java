@@ -112,6 +112,12 @@ public class RepositoryMessagesImpl extends AbstractMessagesImpl
         {
             return "???" + key + "???";
         }
+        catch (IllegalArgumentException e)
+        {
+            // MESSAGES-19 Uncaught IllegalArgumentException using jackrabbit 2.4.1
+            // at org.apache.jackrabbit.core.id.NodeId.<init>(NodeId.java:129)
+            return "???" + key + "???";
+        }
     }
 
     /**

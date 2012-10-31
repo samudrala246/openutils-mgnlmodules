@@ -21,6 +21,7 @@ package net.sourceforge.openutils.mgnlcontrols.configuration;
 
 import info.magnolia.cms.i18n.Messages;
 import info.magnolia.context.MgnlContext;
+import info.magnolia.module.ModuleRegistry;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,9 +47,12 @@ public class ComboGridColumnType extends AbstractGridColumnType
         StringBuilder result = new StringBuilder(super.getHeadSnippet());
         result.append("<script type=\"text/javascript\" src=\"");
         result.append(MgnlContext.getContextPath());
-            result.append("/.resources/controls/js/PipeComboBox.js\"></script>");
+            result.append("/.resources/controls/"
+                + ModuleRegistry.Factory.getInstance().getDefinition("controls").getVersion()
+                + "/js/PipeComboBox.js\"></script>");
         // Combobox must be patched because of a bug. For reference, see:
         // http://www.sencha.com/forum/showthread.php?17465-1.1.1-Local-ComboBox-data-store-filter-not-cleared-on-call-to-setValue%28%29
+        result.append("<script type=\"text/javascript\">");
         result.append("var PatchedComboBox = Ext.extend(Ext.form.ComboBox, {");
         result.append("  setValue: function(v) {");
         result.append("    this.store.clearFilter();");

@@ -21,6 +21,7 @@ package net.sourceforge.openutils.mgnlcontrols.configuration;
 
 import info.magnolia.cms.i18n.Messages;
 import info.magnolia.context.MgnlContext;
+import info.magnolia.module.ModuleRegistry;
 
 import java.util.Map;
 
@@ -41,7 +42,9 @@ public class ColorGridColumnType extends AbstractGridColumnType
     {
         return "<script type=\"text/javascript\" src=\""
             + MgnlContext.getContextPath()
-            + "/.resources/controls/js/ColorField.js\"></script>";
+            + "/.resources/controls/"
+            + ModuleRegistry.Factory.getInstance().getDefinition("controls").getVersion()
+            + "/js/ColorField.js\"></script>";
     }
 
     /**

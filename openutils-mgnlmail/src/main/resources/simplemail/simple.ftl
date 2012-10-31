@@ -13,7 +13,7 @@
           <tbody>
             <tr>
               <td height="101" align="center" bgcolor="#102942" style="color: #fff">
-                <a href="${content.link!}" target="_blank"> [#if content.logo! != ""] ${media.url(media.node(content.logo))} [/#if]</a>
+                <a href="${content.link!}" target="_blank"> [#if content.logo! != ""] ${media.url(content.logo)} [/#if]</a>
                 ${content.title!}
               </td>
             </tr>

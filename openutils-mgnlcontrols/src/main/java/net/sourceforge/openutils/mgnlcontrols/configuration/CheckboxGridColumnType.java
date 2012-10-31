@@ -23,6 +23,7 @@ import info.magnolia.cms.core.Content;
 import info.magnolia.cms.i18n.Messages;
 import info.magnolia.cms.security.AccessDeniedException;
 import info.magnolia.context.MgnlContext;
+import info.magnolia.module.ModuleRegistry;
 
 import java.util.Map;
 
@@ -47,7 +48,9 @@ public class CheckboxGridColumnType implements GridColumnType
     {
         return "<script type=\"text/javascript\" src=\""
             + MgnlContext.getContextPath()
-            + "/.resources/controls/js/CheckColumn.js\"></script>";
+            + "/.resources/controls/"
+            + ModuleRegistry.Factory.getInstance().getDefinition("controls").getVersion()
+            + "/js/CheckColumn.js\"></script>";
     }
 
     /**
@@ -83,7 +86,7 @@ public class CheckboxGridColumnType implements GridColumnType
     /**
      * {@inheritDoc}
      */
-    public void processColumnOnLoad(String[] column, Content colConfig)
+    public void processColumnOnLoad(String[] column, Content colConfig, String propertyName, Content storageNode)
     {
         // TODO Auto-generated method stub
 

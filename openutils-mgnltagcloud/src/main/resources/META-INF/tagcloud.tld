@@ -174,7 +174,7 @@
     <description>Get a tag cloud configured in adminCentral (which caches values and updates on repository operations)</description>
     <name>named</name>
     <function-class>net.sourceforge.openutils.mgnltagcloud.el.TagCloudElFunctions</function-class>
-    <function-signature>info.util.Map named(java.lang.String)</function-signature>
+    <function-signature>java.util.Map named(java.lang.String)</function-signature>
     <example>
       <![CDATA[
       <c:set var="tagCloud" value="${tagcloud:named('articles')}" />
@@ -188,7 +188,7 @@
     <description>Create a tag cloud, cache it, and link it to repository events for updates</description>
     <name>cached</name>
     <function-class>net.sourceforge.openutils.mgnltagcloud.el.TagCloudElFunctions</function-class>
-    <function-signature>info.util.Map cached(java.lang.String, java.lang.String, java.lang.String, int)</function-signature>
+    <function-signature>java.util.Map cached(java.lang.String, java.lang.String, java.lang.String, int)</function-signature>
     <example>
       <![CDATA[
       <c:set var="tagCloud" value="${tagcloud:cached('website', '/site/contens/articles', 'tags', 20)}" />
@@ -202,7 +202,7 @@
     <description>Calculate tag cloud, without caching it. Each call to notcached will calculate tags from lucene indicies</description>
     <name>notcached</name>
     <function-class>net.sourceforge.openutils.mgnltagcloud.el.TagCloudElFunctions</function-class>
-    <function-signature>info.util.Map notcached(java.lang.String, java.lang.String, java.lang.String, int)</function-signature>
+    <function-signature>java.util.Map notcached(java.lang.String, java.lang.String, java.lang.String, int)</function-signature>
     <example>
       <![CDATA[
       <c:set var="tagCloud" value="${tagcloud:notcached('website', '/site/contens/articles', 'tags', 20)}" />
@@ -216,7 +216,7 @@
     <description>Get a map with some properties of passed tag cloud: min which holds the number of hits for the less used tag, max which holds the number of hits for the most used tag. Could be useful for normalization work.</description>
     <name>props</name>
     <function-class>net.sourceforge.openutils.mgnltagcloud.el.TagCloudElFunctions</function-class>
-    <function-signature>info.util.Map props(java.util.Map)</function-signature>
+    <function-signature>java.util.Map props(java.util.Map)</function-signature>
     <example>
       <![CDATA[
       <c:set var="tagCloud" value="${tagcloud:cached('website', '/site/contens/articles', 'tags', 20)}" />
@@ -230,7 +230,7 @@
     <description>Sort a tag cloud by tag names. If the second parameter is true, the sort order is ascending otherwise descending. </description>
     <name>sortbyname</name>
     <function-class>net.sourceforge.openutils.mgnltagcloud.el.TagCloudElFunctions</function-class>
-    <function-signature>info.util.Map sortbyname(java.util.Map, boolean)</function-signature>
+    <function-signature>java.util.Map sortbyname(java.util.Map, boolean)</function-signature>
     <example>
       <![CDATA[
       <c:set var="tagCloud" value="${tagcloud:cached('website', '/site/contens/articles', 'tags', 20)}" />
@@ -242,7 +242,7 @@
     <description>Sort a tag cloud by tag count. If the second parameter is true, the sort order is ascending otherwise descending. </description>
     <name>sortbycount</name>
     <function-class>net.sourceforge.openutils.mgnltagcloud.el.TagCloudElFunctions</function-class>
-    <function-signature>info.util.Map sortbycount(java.util.Map, boolean)</function-signature>
+    <function-signature>java.util.Map sortbycount(java.util.Map, boolean)</function-signature>
     <example>
       <![CDATA[
       <c:set var="tagCloud" value="${tagcloud:cached('website', '/site/contens/articles', 'tags', 20)}" />

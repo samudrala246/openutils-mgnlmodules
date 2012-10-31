@@ -85,7 +85,7 @@ public abstract class AbstractGridColumnType implements GridColumnType
     /**
      * {@inheritDoc}
      */
-    public void processColumnOnLoad(String[] column, Content colConfig)
+    public void processColumnOnLoad(String[] column, Content colConfig, String propertyName, Content storageNode)
     {
     }
 

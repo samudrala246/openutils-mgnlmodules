@@ -30,6 +30,7 @@ import info.magnolia.cms.i18n.Messages;
 import info.magnolia.cms.security.AccessDeniedException;
 import info.magnolia.cms.util.ContentUtil;
 import info.magnolia.context.MgnlContext;
+import info.magnolia.module.ModuleRegistry;
 import info.magnolia.module.admininterface.SaveHandlerImpl;
 
 import java.io.IOException;
@@ -64,7 +65,9 @@ public class FileGridColumnType extends AbstractGridColumnType
     {
         return "<script type=\"text/javascript\" src=\""
             + MgnlContext.getContextPath()
-            + "/.resources/controls/js/FileField.js\"></script>";
+            + "/.resources/controls/"
+            + ModuleRegistry.Factory.getInstance().getDefinition("controls").getVersion()
+            + "/js/FileField.js\"></script>";
     }
 
     /**

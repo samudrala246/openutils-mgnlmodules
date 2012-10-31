@@ -23,7 +23,7 @@
     <script type="text/javascript">
 var editor;
 MgnlDHTMLUtil.addOnLoad(function(){
-  document.getElementById("grid").value = window.opener.getEditCodeValue().replace(/&amp;/g, "&").replace(/&quot;/g, "\"").replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/\\(.)/g, function(all, c) {
+  document.getElementById("grid").value = window.opener.getEditCodeValue().replace(/&amp;/g, "&").replace(/&quot;/g, "\"").replace(/&apos;/g, "\'").replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/\\(.)/g, function(all, c) {
     switch(c){
       case "\\":
         return "\\";
@@ -52,7 +52,7 @@ MgnlDHTMLUtil.addOnLoad(function(){
   });
 });
 function getValue() {
-  return editor.getCode().replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/\\/g, "\\\\").replace(/\t/g, "\\t").replace(/\n/g, "\\n").replace(/\r/g, "\\r");
+  return editor.getCode().replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/'/g, "&apos;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/\\/g, "\\\\").replace(/\t/g, "\\t").replace(/\n/g, "\\n").replace(/\r/g, "\\r");
 }
   </script>
   </head>

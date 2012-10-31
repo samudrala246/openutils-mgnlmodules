@@ -21,6 +21,7 @@ package net.sourceforge.openutils.mgnlcontrols.configuration;
 
 import info.magnolia.cms.i18n.Messages;
 import info.magnolia.context.MgnlContext;
+import info.magnolia.module.ModuleRegistry;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,7 +46,9 @@ public class LinkGridColumnType extends AbstractGridColumnType
     {
         return "<script type=\"text/javascript\" src=\""
             + MgnlContext.getContextPath()
-            + "/.resources/controls/js/LinkField.js\"></script>";
+            + "/.resources/controls/"
+            + ModuleRegistry.Factory.getInstance().getDefinition("controls").getVersion()
+            + "/js/LinkField.js\"></script>";
     }
 
     /**

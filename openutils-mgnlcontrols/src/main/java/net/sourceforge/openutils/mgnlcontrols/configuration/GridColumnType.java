@@ -67,8 +67,10 @@ public interface GridColumnType
      * Possibly transforms the column values on grid load.
      * @param column
      * @param colConfig
+     * @param propertyName
+     * @param storageNode
      */
-    public void processColumnOnLoad(String[] column, Content colConfig);
+    public void processColumnOnLoad(String[] column, Content colConfig, String propertyName, Content storageNode);
 
     /**
      * Possibly transforms the column values on grid save.

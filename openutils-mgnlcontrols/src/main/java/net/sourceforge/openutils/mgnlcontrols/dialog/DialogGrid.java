@@ -105,7 +105,7 @@ public class DialogGrid extends ConfigurableFreemarkerDialog
                     GridColumnType colType = colTypeMap.get(colTypeName);
                     if (colType != null)
                     {
-                        colType.processColumnOnLoad(column, colConfig);
+                        colType.processColumnOnLoad(column, colConfig, getName(), getStorageNode());
                     }
                 }
                 colIndex++;

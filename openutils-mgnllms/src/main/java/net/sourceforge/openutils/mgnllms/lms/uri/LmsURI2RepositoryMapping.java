@@ -85,7 +85,7 @@ public class LmsURI2RepositoryMapping extends URI2RepositoryMapping
      * @param handle
      * @return
      */
-    private String cleanHandle(String handle)
+    protected String cleanHandle(String handle)
     {
         if (!handle.startsWith("/"))
         {

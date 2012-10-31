@@ -25,6 +25,7 @@ import info.magnolia.cms.security.AccessDeniedException;
 import info.magnolia.cms.util.ContentUtil;
 import info.magnolia.cms.util.NodeDataUtil;
 import info.magnolia.context.MgnlContext;
+import info.magnolia.module.ModuleRegistry;
 import info.magnolia.repository.RepositoryConstants;
 
 import java.util.ArrayList;
@@ -52,7 +53,9 @@ public class UUIDLinkGridColumnType extends AbstractGridColumnType
     {
         return "<script type=\"text/javascript\" src=\""
             + MgnlContext.getContextPath()
-            + "/.resources/controls/js/UUIDLinkField.js\"></script>";
+            + "/.resources/controls/"
+            + ModuleRegistry.Factory.getInstance().getDefinition("controls").getVersion()
+            + "/js/UUIDLinkField.js\"></script>";
     }
 
     /**
@@ -82,7 +85,7 @@ public class UUIDLinkGridColumnType extends AbstractGridColumnType
      * {@inheritDoc}
      */
     @Override
-    public void processColumnOnLoad(String[] column, Content colConfig)
+    public void processColumnOnLoad(String[] column, Content colConfig, String propertyName, Content storageNode)
     {
         String repository = StringUtils.defaultIfEmpty(
             NodeDataUtil.getString(colConfig, "repository"),
