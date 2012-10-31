@@ -169,13 +169,22 @@ public class SearchMediaQueryConfiguration
             c.setPaging(itemsPerPage, pageNumberStartingFromOne);
         }
 
-        AdvancedResult result = c.execute();
-        if (log.isDebugEnabled())
+        try
         {
-            log.debug("Executing {} -> {} results", c.toXpathExpression(), result.getTotalSize());
+            AdvancedResult result = c.execute();
+
+            if (log.isDebugEnabled())
+            {
+                log.debug("Executing {} -> {} results", c.toXpathExpression(), result.getTotalSize());
+            }
+            return result;
+        }
+        catch (Throwable e)
+        {
+            log.error("Error running query " + c.toXpathExpression(), e);
         }
 
-        return result;
+        return AdvancedResult.EMPTY_RESULT;
     }
 
 }

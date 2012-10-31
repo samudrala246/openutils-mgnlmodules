@@ -22,7 +22,7 @@ for (var i=0;i<t.length;i++) {
     <textarea id="clipboard" name="clipboard" rows="4" cols="20" style="width: 100%;border: 1px solid #999"></textarea>
     </p>
     <div class="mgnlDialogTabsetSaveBar">
-      <span class="mgnlControlButton" onclick="opener.window.gridPaste(urlParams['name'], urlParams['expand'] == 'true'), document.getElementById('clipboard').value); mgnlShiftPushButtonClick(this); window.top.close();" onmouseout="mgnlShiftPushButtonOut(this);"
+      <span class="mgnlControlButton" onclick="opener.window.gridPaste(urlParams['name'], document.getElementById('clipboard').value, (urlParams['expand'] == 'true')); mgnlShiftPushButtonClick(this); window.top.close();" onmouseout="mgnlShiftPushButtonOut(this);"
         onmousedown="mgnlShiftPushButtonDown(this);">
         OK
       </span>

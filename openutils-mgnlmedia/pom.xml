@@ -196,7 +196,7 @@
     <dependency>
       <groupId>org.apache.pdfbox</groupId>
       <artifactId>pdfbox</artifactId>
-      <version>1.4.0</version>
+      <version>1.6.0</version>
       <exclusions>
         <exclusion>
           <groupId>commons-logging</groupId>
@@ -244,6 +244,10 @@
         <exclusion>
           <groupId>org.freehep</groupId>
           <artifactId>freehep-graphicsio-tests</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>junit</groupId>
+          <artifactId>junit</artifactId>
         </exclusion>
       </exclusions>
     </dependency>

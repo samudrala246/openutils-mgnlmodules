@@ -29,6 +29,8 @@ import java.util.List;
 import javax.jcr.RepositoryException;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang.builder.ToStringBuilder;
+import org.apache.commons.lang.builder.ToStringStyle;
 
 
 /**
@@ -138,6 +140,22 @@ public class SearchFilterOptionProvider extends SearchFilterAbstract
                 log.error("Errore reference node on SearchFilterOptionProvider, {}", e);
             }
         }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String toString()
+    {
+        return new ToStringBuilder(this, ToStringStyle.SIMPLE_STYLE)
+            .append("reference", this.reference)
+            .append("addempty", this.addempty)
+            .append("options", this.options)
+            .append("control", this.getControl())
+            .append("subfilters", this.getSubfilters())
+            .append("label", this.getLabel())
+            .toString();
     }
 
 }

@@ -38,6 +38,8 @@ import org.apache.commons.lang.StringUtils;
 public class SearchFilterText extends SearchFilterAbstract
 {
 
+    private boolean wildcards;
+
     /**
      * {@inheritDoc}
      */
@@ -52,16 +54,50 @@ public class SearchFilterText extends SearchFilterAbstract
         if (values != null && values.length > 0)
         {
             fullTextSearch = values[0];
+
+            if (wildcards)
+            {
+                fullTextSearch = StringUtils.replace(fullTextSearch, "*", "%");
+
+                fullTextSearch = StringUtils.stripStart(StringUtils.stripEnd(fullTextSearch, "%"), "%");
+            }
+
             if (MapUtils.isNotEmpty(getSubfilters()) && StringUtils.isNotBlank(fullTextSearch))
             {
+
                 for (String key : getSubfilters().keySet())
                 {
                     values = request.getParameterValues(key);
-                    if (values != null)
+
+                    if (wildcards && (values == null || values.length == 0))
+                    {
+
+                        SearchFilterOptionProvider infilter = (SearchFilterOptionProvider) getSubfilters().get(key);
+
+                        if (infilter != null)
+                        {
+                            List<Option> options = infilter.getOptions();
+                            List<String> optionparams = new ArrayList<String>();
+                            for (Option option : options)
+                            {
+                                optionparams.add(option.getValue());
+                            }
+                            values = optionparams.toArray(new String[optionparams.size()]);
+                        }
+                    }
+
+                    if (values != null && values.length != 0)
                     {
                         for (String name : values)
                         {
-                            criterionList.add(Restrictions.contains("@" + name, fullTextSearch));
+                            if (wildcards)
+                            {
+                                criterionList.add(Restrictions.like("@" + name, fullTextSearch));
+                            }
+                            else
+                            {
+                                criterionList.add(Restrictions.contains("@" + name, fullTextSearch));
+                            }
                         }
                         if (criterionList.size() > 1)
                         {
@@ -80,9 +116,28 @@ public class SearchFilterText extends SearchFilterAbstract
 
             if (StringUtils.isNotBlank(fullTextSearch))
             {
-                criterionList.add(Restrictions.contains(".", fullTextSearch));
+                if (wildcards && criterionList.size() > 0)
+                {
+                    // jcr:like doesn't work on fulltext, but put criterionList on or
+                    Criterion c = Restrictions.or(criterionList.get(0), Restrictions.contains(".", fullTextSearch));
+                    criterionList.remove(0);
+                    criterionList.add(0, c);
+                }
+                else
+                {
+                    criterionList.add(Restrictions.contains(".", fullTextSearch));
+                }
             }
         }
         return criterionList;
+    }
+
+    /**
+     * Sets the wildcards.
+     * @param wildcards the wildcards to set
+     */
+    public void setWildcards(boolean wildcards)
+    {
+        this.wildcards = wildcards;
     }
 }

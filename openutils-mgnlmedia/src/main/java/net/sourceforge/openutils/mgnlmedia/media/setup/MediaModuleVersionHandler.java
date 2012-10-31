@@ -130,8 +130,8 @@ public class MediaModuleVersionHandler extends SimpleModuleVersionHandler
         // change "external video" handler
         tasks.add(new ChangeExistingPropertyTask(
             ContentRepository.CONFIG,
-            "/modules/media/mediatypes/youtube",
-            "menuIcon",
+            "/modules/media/mediatypes/youtube/handler",
+            "class",
             "net.sourceforge.openutils.mgnlmedia.media.types.impl.YouTubeVideoTypeHandler",
             ExternalVideoTypeHandler.class.getName()));
 
@@ -230,6 +230,12 @@ public class MediaModuleVersionHandler extends SimpleModuleVersionHandler
             "label",
             "Playlists",
             "media.menu.playlists"));
+
+        tasks.add(new CreateMissingPropertyTask(
+            ContentRepository.CONFIG,
+            "/modules/media/config/search/filters/query",
+            "wildcards",
+            Boolean.TRUE));
 
         return tasks;
     }

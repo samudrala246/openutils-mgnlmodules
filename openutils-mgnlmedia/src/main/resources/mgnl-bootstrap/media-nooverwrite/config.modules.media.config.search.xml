@@ -3,7 +3,7 @@
   <sv:property sv:name="jcr:primaryType" sv:type="Name">
     <sv:value>mgnl:content</sv:value>
   </sv:property>
-  <sv:property sv:name="jcr:mixinTypes" sv:type="Name">
+  <sv:property sv:name="jcr:mixinTypes" sv:type="Name" sv:multiple="true">
     <sv:value>mix:lockable</sv:value>
   </sv:property>
   <sv:property sv:name="jcr:uuid" sv:type="String">
@@ -13,7 +13,7 @@
     <sv:value>net.sourceforge.openutils.mgnlmedia.media.advancedsearch.configuration.SearchMediaQueryConfiguration</sv:value>
   </sv:property>
   <sv:property sv:name="defaultBasePath" sv:type="String">
-    <sv:value>/mediagallery</sv:value>
+    <sv:value>/</sv:value>
   </sv:property>
   <sv:property sv:name="jcr:createdBy" sv:type="String">
     <sv:value>admin</sv:value>
@@ -42,7 +42,7 @@
     <sv:property sv:name="jcr:primaryType" sv:type="Name">
       <sv:value>mgnl:content</sv:value>
     </sv:property>
-    <sv:property sv:name="jcr:mixinTypes" sv:type="Name">
+    <sv:property sv:name="jcr:mixinTypes" sv:type="Name" sv:multiple="true">
       <sv:value>mix:lockable</sv:value>
     </sv:property>
     <sv:property sv:name="jcr:uuid" sv:type="String">
@@ -72,7 +72,7 @@
       <sv:property sv:name="jcr:primaryType" sv:type="Name">
         <sv:value>mgnl:contentNode</sv:value>
       </sv:property>
-      <sv:property sv:name="jcr:mixinTypes" sv:type="Name">
+      <sv:property sv:name="jcr:mixinTypes" sv:type="Name" sv:multiple="true">
         <sv:value>mix:lockable</sv:value>
       </sv:property>
       <sv:property sv:name="jcr:uuid" sv:type="String">
@@ -90,6 +90,9 @@
       <sv:property sv:name="label" sv:type="String">
         <sv:value>config.search.filters.text</sv:value>
       </sv:property>
+      <sv:property sv:name="wildcards" sv:type="String">
+        <sv:value>true</sv:value>
+      </sv:property>
       <sv:node sv:name="MetaData">
         <sv:property sv:name="jcr:primaryType" sv:type="Name">
           <sv:value>mgnl:metaData</sv:value>
@@ -104,14 +107,14 @@
           <sv:value>2010-02-15T17:07:44.717+01:00</sv:value>
         </sv:property>
         <sv:property sv:name="mgnl:lastmodified" sv:type="Date">
-          <sv:value>2010-03-22T10:21:19.449+01:00</sv:value>
+          <sv:value>2012-06-11T21:58:59.300+02:00</sv:value>
         </sv:property>
       </sv:node>
       <sv:node sv:name="subfilters">
         <sv:property sv:name="jcr:primaryType" sv:type="Name">
           <sv:value>mgnl:contentNode</sv:value>
         </sv:property>
-        <sv:property sv:name="jcr:mixinTypes" sv:type="Name">
+        <sv:property sv:name="jcr:mixinTypes" sv:type="Name" sv:multiple="true">
           <sv:value>mix:lockable</sv:value>
         </sv:property>
         <sv:property sv:name="jcr:uuid" sv:type="String">
@@ -141,7 +144,7 @@
           <sv:property sv:name="jcr:primaryType" sv:type="Name">
             <sv:value>mgnl:contentNode</sv:value>
           </sv:property>
-          <sv:property sv:name="jcr:mixinTypes" sv:type="Name">
+          <sv:property sv:name="jcr:mixinTypes" sv:type="Name" sv:multiple="true">
             <sv:value>mix:lockable</sv:value>
           </sv:property>
           <sv:property sv:name="jcr:uuid" sv:type="String">
@@ -180,7 +183,7 @@
             <sv:property sv:name="jcr:primaryType" sv:type="Name">
               <sv:value>mgnl:contentNode</sv:value>
             </sv:property>
-            <sv:property sv:name="jcr:mixinTypes" sv:type="Name">
+            <sv:property sv:name="jcr:mixinTypes" sv:type="Name" sv:multiple="true">
               <sv:value>mix:lockable</sv:value>
             </sv:property>
             <sv:property sv:name="jcr:uuid" sv:type="String">
@@ -210,7 +213,7 @@
               <sv:property sv:name="jcr:primaryType" sv:type="Name">
                 <sv:value>mgnl:contentNode</sv:value>
               </sv:property>
-              <sv:property sv:name="jcr:mixinTypes" sv:type="Name">
+              <sv:property sv:name="jcr:mixinTypes" sv:type="Name" sv:multiple="true">
                 <sv:value>mix:lockable</sv:value>
               </sv:property>
               <sv:property sv:name="jcr:uuid" sv:type="String">
@@ -247,7 +250,7 @@
               <sv:property sv:name="jcr:primaryType" sv:type="Name">
                 <sv:value>mgnl:contentNode</sv:value>
               </sv:property>
-              <sv:property sv:name="jcr:mixinTypes" sv:type="Name">
+              <sv:property sv:name="jcr:mixinTypes" sv:type="Name" sv:multiple="true">
                 <sv:value>mix:lockable</sv:value>
               </sv:property>
               <sv:property sv:name="jcr:uuid" sv:type="String">
@@ -291,7 +294,7 @@
       <sv:property sv:name="jcr:primaryType" sv:type="Name">
         <sv:value>mgnl:contentNode</sv:value>
       </sv:property>
-      <sv:property sv:name="jcr:mixinTypes" sv:type="Name">
+      <sv:property sv:name="jcr:mixinTypes" sv:type="Name" sv:multiple="true">
         <sv:value>mix:lockable</sv:value>
       </sv:property>
       <sv:property sv:name="jcr:uuid" sv:type="String">
@@ -333,7 +336,7 @@
         <sv:property sv:name="jcr:primaryType" sv:type="Name">
           <sv:value>mgnl:contentNode</sv:value>
         </sv:property>
-        <sv:property sv:name="jcr:mixinTypes" sv:type="Name">
+        <sv:property sv:name="jcr:mixinTypes" sv:type="Name" sv:multiple="true">
           <sv:value>mix:lockable</sv:value>
         </sv:property>
         <sv:property sv:name="jcr:uuid" sv:type="String">
@@ -365,7 +368,7 @@
       <sv:property sv:name="jcr:primaryType" sv:type="Name">
         <sv:value>mgnl:contentNode</sv:value>
       </sv:property>
-      <sv:property sv:name="jcr:mixinTypes" sv:type="Name">
+      <sv:property sv:name="jcr:mixinTypes" sv:type="Name" sv:multiple="true">
         <sv:value>mix:lockable</sv:value>
       </sv:property>
       <sv:property sv:name="jcr:uuid" sv:type="String">
@@ -407,7 +410,7 @@
         <sv:property sv:name="jcr:primaryType" sv:type="Name">
           <sv:value>mgnl:contentNode</sv:value>
         </sv:property>
-        <sv:property sv:name="jcr:mixinTypes" sv:type="Name">
+        <sv:property sv:name="jcr:mixinTypes" sv:type="Name" sv:multiple="true">
           <sv:value>mix:lockable</sv:value>
         </sv:property>
         <sv:property sv:name="jcr:uuid" sv:type="String">
@@ -440,7 +443,7 @@
           <sv:property sv:name="jcr:primaryType" sv:type="Name">
             <sv:value>mgnl:contentNode</sv:value>
           </sv:property>
-          <sv:property sv:name="jcr:mixinTypes" sv:type="Name">
+          <sv:property sv:name="jcr:mixinTypes" sv:type="Name" sv:multiple="true">
             <sv:value>mix:lockable</sv:value>
           </sv:property>
           <sv:property sv:name="jcr:uuid" sv:type="String">
@@ -483,7 +486,7 @@
           <sv:property sv:name="jcr:primaryType" sv:type="Name">
             <sv:value>mgnl:contentNode</sv:value>
           </sv:property>
-          <sv:property sv:name="jcr:mixinTypes" sv:type="Name">
+          <sv:property sv:name="jcr:mixinTypes" sv:type="Name" sv:multiple="true">
             <sv:value>mix:lockable</sv:value>
           </sv:property>
           <sv:property sv:name="jcr:uuid" sv:type="String">
@@ -523,7 +526,7 @@
           <sv:property sv:name="jcr:primaryType" sv:type="Name">
             <sv:value>mgnl:contentNode</sv:value>
           </sv:property>
-          <sv:property sv:name="jcr:mixinTypes" sv:type="Name">
+          <sv:property sv:name="jcr:mixinTypes" sv:type="Name" sv:multiple="true">
             <sv:value>mix:lockable</sv:value>
           </sv:property>
           <sv:property sv:name="jcr:uuid" sv:type="String">
@@ -565,7 +568,7 @@
       <sv:property sv:name="jcr:primaryType" sv:type="Name">
         <sv:value>mgnl:contentNode</sv:value>
       </sv:property>
-      <sv:property sv:name="jcr:mixinTypes" sv:type="Name">
+      <sv:property sv:name="jcr:mixinTypes" sv:type="Name" sv:multiple="true">
         <sv:value>mix:lockable</sv:value>
       </sv:property>
       <sv:property sv:name="jcr:uuid" sv:type="String">
@@ -607,7 +610,7 @@
         <sv:property sv:name="jcr:primaryType" sv:type="Name">
           <sv:value>mgnl:contentNode</sv:value>
         </sv:property>
-        <sv:property sv:name="jcr:mixinTypes" sv:type="Name">
+        <sv:property sv:name="jcr:mixinTypes" sv:type="Name" sv:multiple="true">
           <sv:value>mix:lockable</sv:value>
         </sv:property>
         <sv:property sv:name="jcr:uuid" sv:type="String">
@@ -640,7 +643,7 @@
           <sv:property sv:name="jcr:primaryType" sv:type="Name">
             <sv:value>mgnl:contentNode</sv:value>
           </sv:property>
-          <sv:property sv:name="jcr:mixinTypes" sv:type="Name">
+          <sv:property sv:name="jcr:mixinTypes" sv:type="Name" sv:multiple="true">
             <sv:value>mix:lockable</sv:value>
           </sv:property>
           <sv:property sv:name="jcr:uuid" sv:type="String">
@@ -685,7 +688,7 @@
       <sv:property sv:name="jcr:primaryType" sv:type="Name">
         <sv:value>mgnl:contentNode</sv:value>
       </sv:property>
-      <sv:property sv:name="jcr:mixinTypes" sv:type="Name">
+      <sv:property sv:name="jcr:mixinTypes" sv:type="Name" sv:multiple="true">
         <sv:value>mix:lockable</sv:value>
       </sv:property>
       <sv:property sv:name="jcr:uuid" sv:type="String">
@@ -728,7 +731,7 @@
       <sv:property sv:name="jcr:primaryType" sv:type="Name">
         <sv:value>mgnl:contentNode</sv:value>
       </sv:property>
-      <sv:property sv:name="jcr:mixinTypes" sv:type="Name">
+      <sv:property sv:name="jcr:mixinTypes" sv:type="Name" sv:multiple="true">
         <sv:value>mix:lockable</sv:value>
       </sv:property>
       <sv:property sv:name="jcr:uuid" sv:type="String">
@@ -771,7 +774,7 @@
       <sv:property sv:name="jcr:primaryType" sv:type="Name">
         <sv:value>mgnl:contentNode</sv:value>
       </sv:property>
-      <sv:property sv:name="jcr:mixinTypes" sv:type="Name">
+      <sv:property sv:name="jcr:mixinTypes" sv:type="Name" sv:multiple="true">
         <sv:value>mix:lockable</sv:value>
       </sv:property>
       <sv:property sv:name="jcr:uuid" sv:type="String">
@@ -814,7 +817,7 @@
       <sv:property sv:name="jcr:primaryType" sv:type="Name">
         <sv:value>mgnl:contentNode</sv:value>
       </sv:property>
-      <sv:property sv:name="jcr:mixinTypes" sv:type="Name">
+      <sv:property sv:name="jcr:mixinTypes" sv:type="Name" sv:multiple="true">
         <sv:value>mix:lockable</sv:value>
       </sv:property>
       <sv:property sv:name="jcr:uuid" sv:type="String">
@@ -856,7 +859,7 @@
         <sv:property sv:name="jcr:primaryType" sv:type="Name">
           <sv:value>mgnl:contentNode</sv:value>
         </sv:property>
-        <sv:property sv:name="jcr:mixinTypes" sv:type="Name">
+        <sv:property sv:name="jcr:mixinTypes" sv:type="Name" sv:multiple="true">
           <sv:value>mix:lockable</sv:value>
         </sv:property>
         <sv:property sv:name="jcr:uuid" sv:type="String">
@@ -889,7 +892,7 @@
           <sv:property sv:name="jcr:primaryType" sv:type="Name">
             <sv:value>mgnl:contentNode</sv:value>
           </sv:property>
-          <sv:property sv:name="jcr:mixinTypes" sv:type="Name">
+          <sv:property sv:name="jcr:mixinTypes" sv:type="Name" sv:multiple="true">
             <sv:value>mix:lockable</sv:value>
           </sv:property>
           <sv:property sv:name="jcr:uuid" sv:type="String">
@@ -929,7 +932,7 @@
           <sv:property sv:name="jcr:primaryType" sv:type="Name">
             <sv:value>mgnl:contentNode</sv:value>
           </sv:property>
-          <sv:property sv:name="jcr:mixinTypes" sv:type="Name">
+          <sv:property sv:name="jcr:mixinTypes" sv:type="Name" sv:multiple="true">
             <sv:value>mix:lockable</sv:value>
           </sv:property>
           <sv:property sv:name="jcr:uuid" sv:type="String">
@@ -969,7 +972,7 @@
           <sv:property sv:name="jcr:primaryType" sv:type="Name">
             <sv:value>mgnl:contentNode</sv:value>
           </sv:property>
-          <sv:property sv:name="jcr:mixinTypes" sv:type="Name">
+          <sv:property sv:name="jcr:mixinTypes" sv:type="Name" sv:multiple="true">
             <sv:value>mix:lockable</sv:value>
           </sv:property>
           <sv:property sv:name="jcr:uuid" sv:type="String">
@@ -1009,7 +1012,7 @@
           <sv:property sv:name="jcr:primaryType" sv:type="Name">
             <sv:value>mgnl:contentNode</sv:value>
           </sv:property>
-          <sv:property sv:name="jcr:mixinTypes" sv:type="Name">
+          <sv:property sv:name="jcr:mixinTypes" sv:type="Name" sv:multiple="true">
             <sv:value>mix:lockable</sv:value>
           </sv:property>
           <sv:property sv:name="jcr:uuid" sv:type="String">
@@ -1049,7 +1052,7 @@
           <sv:property sv:name="jcr:primaryType" sv:type="Name">
             <sv:value>mgnl:contentNode</sv:value>
           </sv:property>
-          <sv:property sv:name="jcr:mixinTypes" sv:type="Name">
+          <sv:property sv:name="jcr:mixinTypes" sv:type="Name" sv:multiple="true">
             <sv:value>mix:lockable</sv:value>
           </sv:property>
           <sv:property sv:name="jcr:uuid" sv:type="String">
