@@ -340,14 +340,14 @@ public class CASAuthenticationModule extends AbstractLoginModule implements Logi
         EntityImpl entity = new EntityImpl();
         entity.addProperty(Entity.NAME, this.principal.getName());
 
-        Map<String, String> attributes = this.principal.getAttributes();
+        Map<String, Object> attributes = this.principal.getAttributes();
 
-        for (Map.Entry<String, String> attr : attributes.entrySet())
+        for (Map.Entry<String, Object> attr : attributes.entrySet())
         {
             entity.addProperty(attr.getKey(), attr.getValue());
         }
 
-        String fullName = attributes.get("title");
+        String fullName = (String) attributes.get("title");
 
         if (fullName != null)
         {
@@ -359,8 +359,8 @@ public class CASAuthenticationModule extends AbstractLoginModule implements Logi
 
         this.subject.getPrincipals().add(entity);
 
-        String[] roles = StringUtils.split(attributes.get(rolesAttribute));
-        String[] groups = StringUtils.split(attributes.get(groupsAttribute));
+        String[] roles = StringUtils.split((String) attributes.get(rolesAttribute));
+        String[] groups = StringUtils.split((String) attributes.get(groupsAttribute));
 
         if (roles == null)
         {
