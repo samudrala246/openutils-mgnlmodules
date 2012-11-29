@@ -88,7 +88,7 @@ public class MediaURI2RepositoryMapping extends URI2RepositoryMapping
     /**
      * Clean a handle. Remove double / and add always a leading /.
      */
-    private String cleanHandle(String handle)
+    protected String cleanHandle(String handle)
     {
         if (!handle.startsWith("/"))
         {
