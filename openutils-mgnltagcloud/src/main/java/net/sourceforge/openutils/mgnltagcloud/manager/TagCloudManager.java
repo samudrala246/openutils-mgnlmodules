@@ -213,22 +213,30 @@ public class TagCloudManager extends ObservedManager
             br.setFacetSpec(propertyName, tagsSpec);
 
             Browsable browser = new BoboSubBrowser(boboReader);
-
-            // perform browse
-            BrowseResult result = browser.browse(br);
-
-            // get tags
-            Map<String, FacetAccessible> facetMap = result.getFacetMap();
-
-            FacetAccessible tagsFacets = facetMap.get(propertyName);
-            List<BrowseFacet> tagsVals = tagsFacets.getFacets();
-
-            // store them in tagCloud itself
-            tagCloud.setTags(new HashMap<String, Integer>());
-            for (BrowseFacet bf : tagsVals)
+            try
             {
-                tagCloud.getTags().put(bf.getValue(), bf.getHitCount());
+
+                // perform browse
+                BrowseResult result = browser.browse(br);
+
+                // get tags
+                Map<String, FacetAccessible> facetMap = result.getFacetMap();
+
+                FacetAccessible tagsFacets = facetMap.get(propertyName);
+                List<BrowseFacet> tagsVals = tagsFacets.getFacets();
+
+                // store them in tagCloud itself
+                tagCloud.setTags(new HashMap<String, Integer>());
+                for (BrowseFacet bf : tagsVals)
+                {
+                    tagCloud.getTags().put(bf.getValue(), bf.getHitCount());
+                }
             }
+            finally
+            {
+                browser.close();
+            }
+            
 
         }
         catch (RepositoryException ex)
