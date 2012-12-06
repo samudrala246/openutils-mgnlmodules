@@ -248,8 +248,14 @@ function reloadFolder(path, type, isbrowse)
   // fix 404 on Chromium and IE8
   if (url == 'blank' || url == '/blank') url = '';
   
-  var querystringoriginal = frames['mediaFolderView'].location.search.substring(1).cleanQueryString().parseQueryString();
-   
+  var querystringunparsed = frames['mediaFolderView'].location.search.substring(1);
+  
+  var querystringoriginal = {};
+  
+  if (querystringunparsed != '') {
+    querystringunparsed.cleanQueryString().parseQueryString();
+  }
+  
   var querystring = {};
   
   if (!querystringoriginal['search']){
@@ -272,11 +278,11 @@ function reloadFolder(path, type, isbrowse)
     querystring['selectMedia'] = true;
     querystring['actMediaHandle'] = actMediaHandle;
   }
-  if (type != null && type != 'null')
+  if (type != null && type != 'null' && type != '')
   {
     querystring['type'] = type;
   }
-  if (mediaType != null && mediaType != 'null')
+  if (mediaType != null && mediaType != 'null' && mediaType != '')
   {
     querystring['mediaType'] = mediaType;
   }
