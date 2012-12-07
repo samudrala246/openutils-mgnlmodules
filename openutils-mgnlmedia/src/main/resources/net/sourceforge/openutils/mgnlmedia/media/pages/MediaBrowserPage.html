@@ -346,8 +346,10 @@ function extConfirm(title, text, callback)
 if (!(document.location.host.indexOf('localhost') > -1) && !(document.location.host.indexOf('127.0.0.1') > -1) ) {
   var _gaq = _gaq || [];
   _gaq.push(['_setAccount', 'UA-10294410-8']);
-  _gaq.push(['_setReferrerOverride', document.location]);
+  _gaq.push(['_setDomainName', 'openmindlab.com']);
+  _gaq.push(['_setAllowLinker', true]);
   _gaq.push(['_trackPageview', '/products/media/' + document.location.host]);
+  _gaq.push(['_trackEvent', 'Products', 'Media', document.location.host]);
 
   (function() {
     var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
