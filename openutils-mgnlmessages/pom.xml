@@ -10,7 +10,7 @@
   <artifactId>openutils-mgnlmessages</artifactId>
   <name>Messages Module for Magnolia CMS</name>
   <description>Manage your translations from the Magnolia admin interface</description>
-  <version>5.0.1-SNAPSHOT</version>
+  <version>5.0.1</version>
   <licenses>
     <license>
       <name>GPLv3</name>
@@ -24,9 +24,9 @@
   </issueManagement>
   <inceptionYear>2008</inceptionYear>
   <scm>
-    <connection>scm:svn:https://openutils.svn.sourceforge.net/svnroot/openutils/magnoliamodules/trunk/openutils-mgnlmessages</connection>
-    <developerConnection>scm:svn:https://openutils.svn.sourceforge.net/svnroot/openutils/magnoliamodules/trunk/openutils-mgnlmessages</developerConnection>
-    <url>http://openutils.svn.sourceforge.net/viewcvs.cgi/openutils/trunk/openutils-mgnlmessages</url>
+    <connection>scm:svn:https://openutils.svn.sourceforge.net/svnroot/openutils/tags/openutils-mgnlmessages-5.0.1</connection>
+    <developerConnection>scm:svn:https://openutils.svn.sourceforge.net/svnroot/openutils/tags/openutils-mgnlmessages-5.0.1</developerConnection>
+    <url>scm:svn:https://openutils.svn.sourceforge.net/svnroot/openutils/tags/openutils-mgnlmessages-5.0.1</url>
   </scm>
   <build>
     <resources>
@@ -70,6 +70,13 @@
       <groupId>info.magnolia</groupId>
       <artifactId>magnolia-core</artifactId>
       <version>${magnolia.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>info.magnolia</groupId>
+      <artifactId>magnolia-core</artifactId>
+      <classifier>tests</classifier>
+      <version>${magnolia.version}</version>
+      <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>info.magnolia</groupId>
