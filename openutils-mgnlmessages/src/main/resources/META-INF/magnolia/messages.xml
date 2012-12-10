@@ -20,6 +20,13 @@
       <implementation>net.sourceforge.openutils.mgnlmessages.configuration.MessagesConfigurationManager</implementation>
     </component>
   </components>
+  <components>
+    <id>system</id>
+    <component>
+      <type>info.magnolia.cms.i18n.MessagesManager</type>
+      <implementation>net.sourceforge.openutils.mgnlmessages.i18n.MultiBundleMgnlMessagesManager</implementation>
+    </component>
+  </components>
   <dependencies>
     <dependency>
       <name>adminInterface</name>

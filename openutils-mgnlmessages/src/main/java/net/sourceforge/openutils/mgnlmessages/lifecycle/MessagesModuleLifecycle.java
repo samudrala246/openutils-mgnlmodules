@@ -19,6 +19,7 @@
 
 package net.sourceforge.openutils.mgnlmessages.lifecycle;
 
+import info.magnolia.cms.i18n.MessagesManager;
 import info.magnolia.module.ModuleLifecycle;
 import info.magnolia.module.ModuleLifecycleContext;
 import net.sourceforge.openutils.mgnlmessages.configuration.MessagesConfigurationManager;
@@ -47,6 +48,8 @@ public class MessagesModuleLifecycle implements ModuleLifecycle
     {
         log.info("Starting module messages");
         ctx.registerModuleObservingComponent("locales", MessagesConfigurationManager.getInstance());
+
+        MessagesManager.getInstance().init();
     }
 
     /**
