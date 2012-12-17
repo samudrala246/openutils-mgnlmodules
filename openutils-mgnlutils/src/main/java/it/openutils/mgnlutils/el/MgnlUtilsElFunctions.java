@@ -21,21 +21,15 @@ package it.openutils.mgnlutils.el;
 
 import info.magnolia.cms.beans.config.ServerConfiguration;
 import info.magnolia.cms.core.AggregationState;
-import info.magnolia.cms.core.Content;
-import info.magnolia.cms.core.HierarchyManager;
-import info.magnolia.cms.core.ItemType;
 import info.magnolia.cms.core.MgnlNodeType;
-import info.magnolia.cms.core.NodeData;
 import info.magnolia.cms.core.Path;
-import info.magnolia.cms.core.SystemProperty;
-import info.magnolia.cms.i18n.I18nContentSupportFactory;
-import info.magnolia.cms.i18n.I18nContentWrapper;
+import info.magnolia.cms.i18n.I18nContentSupport;
 import info.magnolia.cms.i18n.MessagesManager;
 import info.magnolia.cms.security.Permission;
+import info.magnolia.cms.security.PermissionUtil;
 import info.magnolia.cms.security.SecurityUtil;
 import info.magnolia.cms.security.User;
 import info.magnolia.cms.security.auth.Entity;
-import info.magnolia.cms.util.NodeMapWrapper;
 import info.magnolia.context.MgnlContext;
 import info.magnolia.context.WebContext;
 import info.magnolia.jaas.principal.EntityImpl;
@@ -43,6 +37,7 @@ import info.magnolia.jcr.util.ContentMap;
 import info.magnolia.jcr.util.NodeUtil;
 import info.magnolia.link.LinkException;
 import info.magnolia.link.LinkUtil;
+import info.magnolia.objectfactory.Components;
 import info.magnolia.repository.RepositoryConstants;
 
 import java.io.UnsupportedEncodingException;
@@ -50,6 +45,7 @@ import java.lang.reflect.Field;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -59,19 +55,15 @@ import java.util.Map.Entry;
 import java.util.Properties;
 import java.util.Set;
 
-import javax.jcr.Item;
 import javax.jcr.ItemNotFoundException;
-import javax.jcr.LoginException;
 import javax.jcr.Node;
+import javax.jcr.NodeIterator;
+import javax.jcr.Property;
+import javax.jcr.PropertyIterator;
 import javax.jcr.RepositoryException;
 import javax.jcr.Session;
 import javax.security.auth.Subject;
 import javax.servlet.http.HttpServletRequest;
-
-import net.sourceforge.openutils.mgnlcriteria.jcr.query.AdvancedResult;
-import net.sourceforge.openutils.mgnlcriteria.jcr.query.Criteria;
-import net.sourceforge.openutils.mgnlcriteria.jcr.query.JCRCriteriaFactory;
-import net.sourceforge.openutils.mgnlcriteria.jcr.query.criterion.Restrictions;
 
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
@@ -107,24 +99,32 @@ public final class MgnlUtilsElFunctions
      */
     public static boolean firstPageWithCollection(String collectionName)
     {
-        Content actpage = MgnlContext.getAggregationState().getCurrentContent();
+        Node actpage = MgnlUtilsDeprecatedAdapters.getCurrentContent();
+        if (actpage == null)
+        {
+            return false;
+        }
 
         try
         {
-            while (actpage.getLevel() > 1)
+            while (actpage.getDepth() > 1)
             {
                 actpage = actpage.getParent();
 
-                if (actpage.hasContent(collectionName) && actpage.getContent(collectionName).hasChildren())
+                if (actpage.hasNode(collectionName) && actpage.getNode(collectionName).hasNodes())
                 {
-                    MgnlContext.getAggregationState().setCurrentContent(actpage);
+                    MgnlUtilsDeprecatedAdapters.setCurrentContent(actpage);
                     return true;
                 }
             }
         }
         catch (RepositoryException e)
         {
-            log.error("Error looking for collection " + collectionName + " in " + actpage.getHandle(), e);
+            log.error("{} looking for collection {} in {}: {}", new Object[]{
+                e.getClass().getName(),
+                collectionName,
+                NodeUtil.getPathIfPossible(actpage),
+                e.getMessage() });
         }
 
         return false;
@@ -190,7 +190,8 @@ public final class MgnlUtilsElFunctions
      */
     public static String message(String key)
     {
-        String value = MessagesManager.getMessages(I18nContentSupportFactory.getI18nSupport().getLocale()).get(key);
+        String value = MessagesManager.getMessages(Components.getComponent(I18nContentSupport.class).getLocale()).get(
+            key);
 
         return value;
     }
@@ -203,7 +204,7 @@ public final class MgnlUtilsElFunctions
      */
     public static String messageWithArgs(String key, Object[] arguments)
     {
-        String value = MessagesManager.getMessages(I18nContentSupportFactory.getI18nSupport().getLocale()).get(
+        String value = MessagesManager.getMessages(Components.getComponent(I18nContentSupport.class).getLocale()).get(
             key,
             arguments);
 
@@ -216,7 +217,7 @@ public final class MgnlUtilsElFunctions
      */
     public static boolean develop()
     {
-        return SystemProperty.getBooleanProperty("magnolia.develop");
+        return MgnlUtilsDeprecatedAdapters.getBooleanProperty("magnolia.develop");
     }
 
     /**
@@ -242,13 +243,19 @@ public final class MgnlUtilsElFunctions
         // Check if there is already an extensions, else add default one
         if (cleanedurl.startsWith("/"))
         {
-            String defaultExtension = "." + ServerConfiguration.getInstance().getDefaultExtension();
-            cleanedurl = I18nContentSupportFactory.getI18nSupport().toI18NURI(cleanedurl);
-            cleanedurl = contextPath + cleanedurl;
+            String configuredExtension = Components.getComponent(ServerConfiguration.class).getDefaultExtension();
 
-            if (!cleanedurl.endsWith(defaultExtension) && cleanedurl.indexOf(".") < 0)
+            if (StringUtils.isNotBlank(configuredExtension))
             {
-                return cleanedurl + defaultExtension;
+
+                String defaultExtension = "." + configuredExtension;
+                cleanedurl = Components.getComponent(I18nContentSupport.class).toI18NURI(cleanedurl);
+                cleanedurl = contextPath + cleanedurl;
+
+                if (!cleanedurl.endsWith(defaultExtension) && cleanedurl.indexOf(".") < 0)
+                {
+                    return cleanedurl + defaultExtension;
+                }
             }
 
             return cleanedurl;
@@ -334,20 +341,27 @@ public final class MgnlUtilsElFunctions
      * @param subnode String
      * @return the number of nodes in a collection
      */
-    public static int countNodesInCollection(Content content, String subnode)
+    public static int countNodesInCollection(Object content, String subnode)
     {
+        Node node = MgnlUtilsDeprecatedAdapters.toNode(content);
         int count = 0;
-        Content collection = null;
 
         if (content != null)
         {
 
             try
             {
-                if (content.hasContent(subnode))
+                if (node.hasNode(subnode))
                 {
-                    collection = content.getContent(subnode);
-                    count = collection.getChildren().size();
+                    Node collection = node.getNode(subnode);
+                    Iterator<Node> iterator = NodeUtil
+                        .getNodes(node, collection.getPrimaryNodeType().getName())
+                        .iterator();
+
+                    while (iterator.hasNext())
+                    {
+                        count++;
+                    }
                 }
             }
             catch (RepositoryException e)
@@ -364,13 +378,29 @@ public final class MgnlUtilsElFunctions
      * @param content Content
      * @return the number of subpages
      */
-    public static int countSubpages(Content content)
+    public static int countSubpages(Object content)
     {
+        Node node = MgnlUtilsDeprecatedAdapters.toNode(content);
+        if (node == null)
+        {
+            return 0;
+        }
+
         int count = 0;
 
-        if (content != null)
+        try
         {
-            count = content.getChildren(MgnlNodeType.NT_CONTENT).size();
+
+            Iterator<Node> iterator = NodeUtil.getNodes(node, MgnlNodeType.NT_PAGE).iterator();
+
+            while (iterator.hasNext())
+            {
+                count++;
+            }
+        }
+        catch (RepositoryException e)
+        {
+            log.debug(e.getMessage());
         }
 
         return count;
@@ -380,16 +410,39 @@ public final class MgnlUtilsElFunctions
      * Return the collection of subpages of a given page
      * @param content Content
      * @return a Collection<Content> of subpages of a given page
+     * @deprecated avoid methods that works with collections, use iterators
      */
-    public static Collection<Content> subpages(Content content)
+    @Deprecated
+    public static Collection<ContentMap> subpages(Object content)
     {
-
-        if (content != null)
+        Node node = MgnlUtilsDeprecatedAdapters.toNode(content);
+        if (node == null)
         {
-            return content.getChildren(MgnlNodeType.NT_CONTENT);
+            return Collections.EMPTY_LIST;
         }
 
-        return null;
+        Iterable<Node> nodes;
+        try
+        {
+            nodes = NodeUtil.getNodes(node, MgnlNodeType.NT_PAGE);
+        }
+        catch (RepositoryException e)
+        {
+            return Collections.EMPTY_LIST;
+        }
+        Iterator<Node> iterator = nodes.iterator();
+
+        Collection<ContentMap> result = new ArrayList<ContentMap>();
+        while (iterator.hasNext())
+        {
+            ContentMap contentMap = wrapNode(iterator.next());
+            if (contentMap != null)
+            {
+                result.add(contentMap);
+            }
+        }
+
+        return result;
     }
 
     /**
@@ -407,9 +460,21 @@ public final class MgnlUtilsElFunctions
      * @param content Content
      * @return boolean value
      */
-    public static boolean isPage(Content content)
+    public static boolean isPage(Object content)
     {
-        return content != null && !content.isNodeType(ItemType.CONTENTNODE.getSystemName());
+        Node node = MgnlUtilsDeprecatedAdapters.toNode(content);
+        if (node != null)
+        {
+            try
+            {
+                return NodeUtil.isNodeType(node, MgnlNodeType.NT_PAGE);
+            }
+            catch (RepositoryException e)
+            {
+                // ignore
+            }
+        }
+        return false;
     }
 
     /**
@@ -417,23 +482,38 @@ public final class MgnlUtilsElFunctions
      * @param content Content
      * @return the Content of the object passed or of the first parent page that has content type = mgnl:content
      */
-    public static Content getPage(Content content)
+    public static ContentMap getPage(Object content)
     {
 
-        Content page = content;
+        Node node = MgnlUtilsDeprecatedAdapters.toNode(content);
 
-        while (page != null && page.isNodeType(ItemType.CONTENTNODE.getSystemName()))
+        try
         {
-            try
+            while (node != null && !NodeUtil.isNodeType(node, MgnlNodeType.NT_PAGE))
             {
-                page = page.getParent();
-            }
-            catch (RepositoryException e)
-            {
-                log.debug("Unable to read parent of " + page.getHandle(), e);
+                if (node.getDepth() <= 1)
+                {
+                    node = null;
+                }
+                else
+                {
+                    node = node.getParent();
+                }
             }
         }
-        return page;
+        catch (RepositoryException e)
+        {
+            log.debug(
+                "Got a {} while loading parent of {}: {}",
+                new Object[]{e.getClass().getName(), NodeUtil.getPathIfPossible(node), e.getMessage() });
+            return null;
+        }
+
+        if (node != null)
+        {
+            return wrapNode(node);
+        }
+        return null;
     }
 
     /**
@@ -636,13 +716,18 @@ public final class MgnlUtilsElFunctions
      * @param content magnolia content
      * @return the full url to the given content (starting with http)
      */
-    public static String pageFullUrl(Content content)
+    public static String pageFullUrl(Object content)
     {
-        if (content != null)
+
+        Node node = MgnlUtilsDeprecatedAdapters.toNode(content);
+
+        if (node == null)
         {
-            return baseUrl() + content.getHandle() + ".html";
+            return null;
         }
-        return null;
+
+        return baseUrl() + NodeUtil.getPathIfPossible(node) + ".html";
+
     }
 
     /**
@@ -653,10 +738,20 @@ public final class MgnlUtilsElFunctions
     {
         try
         {
+            Node mainContent = MgnlUtilsDeprecatedAdapters.getMainContent();
+            if (mainContent == null)
+            {
+                return null;
+            }
+
             return baseUrl()
-                + LinkUtil.convertUUIDtoURI(MgnlContext.getAggregationState().getMainContent().getUUID(), MgnlContext
+                + LinkUtil.convertUUIDtoURI(mainContent.getIdentifier(), MgnlContext
                     .getAggregationState()
                     .getRepository());
+        }
+        catch (RepositoryException e)
+        {
+            log.warn("Error generating link", e);
         }
         catch (LinkException e)
         {
@@ -694,15 +789,20 @@ public final class MgnlUtilsElFunctions
      * @param list the list to be converted
      * @return a collection with the user's content
      */
-    public static List<NodeMapWrapper> convertToCollection(List<Content> list)
+    @Deprecated
+    public static List<ContentMap> convertToCollection(List<Object> list)
     {
-        List<NodeMapWrapper> itemsList = new ArrayList<NodeMapWrapper>();
-        Collection<Content> result = list;
-        for (Content content : result)
+        List<ContentMap> result = new ArrayList<ContentMap>();
+
+        for (Object content : list)
         {
-            itemsList.add(new NodeMapWrapper(content, content.getHandle()));
+            ContentMap contentMap = wrapNode(MgnlUtilsDeprecatedAdapters.toNode(content));
+            if (contentMap != null)
+            {
+                result.add(contentMap);
+            }
         }
-        return itemsList;
+        return result;
     }
 
     /**
@@ -711,15 +811,33 @@ public final class MgnlUtilsElFunctions
      * @param title
      * @return
      */
-    public static Boolean hasChildWithTitle(Content content, String title)
+    public static Boolean hasChildWithTitle(Object content, String title)
     {
-        Collection<Content> children = content.getChildren();
-        for (Content currentChild : children)
+
+        Node node = MgnlUtilsDeprecatedAdapters.toNode(content);
+
+        if (node == null)
         {
-            if (currentChild.getTitle() != null && currentChild.getTitle().equalsIgnoreCase(title))
+            return false;
+        }
+        try
+        {
+            NodeIterator children = node.getNodes();
+
+            while (children.hasNext())
             {
-                return true;
+                Node child = (Node) children.next();
+
+                if (child.hasProperty("title")
+                    && StringUtils.equalsIgnoreCase(child.getProperty("title").getString(), title))
+                {
+                    return true;
+                }
             }
+        }
+        catch (RepositoryException e)
+        {
+            log.debug(e.getMessage());
         }
 
         return false;
@@ -731,9 +849,38 @@ public final class MgnlUtilsElFunctions
      * @param contentType
      * @return
      */
-    public static Collection<Content> contentChildrenOfType(Content content, String contentType)
+    public static Collection<ContentMap> contentChildrenOfType(Object content, String contentType)
     {
-        return content.getChildren(contentType);
+
+        Node node = MgnlUtilsDeprecatedAdapters.toNode(content);
+        if (node == null)
+        {
+            return Collections.EMPTY_LIST;
+        }
+
+        Iterable<Node> nodes;
+        try
+        {
+            nodes = NodeUtil.getNodes(node, contentType);
+        }
+        catch (RepositoryException e)
+        {
+            log.debug(e.getMessage());
+            return Collections.EMPTY_LIST;
+        }
+        Iterator<Node> iterator = nodes.iterator();
+
+        Collection<ContentMap> result = new ArrayList<ContentMap>();
+        while (iterator.hasNext())
+        {
+            ContentMap contentMap = wrapNode(iterator.next());
+            if (contentMap != null)
+            {
+                result.add(contentMap);
+            }
+        }
+
+        return result;
     }
 
     /**
@@ -830,15 +977,29 @@ public final class MgnlUtilsElFunctions
      * @param obj
      * @param repo
      * @return
+     * @deprecated, use node()
      */
-    public static Content content(Object obj, String repo)
+    @Deprecated
+    public static ContentMap content(Object obj, String repo)
     {
+
+        return node(obj, repo);
+    }
+
+    /**
+     * @param obj
+     * @param repo
+     * @return
+     */
+    public static ContentMap node(Object obj, String repo)
+    {
+
         if (obj == null)
         {
             return null;
         }
 
-        Content content = null;
+        ContentMap content = null;
 
         if (obj instanceof String)
         {
@@ -849,19 +1010,19 @@ public final class MgnlUtilsElFunctions
                 return null;
             }
 
-            HierarchyManager hm = MgnlContext.getHierarchyManager(repo);
             try
             {
+                Session session = MgnlContext.getJCRSession(repo);
                 if (identifier.startsWith("/"))
                 {
-                    if (hm.isExist(identifier))
+                    if (session.nodeExists(identifier))
                     {
-                        content = hm.getContent(identifier);
+                        content = wrapNode(session.getNode(identifier));
                     }
                 }
                 else
                 {
-                    content = hm.getContentByUUID(StringUtils.trim(identifier));
+                    content = wrapNode(session.getNodeByIdentifier(StringUtils.trim(identifier)));
                 }
             }
             catch (ItemNotFoundException e)
@@ -873,39 +1034,12 @@ public final class MgnlUtilsElFunctions
                 log.error(e.getClass().getName() + " getting node \"" + identifier + "\"", e);
             }
         }
-        else if (obj instanceof Content)
+        else
         {
-            content = (Content) obj;
+            content = wrapNode(MgnlUtilsDeprecatedAdapters.toNode(content));
         }
 
         return content;
-    }
-
-    /**
-     * @param obj
-     * @param repo
-     * @return
-     */
-    public static NodeMapWrapper node(Object obj, String repo)
-    {
-        Content content = content(obj, repo);
-
-        NodeMapWrapper node = null;
-        if (content instanceof NodeMapWrapper)
-        {
-            node = (NodeMapWrapper) content;
-        }
-        else if (content != null)
-        {
-            Content currentpage = MgnlContext.getAggregationState().getMainContent();
-            if (currentpage == null)
-            {
-                currentpage = content;
-            }
-            node = new NodeMapWrapper(new I18nContentWrapper(content), currentpage.getHandle());
-        }
-
-        return node;
     }
 
     /**
@@ -972,29 +1106,33 @@ public final class MgnlUtilsElFunctions
      */
     public static String pagePropertyInherited(String property)
     {
-        Content content = MgnlContext.getAggregationState().getMainContent();
+        Node node = MgnlUtilsDeprecatedAdapters.getMainContent();
 
         try
         {
-            while (content.getLevel() >= 1)
+            while (node.getDepth() >= 1)
             {
-                String value = content.getNodeData(property).getString();
-
-                if (!StringUtils.isEmpty(value))
+                if (node.hasProperty(property))
                 {
-                    return value;
-                }
 
-                content = content.getParent();
+                    String value = node.getProperty(property).getString();
+
+                    if (!StringUtils.isEmpty(value))
+                    {
+                        return value;
+                    }
+
+                }
+                node = node.getParent();
             }
         }
         catch (RepositoryException e)
         {
-            log.warn(e.getClass().getName()
-                + " caught while reading property "
-                + property
-                + " from "
-                + MgnlContext.getAggregationState().getMainContent().getHandle());
+            log.warn("{} caught while reading property {} from {}: {}", new Object[]{
+                e.getClass().getName(),
+                property,
+                NodeUtil.getPathIfPossible(MgnlUtilsDeprecatedAdapters.getMainContent()),
+                e.getMessage() });
         }
 
         return null;
@@ -1004,12 +1142,9 @@ public final class MgnlUtilsElFunctions
      * Sets the given content as the active page, calling MgnlContext.getAggregationState().setCurrentContent)
      * @param content current content to set
      */
-    public static void setActivePage(Content content)
+    public static void setActivePage(Object content)
     {
-        if (content != null)
-        {
-            MgnlContext.getAggregationState().setCurrentContent(content);
-        }
+        MgnlUtilsDeprecatedAdapters.setCurrentContent(content);
     }
 
     /**
@@ -1018,7 +1153,13 @@ public final class MgnlUtilsElFunctions
      */
     public static boolean canEdit()
     {
-        return NodeUtil.isGranted(MgnlContext.getAggregationState().getMainContent().getJCRNode(), Permission.SET);
+        Node mainContent = MgnlUtilsDeprecatedAdapters.getMainContent();
+
+        if (mainContent != null)
+        {
+            return NodeUtil.isGranted(mainContent, Permission.SET);
+        }
+        return false;
     }
 
     /**
@@ -1077,27 +1218,28 @@ public final class MgnlUtilsElFunctions
      * Returns the current active page (can be set using the loadPage tag).
      * @return current page
      */
-    public static Content currentPage()
+    public static ContentMap currentPage()
     {
-        return MgnlContext.getAggregationState().getCurrentContent();
+        return wrapNode(MgnlUtilsDeprecatedAdapters.getCurrentContent());
     }
 
     /**
      * Returns the main loaded page (doesn't change when using the loadPage tag).
      * @return loaded page
      */
-    public static Content mainPage()
+    public static ContentMap mainPage()
     {
-        return MgnlContext.getAggregationState().getMainContent();
+        return wrapNode(MgnlUtilsDeprecatedAdapters.getMainContent());
+
     }
 
     /**
      * Returns the current paragraph.
      * @return current paragraph
      */
-    public static Content currentParagraph()
+    public static ContentMap currentParagraph()
     {
-        return MgnlContext.getAggregationState().getCurrentContent();
+        return wrapNode(MgnlUtilsDeprecatedAdapters.getCurrentContent());
     }
 
     /**
@@ -1107,7 +1249,7 @@ public final class MgnlUtilsElFunctions
      */
     public static String systemProperty(String key)
     {
-        return SystemProperty.getProperty(key);
+        return MgnlUtilsDeprecatedAdapters.getProperty(key);
     }
 
     /**
@@ -1116,7 +1258,7 @@ public final class MgnlUtilsElFunctions
      */
     public static Properties systemProperties()
     {
-        return SystemProperty.getProperties();
+        return MgnlUtilsDeprecatedAdapters.systemProperties();
     }
 
     /**
@@ -1135,12 +1277,29 @@ public final class MgnlUtilsElFunctions
      */
     public static boolean isEditMode()
     {
-        final AggregationState aggregationState = MgnlContext.getAggregationState();
-        Content activePage = aggregationState.getMainContent();
-        return ServerConfiguration.getInstance().isAdmin()
-            && !aggregationState.isPreviewMode()
-            && activePage != null
-            && activePage.isGranted(Permission.SET);
+        Node activePage = MgnlUtilsDeprecatedAdapters.getMainContent();
+        if (activePage == null)
+        {
+            return false;
+        }
+
+        AggregationState aggregationState = MgnlUtilsDeprecatedAdapters.getAggregationStateIfAvailable();
+
+        if (aggregationState == null)
+        {
+            return false;
+        }
+
+        try
+        {
+            return Components.getComponent(ServerConfiguration.class).isAdmin()
+                && !aggregationState.isPreviewMode()
+                && PermissionUtil.isGranted(activePage, Permission.SET);
+        }
+        catch (RepositoryException e)
+        {
+            return false;
+        }
     }
 
     /**
@@ -1163,28 +1322,28 @@ public final class MgnlUtilsElFunctions
      */
     public static boolean firstPageWithNode(String nodeName, int minlevel)
     {
-        Content actpage = MgnlContext.getAggregationState().getCurrentContent();
-        if (actpage == null)
+        Node node = MgnlUtilsDeprecatedAdapters.getCurrentContent();
+        if (node == null)
         {
-            actpage = MgnlContext.getAggregationState().getMainContent();
+            node = MgnlUtilsDeprecatedAdapters.getMainContent();
         }
 
         try
         {
-            while (actpage.getLevel() > minlevel)
+            while (node.getDepth() > minlevel)
             {
-                actpage = actpage.getParent();
+                node = node.getParent();
 
-                if (actpage.hasContent(nodeName))
+                if (node.hasNode(nodeName))
                 {
-                    MgnlContext.getAggregationState().setCurrentContent(actpage);
+                    MgnlUtilsDeprecatedAdapters.setCurrentContent(node);
                     return true;
                 }
             }
         }
         catch (RepositoryException e)
         {
-            log.error("Error looking for node " + nodeName + " in " + actpage.getHandle(), e);
+            log.error("Error looking for node " + nodeName + " in " + NodeUtil.getPathIfPossible(node), e);
         }
 
         return false;
@@ -1193,12 +1352,27 @@ public final class MgnlUtilsElFunctions
     /**
      * Function to iterate over a node Data that has "checkbox" as control type, for example. See
      * http://jira.magnolia-cms.com/browse/MAGNOLIA-1969
+     * @deprecated use standard jcr Node methods, based on iterators instead of collections
      */
-    public static Collection<NodeData> nodeDataIterator(Content c, String collection)
+    @Deprecated
+    public static Collection<Property> nodeDataIterator(Object c, String collection)
     {
+        Node node = MgnlUtilsDeprecatedAdapters.toNode(c);
         try
         {
-            return c.getContent(collection).getNodeDataCollection();
+            if (node.hasNode(collection))
+            {
+                return Collections.EMPTY_LIST;
+            }
+            PropertyIterator properties = node.getNode(collection).getProperties();
+
+            Collection<Property> result = new ArrayList<Property>();
+            while (properties.hasNext())
+            {
+                result.add(properties.nextProperty());
+            }
+
+            return result;
         }
         catch (RepositoryException e)
         {
@@ -1237,7 +1411,7 @@ public final class MgnlUtilsElFunctions
             log.debug("Got a {} while loading level {} starting from {}: {}", new Object[]{
                 e.getClass().getName(),
                 level,
-                node,
+                NodeUtil.getPathIfPossible(node),
                 e.getMessage() });
             return null;
         }
@@ -1246,6 +1420,10 @@ public final class MgnlUtilsElFunctions
 
     private static ContentMap wrapNode(Node node)
     {
+        if (node == null)
+        {
+            return null;
+        }
         return new ContentMap(node);
     }
 }

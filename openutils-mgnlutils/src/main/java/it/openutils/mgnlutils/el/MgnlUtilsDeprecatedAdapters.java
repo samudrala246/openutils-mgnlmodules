@@ -1,7 +1,11 @@
 package it.openutils.mgnlutils.el;
 
+import java.util.Properties;
+
 import info.magnolia.cms.core.AggregationState;
 import info.magnolia.cms.core.Content;
+import info.magnolia.cms.core.DefaultContent;
+import info.magnolia.cms.core.SystemProperty;
 import info.magnolia.context.MgnlContext;
 import info.magnolia.context.WebContext;
 import info.magnolia.jcr.util.ContentMap;
@@ -25,7 +29,7 @@ public class MgnlUtilsDeprecatedAdapters
 
     public static Node getCurrentContent()
     {
-        AggregationState aggregationState = safeGetAggregationStateIfAvailable();
+        AggregationState aggregationState = getAggregationStateIfAvailable();
         if (aggregationState != null)
         {
             Content mainContent = aggregationState.getCurrentContent();
@@ -34,9 +38,9 @@ public class MgnlUtilsDeprecatedAdapters
         return null;
     }
 
-    public static Node getCurrentMain()
+    public static Node getMainContent()
     {
-        AggregationState aggregationState = safeGetAggregationStateIfAvailable();
+        AggregationState aggregationState = getAggregationStateIfAvailable();
         if (aggregationState != null)
         {
             Content mainContent = aggregationState.getMainContent();
@@ -45,7 +49,7 @@ public class MgnlUtilsDeprecatedAdapters
         return null;
     }
 
-    public static AggregationState safeGetAggregationStateIfAvailable()
+    public static AggregationState getAggregationStateIfAvailable()
     {
         WebContext ctx = MgnlContext.getWebContextOrNull();
         if (ctx != null)
@@ -79,5 +83,33 @@ public class MgnlUtilsDeprecatedAdapters
         }
 
         return null;
+    }
+
+    public static String getProperty(String name)
+    {
+        return SystemProperty.getProperty(name);
+    }
+
+    public static boolean getBooleanProperty(String name)
+    {
+        return SystemProperty.getBooleanProperty(name);
+    }
+
+    public static Properties systemProperties()
+    {
+        return SystemProperty.getProperties();
+    }
+
+    public static void setCurrentContent(Object content)
+    {
+        Node node = toNode(content);
+        if (node != null)
+        {
+            AggregationState aggregationState = getAggregationStateIfAvailable();
+            if (aggregationState != null)
+            {
+                aggregationState.setCurrentContent(new DefaultContent(node));
+            }
+        }
     }
 }
