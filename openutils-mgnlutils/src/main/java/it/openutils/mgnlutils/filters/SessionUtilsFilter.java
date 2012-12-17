@@ -1,7 +1,7 @@
 /**
  *
  * Generic utilities for Magnolia CMS (http://www.openmindlab.com/lab/products/mgnlutils.html)
- * Copyright(C) 2009-2011, Openmind S.r.l. http://www.openmindonline.it
+ * Copyright(C) 2009-2012, Openmind S.r.l. http://www.openmindonline.it
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by

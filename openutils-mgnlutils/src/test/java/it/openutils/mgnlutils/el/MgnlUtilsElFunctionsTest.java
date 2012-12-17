@@ -1,7 +1,7 @@
 /**
  *
  * Generic utilities for Magnolia CMS (http://www.openmindlab.com/lab/products/mgnlutils.html)
- * Copyright(C) 2009-2011, Openmind S.r.l. http://www.openmindonline.it
+ * Copyright(C) 2009-2012, Openmind S.r.l. http://www.openmindonline.it
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -28,9 +28,7 @@ import info.magnolia.context.MgnlContext;
 import info.magnolia.link.LinkTransformerManager;
 import info.magnolia.test.ComponentsTestUtil;
 import info.magnolia.test.mock.MockWebContext;
-import it.openutils.mgnlutils.test.ModuleConfiguration;
 import it.openutils.mgnlutils.test.RepositoryTestConfiguration;
-import it.openutils.mgnlutils.test.TestModule;
 import it.openutils.mgnlutils.test.TestNgRepositoryTestcase;
 
 import java.lang.reflect.Method;
@@ -48,7 +46,7 @@ import org.testng.annotations.Test;
 @RepositoryTestConfiguration(repositoryConfig = "/utils-repository/test-repositories.xml", jackrabbitRepositoryConfig = "/utils-repository/jackrabbit-test-configuration.xml", bootstrapFiles = {
     "/utils-bootstrap/config.server.xml",
     "/utils-bootstrap/website.pets.xml",
-    "/utils-bootstrap/config.modules.testmodule.xml" }, magnoliaProperties = "/test-magnolia.properties", startModules = {@ModuleConfiguration(name = "testmodule", moduleclass = TestModule.class) })
+    "/utils-bootstrap/config.modules.testmodule.xml" }, magnoliaProperties = "/test-magnolia.properties")
 public class MgnlUtilsElFunctionsTest extends TestNgRepositoryTestcase
 {
 
