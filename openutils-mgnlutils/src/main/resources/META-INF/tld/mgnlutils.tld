@@ -101,7 +101,7 @@
     <description>Return the content of a given path and repository</description>
     <name>contentByPath</name>
     <function-class>it.openutils.mgnlutils.el.MgnlUtilsElFunctions</function-class>
-    <function-signature>info.magnolia.cms.core.Content contentByPath(java.lang.String, java.lang.String)</function-signature>
+    <function-signature>info.magnolia.jcr.util.ContentMap contentByPath(java.lang.String, java.lang.String)</function-signature>
     <example>
       <![CDATA[
        ${mu:contentByPath('Magnolia-Utils','website')}
@@ -339,10 +339,10 @@ mu:isLine('aaa\nbb\nc', 'b') = false]]></example>
     <function-signature>void setActivePage(info.magnolia.cms.core.Content)</function-signature>
   </function>
   <function>
-    <description>Get a Content node by its UUID. Internally uses JCR Criteria. Params are UUID and repository name.</description>
+    <description>Get a node by its UUID, wrapped as ContentMap.</description>
     <name>contentByUUID</name>
     <function-class>it.openutils.mgnlutils.el.MgnlUtilsElFunctions</function-class>
-    <function-signature>info.magnolia.cms.core.Content contentByUUID(java.lang.String, java.lang.String)</function-signature>
+    <function-signature>info.magnolia.jcr.util.ContentMap contentByUUID(java.lang.String, java.lang.String)</function-signature>
   </function>
   <function>
     <description>Check if the current user belongs the given role</description>
@@ -435,6 +435,12 @@ mu:isLine('aaa\nbb\nc', 'b') = false]]></example>
     <name>nodeDataIterator</name>
     <function-class>it.openutils.mgnlutils.el.MgnlUtilsElFunctions</function-class>
     <function-signature>java.util.Collection nodeDataIterator(info.magnolia.cms.core.Content, java.lang.String)</function-signature>
+  </function>
+  <function>
+    <description>Loads the ancestor of the given jcr Node/ContentMap. Returns null if the object is null or if requested level is greater than current depth</description>
+    <name>ancestor</name>
+    <function-class>it.openutils.mgnlutils.el.MgnlUtilsElFunctions</function-class>
+    <function-signature>info.magnolia.jcr.util.ContentMap ancestor(java.lang.Object, int)</function-signature>
   </function>
   <!-- please don't add new funtions without a meaningfull <description> -->
 </taglib>

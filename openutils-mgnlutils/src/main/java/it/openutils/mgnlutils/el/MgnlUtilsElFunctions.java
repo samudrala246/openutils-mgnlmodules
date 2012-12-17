@@ -39,6 +39,7 @@ import info.magnolia.cms.util.NodeMapWrapper;
 import info.magnolia.context.MgnlContext;
 import info.magnolia.context.WebContext;
 import info.magnolia.jaas.principal.EntityImpl;
+import info.magnolia.jcr.util.ContentMap;
 import info.magnolia.jcr.util.NodeUtil;
 import info.magnolia.link.LinkException;
 import info.magnolia.link.LinkUtil;
@@ -58,11 +59,17 @@ import java.util.Map.Entry;
 import java.util.Properties;
 import java.util.Set;
 
+import javax.jcr.Item;
 import javax.jcr.ItemNotFoundException;
+import javax.jcr.LoginException;
+import javax.jcr.Node;
 import javax.jcr.RepositoryException;
+import javax.jcr.Session;
 import javax.security.auth.Subject;
 import javax.servlet.http.HttpServletRequest;
 
+import net.sourceforge.openutils.mgnlcriteria.jcr.query.AdvancedResult;
+import net.sourceforge.openutils.mgnlcriteria.jcr.query.Criteria;
 import net.sourceforge.openutils.mgnlcriteria.jcr.query.JCRCriteriaFactory;
 import net.sourceforge.openutils.mgnlcriteria.jcr.query.criterion.Restrictions;
 
@@ -129,16 +136,29 @@ public final class MgnlUtilsElFunctions
      * @param repository repository type
      * @return the content of a given path and repository
      */
-    public static Content contentByPath(String path, String repository)
+    public static ContentMap contentByPath(String path, String repository)
     {
-        try
-        {
-            return MgnlContext.getHierarchyManager(repository).getContent(path);
-        }
-        catch (RepositoryException e)
+        if (path == null || repository == null)
         {
             return null;
         }
+        try
+        {
+            Node node = MgnlContext.getJCRSession(repository).getNode(path);
+            if (node != null)
+            {
+                return wrapNode(node);
+            }
+        }
+        catch (RepositoryException e)
+        {
+            log.debug("{} loading path {} from workspace {}:{}", new Object[]{
+                e.getClass().getName(),
+                path,
+                repository,
+                e.getMessage() });
+        }
+        return null;
     }
 
     /**
@@ -1002,23 +1022,35 @@ public final class MgnlUtilsElFunctions
     }
 
     /**
-     * Get a Content node by its UUID. Internally uses JCR Criteria.
+     * Get a node by its UUID, wrapped as ContentMap.
      * @param uuid content UUID
      * @param repo workspace name
-     * @return Content or null if not found
+     * @return ContentMap or null if not found
      */
-    public static Content contentByUUID(String uuid, String repo)
+    public static ContentMap contentByUUID(String uuid, String repo) throws RepositoryException
     {
         if (StringUtils.isBlank(uuid))
         {
             return null;
         }
-        return JCRCriteriaFactory
-            .createCriteria()
-            .setWorkspace(repo)
-            .add(Restrictions.eq("@jcr:uuid", uuid))
-            .execute()
-            .getFirstResult();
+
+        Session session;
+        try
+        {
+            session = MgnlContext.getJCRSession(repo);
+            Node loaded = session.getNodeByIdentifier(uuid);
+
+            if (loaded != null)
+            {
+                return wrapNode(loaded);
+            }
+        }
+        catch (ItemNotFoundException e)
+        {
+            // ignore
+        }
+
+        return null;
     }
 
     /**
@@ -1177,4 +1209,43 @@ public final class MgnlUtilsElFunctions
         }
     }
 
+    public static ContentMap ancestor(Object nodeorcontent, int level)
+    {
+
+        Node node = MgnlUtilsDeprecatedAdapters.toNode(nodeorcontent);
+
+        if (node == null)
+        {
+            return null;
+        }
+
+        try
+        {
+            if (node.getDepth() < level)
+            {
+                return null;
+            }
+            if (node.getDepth() == level)
+            {
+                return wrapNode(node);
+            }
+
+            return wrapNode((Node) node.getAncestor(level));
+        }
+        catch (RepositoryException e)
+        {
+            log.debug("Got a {} while loading level {} starting from {}: {}", new Object[]{
+                e.getClass().getName(),
+                level,
+                node,
+                e.getMessage() });
+            return null;
+        }
+
+    }
+
+    private static ContentMap wrapNode(Node node)
+    {
+        return new ContentMap(node);
+    }
 }
