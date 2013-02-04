@@ -10,7 +10,7 @@
   <artifactId>openutils-mgnlmedia</artifactId>
   <name>SimpleMedia Module for Magnolia CMS</name>
   <description>SimpleMedia Module for Magnolia CMS: a module for Magnolia CMS for easier management of multimedia assets.</description>
-  <version>5.0.2</version>
+  <version>5.0.3-SNAPSHOT</version>
   <inceptionYear>2008</inceptionYear>
   <licenses>
     <license>
@@ -24,9 +24,9 @@
     <url>http://jira.openmindlab.com/browse/MEDIA</url>
   </issueManagement>
   <scm>
-    <connection>scm:svn:https://openutils.svn.sourceforge.net/svnroot/openutils/tags/openutils-mgnlmedia-5.0.2</connection>
-    <developerConnection>scm:svn:https://openutils.svn.sourceforge.net/svnroot/openutils/tags/openutils-mgnlmedia-5.0.2</developerConnection>
-    <url>scm:svn:https://openutils.svn.sourceforge.net/svnroot/openutils/tags/openutils-mgnlmedia-5.0.2</url>
+    <connection>scm:svn:https://openutils.svn.sourceforge.net/svnroot/openutils/magnoliamodules/trunk/openutils-mgnlmedia</connection>
+    <developerConnection>scm:svn:https://openutils.svn.sourceforge.net/svnroot/openutils/magnoliamodules/trunk/openutils-mgnlmedia</developerConnection>
+    <url>http://openutils.svn.sourceforge.net/viewcvs.cgi/openutils/trunk/openutils-mgnlmedia</url>
   </scm>
   <build>
     <resources>
