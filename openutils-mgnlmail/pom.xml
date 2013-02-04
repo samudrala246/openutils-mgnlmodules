@@ -9,7 +9,7 @@
   <packaging>jar</packaging>
   <artifactId>openutils-mgnlmail</artifactId>
   <name>simplemail module for Magnolia CMS</name>
-  <version>5.0.0-SNAPSHOT</version>
+  <version>5.0.0</version>
   <inceptionYear>2011</inceptionYear>
   <description>An extension to the mail module for Magnolia CMS</description>
   <url>http://www.openmindlab.com/lab/products/mgnlmail.html</url>
@@ -24,9 +24,9 @@
     </license>
   </licenses>
   <scm>
-    <connection>scm:svn:https://openutils.svn.sourceforge.net/svnroot/openutils/magnoliamodules/trunk/openutils-mgnlmail</connection>
-    <developerConnection>scm:svn:https://openutils.svn.sourceforge.net/svnroot/openutils/magnoliamodules/trunk/openutils-mgnlmail </developerConnection>
-    <url>http://openutils.svn.sourceforge.net/viewcvs.cgi/openutils/trunk/openutils-mgnlmail</url>
+    <connection>scm:svn:https://openutils.svn.sourceforge.net/svnroot/openutils/tags/openutils-mgnlmail-5.0.0</connection>
+    <developerConnection>scm:svn:https://openutils.svn.sourceforge.net/svnroot/openutils/tags/openutils-mgnlmail-5.0.0 </developerConnection>
+    <url>scm:svn:https://openutils.svn.sourceforge.net/svnroot/openutils/tags/openutils-mgnlmail-5.0.0</url>
   </scm>
   <build>
     <resources>
