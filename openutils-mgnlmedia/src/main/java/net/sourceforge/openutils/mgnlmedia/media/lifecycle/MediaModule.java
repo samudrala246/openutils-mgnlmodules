@@ -85,6 +85,8 @@ public class MediaModule implements ModuleLifecycle
 
     private LockUtils locks = new LockUtils(4);
 
+    private String baseurl;
+
     /**
      * Constructor
      */
@@ -343,4 +345,23 @@ public class MediaModule implements ModuleLifecycle
     {
         return locks;
     }
+
+    /**
+     * Returns the baseurl.
+     * @return the baseurl
+     */
+    public String getBaseurl()
+    {
+        return baseurl;
+    }
+
+    /**
+     * Sets the baseurl.
+     * @param baseurl the baseurl to set
+     */
+    public void setBaseurl(String baseurl)
+    {
+        this.baseurl = baseurl;
+    }
+
 }

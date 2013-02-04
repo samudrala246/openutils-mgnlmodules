@@ -200,7 +200,7 @@ public final class MediaEl
         {
             return null;
         }
-        return mtc.getHandler().getUrl(media, options);
+        return appendBaseUrl(mtc.getHandler().getUrl(media, options));
     }
 
     /**
@@ -299,7 +299,7 @@ public final class MediaEl
             Point size = ImageUtils.parseForSize(resolution);
             if (width == size.x && height == size.y)
             {
-                return mcm.getURIMappingPrefix() + prop.getProperty(FileProperties.PATH);
+                return appendBaseUrl(mcm.getURIMappingPrefix() + prop.getProperty(FileProperties.PATH));
             }
         }
 
@@ -317,7 +317,7 @@ public final class MediaEl
             {
                 String resPath = new FileProperties(resolutions, resString).getProperty(FileProperties.PATH);
 
-                return mcm.getURIMappingPrefix() + resPath;
+                return appendBaseUrl(mcm.getURIMappingPrefix() + resPath);
 
             }
         }
@@ -361,7 +361,7 @@ public final class MediaEl
                     }
                     catch (RepositoryException e)
                     {
-                        res = null;
+                        // do nothing
                     }
                 }
             }
@@ -920,6 +920,16 @@ public final class MediaEl
         log.warn("\"tags()\" has been deprecated, please check javadocs");
 
         return tagsLoc(media, null);
+    }
+
+    private static String appendBaseUrl(String url)
+    {
+        String baseurl = module().getBaseurl();
+        if (baseurl != null && StringUtils.isNotEmpty(url) && !StringUtils.contains(url, "://"))
+        {
+            return baseurl + url;
+        }
+        return url;
     }
 
 }
