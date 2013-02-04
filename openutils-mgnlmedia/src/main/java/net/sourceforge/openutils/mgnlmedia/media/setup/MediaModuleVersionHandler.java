@@ -236,13 +236,16 @@ public class MediaModuleVersionHandler extends SimpleModuleVersionHandler
             "/modules/media/config/search/filters/query",
             "wildcards",
             Boolean.TRUE));
-        
+
         tasks.add(new ChangeExistingPropertyTask(
             ContentRepository.CONFIG,
             "/modules/media/mediausedin/website",
             "nodeType",
             "mgnl:content",
             "mgnl:page"));
+
+        // empty placeholder
+        tasks.add(new CreateMissingPropertyTask(ContentRepository.CONFIG, "/modules/media/config", "baseurl", ""));
 
         return tasks;
     }
