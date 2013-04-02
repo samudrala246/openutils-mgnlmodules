@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <parent>
     <groupId>net.sourceforge.openutils</groupId>
     <artifactId>openutils-parent</artifactId>
@@ -54,6 +55,30 @@
         <configuration>
           <useManifestOnlyJar>false</useManifestOnlyJar>
         </configuration>
+      </plugin>
+      <plugin>
+        <groupId>com.mycila.maven-license-plugin</groupId>
+        <artifactId>maven-license-plugin</artifactId>
+        <version>1.5.0</version>
+        <configuration>
+          <header>src/main/etc/header.txt</header>
+          <includes>
+            <include>src/**/*.java</include>
+          </includes>
+          <properties>
+            <year>${project.inceptionYear}-2013</year>
+            <name>${project.name}</name>
+            <description>${project.description}</description>
+            <url>${project.url}</url>
+          </properties>
+        </configuration>
+        <executions>
+          <execution>
+            <goals>
+              <goal>check</goal>
+            </goals>
+          </execution>
+        </executions>
       </plugin>
     </plugins>
     <resources>
