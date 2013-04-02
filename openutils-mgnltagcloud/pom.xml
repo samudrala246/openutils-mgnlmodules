@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <parent>
     <groupId>net.sourceforge.openutils</groupId>
     <artifactId>openutils-parent</artifactId>
@@ -25,8 +26,10 @@
   </issueManagement>
   <inceptionYear>2010</inceptionYear>
   <scm>
-    <connection>scm:svn:https://openutils.svn.sourceforge.net/svnroot/openutils/magnoliamodules/trunk/openutils-mgnltagcloud</connection>
-    <developerConnection>scm:svn:https://openutils.svn.sourceforge.net/svnroot/openutils/magnoliamodules/trunk/openutils-mgnltagcloud</developerConnection>
+    <connection>scm:svn:https://openutils.svn.sourceforge.net/svnroot/openutils/magnoliamodules/trunk/openutils-mgnltagcloud
+    </connection>
+    <developerConnection>scm:svn:https://openutils.svn.sourceforge.net/svnroot/openutils/magnoliamodules/trunk/openutils-mgnltagcloud
+    </developerConnection>
     <url>http://openutils.svn.sourceforge.net/viewcvs.cgi/openutils/trunk/openutils-mgnltagcloud</url>
   </scm>
   <build>
@@ -142,12 +145,30 @@
     <dependency>
       <groupId>com.browseengine.bobo</groupId>
       <artifactId>bobo-browse</artifactId>
-      <version>2.5.1</version>
+      <version>3.2.0</version>
+      <exclusions>
+        <exclusion>
+          <groupId>org.springframework</groupId>
+          <artifactId>spring-context</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
     <dependency>
       <groupId>fastutil</groupId>
       <artifactId>fastutil</artifactId>
       <version>5.0.5</version>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-context</artifactId>
+      <version>2.5.5</version><!-- temporarily used for bobo-browse patch -->
+      <scope>test</scope>
+      <exclusions>
+        <exclusion>
+          <groupId>commons-logging</groupId>
+          <artifactId>commons-logging</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
     <dependency>
       <groupId>net.sourceforge.openutils</groupId>
@@ -181,6 +202,11 @@
       </exclusions>
     </dependency>
     <dependency>
+      <groupId>org.apache.lucene</groupId>
+      <artifactId>lucene-core</artifactId>
+      <version>3.6.0</version><!-- forces version 3.6, used in jackrabbit 2.6 (bobo-browse 3.2.0 actually depends on lucene 3.5) -->
+    </dependency>
+    <dependency>
       <groupId>javax.servlet</groupId>
       <artifactId>servlet-api</artifactId>
       <version>2.4</version>
@@ -201,6 +227,6 @@
   </dependencies>
   <properties>
     <magnolia.version>4.5.6</magnolia.version>
-    <jackrabbit.version>2.4.1</jackrabbit.version>
+    <jackrabbit.version>2.6.0</jackrabbit.version>
   </properties>
 </project>
