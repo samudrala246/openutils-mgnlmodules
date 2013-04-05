@@ -23,6 +23,7 @@ import info.magnolia.cms.core.Content;
 import info.magnolia.cms.i18n.I18nContentSupportFactory;
 import info.magnolia.cms.security.AccessDeniedException;
 import info.magnolia.module.admininterface.dialogs.ConfiguredDialog;
+import info.magnolia.objectfactory.Components;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
@@ -210,7 +211,7 @@ public class TagCloudDialog extends ConfigurableFreemarkerDialog
 
         if (StringUtils.isNotBlank(tagCloudName))
         {
-            TagCloud tagCloudOriginal = TagCloudManager.getInstance().getTagCloud(tagCloudName);
+            TagCloud tagCloudOriginal = Components.getComponent(TagCloudManager.class).getTagCloud(tagCloudName);
             if (tagCloudOriginal != null)
             {
                 try
@@ -264,9 +265,8 @@ public class TagCloudDialog extends ConfigurableFreemarkerDialog
             }
 
             tagCloud.setCount(10000);
-            TagCloudManager.getInstance().calculateTagCloud(tagCloud);
+            Components.getComponent(TagCloudManager.class).calculateTagCloud(tagCloud);
         }
         return tagCloud;
     }
 }
-

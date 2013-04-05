@@ -19,6 +19,8 @@
 
 package net.sourceforge.openutils.mgnltagcloud.el;
 
+import info.magnolia.objectfactory.Components;
+
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
@@ -50,7 +52,7 @@ public class TagCloudElFunctions
      */
     public static Map<String, Integer> named(String name)
     {
-        TagCloud tagCloud = TagCloudManager.getInstance().getTagCloud(name);
+        TagCloud tagCloud = Components.getComponent(TagCloudManager.class).getTagCloud(name);
         return tagCloud != null ? tagCloud.getTags() : new HashMap<String, Integer>();
     }
 
@@ -102,11 +104,11 @@ public class TagCloudElFunctions
 
         if (cacheAndObserve)
         {
-            tagCloud = TagCloudManager.getInstance().checkForTagCloud(tagCloud);
+            tagCloud = Components.getComponent(TagCloudManager.class).checkForTagCloud(tagCloud);
         }
         else
         {
-            TagCloudManager.getInstance().calculateTagCloud(tagCloud);
+            Components.getComponent(TagCloudManager.class).calculateTagCloud(tagCloud);
         }
 
         return tagCloud != null ? sortbyname(tagCloud.getTags(), true) : new HashMap<String, Integer>();

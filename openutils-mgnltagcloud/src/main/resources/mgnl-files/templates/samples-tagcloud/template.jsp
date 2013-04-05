@@ -1,6 +1,6 @@
 <jsp:root version="2.0" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:c="urn:jsptld:http://java.sun.com/jsp/jstl/core"
-  xmlns:fmt="urn:jsptld:http://java.sun.com/jsp/jstl/fmt" xmlns:fn="http://java.sun.com/jsp/jstl/functions" xmlns:cms="urn:jsptld:cms-taglib"
-  xmlns:cmsfn="http://www.magnolia.info/tlds/cmsfn-taglib.tld" xmlns:cmsu="urn:jsptld:cms-util-taglib"
+  xmlns:fmt="urn:jsptld:http://java.sun.com/jsp/jstl/fmt" xmlns:fn="http://java.sun.com/jsp/jstl/functions" 
+  xmlns:cms="http://magnolia-cms.com/taglib/templating-components/cms"
   xmlns:tagcloud="http://net.sourceforge.openutils/mgnlTagCloud" xmlns:su="http://openutils.sf.net/openutils-stringutils">
   <jsp:directive.page contentType="text/html; charset=UTF-8" session="false" />
   <jsp:text>
@@ -8,9 +8,9 @@
   </jsp:text>
   <html>
     <head>
+      <cms:init />
       <title>${actpage.title}</title>
     </head>
-    <cms:mainBar paragraph="sample-tagcloud" />
     <body>
       <h1>${actpage.title}</h1>
       <h2>Samples:</h2>

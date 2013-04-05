@@ -19,9 +19,10 @@
 
 package net.sourceforge.openutils.mgnltagcloud.util;
 
-import info.magnolia.cms.util.FactoryUtil;
-import info.magnolia.cms.util.FactoryUtil.InstanceFactory;
 import info.magnolia.context.MgnlContext;
+import info.magnolia.objectfactory.ComponentFactory;
+import info.magnolia.objectfactory.ComponentProvider;
+import info.magnolia.objectfactory.Components;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -32,6 +33,7 @@ import javax.inject.Singleton;
 import javax.jcr.RepositoryException;
 import javax.jcr.Session;
 import javax.jcr.query.InvalidQueryException;
+import javax.jws.Oneway;
 
 import org.apache.commons.lang.UnhandledException;
 import org.apache.jackrabbit.core.RepositoryImpl;
@@ -54,7 +56,7 @@ import org.slf4j.LoggerFactory;
  * @version $Id$
  */
 @Singleton
-public class JackrabbitUtil implements InstanceFactory
+public class JackrabbitUtil
 {
 
     private static final String LANG_SQL = "sql";
@@ -71,16 +73,15 @@ public class JackrabbitUtil implements InstanceFactory
     /**
      * {@inheritDoc}
      */
-    public Object newInstance()
+    public JackrabbitUtil()
     {
-        JackrabbitUtil util = new JackrabbitUtil();
         try
         {
-            util.getSearchManager = RepositoryImpl.class.getDeclaredMethod("getSearchManager", String.class);
-            util.getQueryNodeFactory = SearchIndex.class.getDeclaredMethod("getQueryNodeFactory");
+            getSearchManager = RepositoryImpl.class.getDeclaredMethod("getSearchManager", String.class);
+            getQueryNodeFactory = SearchIndex.class.getDeclaredMethod("getQueryNodeFactory");
 
-            util.getSearchManager.setAccessible(true);
-            util.getQueryNodeFactory.setAccessible(true);
+            getSearchManager.setAccessible(true);
+            getQueryNodeFactory.setAccessible(true);
         }
         catch (SecurityException e)
         {
@@ -90,7 +91,6 @@ public class JackrabbitUtil implements InstanceFactory
         {
             log.error("Exception getting SearchManager", e);
         }
-        return util;
     }
 
     /**
@@ -98,7 +98,7 @@ public class JackrabbitUtil implements InstanceFactory
      * @param repository repository
      * @return jcr session
      */
-    public static Session getSession(String repository)
+    public Session getSession(String repository)
     {
         return MgnlContext.getSystemContext().getHierarchyManager(repository).getWorkspace().getSession();
     }
@@ -110,18 +110,18 @@ public class JackrabbitUtil implements InstanceFactory
      * @return {@link SearchIndex}
      * @throws RepositoryException exception getting searchindex
      */
-    public static SearchIndex getSearchIndex(String repository, Session session) throws RepositoryException
+    public SearchIndex getSearchIndex(String repository, Session session) throws RepositoryException
     {
         RepositoryImpl repImpl = (RepositoryImpl) session.getRepository();
-        JackrabbitUtil util = (JackrabbitUtil) FactoryUtil.getSingleton(JackrabbitUtil.class);
+
         try
         {
-            SearchManager searchManager = (SearchManager) util.getSearchManager.invoke(repImpl, repository);
+            SearchManager searchManager = (SearchManager) getSearchManager.invoke(repImpl, repository);
             return (SearchIndex) searchManager.getQueryHandler();
         }
         catch (Throwable e)
         {
-            util.log.error("Error retrieving SearchIndex", e);
+            log.error("Error retrieving SearchIndex", e);
         }
         return null;
     }
@@ -133,17 +133,16 @@ public class JackrabbitUtil implements InstanceFactory
      * @param si jackr search index
      * @return lucene query
      */
-    public static Query getQuery(String path, Session session, SearchIndex si)
+    public Query getQuery(String path, Session session, SearchIndex si)
     {
-        JackrabbitUtil util = (JackrabbitUtil) FactoryUtil.getSingleton(JackrabbitUtil.class);
         QueryNodeFactory factory;
         try
         {
-            factory = (QueryNodeFactory) util.getQueryNodeFactory.invoke(si);
+            factory = (QueryNodeFactory) getQueryNodeFactory.invoke(si);
         }
         catch (Throwable e)
         {
-            util.log.error("Error qetting query node factory", e);
+            log.error("Error qetting query node factory", e);
             return null;
         }
         try
@@ -170,16 +169,16 @@ public class JackrabbitUtil implements InstanceFactory
         }
         catch (InvalidQueryException e)
         {
-            util.log.error("Invalid query", e);
+            log.error("Invalid query", e);
         }
         catch (RepositoryException e)
         {
-            util.log.error("Repository Exception", e);
+            log.error("Repository Exception", e);
         }
         return null;
     }
 
-    private static Query createQuery(QueryRootNode root, Session session, SearchIndex si) throws RepositoryException
+    private Query createQuery(QueryRootNode root, Session session, SearchIndex si) throws RepositoryException
     {
 
         // LuceneQueryBuilder.createQuery() signature has changed in 2.2.1 (one more parameter added) so we are forced
@@ -199,7 +198,7 @@ public class JackrabbitUtil implements InstanceFactory
         if (createQuery == null)
         {
             throw new UnhandledException(
-                "Unsupported version of jackrabbit detected (not in the range 1.6 - 2.0.5?)",
+                "Unsupported version of jackrabbit detected (not in the range 1.6 - 2.6.?)",
                 null);
         }
 

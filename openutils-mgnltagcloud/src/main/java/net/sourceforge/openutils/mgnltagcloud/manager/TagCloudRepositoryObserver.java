@@ -19,6 +19,8 @@
 
 package net.sourceforge.openutils.mgnltagcloud.manager;
 
+import info.magnolia.objectfactory.Components;
+
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -84,8 +86,8 @@ public class TagCloudRepositoryObserver implements EventListener
         List<TagCloud> tagCloudsToRefresh = new ArrayList<TagCloud>();
         for (String path : paths)
         {
-            for (Map.Entry<String, TagCloud> entry : TagCloudManager
-                .getInstance()
+            for (Map.Entry<String, TagCloud> entry : Components
+                .getComponent(TagCloudManager.class)
                 .getTagClouds(this.repository)
                 .entrySet())
             {
@@ -102,7 +104,7 @@ public class TagCloudRepositoryObserver implements EventListener
         // refresh tagClouds
         for (TagCloud tc : tagCloudsToRefresh)
         {
-            TagCloudManager.getInstance().calculateTagCloud(tc);
+            Components.getComponent(TagCloudManager.class).calculateTagCloud(tc);
         }
     }
 

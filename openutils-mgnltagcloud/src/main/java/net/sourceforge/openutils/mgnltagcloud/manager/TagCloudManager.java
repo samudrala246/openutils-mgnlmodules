@@ -22,10 +22,10 @@ package net.sourceforge.openutils.mgnltagcloud.manager;
 import info.magnolia.cms.beans.config.ObservedManager;
 import info.magnolia.cms.core.Content;
 import info.magnolia.cms.util.ContentUtil;
-import info.magnolia.cms.util.FactoryUtil;
 import info.magnolia.cms.util.ObservationUtil;
 import info.magnolia.content2bean.Content2BeanException;
 import info.magnolia.content2bean.Content2BeanUtil;
+import info.magnolia.objectfactory.Components;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -33,6 +33,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.inject.Inject;
 import javax.inject.Singleton;
 import javax.jcr.RepositoryException;
 import javax.jcr.Session;
@@ -87,13 +88,8 @@ public class TagCloudManager extends ObservedManager
      */
     private Map<String, EventListener> repositoryListeners = new HashMap<String, EventListener>();
 
-    /**
-     * @return tagcloud manager singleton instance
-     */
-    public static TagCloudManager getInstance()
-    {
-        return (TagCloudManager) FactoryUtil.getSingleton(TagCloudManager.class);
-    }
+    @Inject
+    protected JackrabbitUtil jackrabbitUtil;
 
     /**
      * {@inheritDoc}
@@ -178,8 +174,8 @@ public class TagCloudManager extends ObservedManager
         try
         {
             // get index reader
-            Session session = JackrabbitUtil.getSession(tagCloud.getRepository());
-            SearchIndex si = JackrabbitUtil.getSearchIndex(tagCloud.getRepository(), session);
+            Session session = jackrabbitUtil.getSession(tagCloud.getRepository());
+            SearchIndex si = jackrabbitUtil.getSearchIndex(tagCloud.getRepository(), session);
             ir = si.getIndexReader();
 
             NamespaceMappings namespaceMappings = si.getNamespaceMappings();
@@ -189,14 +185,14 @@ public class TagCloudManager extends ObservedManager
 
             // configure bobo for faceted search
             MultiValueFacetHandler tagsHandler = new MultiValueFacetHandler(propertyName);
-            List<FacetHandler<?>> handlerList = Arrays.asList(new FacetHandler<?>[]{tagsHandler });
+            List<FacetHandler< ? >> handlerList = Arrays.asList(new FacetHandler< ? >[]{tagsHandler });
             BoboIndexReader boboReader = HierarchyBoboIndexReader.getInstance(ir, handlerList);
 
             // get query
             Query q = boboReader.getFastMatchAllDocsQuery();
             if (StringUtils.isNotBlank(tagCloud.getPath()) && !"/".equals(tagCloud.getPath()))
             {
-                q = JackrabbitUtil.getQuery(tagCloud.getPath(), session, si);
+                q = jackrabbitUtil.getQuery(tagCloud.getPath(), session, si);
             }
 
             // build request for bobo
@@ -236,7 +232,6 @@ public class TagCloudManager extends ObservedManager
             {
                 browser.close();
             }
-            
 
         }
         catch (RepositoryException ex)

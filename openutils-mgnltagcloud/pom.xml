@@ -145,7 +145,7 @@
     <dependency>
       <groupId>com.browseengine.bobo</groupId>
       <artifactId>bobo-browse</artifactId>
-      <version>3.2.0</version>
+      <version>2.5.1</version>
       <exclusions>
         <exclusion>
           <groupId>org.springframework</groupId>
@@ -201,11 +201,13 @@
         </exclusion>
       </exclusions>
     </dependency>
+    <!--
     <dependency>
       <groupId>org.apache.lucene</groupId>
       <artifactId>lucene-core</artifactId>
-      <version>3.6.0</version><!-- forces version 3.6, used in jackrabbit 2.6 (bobo-browse 3.2.0 actually depends on lucene 3.5) -->
+      <version>3.6.0</version>
     </dependency>
+    -->
     <dependency>
       <groupId>javax.servlet</groupId>
       <artifactId>servlet-api</artifactId>
@@ -227,6 +229,6 @@
   </dependencies>
   <properties>
     <magnolia.version>4.5.6</magnolia.version>
-    <jackrabbit.version>2.6.0</jackrabbit.version>
+    <jackrabbit.version>2.4.0</jackrabbit.version>
   </properties>
 </project>

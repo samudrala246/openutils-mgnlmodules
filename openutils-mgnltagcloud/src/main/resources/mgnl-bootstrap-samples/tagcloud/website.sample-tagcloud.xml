@@ -31,7 +31,7 @@
       <sv:value>2010-05-11T17:25:11.508+02:00</sv:value>
     </sv:property>
     <sv:property sv:name="mgnl:template" sv:type="String">
-      <sv:value>sampleTagcloud</sv:value>
+      <sv:value>tagcloud:pages/sampleTagcloud</sv:value>
     </sv:property>
   </sv:node>
   <sv:node sv:name="sample-inner-tagcloud-page">
@@ -68,7 +68,7 @@
         <sv:value>2010-05-11T17:36:17.548+02:00</sv:value>
       </sv:property>
       <sv:property sv:name="mgnl:template" sv:type="String">
-        <sv:value>sampleTagcloud</sv:value>
+        <sv:value>tagcloud:pages/sampleTagcloud</sv:value>
       </sv:property>
     </sv:node>
   </sv:node>
@@ -107,7 +107,7 @@
         <sv:value>2010-05-11T17:36:35.895+02:00</sv:value>
       </sv:property>
       <sv:property sv:name="mgnl:template" sv:type="String">
-        <sv:value>sampleTagcloud</sv:value>
+        <sv:value>tagcloud:pages/sampleTagcloud</sv:value>
       </sv:property>
     </sv:node>
   </sv:node>

@@ -27,8 +27,10 @@ import info.magnolia.cms.core.Path;
 import info.magnolia.cms.util.ClasspathResourcesUtil;
 import info.magnolia.cms.util.ContentUtil;
 import info.magnolia.context.MgnlContext;
+import info.magnolia.objectfactory.Components;
 import info.magnolia.repository.RepositoryConstants;
 import info.magnolia.test.RepositoryTestCase;
+import info.magnolia.test.mock.MockSimpleComponentProvider;
 
 import java.util.Map;
 import java.util.Set;
@@ -38,6 +40,7 @@ import javax.jcr.Value;
 
 import net.sourceforge.openutils.mgnltagcloud.el.TagCloudElFunctions;
 import net.sourceforge.openutils.mgnltagcloud.module.TagCloudModule;
+import net.sourceforge.openutils.mgnltagcloud.util.JackrabbitUtil;
 
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.jackrabbit.value.ValueFactoryImpl;
@@ -269,14 +272,17 @@ public class TagCloudManagerTest extends RepositoryTestCase
 
         hmConfig.save();
 
-        TagCloudManager.getInstance().onRegister(contentTagcloud);
+        TagCloudManager manager = Components.getComponent(TagCloudManager.class);
+        manager.jackrabbitUtil = new JackrabbitUtil();
+
+        manager.onRegister(contentTagcloud);
     }
 
     @Override
     public void tearDown() throws Exception
     {
         super.tearDown();
-        TagCloudManager.getInstance().stopObserving();
+        Components.getComponent(TagCloudManager.class).stopObserving();
     }
 
     /**

@@ -21,6 +21,7 @@ package net.sourceforge.openutils.mgnltagcloud.module;
 
 import info.magnolia.module.ModuleLifecycle;
 import info.magnolia.module.ModuleLifecycleContext;
+import info.magnolia.objectfactory.Components;
 import net.sourceforge.openutils.mgnltagcloud.manager.TagCloudManager;
 
 import org.slf4j.Logger;
@@ -46,7 +47,9 @@ public class TagCloudModule implements ModuleLifecycle
     {
         log.info("Starting module tagcloud");
 
-        moduleLifecycleContext.registerModuleObservingComponent("clouds", TagCloudManager.getInstance());
+        moduleLifecycleContext.registerModuleObservingComponent(
+            "clouds",
+            Components.getComponent(TagCloudManager.class));
     }
 
     /**
@@ -55,7 +58,7 @@ public class TagCloudModule implements ModuleLifecycle
     public void stop(ModuleLifecycleContext moduleLifecycleContext)
     {
         log.info("Stopping module tagcloud");
-        TagCloudManager.getInstance().stopObserving();
+        Components.getComponent(TagCloudManager.class).stopObserving();
     }
 
 }
