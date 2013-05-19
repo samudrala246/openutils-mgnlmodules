@@ -32,11 +32,14 @@ import java.util.List;
 import java.util.Locale;
 import java.util.MissingResourceException;
 
+import javax.jcr.Property;
+import javax.jcr.PropertyIterator;
 import javax.jcr.RepositoryException;
 import javax.jcr.observation.EventIterator;
 import javax.jcr.observation.EventListener;
 
 import net.sourceforge.openutils.mgnlcriteria.jcr.query.AdvancedResult;
+import net.sourceforge.openutils.mgnlcriteria.jcr.query.AdvancedResultItem;
 import net.sourceforge.openutils.mgnlcriteria.jcr.query.Criteria;
 import net.sourceforge.openutils.mgnlcriteria.jcr.query.JCRCriteriaFactory;
 import net.sourceforge.openutils.mgnlcriteria.jcr.query.criterion.Order;
@@ -155,16 +158,36 @@ public class RepositoryMessagesImpl extends AbstractMessagesImpl
                 result.getTotalSize(),
                 criteria.toXpathExpression());
 
-            for (Content c : result.getItems())
+            for (AdvancedResultItem c : result.getItems())
             {
-                if (c.getNodeDataCollection().size() > 0)
+
+                PropertyIterator properties;
+                try
                 {
-                    // fix for NPE found in logs... not sure why, but it can happen
-                    String key = StringUtils.substring(StringUtils.replace(c.getHandle(), "/", "."), 1);
-                    if (StringUtils.isNotEmpty(key))
+                    properties = c.getProperties();
+
+                    while (properties.hasNext())
                     {
-                        keys.add(key);
+                        Property nextProperty = properties.nextProperty();
+
+                        try
+                        {
+                            String key = StringUtils
+                                .substring(StringUtils.replace(nextProperty.getPath(), "/", "."), 1);
+                            if (StringUtils.isNotEmpty(key))
+                            {
+                                keys.add(key);
+                            }
+                        }
+                        catch (RepositoryException e)
+                        {
+                            // ignore
+                        }
                     }
+                }
+                catch (RepositoryException e1)
+                {
+                    // properties can't be read, ignore
                 }
             }
         }

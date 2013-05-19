@@ -51,6 +51,9 @@
   <category name="info.magnolia.cms.i18n.AbstractMessagesImpl">
     <priority value="DEBUG" />
   </category>
+  <category name="it.openutils.mgnlutils.el">
+    <priority value="DEBUG" />
+  </category>
   <root>
     <priority value="ALL" />
     <appender-ref ref="console" />

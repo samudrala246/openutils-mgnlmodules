@@ -24,6 +24,7 @@ import info.magnolia.cms.i18n.I18nContentSupportFactory;
 import info.magnolia.cms.util.ContentUtil;
 import info.magnolia.cms.util.NodeDataUtil;
 import info.magnolia.context.MgnlContext;
+import info.magnolia.jcr.util.NodeUtil;
 import info.magnolia.jcr.util.PropertyUtil;
 import info.magnolia.module.ModuleRegistry;
 
@@ -181,27 +182,12 @@ public class PlaylistView extends MessagesTemplatedMVCHandler
             Content node = ContentUtil.getContent(PlaylistConstants.REPO, path);
             if (node != null)
             {
-                Map<String, String> propNames = new HashMap<String, String>();
-                propNames.put("title", "title");
-                propNames.put("description", "description");
-                propNames.put("tags", "tags");
-                if (!StringUtils.isEmpty(locale))
-                {
-                    Locale l = LocaleUtils.toLocale(locale);
-                    if (!I18nContentSupportFactory.getI18nSupport().getFallbackLocale().equals(l))
-                    {
-                        for (Entry<String, String> entry : propNames.entrySet())
-                        {
-                            entry.setValue(entry.getValue() + "_" + l);
-                        }
-                    }
-                }
 
                 playlist = new PlaylistBean();
                 playlist.setUuid(node.getUUID());
                 playlist.setHandle(node.getHandle());
-                playlist.setTitle(NodeDataUtil.getString(node, propNames.get("title")));
-                playlist.setDescription(NodeDataUtil.getString(node, propNames.get("description")));
+                playlist.setTitle(NodeDataUtil.getString(node, "title"));
+                playlist.setDescription(NodeDataUtil.getString(node, "description"));
                 List<PlaylistEntryBean> entries = new ArrayList<PlaylistEntryBean>();
 
                 for (Iterator<MediaNodeAndEntryPath> iterator = PlaylistIterateUtils.iterate(node.getJCRNode()); iterator
@@ -213,9 +199,10 @@ public class PlaylistView extends MessagesTemplatedMVCHandler
                     {
                         continue;
                     }
+
                     PlaylistEntryBean entry = new PlaylistEntryBean();
                     entry.setHandle(item.getPlaylistEntryPath());
-                    entry.setMedia(media.getUUID());
+                    entry.setMedia(NodeUtil.getNodeIdentifierIfPossible(media));
                     entry.setMediaHandle(media.getHandle());
                     MediaTypeConfiguration typeConf = MediaConfigurationManager
                         .getInstance()
@@ -226,18 +213,9 @@ public class PlaylistView extends MessagesTemplatedMVCHandler
                     }
                     entry.setThumbnail(MediaEl.thumbnail(media));
                     entry.setType(PropertyUtil.getString(media, "type"));
-                    entry.setTitle(I18nContentSupportFactory
-                        .getI18nSupport()
-                        .getProperty(media, propNames.get("title"))
-                        .getString());
-                    entry.setDescription(I18nContentSupportFactory
-                        .getI18nSupport()
-                        .getProperty(media, propNames.get("description"))
-                        .getString());
-                    entry.setTags(I18nContentSupportFactory
-                        .getI18nSupport()
-                        .getProperty(media, propNames.get("tags"))
-                        .getString());
+                    entry.setTitle(PropertyUtil.getString(media, "title"));
+                    entry.setDescription(PropertyUtil.getString(media, "description"));
+                    entry.setTags(PropertyUtil.getString(media, "tags"));
                     entries.add(entry);
                 }
                 playlist.setEntries(entries);

@@ -21,6 +21,7 @@ package net.sourceforge.openutils.mgnlmedia.media.tags.el;
 
 import info.magnolia.cms.beans.runtime.FileProperties;
 import info.magnolia.cms.core.Content;
+import info.magnolia.cms.core.DefaultContent;
 import info.magnolia.cms.core.NodeData;
 import info.magnolia.cms.i18n.I18nContentWrapper;
 import info.magnolia.cms.util.NodeDataUtil;
@@ -38,7 +39,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-import javax.jcr.ItemNotFoundException;
 import javax.jcr.PropertyType;
 import javax.jcr.RepositoryException;
 import javax.jcr.Value;
@@ -104,17 +104,14 @@ public final class MediaEl
      */
     public static Content node(Object obj)
     {
-        // TODO use openutils-mgnlutils 1.0.8:
-        // return
-
         if (obj == null)
         {
             return null;
         }
 
-        Content content = it.openutils.mgnlutils.el.MgnlUtilsElFunctions.node(obj, MediaModule.REPO);
+        ContentMap contentMap = it.openutils.mgnlutils.el.MgnlUtilsElFunctions.node(obj, MediaModule.REPO);
 
-        if (content != null && !(content instanceof NodeMapWrapper))
+        if (contentMap != null)
         {
             Content currentpage = null;
 
@@ -125,13 +122,16 @@ public final class MediaEl
 
             if (currentpage == null)
             {
-                currentpage = content;
+                currentpage = new DefaultContent(contentMap.getJCRNode());
             }
 
-            content = new NodeMapWrapper(new I18nContentWrapper(content), currentpage.getHandle());
+            Content content = new NodeMapWrapper(
+                new I18nContentWrapper(new DefaultContent(contentMap.getJCRNode())),
+                currentpage.getHandle());
+            return content;
         }
 
-        return content;
+        return null;
     }
 
     /**
@@ -531,7 +531,7 @@ public final class MediaEl
             return null;
         }
 
-        Content playlistNode = it.openutils.mgnlutils.el.MgnlUtilsElFunctions.node(obj, PlaylistConstants.REPO);
+        ContentMap playlistNode = it.openutils.mgnlutils.el.MgnlUtilsElFunctions.node(obj, PlaylistConstants.REPO);
 
         Iterator<ContentMap> iter = Iterators.transform(
             PlaylistIterateUtils.iterate(playlistNode.getJCRNode()),

@@ -23,6 +23,8 @@ import info.magnolia.cms.core.Content;
 import info.magnolia.cms.core.ItemType;
 import info.magnolia.cms.util.NodeDataUtil;
 import info.magnolia.context.MgnlContext;
+import info.magnolia.jcr.util.ContentMap;
+import info.magnolia.jcr.util.PropertyUtil;
 
 import java.lang.reflect.Array;
 import java.util.Collection;
@@ -33,6 +35,7 @@ import java.util.Iterator;
 import java.util.Map;
 
 import javax.jcr.Node;
+import javax.jcr.Property;
 import javax.jcr.RepositoryException;
 import javax.jcr.Value;
 import javax.servlet.http.HttpServletRequest;
@@ -85,9 +88,9 @@ public final class PlaylistIterateUtils
 
         try
         {
-            if (playlistNode.hasContent("search"))
+            if (playlistNode.hasNode("search"))
             {
-                Content searchNode = playlistNode.getContent("search");
+                Node searchNode = playlistNode.getNode("search");
                 Collection<Content> paramNodes = searchNode.getChildren(ItemType.CONTENTNODE);
                 final Map<String, Object> map = new HashMap<String, Object>();
                 for (Content paramNode : paramNodes)
@@ -108,6 +111,9 @@ public final class PlaylistIterateUtils
                         map.put(paramName, paramValues);
                     }
                 }
+
+                Property maxresultProperty = PropertyUtil.getPropertyOrNull(playlistNode, "maxResults");
+                int maxresults = maxresultProperty != null ? (int) maxresultProperty.getLong() : 0;
                 AdvancedResult searchResult = MediaEl
                     .module()
                     .getSearch()
@@ -117,7 +123,7 @@ public final class PlaylistIterateUtils
                         "/",
                         true,
                         SortMode.SCORE,
-                        (int) NodeDataUtil.getLong(playlistNode, "maxResults", 0),
+                        maxresults,
                         1);
                 return Iterators.transform(
                     searchResult.getItems(),
@@ -145,7 +151,7 @@ public final class PlaylistIterateUtils
                          */
                         public MediaNodeAndEntryPath apply(AdvancedResultItem playlistEntry)
                         {
-                            String mediaUUID = NodeDataUtil.getString(playlistEntry, "media");
+                            String mediaUUID = PropertyUtil.getString(playlistEntry, "media");
                             Content mediaNode = MediaEl.node(mediaUUID);
                             if (mediaNode == null)
                             {
