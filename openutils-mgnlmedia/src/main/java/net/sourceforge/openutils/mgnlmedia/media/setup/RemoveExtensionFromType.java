@@ -19,12 +19,12 @@
 
 package net.sourceforge.openutils.mgnlmedia.media.setup;
 
-import info.magnolia.cms.beans.config.ContentRepository;
 import info.magnolia.cms.core.Content;
 import info.magnolia.cms.core.HierarchyManager;
 import info.magnolia.module.InstallContext;
 import info.magnolia.module.delta.AbstractRepositoryTask;
 import info.magnolia.module.delta.TaskExecutionException;
+import info.magnolia.repository.RepositoryConstants;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -70,7 +70,7 @@ public class RemoveExtensionFromType extends AbstractRepositoryTask
     protected void doExecute(InstallContext ctx) throws RepositoryException, TaskExecutionException
     {
 
-        final HierarchyManager hm = ctx.getHierarchyManager(ContentRepository.CONFIG);
+        final HierarchyManager hm = ctx.getHierarchyManager(RepositoryConstants.CONFIG);
         String nodePath = "/modules/media/mediatypes/" + this.mediatype;
 
         try

@@ -37,6 +37,7 @@ import java.util.Map;
 import java.util.Set;
 
 import javax.inject.Singleton;
+import javax.jcr.Node;
 import javax.jcr.RepositoryException;
 import javax.jcr.query.InvalidQueryException;
 
@@ -138,19 +139,19 @@ public class MediaUsedInManager extends ObservedManager
                 return Collections.emptyList();
             }
         }
-        List<Content> nodes = getUsedInWorkspaceNodes(mediaUUID, uiw);
+        List<Node> nodes = getUsedInWorkspaceNodes(mediaUUID, uiw);
         List<String> paths = new ArrayList<String>(nodes.size());
-        for (Content node : nodes)
+        for (Node node : nodes)
         {
-            paths.add(node.getHandle());
+            paths.add(node.getPath());
         }
         return paths;
     }
 
-    private static List<Content> getUsedInWorkspaceNodes(String mediaUUID, UsedInWorkspace uiw)
+    private static List<Node> getUsedInWorkspaceNodes(String mediaUUID, UsedInWorkspace uiw)
         throws InvalidQueryException, RepositoryException
     {
-        List<Content> nodes = new ArrayList<Content>();
+        List<Node> nodes = new ArrayList<Node>();
         Set<String> handles = new HashSet<String>();
 
         String basepath = "/jcr:root" + StringUtils.defaultString(uiw.getBasePath());
@@ -173,18 +174,18 @@ public class MediaUsedInManager extends ObservedManager
 
         log.debug("{} > {}", criteria.toXpathExpression(), result.getTotalSize());
 
-        for (Content item : result.getItems())
+        for (Node item : result.getItems())
         {
-            // log.debug("{} {}", item.getJCRNode().getPrimaryNodeType().getName(), item.getHandle());
-
-            while (!item.getNodeTypeName().equals(uiw.getNodeType()) && item.getLevel() > 1)
+            while (!StringUtils.equals(item.getPrimaryNodeType().getName(), uiw.getNodeType()) && item.getDepth() > 1)
             {
                 item = item.getParent();
             }
-            if (item.getNodeTypeName().equals(uiw.getNodeType()) && !handles.contains(item.getHandle()))
+
+            if (StringUtils.equals(item.getPrimaryNodeType().getName(), uiw.getNodeType())
+                && !handles.contains(item.getPath()))
             {
                 nodes.add(item);
-                handles.add(item.getHandle());
+                handles.add(item.getPath());
             }
         }
 

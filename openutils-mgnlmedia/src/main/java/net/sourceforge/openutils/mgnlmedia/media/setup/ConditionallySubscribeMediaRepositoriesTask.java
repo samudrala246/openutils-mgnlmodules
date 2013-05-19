@@ -19,7 +19,6 @@
 
 package net.sourceforge.openutils.mgnlmedia.media.setup;
 
-import info.magnolia.cms.beans.config.ContentRepository;
 import info.magnolia.cms.core.Content;
 import info.magnolia.cms.core.ItemType;
 import info.magnolia.cms.exchange.ActivationManager;
@@ -31,6 +30,7 @@ import info.magnolia.module.delta.AbstractTask;
 import info.magnolia.module.delta.TaskExecutionException;
 import info.magnolia.module.model.ModuleDefinition;
 import info.magnolia.module.model.RepositoryDefinition;
+import info.magnolia.repository.RepositoryConstants;
 
 import java.util.Collection;
 import java.util.List;
@@ -59,7 +59,7 @@ public class ConditionallySubscribeMediaRepositoriesTask extends AbstractTask
 
         // check for the sigleinstance flag directly in jcr, the module is not started yet
         boolean singleinstance = false;
-        Content moduleConfigNode = ContentUtil.getContent(ContentRepository.CONFIG, "/modules/media/config");
+        Content moduleConfigNode = ContentUtil.getContent(RepositoryConstants.CONFIG, "/modules/media/config");
         if (moduleConfigNode != null)
         {
             singleinstance = moduleConfigNode.getNodeData("singleinstance").getBoolean();
@@ -95,7 +95,7 @@ public class ConditionallySubscribeMediaRepositoriesTask extends AbstractTask
         {
             if (!subscriber.isSubscribed("/", repository))
             {
-                Content subscriptionsNode = ContentUtil.getContent(ContentRepository.CONFIG, sManager.getConfigPath()
+                Content subscriptionsNode = ContentUtil.getContent(RepositoryConstants.CONFIG, sManager.getConfigPath()
                     + "/"
                     + subscriber.getName()
                     + "/subscriptions");

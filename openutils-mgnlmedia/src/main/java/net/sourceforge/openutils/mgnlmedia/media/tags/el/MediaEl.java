@@ -21,12 +21,12 @@ package net.sourceforge.openutils.mgnlmedia.media.tags.el;
 
 import info.magnolia.cms.beans.runtime.FileProperties;
 import info.magnolia.cms.core.Content;
-import info.magnolia.cms.core.HierarchyManager;
 import info.magnolia.cms.core.NodeData;
 import info.magnolia.cms.i18n.I18nContentWrapper;
 import info.magnolia.cms.util.NodeDataUtil;
 import info.magnolia.cms.util.NodeMapWrapper;
 import info.magnolia.context.MgnlContext;
+import info.magnolia.jcr.util.ContentMap;
 import info.magnolia.module.ModuleRegistry;
 
 import java.awt.Point;
@@ -105,52 +105,14 @@ public final class MediaEl
     public static Content node(Object obj)
     {
         // TODO use openutils-mgnlutils 1.0.8:
-        // return it.openutils.mgnlutils.el.MgnlUtilsElFunctions.node(obj, MediaModule.REPO);
+        // return
 
         if (obj == null)
         {
             return null;
         }
 
-        Content content = null;
-
-        if (obj instanceof String)
-        {
-            String mediaIdentifier = (String) obj;
-
-            if (StringUtils.isBlank(mediaIdentifier))
-            {
-                return null;
-            }
-
-            HierarchyManager hm = MgnlContext.getHierarchyManager(MediaModule.REPO);
-            try
-            {
-                if (mediaIdentifier.startsWith("/"))
-                {
-                    if (hm.isExist(mediaIdentifier))
-                    {
-                        content = hm.getContent(mediaIdentifier);
-                    }
-                }
-                else
-                {
-                    content = hm.getContentByUUID(StringUtils.trim(mediaIdentifier));
-                }
-            }
-            catch (ItemNotFoundException e)
-            {
-                log.debug("Node \"" + mediaIdentifier + "\" not found");
-            }
-            catch (RepositoryException e)
-            {
-                log.error(e.getClass().getName() + " getting node \"" + mediaIdentifier + "\"", e);
-            }
-        }
-        else if (obj instanceof Content)
-        {
-            content = (Content) obj;
-        }
+        Content content = it.openutils.mgnlutils.el.MgnlUtilsElFunctions.node(obj, MediaModule.REPO);
 
         if (content != null && !(content instanceof NodeMapWrapper))
         {
@@ -562,65 +524,26 @@ public final class MediaEl
      * @param obj playlist node or UUID
      * @return Iterator of media nodes
      */
-    public static Iterator<Content> mediaNodesInPlaylist(Object obj)
+    public static Iterator<ContentMap> mediaNodesInPlaylist(Object obj)
     {
-        // TODO use openutils-mgnlutils 1.0.8:
-        // Content playlistNode = it.openutils.mgnlutils.el.MgnlUtilsElFunctions.node(obj, PlaylistConstants.REPO);
-        Content playlistNode = null;
         if (obj == null)
         {
             return null;
         }
 
-        if (obj instanceof String)
-        {
-            String identifier = (String) obj;
+        Content playlistNode = it.openutils.mgnlutils.el.MgnlUtilsElFunctions.node(obj, PlaylistConstants.REPO);
 
-            if (StringUtils.isBlank(identifier))
-            {
-                return null;
-            }
-
-            HierarchyManager hm = MgnlContext.getHierarchyManager(PlaylistConstants.REPO);
-            try
-            {
-                if (identifier.startsWith("/"))
-                {
-                    if (hm.isExist(identifier))
-                    {
-                        playlistNode = hm.getContent(identifier);
-                    }
-                }
-                else
-                {
-                    playlistNode = hm.getContentByUUID(StringUtils.trim(identifier));
-                }
-            }
-            catch (ItemNotFoundException e)
-            {
-                log.debug("Node \"" + identifier + "\" not found");
-            }
-            catch (RepositoryException e)
-            {
-                log.error(e.getClass().getName() + " getting node \"" + identifier + "\"", e);
-            }
-        }
-        else if (obj instanceof Content)
-        {
-            playlistNode = (Content) obj;
-        }
-
-        Iterator<Content> iter = Iterators.transform(
-            PlaylistIterateUtils.iterate(playlistNode),
-            new Function<MediaNodeAndEntryPath, Content>()
+        Iterator<ContentMap> iter = Iterators.transform(
+            PlaylistIterateUtils.iterate(playlistNode.getJCRNode()),
+            new Function<MediaNodeAndEntryPath, ContentMap>()
             {
 
                 /**
                  * {@inheritDoc}
                  */
-                public Content apply(MediaNodeAndEntryPath from)
+                public ContentMap apply(MediaNodeAndEntryPath from)
                 {
-                    return from.getMediaNode();
+                    return (ContentMap) from.getMediaNode();
                 }
             });
         return Iterators.filter(iter, Predicates.notNull());

@@ -32,6 +32,8 @@ import info.magnolia.cms.util.FactoryUtil;
 import info.magnolia.cms.util.NodeDataUtil;
 import info.magnolia.content2bean.Content2BeanUtil;
 import info.magnolia.context.MgnlContext;
+import info.magnolia.jcr.util.NodeUtil;
+import info.magnolia.jcr.util.PropertyUtil;
 import info.magnolia.repository.RepositoryConstants;
 
 import java.util.ArrayList;
@@ -42,6 +44,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.inject.Singleton;
+import javax.jcr.Node;
 import javax.jcr.RepositoryException;
 import javax.jcr.query.InvalidQueryException;
 
@@ -267,27 +270,33 @@ public class MediaConfigurationManager extends ObservedManager
         return qr.getContent(MediaConfigurationManager.MGNL_MEDIA_TYPE);
     }
 
+    @Deprecated
+    public MediaTypeConfiguration getMediaTypeConfigurationFromMedia(Content media)
+    {
+        return getMediaTypeConfigurationFromMedia(media.getJCRNode());
+    }
+
     /**
      * Get the type configuration for a media
      * @param media media
      * @return type configuration
      */
-    public MediaTypeConfiguration getMediaTypeConfigurationFromMedia(Content media)
+    public MediaTypeConfiguration getMediaTypeConfigurationFromMedia(Node media)
     {
         try
         {
-            if (!media.getItemType().equals(MEDIA))
+            if (!StringUtils.equals(media.getPrimaryNodeType().getName(), MGNL_MEDIA_TYPE))
             {
                 return null;
             }
         }
         catch (RepositoryException e)
         {
-            log.error("Error getting item type on node {} module media", media.getHandle(), e);
+            log.error("Error getting item type on node {} module media", NodeUtil.getPathIfPossible(media), e);
             return null;
         }
 
-        return types.get(NodeDataUtil.getString(media, "type"));
+        return types.get(PropertyUtil.getString(media, "type"));
     }
 
     /**

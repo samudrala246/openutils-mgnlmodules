@@ -19,12 +19,12 @@
 
 package net.sourceforge.openutils.mgnlmedia.media.setup;
 
-import info.magnolia.cms.beans.config.ContentRepository;
 import info.magnolia.cms.core.SystemProperty;
 import info.magnolia.module.InstallContext;
 import info.magnolia.module.ModuleRegistry;
 import info.magnolia.module.delta.SetupModuleRepositoriesTask;
 import info.magnolia.module.delta.Task;
+import info.magnolia.repository.RepositoryConstants;
 import it.openutils.mgnltasks.BootstrapMissingNodesTask;
 import it.openutils.mgnltasks.ChangeExistingPropertyTask;
 import it.openutils.mgnltasks.CreateMissingPropertyTask;
@@ -88,48 +88,48 @@ public class MediaModuleVersionHandler extends SimpleModuleVersionHandler
         // tasks.add(new MoveOriginalNodeTask());
 
         tasks.add(new CreateMissingPropertyTask(
-            ContentRepository.CONFIG,
+            RepositoryConstants.CONFIG,
             "/modules/media/config",
             "singleinstance",
             Boolean.FALSE));
 
         tasks.add(new CreateMissingPropertyTask(
-            ContentRepository.CONFIG,
+            RepositoryConstants.CONFIG,
             "/modules/media/config",
             "player",
             "jwplayer5"));
 
         tasks.add(new CreateMissingPropertyTask(
-            ContentRepository.CONFIG,
+            RepositoryConstants.CONFIG,
             "/modules/media/config",
             "folderViewItemsPerPage",
             10L));
 
         // MEDIA-70 new enabled property for media type
         tasks.add(new CreateMissingPropertyTask(
-            ContentRepository.CONFIG,
+            RepositoryConstants.CONFIG,
             "/modules/media/mediatypes/image",
             "enabled",
             Boolean.TRUE));
         tasks.add(new CreateMissingPropertyTask(
-            ContentRepository.CONFIG,
+            RepositoryConstants.CONFIG,
             "/modules/media/mediatypes/video",
             "enabled",
             Boolean.TRUE));
         tasks.add(new CreateMissingPropertyTask(
-            ContentRepository.CONFIG,
+            RepositoryConstants.CONFIG,
             "/modules/media/mediatypes/youtube",
             "enabled",
             Boolean.TRUE));
         tasks.add(new CreateMissingPropertyTask(
-            ContentRepository.CONFIG,
+            RepositoryConstants.CONFIG,
             "/modules/media/mediatypes/audio",
             "enabled",
             Boolean.TRUE));
 
         // change "external video" handler
         tasks.add(new ChangeExistingPropertyTask(
-            ContentRepository.CONFIG,
+            RepositoryConstants.CONFIG,
             "/modules/media/mediatypes/youtube/handler",
             "class",
             "net.sourceforge.openutils.mgnlmedia.media.types.impl.YouTubeVideoTypeHandler",
@@ -137,7 +137,7 @@ public class MediaModuleVersionHandler extends SimpleModuleVersionHandler
 
         // change "external video" icon
         tasks.add(new ChangeExistingPropertyTask(
-            ContentRepository.CONFIG,
+            RepositoryConstants.CONFIG,
             "/modules/media/mediatypes/youtube",
             "menuIcon",
             "/.resources/media/icons/film.gif",
@@ -145,7 +145,7 @@ public class MediaModuleVersionHandler extends SimpleModuleVersionHandler
 
         // change "audio" icon
         tasks.add(new ChangeExistingPropertyTask(
-            ContentRepository.CONFIG,
+            RepositoryConstants.CONFIG,
             "/modules/media/mediatypes/audio",
             "menuIcon",
             "/.resources/media/icons/audio.gif",
@@ -153,7 +153,7 @@ public class MediaModuleVersionHandler extends SimpleModuleVersionHandler
 
         // change "video" icon
         tasks.add(new ChangeExistingPropertyTask(
-            ContentRepository.CONFIG,
+            RepositoryConstants.CONFIG,
             "/modules/media/mediatypes/video",
             "menuIcon",
             "/.resources/media/icons/film.gif",
@@ -161,7 +161,7 @@ public class MediaModuleVersionHandler extends SimpleModuleVersionHandler
 
         // change "image" icon
         tasks.add(new ChangeExistingPropertyTask(
-            ContentRepository.CONFIG,
+            RepositoryConstants.CONFIG,
             "/modules/media/mediatypes/image",
             "menuIcon",
             "/.resources/media/icons/image16.gif",
@@ -174,7 +174,7 @@ public class MediaModuleVersionHandler extends SimpleModuleVersionHandler
         tasks.add(new NodeSortTask("config", "/modules/media/mediatypes", "order"));
 
         tasks.add(new CreateMissingPropertyTask(
-            ContentRepository.CONFIG,
+            RepositoryConstants.CONFIG,
             "/modules/media/mediatypes/youtube/handler",
             "parseremotefiles",
             Boolean.TRUE));
@@ -196,7 +196,7 @@ public class MediaModuleVersionHandler extends SimpleModuleVersionHandler
 
             // extended template renderer
             tasks.add(new ChangeExistingPropertyTask(
-                ContentRepository.CONFIG,
+                RepositoryConstants.CONFIG,
                 "/modules/standard-templating-kit/template-renderers/stk",
                 "renderer",
                 "net.sourceforge.openutils.mgnlmedia.freemarker.SktSimpleMediaTemplateRenderer",
@@ -204,7 +204,7 @@ public class MediaModuleVersionHandler extends SimpleModuleVersionHandler
 
             // extended paragraph renderer
             tasks.add(new ChangeExistingPropertyTask(
-                ContentRepository.CONFIG,
+                RepositoryConstants.CONFIG,
                 "/modules/standard-templating-kit/paragraph-renderers/stk",
                 "class",
                 "net.sourceforge.openutils.mgnlmedia.freemarker.SktSimpleMediaParagraphRenderer",
@@ -219,33 +219,33 @@ public class MediaModuleVersionHandler extends SimpleModuleVersionHandler
 
         // change "playlists" icon and description
         tasks.add(new ChangeExistingPropertyTask(
-            ContentRepository.CONFIG,
+            RepositoryConstants.CONFIG,
             "/modules/adminInterface/config/menu/media/playlists",
             "icon",
             "/.resources/media/icons/ico16-playlist.png",
             "/.resources/media/icons/ico16-playlists.png"));
         tasks.add(new ChangeExistingPropertyTask(
-            ContentRepository.CONFIG,
+            RepositoryConstants.CONFIG,
             "/modules/adminInterface/config/menu/media/playlists",
             "label",
             "Playlists",
             "media.menu.playlists"));
 
         tasks.add(new CreateMissingPropertyTask(
-            ContentRepository.CONFIG,
+            RepositoryConstants.CONFIG,
             "/modules/media/config/search/filters/query",
             "wildcards",
             Boolean.TRUE));
 
         tasks.add(new ChangeExistingPropertyTask(
-            ContentRepository.CONFIG,
+            RepositoryConstants.CONFIG,
             "/modules/media/mediausedin/website",
             "nodeType",
             "mgnl:content",
             "mgnl:page"));
 
         // empty placeholder
-        tasks.add(new CreateMissingPropertyTask(ContentRepository.CONFIG, "/modules/media/config", "baseurl", ""));
+        tasks.add(new CreateMissingPropertyTask(RepositoryConstants.CONFIG, "/modules/media/config", "baseurl", ""));
 
         return tasks;
     }

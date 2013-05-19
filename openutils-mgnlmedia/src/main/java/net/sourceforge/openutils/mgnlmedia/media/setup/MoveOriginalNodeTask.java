@@ -19,21 +19,14 @@
 
 package net.sourceforge.openutils.mgnlmedia.media.setup;
 
-import info.magnolia.cms.core.Content;
-import info.magnolia.cms.core.HierarchyManager;
-import info.magnolia.cms.core.NodeData;
 import info.magnolia.cms.core.search.Query;
 import info.magnolia.context.MgnlContext;
 import info.magnolia.module.InstallContext;
 import info.magnolia.module.delta.Task;
 import info.magnolia.module.delta.TaskExecutionException;
 
-import java.io.InputStream;
-import java.util.List;
-
 import javax.jcr.RepositoryException;
-import javax.jcr.Value;
-import javax.jcr.nodetype.ConstraintViolationException;
+import javax.jcr.Session;
 
 import net.sourceforge.openutils.mgnlcriteria.jcr.query.AdvancedResult;
 import net.sourceforge.openutils.mgnlcriteria.jcr.query.AdvancedResultItem;
@@ -44,7 +37,6 @@ import net.sourceforge.openutils.mgnlmedia.media.configuration.MediaConfiguratio
 import net.sourceforge.openutils.mgnlmedia.media.lifecycle.MediaModule;
 import net.sourceforge.openutils.mgnlmedia.media.types.impl.BaseTypeHandler;
 
-import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -59,7 +51,7 @@ public class MoveOriginalNodeTask implements Task
     /**
      * Logger.
      */
-    private Logger log = LoggerFactory.getLogger(this.getClass());
+    private static Logger log = LoggerFactory.getLogger(MoveOriginalNodeTask.class);
 
     public String getName()
     {
@@ -73,12 +65,12 @@ public class MoveOriginalNodeTask implements Task
 
     public void execute(InstallContext installContext) throws TaskExecutionException
     {
-        HierarchyManager mgr = installContext.getHierarchyManager(MediaModule.REPO);
         try
         {
-            reset(mgr, "image", "image");
-            reset(mgr, "video", "video");
-            reset(mgr, "audio", "audio");
+            Session session = installContext.getJCRSession(MediaModule.REPO);
+            reset(session, "image", "image");
+            reset(session, "video", "video");
+            reset(session, "audio", "audio");
         }
         catch (RepositoryException ex)
         {
@@ -88,18 +80,17 @@ public class MoveOriginalNodeTask implements Task
 
     public static void execute() throws RepositoryException
     {
-        HierarchyManager mgr = MgnlContext.getHierarchyManager(MediaModule.REPO);
+        Session session = MgnlContext.getJCRSession(MediaModule.REPO);
 
-        reset(mgr, "image", "image");
-        reset(mgr, "video", "video");
-        reset(mgr, "audio", "audio");
+        reset(session, "image", "image");
+        reset(session, "video", "video");
+        reset(session, "audio", "audio");
     }
 
-    public static void reset(HierarchyManager queryManager, String type, String nodedataOldName)
-        throws RepositoryException
+    public static void reset(Session session, String type, String nodedataOldName) throws RepositoryException
     {
 
-        DirectJcrQuery query = JCRCriteriaFactory.createDirectJcrQuery(queryManager, "//*[@jcr:primaryType = '"
+        DirectJcrQuery query = JCRCriteriaFactory.createDirectJcrQuery(session, "//*[@jcr:primaryType = '"
             + MediaConfigurationManager.MEDIA.getSystemName()
             + "' and "
             + nodedataOldName
@@ -113,30 +104,25 @@ public class MoveOriginalNodeTask implements Task
 
         while (items.hasNext())
         {
-            Content media = items.next();
+            AdvancedResultItem media = items.next();
 
-            NodeData nd = media.getNodeData(nodedataOldName);
-            Value value = nd.getValue();
-            if (value != null)
+            if (media.hasProperty(nodedataOldName))
             {
-                InputStream stream = value.getStream();
-                NodeData ndNew = media.createNodeData(BaseTypeHandler.ORGINAL_NODEDATA_NAME, stream);
-                for (String attributeName : ((List<String>) nd.getAttributeNames()))
+                try
                 {
-                    try
-                    {
-                        ndNew.setAttribute(attributeName, nd.getAttribute(attributeName));
-                    }
-                    catch (ConstraintViolationException ex)
-                    {
-                        // go on
-                    }
+                    // it's a binary nodedata -> node
+                    session.getWorkspace().move(
+                        media.getPath() + "/" + nodedataOldName,
+                        media.getPath() + "/" + BaseTypeHandler.ORGINAL_NODEDATA_NAME);
                 }
-                IOUtils.closeQuietly(stream);
-                nd.delete();
+                catch (RepositoryException e)
+                {
+                    log.warn(
+                        "Unable to move node from {} to {}",
+                        media.getPath() + "/" + nodedataOldName,
+                        media.getPath() + "/" + BaseTypeHandler.ORGINAL_NODEDATA_NAME);
+                }
             }
-
-            media.save();
         }
     }
 }

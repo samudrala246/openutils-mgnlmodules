@@ -32,6 +32,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
+import javax.jcr.Node;
 import javax.jcr.RepositoryException;
 import javax.jcr.Value;
 import javax.servlet.http.HttpServletRequest;
@@ -75,7 +76,7 @@ public final class PlaylistIterateUtils
      * @return
      */
     @SuppressWarnings("unchecked")
-    public static Iterator<MediaNodeAndEntryPath> iterate(final Content playlistNode)
+    public static Iterator<MediaNodeAndEntryPath> iterate(final Node playlistNode)
     {
         if (playlistNode == null)
         {
@@ -136,13 +137,13 @@ public final class PlaylistIterateUtils
             {
                 return Iterators.transform(
                     playlistNode.getChildren(PlaylistConstants.PLAYLIST_ENTRY).iterator(),
-                    new Function<Content, MediaNodeAndEntryPath>()
+                    new Function<AdvancedResultItem, MediaNodeAndEntryPath>()
                     {
 
                         /**
                          * {@inheritDoc}
                          */
-                        public MediaNodeAndEntryPath apply(Content playlistEntry)
+                        public MediaNodeAndEntryPath apply(AdvancedResultItem playlistEntry)
                         {
                             String mediaUUID = NodeDataUtil.getString(playlistEntry, "media");
                             Content mediaNode = MediaEl.node(mediaUUID);
@@ -150,10 +151,10 @@ public final class PlaylistIterateUtils
                             {
                                 log.warn(
                                     "Node {} referenced by entry {} of playlist {} does not exist in media repository",
-                                    new Object[]{mediaUUID, playlistEntry.getName(), playlistNode.getHandle() });
+                                    new Object[]{mediaUUID, playlistEntry.getName(), playlistNode.getPath() });
                             }
 
-                            return new MediaNodeAndEntryPath(mediaNode, playlistEntry.getHandle());
+                            return new MediaNodeAndEntryPath(mediaNode, playlistEntry.getPath());
                         }
                     });
             }
@@ -168,14 +169,14 @@ public final class PlaylistIterateUtils
     public static class MediaNodeAndEntryPath
     {
 
-        private final Content mediaNode;
+        private final AdvancedResultItem mediaNode;
 
         private final String playlistEntryPath;
 
         /**
          * 
          */
-        public MediaNodeAndEntryPath(Content mediaNode, String playlistEntryPath)
+        public MediaNodeAndEntryPath(AdvancedResultItem mediaNode, String playlistEntryPath)
         {
             this.mediaNode = mediaNode;
             this.playlistEntryPath = playlistEntryPath;
@@ -185,7 +186,7 @@ public final class PlaylistIterateUtils
          * Returns the mediaNode.
          * @return the mediaNode
          */
-        public Content getMediaNode()
+        public AdvancedResultItem getMediaNode()
         {
             return mediaNode;
         }
@@ -280,23 +281,27 @@ public final class PlaylistIterateUtils
             }
         }
 
+        @Override
         public String[] getParameterValues(String name)
         {
             String[] value = ((String[]) paramsMap.get(name));
             return value != null ? (String[]) value.clone() : null;
         }
 
+        @Override
         public String getParameter(String name)
         {
             String[] values = (String[]) paramsMap.get(name);
             return values != null && values.length > 0 ? values[0] : null;
         }
 
+        @Override
         public Enumeration getParameterNames()
         {
             return Collections.enumeration(paramsMap.keySet());
         }
 
+        @Override
         public Map getParameterMap()
         {
             HashMap clone = (HashMap) paramsMap.clone();

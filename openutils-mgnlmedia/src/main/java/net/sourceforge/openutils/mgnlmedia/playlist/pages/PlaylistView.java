@@ -24,6 +24,7 @@ import info.magnolia.cms.i18n.I18nContentSupportFactory;
 import info.magnolia.cms.util.ContentUtil;
 import info.magnolia.cms.util.NodeDataUtil;
 import info.magnolia.context.MgnlContext;
+import info.magnolia.jcr.util.PropertyUtil;
 import info.magnolia.module.ModuleRegistry;
 
 import java.io.IOException;
@@ -42,6 +43,7 @@ import javax.jcr.RepositoryException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.openutils.mgnlcriteria.jcr.query.AdvancedResultItem;
 import net.sourceforge.openutils.mgnlmedia.media.configuration.MediaConfigurationManager;
 import net.sourceforge.openutils.mgnlmedia.media.configuration.MediaTypeConfiguration;
 import net.sourceforge.openutils.mgnlmedia.media.lifecycle.MediaModule;
@@ -202,10 +204,11 @@ public class PlaylistView extends MessagesTemplatedMVCHandler
                 playlist.setDescription(NodeDataUtil.getString(node, propNames.get("description")));
                 List<PlaylistEntryBean> entries = new ArrayList<PlaylistEntryBean>();
 
-                for (Iterator<MediaNodeAndEntryPath> iterator = PlaylistIterateUtils.iterate(node); iterator.hasNext();)
+                for (Iterator<MediaNodeAndEntryPath> iterator = PlaylistIterateUtils.iterate(node.getJCRNode()); iterator
+                    .hasNext();)
                 {
                     MediaNodeAndEntryPath item = iterator.next();
-                    Content media = item.getMediaNode();
+                    AdvancedResultItem media = item.getMediaNode();
                     if (media == null)
                     {
                         continue;
@@ -222,18 +225,18 @@ public class PlaylistView extends MessagesTemplatedMVCHandler
                         entry.setMediaDialog(typeConf.getDialog());
                     }
                     entry.setThumbnail(MediaEl.thumbnail(media));
-                    entry.setType(NodeDataUtil.getString(media, "type"));
+                    entry.setType(PropertyUtil.getString(media, "type"));
                     entry.setTitle(I18nContentSupportFactory
                         .getI18nSupport()
-                        .getNodeData(media, propNames.get("title"))
+                        .getProperty(media, propNames.get("title"))
                         .getString());
                     entry.setDescription(I18nContentSupportFactory
                         .getI18nSupport()
-                        .getNodeData(media, propNames.get("description"))
+                        .getProperty(media, propNames.get("description"))
                         .getString());
                     entry.setTags(I18nContentSupportFactory
                         .getI18nSupport()
-                        .getNodeData(media, propNames.get("tags"))
+                        .getProperty(media, propNames.get("tags"))
                         .getString());
                     entries.add(entry);
                 }
