@@ -33,9 +33,9 @@ public final class PlaylistConstants
      */
     public static final String REPO = "playlists";
 
-    private static final String MGNL_PLAYLIST_TYPE = "mgnl:playlist";
+    public static final String MGNL_PLAYLIST_TYPE = "mgnl:playlist";
 
-    private static final String MGNL_PLAYLIST_ENTRY_TYPE = "mgnl:playlistentry";
+    public static final String MGNL_PLAYLIST_ENTRY_TYPE = "mgnl:playlistentry";
 
     /**
      * Folder type

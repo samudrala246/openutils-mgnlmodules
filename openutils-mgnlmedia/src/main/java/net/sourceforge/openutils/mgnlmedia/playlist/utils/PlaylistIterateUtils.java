@@ -21,9 +21,12 @@ package net.sourceforge.openutils.mgnlmedia.playlist.utils;
 
 import info.magnolia.cms.core.Content;
 import info.magnolia.cms.core.ItemType;
+import info.magnolia.cms.core.MgnlNodeType;
 import info.magnolia.cms.util.NodeDataUtil;
 import info.magnolia.context.MgnlContext;
+import info.magnolia.jcr.predicate.AbstractPredicate;
 import info.magnolia.jcr.util.ContentMap;
+import info.magnolia.jcr.util.NodeUtil;
 import info.magnolia.jcr.util.PropertyUtil;
 
 import java.lang.reflect.Array;
@@ -48,6 +51,7 @@ import net.sourceforge.openutils.mgnlmedia.media.tags.el.MediaEl;
 import net.sourceforge.openutils.mgnlmedia.playlist.PlaylistConstants;
 
 import org.apache.commons.collections.IteratorUtils;
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -67,9 +71,6 @@ public final class PlaylistIterateUtils
      */
     private static Logger log = LoggerFactory.getLogger(PlaylistIterateUtils.class);
 
-    /**
-     * 
-     */
     private PlaylistIterateUtils()
     {
     }
@@ -91,12 +92,14 @@ public final class PlaylistIterateUtils
             if (playlistNode.hasNode("search"))
             {
                 Node searchNode = playlistNode.getNode("search");
-                Collection<Content> paramNodes = searchNode.getChildren(ItemType.CONTENTNODE);
+
+                Iterable<Node> nodes = NodeUtil.getNodes(searchNode, MgnlNodeType.NT_CONTENTNODE);
+
                 final Map<String, Object> map = new HashMap<String, Object>();
-                for (Content paramNode : paramNodes)
+                for (Node node : nodes)
                 {
-                    String paramName = NodeDataUtil.getString(paramNode, "name");
-                    Value[] jcrValues = paramNode.getNodeData("value").getValues();
+                    String paramName = PropertyUtil.getString(node, "name");
+                    Value[] jcrValues = node.getProperty("value").getValues();
                     String[] paramValues = new String[jcrValues.length];
                     for (int i = 0; i < jcrValues.length; i++)
                     {
@@ -141,28 +144,30 @@ public final class PlaylistIterateUtils
             }
             else
             {
-                return Iterators.transform(
-                    playlistNode.getChildren(PlaylistConstants.PLAYLIST_ENTRY).iterator(),
-                    new Function<AdvancedResultItem, MediaNodeAndEntryPath>()
+
+                // playlistNode.getChildren(PlaylistConstants.PLAYLIST_ENTRY).iterator(),
+                Iterable<Node> nodes = NodeUtil.getNodes(playlistNode, PlaylistConstants.MGNL_PLAYLIST_ENTRY_TYPE);
+
+                return Iterators.transform(nodes.iterator(), new Function<AdvancedResultItem, MediaNodeAndEntryPath>()
+                {
+
+                    /**
+                     * {@inheritDoc}
+                     */
+                    public MediaNodeAndEntryPath apply(AdvancedResultItem playlistEntry)
                     {
-
-                        /**
-                         * {@inheritDoc}
-                         */
-                        public MediaNodeAndEntryPath apply(AdvancedResultItem playlistEntry)
+                        String mediaUUID = PropertyUtil.getString(playlistEntry, "media");
+                        Content mediaNode = MediaEl.node(mediaUUID);
+                        if (mediaNode == null)
                         {
-                            String mediaUUID = PropertyUtil.getString(playlistEntry, "media");
-                            Content mediaNode = MediaEl.node(mediaUUID);
-                            if (mediaNode == null)
-                            {
-                                log.warn(
-                                    "Node {} referenced by entry {} of playlist {} does not exist in media repository",
-                                    new Object[]{mediaUUID, playlistEntry.getName(), playlistNode.getPath() });
-                            }
-
-                            return new MediaNodeAndEntryPath(mediaNode, playlistEntry.getPath());
+                            log.warn(
+                                "Node {} referenced by entry {} of playlist {} does not exist in media repository",
+                                new Object[]{mediaUUID, playlistEntry.getName(), playlistNode.getPath() });
                         }
-                    });
+
+                        return new MediaNodeAndEntryPath(mediaNode.getJCRNode(), playlistEntry.getPath());
+                    }
+                });
             }
         }
         catch (RepositoryException e)
@@ -175,14 +180,14 @@ public final class PlaylistIterateUtils
     public static class MediaNodeAndEntryPath
     {
 
-        private final AdvancedResultItem mediaNode;
+        private final Node mediaNode;
 
         private final String playlistEntryPath;
 
         /**
          * 
          */
-        public MediaNodeAndEntryPath(AdvancedResultItem mediaNode, String playlistEntryPath)
+        public MediaNodeAndEntryPath(Node mediaNode, String playlistEntryPath)
         {
             this.mediaNode = mediaNode;
             this.playlistEntryPath = playlistEntryPath;
@@ -192,7 +197,7 @@ public final class PlaylistIterateUtils
          * Returns the mediaNode.
          * @return the mediaNode
          */
-        public AdvancedResultItem getMediaNode()
+        public Node getMediaNode()
         {
             return mediaNode;
         }
