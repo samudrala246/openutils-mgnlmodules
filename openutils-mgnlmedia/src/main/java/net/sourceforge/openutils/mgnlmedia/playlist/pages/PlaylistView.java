@@ -40,6 +40,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import javax.jcr.Node;
 import javax.jcr.RepositoryException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -194,7 +195,7 @@ public class PlaylistView extends MessagesTemplatedMVCHandler
                     .hasNext();)
                 {
                     MediaNodeAndEntryPath item = iterator.next();
-                    AdvancedResultItem media = item.getMediaNode();
+                    Node media = item.getMediaNode();
                     if (media == null)
                     {
                         continue;
@@ -203,7 +204,7 @@ public class PlaylistView extends MessagesTemplatedMVCHandler
                     PlaylistEntryBean entry = new PlaylistEntryBean();
                     entry.setHandle(item.getPlaylistEntryPath());
                     entry.setMedia(NodeUtil.getNodeIdentifierIfPossible(media));
-                    entry.setMediaHandle(media.getHandle());
+                    entry.setMediaHandle(NodeUtil.getPathIfPossible(media));
                     MediaTypeConfiguration typeConf = MediaConfigurationManager
                         .getInstance()
                         .getMediaTypeConfigurationFromMedia(media);

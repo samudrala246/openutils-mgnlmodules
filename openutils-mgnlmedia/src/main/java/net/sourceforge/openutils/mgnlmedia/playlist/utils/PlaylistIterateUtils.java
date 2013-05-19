@@ -148,13 +148,13 @@ public final class PlaylistIterateUtils
                 // playlistNode.getChildren(PlaylistConstants.PLAYLIST_ENTRY).iterator(),
                 Iterable<Node> nodes = NodeUtil.getNodes(playlistNode, PlaylistConstants.MGNL_PLAYLIST_ENTRY_TYPE);
 
-                return Iterators.transform(nodes.iterator(), new Function<AdvancedResultItem, MediaNodeAndEntryPath>()
+                return Iterators.transform(nodes.iterator(), new Function<Node, MediaNodeAndEntryPath>()
                 {
 
                     /**
                      * {@inheritDoc}
                      */
-                    public MediaNodeAndEntryPath apply(AdvancedResultItem playlistEntry)
+                    public MediaNodeAndEntryPath apply(Node playlistEntry)
                     {
                         String mediaUUID = PropertyUtil.getString(playlistEntry, "media");
                         Content mediaNode = MediaEl.node(mediaUUID);
@@ -162,10 +162,14 @@ public final class PlaylistIterateUtils
                         {
                             log.warn(
                                 "Node {} referenced by entry {} of playlist {} does not exist in media repository",
-                                new Object[]{mediaUUID, playlistEntry.getName(), playlistNode.getPath() });
+                                new Object[]{
+                                    mediaUUID,
+                                    NodeUtil.getName(playlistEntry),
+                                    NodeUtil.getPathIfPossible(playlistNode) });
                         }
 
-                        return new MediaNodeAndEntryPath(mediaNode.getJCRNode(), playlistEntry.getPath());
+                        return new MediaNodeAndEntryPath(mediaNode.getJCRNode(), NodeUtil
+                            .getPathIfPossible(playlistEntry));
                     }
                 });
             }
