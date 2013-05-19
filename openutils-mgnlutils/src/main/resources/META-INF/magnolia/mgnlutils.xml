@@ -5,4 +5,14 @@
   <displayName>Magnolia utils module</displayName>
   <description>Useful EL functions and generic Magnolia utilities</description>
   <version>${project.version}</version>
+  <dependencies>
+    <dependency>
+      <name>core</name>
+      <version>4.5/*</version>
+    </dependency>
+    <dependency>
+      <name>criteria</name>
+      <version>5.0.1/*</version>
+    </dependency>
+  </dependencies>
 </module>
