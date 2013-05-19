@@ -1,8 +1,9 @@
 
-[#assign cms=JspTaglibs["cms-taglib"]] [@cms.mainBar dialog="simplemail-simple" /]
+[#assign cms=JspTaglibs["http://magnolia-cms.com/taglib/templating-components/cms"]] 
 <html>
 <head>
 <title>${content.title!}</title>
+[@cms.init /]
 </head>
 <body>
 <table cellpadding="0" cellspacing="0" border="0" align="center" width="100%" bgcolor="#FFF">
@@ -26,13 +27,7 @@
               </td>
               <td width="620" valign="top" align="left" bgcolor="#ffffff" style="font-family:Georgia, serif;background:#fff">
                 <div style="padding: 20px;">
-[@cms.contentNodeIterator contentNodeCollectionName="main"]
-    [@cms.editBar /]
-    [@cms.includeTemplate /]
-[/@cms.contentNodeIterator]
-[@cms.newBar contentNodeCollectionName="main" newLabel="New Content" paragraph="simplemail-text" /]
-
-
+[@cms.area name="main" /]
 </div>
               </td>
               <td width="16" bgcolor="#ffffff" style="font-family:Georgia, serif;background:#fff">

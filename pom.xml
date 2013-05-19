@@ -30,6 +30,7 @@
     <module>openutils-mgnlmedia</module>
     <module>openutils-mgnlcriteria</module>
     <module>openutils-mgnlrepoutils</module>
+    <module>openutils-mgnltests</module>
     <module>openutils-mgnlutils</module>
     <module>openutils-mgnltagcloud</module>
     <module>openutils-mgnlrules</module>

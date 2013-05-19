@@ -54,7 +54,7 @@ public class SimplemailTreeConfiguration extends WebsiteTreeConfiguration
     {
         super.prepareTree(tree, browseMode, request);
 
-        tree.addIcon(ItemType.CONTENT.getSystemName(), "/.resources/simplemail/ico16-mail.png");
+        tree.addIcon(ItemType.CONTENT.getSystemName(), "/.resources/simplemail/icons/ico16-mail.png");
         tree.addItemType(ItemType.NT_FOLDER, Tree.ICONDOCROOT + "folder.gif");
         tree.setDrawShifter(true); // for folders
     }

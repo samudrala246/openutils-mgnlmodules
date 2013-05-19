@@ -3,7 +3,7 @@
     <groupId>net.sourceforge.openutils</groupId>
     <artifactId>openutils-parent</artifactId>
     <relativePath>../openutils-parent</relativePath>
-    <version>1.12</version>
+    <version>1.13</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <packaging>jar</packaging>
@@ -24,9 +24,9 @@
   </issueManagement>
   <inceptionYear>2008</inceptionYear>
   <scm>
-    <connection>scm:svn:https://openutils.svn.sourceforge.net/svnroot/openutils/magnoliamodules/trunk/openutils-mgnlmessages</connection>
-    <developerConnection>scm:svn:https://openutils.svn.sourceforge.net/svnroot/openutils/magnoliamodules/trunk/openutils-mgnlmessages</developerConnection>
-    <url>http://openutils.svn.sourceforge.net/viewcvs.cgi/openutils/trunk/openutils-mgnlmessages</url>
+    <connection>scm:svn:svn+ssh://svn.code.sf.net/p/openutils/code/magnoliamodules/trunk/openutils-mgnlmessages</connection>
+    <developerConnection>scm:svn:svn+ssh://svn.code.sf.net/p/openutils/code/magnoliamodules/trunk/openutils-mgnlmessages</developerConnection>
+    <url>http://sourceforge.net/p/openutils/code/HEAD/tree/trunk/openutils-mgnlmessages</url>
   </scm>
   <build>
     <resources>
