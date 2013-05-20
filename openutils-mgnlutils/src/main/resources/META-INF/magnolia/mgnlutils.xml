@@ -4,6 +4,8 @@
   <name>mgnlutils</name>
   <displayName>Magnolia utils module</displayName>
   <description>Useful EL functions and generic Magnolia utilities</description>
+  <class>it.openutils.mgnlutils.setup.MgnlUtilsModule</class>
+  <versionHandler>it.openutils.mgnlutils.setup.MgnlUtilsModuleVersionHandler</versionHandler>
   <version>${project.version}</version>
   <dependencies>
     <dependency>

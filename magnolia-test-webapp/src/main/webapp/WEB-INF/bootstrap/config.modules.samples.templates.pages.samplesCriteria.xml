@@ -3,23 +3,23 @@
   <sv:property sv:name="jcr:primaryType" sv:type="Name">
     <sv:value>mgnl:contentNode</sv:value>
   </sv:property>
-  <sv:property sv:name="jcr:mixinTypes" sv:type="Name">
+  <sv:property sv:name="jcr:mixinTypes" sv:type="Name" sv:multiple="true">
     <sv:value>mix:lockable</sv:value>
   </sv:property>
   <sv:property sv:name="jcr:uuid" sv:type="String">
-    <sv:value>aaf3511c-2084-4f54-9e5a-ba0fca2a58f0</sv:value>
+    <sv:value>a09f5032-bc54-4f8b-b011-111f922119f6</sv:value>
   </sv:property>
   <sv:property sv:name="jcr:createdBy" sv:type="String">
     <sv:value>admin</sv:value>
   </sv:property>
-  <sv:property sv:name="templatePath" sv:type="String">
+  <sv:property sv:name="renderType" sv:type="String">
+    <sv:value>jsp</sv:value>
+  </sv:property>
+  <sv:property sv:name="templateScript" sv:type="String">
     <sv:value>/template_criteria/criteria.jsp</sv:value>
   </sv:property>
   <sv:property sv:name="title" sv:type="String">
     <sv:value>Sample Criteria</sv:value>
-  </sv:property>
-  <sv:property sv:name="type" sv:type="String">
-    <sv:value>jsp</sv:value>
   </sv:property>
   <sv:property sv:name="visible" sv:type="String">
     <sv:value>true</sv:value>
@@ -41,7 +41,7 @@
       <sv:value>2008-09-23T16:56:46.344+02:00</sv:value>
     </sv:property>
     <sv:property sv:name="mgnl:lastmodified" sv:type="Date">
-      <sv:value>2010-08-25T16:46:38.062+02:00</sv:value>
+      <sv:value>2013-05-19T19:46:43.497+02:00</sv:value>
     </sv:property>
   </sv:node>
 </sv:node>

@@ -29,8 +29,15 @@ public class MgnlUtilsModule implements ModuleLifecycle
      */
     public void start(ModuleLifecycleContext moduleLifecycleContext)
     {
-        log.warn("Adding EL resolver for javax.jcr.Node");
-        JspFactory.getDefaultFactory().getJspApplicationContext(servletContext).addELResolver(new NodeElResolver());
+        try
+        {
+            JspFactory.getDefaultFactory().getJspApplicationContext(servletContext).addELResolver(new NodeElResolver());
+            log.info("EL resolver for javax.jcr.Node added");
+        }
+        catch (IllegalStateException e)
+        {
+            // ignore, this means the module have been reloaded, but the webapp is already initialized
+        }
     }
 
     /**
@@ -38,7 +45,7 @@ public class MgnlUtilsModule implements ModuleLifecycle
      */
     public void stop(ModuleLifecycleContext moduleLifecycleContext)
     {
-        // TODO Auto-generated method stub
+        // nothing to do
 
     }
 

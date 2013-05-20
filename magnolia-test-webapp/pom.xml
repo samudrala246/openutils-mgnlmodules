@@ -186,12 +186,12 @@
     <dependency>
       <groupId>net.sourceforge.openutils</groupId>
       <artifactId>openutils-mgnlutils</artifactId>
-      <version>5.0.1-SNAPSHOT</version>
+      <version>5.0.2-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>net.sourceforge.openutils</groupId>
       <artifactId>openutils-mgnltagcloud</artifactId>
-      <version>5.0.0-SNAPSHOT</version>
+      <version>5.0.2-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>net.sourceforge.openutils</groupId>

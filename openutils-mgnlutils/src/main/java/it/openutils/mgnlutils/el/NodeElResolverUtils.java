@@ -3,10 +3,12 @@ package it.openutils.mgnlutils.el;
 import java.lang.reflect.InvocationTargetException;
 
 import info.magnolia.cms.beans.runtime.FileProperties;
+import info.magnolia.jcr.util.ContentMap;
 import info.magnolia.jcr.util.NodeUtil;
 import info.magnolia.link.LinkException;
 import info.magnolia.link.LinkTransformerManager;
 
+import javax.jcr.ItemNotFoundException;
 import javax.jcr.Node;
 import javax.jcr.PathNotFoundException;
 import javax.jcr.Property;
@@ -30,14 +32,49 @@ public class NodeElResolverUtils
 
     private static Logger log = LoggerFactory.getLogger(NodeElResolverUtils.class);
 
-    public static Object get(Node node, String key)
+    /**
+     * Convet the input param to a javax.jcr.Node if possible, or return null.
+     * @param base input value
+     * @return a javax.jcr.Node or null
+     */
+    @SuppressWarnings("deprecation")
+    public static Node toNode(Object base)
     {
-        if (node == null || key == null)
+        if (base == null)
         {
             return null;
         }
 
-        if (StringUtils.equalsIgnoreCase(key, "uuid")
+        Node node = null;
+        if (base instanceof Node)
+        {
+            node = (Node) base;
+        }
+        else if (base instanceof ContentMap)
+        {
+            node = ((ContentMap) base).getJCRNode();
+        }
+        else if (base instanceof info.magnolia.cms.core.Content)
+        {
+            node = ((info.magnolia.cms.core.Content) base).getJCRNode();
+        }
+        return node;
+    }
+
+    public static Object get(Object base, String key)
+    {
+
+        Node node = toNode(base);
+
+        if (node == null || key == null)
+        {
+            return null;
+        }
+        if (StringUtils.equals(key, "class"))
+        {
+            return base.getClass();
+        }
+        else if (StringUtils.equalsIgnoreCase(key, "uuid")
             || StringUtils.equalsIgnoreCase(key, "@uuid")
             || StringUtils.equalsIgnoreCase(key, "@id"))
         {
@@ -45,11 +82,35 @@ public class NodeElResolverUtils
         }
         else if (StringUtils.equals(key, "handle")
             || StringUtils.equals(key, "@handle")
-            || StringUtils.equals(key, "@path"))
+            || StringUtils.equals(key, "@path")
+            || StringUtils.equals(key, "path"))
         {
             return NodeUtil.getPathIfPossible(node);
         }
-        else if (StringUtils.equals(key, "@level") || StringUtils.equals(key, "@depth"))
+        else if (StringUtils.equals(key, "JCRNode"))
+        {
+            // contentMap/Content method
+            return node;
+        }
+        else if (StringUtils.equals(key, "@name") || StringUtils.equals(key, "name"))
+        {
+            return NodeUtil.getName(node);
+        }
+        else if (StringUtils.equals(key, "@nodeType"))
+        {
+            try
+            {
+                return node.getPrimaryNodeType();
+            }
+            catch (RepositoryException e)
+            {
+                // ignore
+            }
+        }
+
+        else if (StringUtils.equals(key, "level")
+            || StringUtils.equals(key, "@level")
+            || StringUtils.equals(key, "@depth"))
         {
             try
             {
@@ -63,7 +124,28 @@ public class NodeElResolverUtils
 
         try
         {
-            Object property = BeanUtils.getProperty(node, key);
+            Object property = PropertyUtils.getProperty(base, key);
+
+            // the Node class has a property with this name, stop here
+            return property;
+        }
+        catch (IllegalAccessException e)
+        {
+            // ignore, we tried and failed
+        }
+        catch (NoSuchMethodException e)
+        {
+            // ignore, we tried and failed
+        }
+        catch (InvocationTargetException e)
+        {
+            // ignore, we tried and failed
+        }
+
+        try
+        {
+            // try again with node
+            Object property = PropertyUtils.getProperty(node, key);
 
             // the Node class has a property with this name, stop here
             return property;

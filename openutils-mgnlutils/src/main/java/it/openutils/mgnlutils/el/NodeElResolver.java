@@ -63,44 +63,16 @@ public class NodeElResolver extends javax.el.ELResolver
             return null;
         }
 
-        Node node = toNode(base);
-
-        if (node != null)
+        if (NodeElResolverUtils.toNode(base) != null)
         {
             context.setPropertyResolved(true);
-            return NodeElResolverUtils.get(node, ObjectUtils.toString(property));
+            Object result = NodeElResolverUtils.get(base, ObjectUtils.toString(property));
+
+            log.debug("getValue {} {} = {}", new Object[]{base, property, result });
+            return result;
         }
 
         return null;
-    }
-
-    /**
-     * Convet the input param to a javax.jcr.Node if possible, or return null.
-     * @param base input value
-     * @return a javax.jcr.Node or null
-     */
-    @SuppressWarnings("deprecation")
-    private Node toNode(Object base)
-    {
-        if (base == null)
-        {
-            return null;
-        }
-
-        Node node = null;
-        if (base instanceof Node)
-        {
-            node = (Node) base;
-        }
-        else if (base instanceof ContentMap)
-        {
-            node = ((ContentMap) base).getJCRNode();
-        }
-        else if (base instanceof info.magnolia.cms.core.Content)
-        {
-            node = ((info.magnolia.cms.core.Content) base).getJCRNode();
-        }
-        return node;
     }
 
     /**
@@ -109,7 +81,7 @@ public class NodeElResolver extends javax.el.ELResolver
     @Override
     public Class< ? > getType(ELContext context, Object base, Object property)
     {
-        if (toNode(base) != null)
+        if (NodeElResolverUtils.toNode(base) != null)
         {
             context.setPropertyResolved(true);
             return Object.class;
@@ -128,7 +100,7 @@ public class NodeElResolver extends javax.el.ELResolver
             return null;
         }
 
-        Node node = toNode(base);
+        Node node = NodeElResolverUtils.toNode(base);
         if (node != null)
         {
             List<FeatureDescriptor> list = new ArrayList<FeatureDescriptor>();
@@ -179,7 +151,7 @@ public class NodeElResolver extends javax.el.ELResolver
     @Override
     public Class< ? > getCommonPropertyType(ELContext context, Object base)
     {
-        if (toNode(base) != null)
+        if (NodeElResolverUtils.toNode(base) != null)
         {
             return Object.class;
         }

@@ -46,10 +46,10 @@
     <priority value="INFO" />
   </category>
   <category name="info.magnolia.module.admininterface.commands.ActivationCommand">
-    <priority value="DEBUG" />
+    <priority value="INFO" />
   </category>
   <category name="info.magnolia.cms.i18n.AbstractMessagesImpl">
-    <priority value="DEBUG" />
+    <priority value="INFO" />
   </category>
   <category name="it.openutils.mgnlutils.el">
     <priority value="DEBUG" />

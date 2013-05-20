@@ -19,14 +19,14 @@
 
 package it.openutils.mgnlutils.setup;
 
-import it.openutils.mgnltasks.SimpleModuleVersionHandler;
+import it.openutils.mgnltasks.DiffSimpleModuleVersionHandler;
 
 
 /**
  * @author fgiust
  * @version $Id$
  */
-public class MgnlUtilsModuleVersionHandler extends SimpleModuleVersionHandler
+public class MgnlUtilsModuleVersionHandler extends DiffSimpleModuleVersionHandler
 {
 
 }
