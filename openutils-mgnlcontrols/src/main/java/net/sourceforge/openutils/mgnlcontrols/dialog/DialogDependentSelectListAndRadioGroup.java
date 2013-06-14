@@ -28,7 +28,7 @@ import javax.jcr.RepositoryException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.openutils.mgnlcontrols.dialog.ConfigurableFreemarkerDialog;
+import org.apache.commons.lang.StringUtils;
 
 
 /**
@@ -116,6 +116,12 @@ public class DialogDependentSelectListAndRadioGroup extends ConfigurableFreemark
         super.init(request, response, websiteNode, configNode);
         getDependentSelectList().init(request, response, websiteNode, configNode);
         getRadioGroup().init(request, response, websiteNode, configNode);
+        if (StringUtils.isEmpty(getConfigValue("saveHandler")))
+        {
+            setConfig(
+                "saveHandler",
+                "net.sourceforge.openutils.mgnlcontrols.dialog.DialogDependentSelectListSaveHandler");
+        }
     }
 
     /**

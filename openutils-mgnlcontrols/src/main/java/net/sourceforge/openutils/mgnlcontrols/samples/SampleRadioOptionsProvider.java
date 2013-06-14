@@ -12,7 +12,7 @@ import javax.jcr.LoginException;
 import javax.jcr.Node;
 import javax.jcr.RepositoryException;
 
-import net.sourceforge.openutils.mgnlcontrols.dialog.DialogDependentSelectList;
+import net.sourceforge.openutils.mgnlcontrols.dialog.DialogRadioGroup;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,26 +22,24 @@ import org.slf4j.LoggerFactory;
  * @author diego
  * @version $Id: $
  */
-public class SampleSelectOptionsProvider implements DialogDependentSelectList.SelectOptionsProvider
+public class SampleRadioOptionsProvider implements DialogRadioGroup.RadioOptionsProvider
 {
 
     /**
      * Logger.
      */
-    private static final Logger log = LoggerFactory.getLogger(SampleSelectOptionsProvider.class);
+    private static final Logger log = LoggerFactory.getLogger(SampleRadioOptionsProvider.class);
 
     /**
      * {@inheritDoc}
      */
-    public Map<String, String> getSelectOptions(String[] treePathValues, DialogControl dialogControl)
+    public Map<String, String> getRadioOptions(DialogControl dialogControl)
     {
         Map<String, String> options = new LinkedHashMap<String, String>();
         try
         {
-            Node parent = treePathValues.length > 0 ? NodeUtil.getNodeByIdentifier(
-                "config",
-                treePathValues[treePathValues.length - 1]) : MgnlContext.getJCRSession("config").getRootNode();
-            for (Iterator<Node> iter = NodeUtil.getNodes(parent, "mgnl:content").iterator(); iter.hasNext();)
+            Node parent = MgnlContext.getJCRSession("website").getRootNode();
+            for (Iterator<Node> iter = NodeUtil.getNodes(parent, "mgnl:page").iterator(); iter.hasNext();)
             {
                 Node node = iter.next();
                 options.put(node.getIdentifier(), node.getName());

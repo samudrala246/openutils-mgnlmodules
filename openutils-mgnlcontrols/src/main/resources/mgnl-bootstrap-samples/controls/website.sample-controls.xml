@@ -29,7 +29,7 @@
       <sv:value>2010-05-11T18:45:03.281+02:00</sv:value>
     </sv:property>
     <sv:property sv:name="mgnl:lastmodified" sv:type="Date">
-      <sv:value>2013-06-14T16:02:47.597+02:00</sv:value>
+      <sv:value>2013-06-14T16:45:39.733+02:00</sv:value>
     </sv:property>
     <sv:property sv:name="mgnl:template" sv:type="String">
       <sv:value>controls:pages/sampleControls</sv:value>
@@ -62,7 +62,7 @@
         <sv:value>2010-05-11T18:55:40.453+02:00</sv:value>
       </sv:property>
       <sv:property sv:name="mgnl:lastmodified" sv:type="Date">
-        <sv:value>2013-06-14T16:02:47.597+02:00</sv:value>
+        <sv:value>2013-06-14T16:45:39.732+02:00</sv:value>
       </sv:property>
     </sv:node>
     <sv:node sv:name="0">
@@ -231,6 +231,21 @@ world	/demo-project.html	1be12547-ad82-4c83-8396-213466ceb003	&lt;p&gt;consectet
       <sv:property sv:name="jcr:uuid" sv:type="String">
         <sv:value>2f0eb337-36c7-4dc6-bdd8-4a904834d038</sv:value>
       </sv:property>
+      <sv:property sv:name="bar" sv:type="String">
+        <sv:value>1e1df947-3a2b-437c-8e38-d0a03d4c41c0</sv:value>
+      </sv:property>
+      <sv:property sv:name="baz" sv:type="String">
+        <sv:value>9c9b6148-f018-49f9-b674-102b1f4318eb</sv:value>
+      </sv:property>
+      <sv:property sv:name="bazSelect0" sv:type="String">
+        <sv:value>2f363acf-792e-4e2f-9fdb-6a52853b44f0</sv:value>
+      </sv:property>
+      <sv:property sv:name="bazSelect1" sv:type="String">
+        <sv:value>ea1cf7df-1bcf-4b47-b7bc-f4403daa50e6</sv:value>
+      </sv:property>
+      <sv:property sv:name="bazSelect2" sv:type="String">
+        <sv:value>9d29a284-9502-43a8-beba-c57fac3b462f</sv:value>
+      </sv:property>
       <sv:property sv:name="foo" sv:type="String">
         <sv:value>46b21a36-f8c2-4193-b23e-17f06de93932</sv:value>
       </sv:property>
@@ -242,9 +257,6 @@ world	/demo-project.html	1be12547-ad82-4c83-8396-213466ceb003	&lt;p&gt;consectet
       </sv:property>
       <sv:property sv:name="fooSelect2" sv:type="String">
         <sv:value>9d29a284-9502-43a8-beba-c57fac3b462f</sv:value>
-      </sv:property>
-      <sv:property sv:name="fooSelect3" sv:type="String">
-        <sv:value>46b21a36-f8c2-4193-b23e-17f06de93932</sv:value>
       </sv:property>
       <sv:property sv:name="jcr:createdBy" sv:type="String">
         <sv:value>superuser</sv:value>
@@ -263,7 +275,7 @@ world	/demo-project.html	1be12547-ad82-4c83-8396-213466ceb003	&lt;p&gt;consectet
           <sv:value>2013-06-14T16:00:43.989+02:00</sv:value>
         </sv:property>
         <sv:property sv:name="mgnl:lastmodified" sv:type="Date">
-          <sv:value>2013-06-14T16:02:47.596+02:00</sv:value>
+          <sv:value>2013-06-14T16:45:39.732+02:00</sv:value>
         </sv:property>
         <sv:property sv:name="mgnl:template" sv:type="String">
           <sv:value>controls:components/samples-dependentSelectList</sv:value>
