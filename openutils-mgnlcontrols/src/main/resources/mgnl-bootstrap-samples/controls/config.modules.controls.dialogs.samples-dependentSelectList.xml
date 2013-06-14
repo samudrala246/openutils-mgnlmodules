@@ -103,7 +103,7 @@
         <sv:value>dependentSelectList</sv:value>
       </sv:property>
       <sv:property sv:name="jcr:createdBy" sv:type="String">
-        <sv:value>superuser</sv:value>
+        <sv:value>admin</sv:value>
       </sv:property>
       <sv:property sv:name="label" sv:type="String">
         <sv:value>Foo</sv:value>
@@ -116,7 +116,7 @@
           <sv:value>mgnl:metaData</sv:value>
         </sv:property>
         <sv:property sv:name="jcr:createdBy" sv:type="String">
-          <sv:value>superuser</sv:value>
+          <sv:value>admin</sv:value>
         </sv:property>
         <sv:property sv:name="mgnl:authorid" sv:type="String">
           <sv:value>superuser</sv:value>
@@ -142,8 +142,11 @@
       <sv:property sv:name="controlType" sv:type="String">
         <sv:value>radioGroup</sv:value>
       </sv:property>
+      <sv:property sv:name="itemsPerPage" sv:type="String">
+        <sv:value>5</sv:value>
+      </sv:property>
       <sv:property sv:name="jcr:createdBy" sv:type="String">
-        <sv:value>superuser</sv:value>
+        <sv:value>admin</sv:value>
       </sv:property>
       <sv:property sv:name="label" sv:type="String">
         <sv:value>Bar</sv:value>
@@ -156,7 +159,7 @@
           <sv:value>mgnl:metaData</sv:value>
         </sv:property>
         <sv:property sv:name="jcr:createdBy" sv:type="String">
-          <sv:value>superuser</sv:value>
+          <sv:value>admin</sv:value>
         </sv:property>
         <sv:property sv:name="mgnl:activated" sv:type="Boolean">
           <sv:value>false</sv:value>
@@ -168,7 +171,7 @@
           <sv:value>2013-06-14T15:54:03.927+02:00</sv:value>
         </sv:property>
         <sv:property sv:name="mgnl:lastmodified" sv:type="Date">
-          <sv:value>2013-06-14T16:35:32.392+02:00</sv:value>
+          <sv:value>2013-06-14T17:40:38.218+02:00</sv:value>
         </sv:property>
       </sv:node>
     </sv:node>
@@ -185,8 +188,11 @@
       <sv:property sv:name="controlType" sv:type="String">
         <sv:value>dependentSelectListAndRadioGroup</sv:value>
       </sv:property>
+      <sv:property sv:name="itemsPerPage" sv:type="String">
+        <sv:value>5</sv:value>
+      </sv:property>
       <sv:property sv:name="jcr:createdBy" sv:type="String">
-        <sv:value>superuser</sv:value>
+        <sv:value>admin</sv:value>
       </sv:property>
       <sv:property sv:name="label" sv:type="String">
         <sv:value>Baz</sv:value>
@@ -202,7 +208,7 @@
           <sv:value>mgnl:metaData</sv:value>
         </sv:property>
         <sv:property sv:name="jcr:createdBy" sv:type="String">
-          <sv:value>superuser</sv:value>
+          <sv:value>admin</sv:value>
         </sv:property>
         <sv:property sv:name="mgnl:activated" sv:type="Boolean">
           <sv:value>false</sv:value>
@@ -214,7 +220,7 @@
           <sv:value>2013-06-14T15:54:03.927+02:00</sv:value>
         </sv:property>
         <sv:property sv:name="mgnl:lastmodified" sv:type="Date">
-          <sv:value>2013-06-14T16:43:16.185+02:00</sv:value>
+          <sv:value>2013-06-14T17:40:48.550+02:00</sv:value>
         </sv:property>
       </sv:node>
     </sv:node>

@@ -9,11 +9,14 @@
 [/#list]
 [#assign refresh = request.getParameter("dependentSelectListCK")?has_content]
 [#assign found = false]
-[#list radioOptions?keys as key]
+[#list radioOptions.items?keys as key]
   [#assign checked = (!refresh && key = value!) || (refresh && key = request.getParameter(name)!)]
   [#assign found = found || checked]
-<input type="radio" id="${name}_${key?html!}" name="${name}" value="${key?html!}"[#if checked] checked="checked"[/#if] />${radioOptions[key]!}<br />
+<input type="radio" id="${name}_${key?html!}" name="${name}" value="${key?html!}"[#if checked] checked="checked"[/#if] />${radioOptions.items[key]!}<br />
 [/#list]
+[#if radioOptions.more]
+<a href="#" id="${name}More">More</a>
+[/#if]
 [#if !refresh]
   [#if !found]
 <input type="hidden" name="${name}" value="${value?html}" />
