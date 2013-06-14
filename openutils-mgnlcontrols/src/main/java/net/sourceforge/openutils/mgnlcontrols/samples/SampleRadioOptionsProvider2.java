@@ -59,6 +59,7 @@ public class SampleRadioOptionsProvider2 implements DialogRadioGroup.RadioOption
                 {
                     Node node = iter.next();
                     options.getItems().put(node.getIdentifier(), node.getName());
+                    i++;
                 }
                 options.setMore(iter.hasNext());
             }
