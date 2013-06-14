@@ -1,9 +1,8 @@
-<jsp:root version="2.0" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:cms="urn:jsptld:cms-taglib"
-  xmlns:c="urn:jsptld:http://java.sun.com/jsp/jstl/core" xmlns:fmt="urn:jsptld:http://java.sun.com/jsp/jstl/fmt"
-  xmlns:fn="urn:jsptld:http://java.sun.com/jsp/jstl/functions" xmlns:cmsu="urn:jsptld:cms-util-taglib"
-  xmlns:cmsfn="http://www.magnolia.info/tlds/cmsfn-taglib.tld" xmlns:mu="mgnlutils">
+<jsp:root version="2.0" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:c="http://java.sun.com/jsp/jstl/core"
+  xmlns:fmt="http://java.sun.com/jsp/jstl/fmt" xmlns:fn="http://java.sun.com/jsp/jstl/functions" xmlns:cms="http://magnolia-cms.com/taglib/templating-components/cms"
+  xmlns:cmsfn="http://magnolia-cms.com/taglib/templating-components/cmsfn" xmlns:media="http://net.sourceforge.openutils/mgnlMedia"
+  xmlns:mu="mgnlutils">
   <jsp:directive.page contentType="text/html; charset=UTF-8" session="false" />
-  <cms:setNode var="node" />
   <table cellspacing="0" border="1">
     <thead>
       <tr>
@@ -19,7 +18,7 @@
       </tr>
     </thead>
     <tbody>
-      <c:forEach var="row" items="${mu:splitAndTokenize(node.grid)}">
+      <c:forEach var="row" items="${mu:splitAndTokenize(content.grid)}">
         <tr>
 
           <!-- text -->
@@ -45,10 +44,12 @@
           <!-- file -->
           <td>
             <c:if test="${!empty row[4]}">
-              <cms:setNode var="filesNode" path="${fn:substringBefore(row[4], '/grid_files/')}/grid_files" />
+              <c:set var="path" value="${fn:substringBefore(row[4], '/grid_files/')}/grid_files" />
+              <c:set var="filesNode" value="${cmsfn:content(path, 'website')}" />
               <c:set var="property" value="${fn:substringBefore(fn:substringAfter(row[4], '/grid_files/'), '/')}" />
               <a href="${pageContext.request.contextPath}${row[4]}">
-                <cms:out contentNode="${filesNode}" nodeDataName="${property}" fileProperty="name" />
+                <!--cms:out contentNode="${filesNode}" nodeDataName="${property}" fileProperty="name" /-->
+                ${filesNode[property].fileName}
               </a>
             </c:if>
           </td>

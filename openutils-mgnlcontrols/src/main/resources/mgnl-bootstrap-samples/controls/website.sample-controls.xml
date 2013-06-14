@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <sv:node sv:name="sample-controls" xmlns:sv="http://www.jcp.org/jcr/sv/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <sv:property sv:name="jcr:primaryType" sv:type="Name">
-    <sv:value>mgnl:content</sv:value>
+    <sv:value>mgnl:page</sv:value>
   </sv:property>
   <sv:property sv:name="jcr:mixinTypes" sv:type="Name" sv:multiple="true">
     <sv:value>mix:lockable</sv:value>
@@ -10,7 +10,7 @@
     <sv:value>1e1df947-3a2b-437c-8e38-d0a03d4c41c0</sv:value>
   </sv:property>
   <sv:property sv:name="jcr:createdBy" sv:type="String">
-    <sv:value>admin</sv:value>
+    <sv:value>superuser</sv:value>
   </sv:property>
   <sv:property sv:name="title" sv:type="String">
     <sv:value>Controls sample</sv:value>
@@ -20,7 +20,7 @@
       <sv:value>mgnl:metaData</sv:value>
     </sv:property>
     <sv:property sv:name="jcr:createdBy" sv:type="String">
-      <sv:value>admin</sv:value>
+      <sv:value>superuser</sv:value>
     </sv:property>
     <sv:property sv:name="mgnl:authorid" sv:type="String">
       <sv:value>superuser</sv:value>
@@ -29,7 +29,7 @@
       <sv:value>2010-05-11T18:45:03.281+02:00</sv:value>
     </sv:property>
     <sv:property sv:name="mgnl:lastmodified" sv:type="Date">
-      <sv:value>2013-06-14T11:08:44.343+02:00</sv:value>
+      <sv:value>2013-06-14T15:14:54.258+02:00</sv:value>
     </sv:property>
     <sv:property sv:name="mgnl:template" sv:type="String">
       <sv:value>controls:pages/sampleControls</sv:value>
@@ -37,7 +37,7 @@
   </sv:node>
   <sv:node sv:name="main">
     <sv:property sv:name="jcr:primaryType" sv:type="Name">
-      <sv:value>mgnl:contentNode</sv:value>
+      <sv:value>mgnl:area</sv:value>
     </sv:property>
     <sv:property sv:name="jcr:mixinTypes" sv:type="Name" sv:multiple="true">
       <sv:value>mix:lockable</sv:value>
@@ -46,14 +46,14 @@
       <sv:value>04bed0be-23ab-4b18-b581-04f1670b59ad</sv:value>
     </sv:property>
     <sv:property sv:name="jcr:createdBy" sv:type="String">
-      <sv:value>admin</sv:value>
+      <sv:value>superuser</sv:value>
     </sv:property>
     <sv:node sv:name="MetaData">
       <sv:property sv:name="jcr:primaryType" sv:type="Name">
         <sv:value>mgnl:metaData</sv:value>
       </sv:property>
       <sv:property sv:name="jcr:createdBy" sv:type="String">
-        <sv:value>admin</sv:value>
+        <sv:value>superuser</sv:value>
       </sv:property>
       <sv:property sv:name="mgnl:authorid" sv:type="String">
         <sv:value>superuser</sv:value>
@@ -62,12 +62,12 @@
         <sv:value>2010-05-11T18:55:40.453+02:00</sv:value>
       </sv:property>
       <sv:property sv:name="mgnl:lastmodified" sv:type="Date">
-        <sv:value>2010-06-21T17:46:04.175+02:00</sv:value>
+        <sv:value>2013-06-14T14:55:50.194+02:00</sv:value>
       </sv:property>
     </sv:node>
     <sv:node sv:name="0">
       <sv:property sv:name="jcr:primaryType" sv:type="Name">
-        <sv:value>mgnl:contentNode</sv:value>
+        <sv:value>mgnl:component</sv:value>
       </sv:property>
       <sv:property sv:name="jcr:mixinTypes" sv:type="Name" sv:multiple="true">
         <sv:value>mix:lockable</sv:value>
@@ -97,14 +97,14 @@ world	/demo-project.html	1be12547-ad82-4c83-8396-213466ceb003	&lt;p&gt;consectet
 								</sv:value>
       </sv:property>
       <sv:property sv:name="jcr:createdBy" sv:type="String">
-        <sv:value>admin</sv:value>
+        <sv:value>superuser</sv:value>
       </sv:property>
       <sv:node sv:name="MetaData">
         <sv:property sv:name="jcr:primaryType" sv:type="Name">
           <sv:value>mgnl:metaData</sv:value>
         </sv:property>
         <sv:property sv:name="jcr:createdBy" sv:type="String">
-          <sv:value>admin</sv:value>
+          <sv:value>superuser</sv:value>
         </sv:property>
         <sv:property sv:name="mgnl:authorid" sv:type="String">
           <sv:value>superuser</sv:value>
@@ -116,7 +116,7 @@ world	/demo-project.html	1be12547-ad82-4c83-8396-213466ceb003	&lt;p&gt;consectet
           <sv:value>2010-06-21T17:46:04.175+02:00</sv:value>
         </sv:property>
         <sv:property sv:name="mgnl:template" sv:type="String">
-          <sv:value>samples-grid</sv:value>
+          <sv:value>controls:components/samples-grid</sv:value>
         </sv:property>
       </sv:node>
       <sv:node sv:name="grid_files">
@@ -130,14 +130,14 @@ world	/demo-project.html	1be12547-ad82-4c83-8396-213466ceb003	&lt;p&gt;consectet
           <sv:value>d71bd42f-e207-4f67-bd9b-bab73a5e83f3</sv:value>
         </sv:property>
         <sv:property sv:name="jcr:createdBy" sv:type="String">
-          <sv:value>admin</sv:value>
+          <sv:value>superuser</sv:value>
         </sv:property>
         <sv:node sv:name="MetaData">
           <sv:property sv:name="jcr:primaryType" sv:type="Name">
             <sv:value>mgnl:metaData</sv:value>
           </sv:property>
           <sv:property sv:name="jcr:createdBy" sv:type="String">
-            <sv:value>admin</sv:value>
+            <sv:value>superuser</sv:value>
           </sv:property>
           <sv:property sv:name="mgnl:creationdate" sv:type="Date">
             <sv:value>2010-05-11T18:55:40.515+02:00</sv:value>
