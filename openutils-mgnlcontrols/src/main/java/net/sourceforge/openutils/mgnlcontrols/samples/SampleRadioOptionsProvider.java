@@ -39,8 +39,8 @@ public class SampleRadioOptionsProvider implements DialogRadioGroup.RadioOptions
         options.setMore(false);
         try
         {
-            Node parent = MgnlContext.getJCRSession("website").getRootNode();
-            Iterator<Node> iter = NodeUtil.getNodes(parent, "mgnl:page").iterator();
+            Node parent = MgnlContext.getJCRSession("config").getNode("/modules/controls/gridColumnTypes");
+            Iterator<Node> iter = NodeUtil.getNodes(parent, "mgnl:contentNode").iterator();
             int start = itemsPerPage > 0 ? Math.max(pageNumberStartingFromOne - 1, 0) * itemsPerPage : 0;
             int i = 0;
             while (i < start && iter.hasNext())
