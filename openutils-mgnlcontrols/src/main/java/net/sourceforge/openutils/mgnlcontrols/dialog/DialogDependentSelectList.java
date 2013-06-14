@@ -33,8 +33,6 @@ import javax.jcr.RepositoryException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.openutils.mgnlcontrols.dialog.ConfigurableFreemarkerDialog;
-
 import org.apache.commons.lang.StringUtils;
 
 
@@ -172,6 +170,12 @@ public class DialogDependentSelectList extends ConfigurableFreemarkerDialog
         throws RepositoryException
     {
         super.init(request, response, websiteNode, configNode);
+        if (StringUtils.isEmpty(getConfigValue("saveHandler")))
+        {
+            setConfig(
+                "saveHandler",
+                "net.sourceforge.openutils.mgnlcontrols.dialog.DialogDependentSelectListSaveHandler");
+        }
     }
 
     /**

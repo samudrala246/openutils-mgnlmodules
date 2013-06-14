@@ -3,7 +3,7 @@
 <select style="width:100%;" class="mgnlDialogControlSelect" id="${paramSelect}" name="${paramSelect}">
   <option value="">- select -</option>
   [#list options?keys as key]
-  <option value="${key?html!}"[#if key = request.getParameter(paramSelect)!] selected="selected"[/#if]>${options[key]!}</option>
+  <option value="${key?html!}"[#if key = treePathValues[options_index]!] selected="selected"[/#if]>${options[key]!}</option>
   [/#list]
 </select>
 [/#list]
