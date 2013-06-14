@@ -6,7 +6,6 @@ import info.magnolia.jcr.util.NodeUtil;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.jcr.Node;
 import javax.jcr.RepositoryException;
@@ -33,9 +32,12 @@ public class SampleRadioOptionsProvider2 implements DialogRadioGroup.RadioOption
     /**
      * {@inheritDoc}
      */
-    public Map<String, String> getRadioOptions(DialogControl dialogControl)
+    public DialogRadioGroup.RadioOptions getRadioOptions(int itemsPerPage, int pageNumberStartingFromOne,
+        DialogControl dialogControl)
     {
-        Map<String, String> options = new LinkedHashMap<String, String>();
+        DialogRadioGroup.RadioOptions options = new DialogRadioGroup.RadioOptions();
+        options.setItems(new LinkedHashMap<String, String>());
+        options.setMore(false);
         List<String> treePathValues = ((DialogDependentSelectListAndRadioGroup) dialogControl)
             .getDependentSelectList()
             .getTreePathValues();
@@ -44,11 +46,21 @@ public class SampleRadioOptionsProvider2 implements DialogRadioGroup.RadioOption
             try
             {
                 Node parent = NodeUtil.getNodeByIdentifier("config", treePathValues.get(treePathValues.size() - 1));
-                for (Iterator<Node> iter = NodeUtil.getNodes(parent, "mgnl:contentNode").iterator(); iter.hasNext();)
+                Iterator<Node> iter = NodeUtil.getNodes(parent, "mgnl:contentNode").iterator();
+                int start = itemsPerPage > 0 ? Math.max(pageNumberStartingFromOne - 1, 0) * itemsPerPage : 0;
+                int i = 0;
+                while (i < start && iter.hasNext())
+                {
+                    iter.next();
+                    i++;
+                }
+                int end = itemsPerPage > 0 ? start + itemsPerPage : 0;
+                while ((end == 0 || i < end) && iter.hasNext())
                 {
                     Node node = iter.next();
-                    options.put(node.getIdentifier(), node.getName());
+                    options.getItems().put(node.getIdentifier(), node.getName());
                 }
+                options.setMore(iter.hasNext());
             }
             catch (RepositoryException e)
             {

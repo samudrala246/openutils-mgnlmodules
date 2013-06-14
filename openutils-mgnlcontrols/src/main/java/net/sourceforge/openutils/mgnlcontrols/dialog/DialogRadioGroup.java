@@ -30,9 +30,8 @@ import javax.jcr.RepositoryException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.openutils.mgnlcontrols.dialog.ConfigurableFreemarkerDialog;
-
 import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang.math.NumberUtils;
 
 
 /**
@@ -43,7 +42,7 @@ public class DialogRadioGroup extends ConfigurableFreemarkerDialog
 
     private RadioOptionsProvider radioOptionsProvider;
 
-    private Map<String, String> radioOptions;
+    private RadioOptions radioOptions;
 
     /**
      * Returns the radioOptionsProvider.
@@ -77,11 +76,14 @@ public class DialogRadioGroup extends ConfigurableFreemarkerDialog
      * Returns the radioOptions.
      * @return the radioOptions
      */
-    public Map<String, String> getRadioOptions()
+    public RadioOptions getRadioOptions()
     {
         if (radioOptions == null)
         {
-            radioOptions = getRadioOptionsProvider().getRadioOptions(getThisDialogControl());
+            radioOptions = getRadioOptionsProvider().getRadioOptions(
+                NumberUtils.toInt(getConfigValue("itemsPerPage")),
+                NumberUtils.toInt(getRequest().getParameter("radioGroupPage"), 1),
+                getThisDialogControl());
         }
         return radioOptions;
     }
@@ -123,6 +125,51 @@ public class DialogRadioGroup extends ConfigurableFreemarkerDialog
     public interface RadioOptionsProvider
     {
 
-        public Map<String, String> getRadioOptions(DialogControl dialogControl);
+        public RadioOptions getRadioOptions(int itemsPerPage, int pageNumberStartingFromOne, DialogControl dialogControl);
+    }
+
+    public static class RadioOptions
+    {
+
+        Map<String, String> items;
+
+        boolean more;
+
+        /**
+         * Returns the items.
+         * @return the items
+         */
+        public Map<String, String> getItems()
+        {
+            return items;
+        }
+
+        /**
+         * Sets the items.
+         * @param items the items to set
+         */
+        public void setItems(Map<String, String> items)
+        {
+            this.items = items;
+        }
+
+        /**
+         * Returns the more.
+         * @return the more
+         */
+        public boolean isMore()
+        {
+            return more;
+        }
+
+        /**
+         * Sets the more.
+         * @param more the more to set
+         */
+        public void setMore(boolean more)
+        {
+            this.more = more;
+        }
+
     }
 }

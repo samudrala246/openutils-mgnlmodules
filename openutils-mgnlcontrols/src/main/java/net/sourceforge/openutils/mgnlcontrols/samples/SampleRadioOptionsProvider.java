@@ -6,9 +6,7 @@ import info.magnolia.jcr.util.NodeUtil;
 
 import java.util.Iterator;
 import java.util.LinkedHashMap;
-import java.util.Map;
 
-import javax.jcr.LoginException;
 import javax.jcr.Node;
 import javax.jcr.RepositoryException;
 
@@ -33,22 +31,30 @@ public class SampleRadioOptionsProvider implements DialogRadioGroup.RadioOptions
     /**
      * {@inheritDoc}
      */
-    public Map<String, String> getRadioOptions(DialogControl dialogControl)
+    public DialogRadioGroup.RadioOptions getRadioOptions(int itemsPerPage, int pageNumberStartingFromOne,
+        DialogControl dialogControl)
     {
-        Map<String, String> options = new LinkedHashMap<String, String>();
+        DialogRadioGroup.RadioOptions options = new DialogRadioGroup.RadioOptions();
+        options.setItems(new LinkedHashMap<String, String>());
+        options.setMore(false);
         try
         {
             Node parent = MgnlContext.getJCRSession("website").getRootNode();
-            for (Iterator<Node> iter = NodeUtil.getNodes(parent, "mgnl:page").iterator(); iter.hasNext();)
+            Iterator<Node> iter = NodeUtil.getNodes(parent, "mgnl:page").iterator();
+            int start = itemsPerPage > 0 ? Math.max(pageNumberStartingFromOne - 1, 0) * itemsPerPage : 0;
+            int i = 0;
+            while (i < start && iter.hasNext())
+            {
+                iter.next();
+                i++;
+            }
+            int end = itemsPerPage > 0 ? start + itemsPerPage : 0;
+            while ((end == 0 || i < end) && iter.hasNext())
             {
                 Node node = iter.next();
-                options.put(node.getIdentifier(), node.getName());
+                options.getItems().put(node.getIdentifier(), node.getName());
             }
-        }
-        catch (LoginException e)
-        {
-            // TODO Auto-generated catch block
-            log.error(e.getMessage(), e);
+            options.setMore(iter.hasNext());
         }
         catch (RepositoryException e)
         {
