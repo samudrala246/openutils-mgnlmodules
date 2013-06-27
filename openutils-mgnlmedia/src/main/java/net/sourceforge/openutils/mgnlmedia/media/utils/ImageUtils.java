@@ -848,11 +848,9 @@ public final class ImageUtils
     {
         return checkOrCreateResolution(media, resolutionTarget, nodeDataName, false);
     }
-
-    public static boolean checkOrCreateResolution(final Content media, final String resolutionTarget,
-        String nodeDataName, final boolean lazy)
+    
+    private static boolean checkResolution(final Content media, final String resolutionTarget, final boolean lazy)
     {
-
         Content resolutions = getResolutionsNode(media);
 
         String resolution = resolutionTarget;
@@ -885,10 +883,15 @@ public final class ImageUtils
             // go on with res calculation
         }
 
-        String type = media.getNodeData("type").getString();
-        if (StringUtils.equals(type, "other"))
+        return false;
+    }
+
+    public static boolean checkOrCreateResolution(final Content media, final String resolutionTarget,
+        String nodeDataName, final boolean lazy)
+    {
+        if (checkResolution(media, resolutionTarget, lazy))
         {
-            return false;
+            return true;
         }
 
         if (nodeDataName == null)
@@ -984,6 +987,14 @@ public final class ImageUtils
 
                     synchronized (MediaEl.module().getLocks().nextLock())
                     {
+                        // Check again for resolution, maybe it has been created by an other thread
+                        if (checkResolution(node, resolutionTarget, lazy))
+                        {
+                            log.debug(
+                                "Resolution {} for {} already generated",
+                                new Object[]{resolutioNodeName, node.getHandle() });
+                            return;
+                        }
                         currentWorkingThreads++;
                         if (log.isDebugEnabled())
                         {
