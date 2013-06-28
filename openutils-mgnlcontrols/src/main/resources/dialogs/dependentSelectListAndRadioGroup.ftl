@@ -9,22 +9,20 @@
 </select>
 [/#list]
 <div class="radioGroup">
-[#assign found = false]
 [#list radioOptions.items?keys as key]
   [#assign checked = (!refresh && key = value!) || (refresh && key = request.getParameter(name)!)]
-  [#assign found = found || checked]
-  <input type="radio" id="${name}_${key?html!}" name="${name}" value="${key?html!}"[#if checked] checked="checked"[/#if] />${radioOptions.items[key]!}<br />
+  <input type="radio" id="${name}_${key?html!}" name="${name}Radio" value="${key?html!}"[#if checked] checked="checked"[/#if] />${radioOptions.items[key]!}<br />
 [/#list]
 [#if radioOptions.more]
   <a href="#" id="${name}More">More</a>
 [/#if]
-[#if !refresh]
-  [#if !found]
-  <input type="hidden" name="${name}" value="${value?html}" />
-  [/#if]
-[/#if]
 </div>
 [#if !refresh]
+  [#if (configuration['showValue']!false)?string == 'true']
+<input type="text" id="${name}" name="${name}" value="${value?html!}" class="mgnlDialogControlEdit" style="width: 100%;" />
+  [#else]
+<input type="hidden" id="${name}" name="${name}" value="${value?html!}" />
+  [/#if]
 <script type="text/javascript">
 (function($){
   var dialogBoxInput;
@@ -33,7 +31,7 @@
   
   function init(){
     dialogBoxInput = $('label[for="${name}"]').closest("tr").find("td.mgnlDialogBoxInput");
-    selects = dialogBoxInput.find('select[name!="${name}"]');
+    selects = dialogBoxInput.find("select");
     selects.change(function(){
       var $this = $(this);
       var data = $("#mgnlPath,#mgnlParagraph,#mgnlRepository,#mgnlLocale,#mgnlRichE,#mgnlRichEPaste").add(selects);
@@ -47,11 +45,15 @@
   }
   
   function initRadio(){
+    var input = dialogBoxInput.find('input[name="${name}"]');
+    dialogBoxInput.find('input[type="radio"]').click(function(){
+      input.val($(this).val());
+    });
     var link = $("a#${name}More");
     link.click(function(e){
       e.preventDefault();
       var $this = $(this);
-      var data = $("#mgnlPath,#mgnlParagraph,#mgnlRepository,#mgnlLocale,#mgnlRichE,#mgnlRichEPaste").add(selects);
+      var data = $("#mgnlPath,#mgnlParagraph,#mgnlRepository,#mgnlLocale,#mgnlRichE,#mgnlRichEPaste").add(selects).add(input);
       $.get($("#mgnlFormMain").attr("action"), data.serialize() + "&radioGroupPage=" + (++page) + "&dependentSelectListCK=" + new Date().getTime(), function(data){
         $(data).find('label[for="${name}"]').closest("tr").find("td.mgnlDialogBoxInput .radioGroup").replaceAll(link);
         initRadio();
@@ -64,4 +66,10 @@
   });
 })(jQuery);
 </script>
+[#else]
+  [#if (configuration['showValue']!false)?string == 'true']
+  <input type="text" id="${name}" name="${name}" value="" class="mgnlDialogControlEdit" style="width: 100%;" />
+  [#else]
+  <input type="hidden" name="${name}" value="" />
+  [/#if]
 [/#if]

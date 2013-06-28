@@ -4,6 +4,6 @@
   xmlns:mu="mgnlutils">
   <jsp:directive.page contentType="text/html; charset=UTF-8" session="false" />
   ${cmsfn:contentByIdentifier(content.foo, "config")}<br />
-  ${cmsfn:contentByIdentifier(content.bar, "website")}<br />
+  ${cmsfn:contentByIdentifier(content.bar, "config")}<br />
   ${cmsfn:contentByIdentifier(content.baz, "config")}<br />
 </jsp:root>
