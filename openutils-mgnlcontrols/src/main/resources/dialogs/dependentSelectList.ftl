@@ -9,12 +9,16 @@
 [/#list]
 [#assign refresh = request.getParameter("dependentSelectListCK")?has_content]
 [#if !refresh]
-<input type="hidden" name="${name}" value="${value?html}" />
+  [#if (configuration['showValue']!false)?string == 'true']
+<input type="text" id="${name}" name="${name}" value="${value?html!}" class="mgnlDialogControlEdit" style="width: 100%;" />
+  [#else]
+<input type="hidden" id="${name}" name="${name}" value="${value?html!}" />
+  [/#if]
 <script type="text/javascript">
 (function($){
   function init(){
     var dialogBoxInput = $('label[for="${name}"]').closest("tr").find("td.mgnlDialogBoxInput");
-    var selects = dialogBoxInput.find('select[name!="${name}"]');
+    var selects = dialogBoxInput.find("select");
     selects.change(function(){
       var $this = $(this);
       var data = $("#mgnlPath,#mgnlParagraph,#mgnlRepository,#mgnlLocale,#mgnlRichE,#mgnlRichEPaste").add(selects);
@@ -31,5 +35,9 @@
 })(jQuery);
 </script>
 [#else]
+  [#if (configuration['showValue']!false)?string == 'true']
+<input type="text" id="${name}" name="${name}" value="[#if leaf]${request.getParameter(paramSelect)?html!}[/#if]" class="mgnlDialogControlEdit" style="width: 100%;" />
+  [#else]
 <input type="hidden" name="${name}" value="[#if leaf]${request.getParameter(paramSelect)?html!}[/#if]" />
+  [/#if]
 [/#if]

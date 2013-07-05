@@ -3,7 +3,7 @@
   xmlns:cmsfn="http://magnolia-cms.com/taglib/templating-components/cmsfn" xmlns:media="http://net.sourceforge.openutils/mgnlMedia"
   xmlns:mu="mgnlutils">
   <jsp:directive.page contentType="text/html; charset=UTF-8" session="false" />
-  ${!empty(content.foo) ? cmsfn:contentByIdentifier(content.foo, "config") : '-'}<br />
-  ${!empty(content.bar) ? cmsfn:contentByIdentifier(content.bar, "config") : '-'}<br />
-  ${!empty(content.baz) ? cmsfn:contentByIdentifier(content.baz, "config") : '-'}<br />
+  ${!empty(content.foo) ? content.foo : '-'}<br />
+  ${!empty(content.bar) ? content.bar : '-'}<br />
+  ${!empty(content.baz) ? content.baz : '-'}<br />
 </jsp:root>
