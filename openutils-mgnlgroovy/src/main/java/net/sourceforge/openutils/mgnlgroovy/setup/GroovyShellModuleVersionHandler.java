@@ -1,7 +1,7 @@
 /**
  *
  * Groovy Shell for Magnolia CMS (http://www.openmindlab.com/lab/products/groovy.html)
- * Copyright(C) 2008-2012, Openmind S.r.l. http://www.openmindonline.it
+ * Copyright(C) 2008-2013, Openmind S.r.l. http://www.openmindonline.it
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
