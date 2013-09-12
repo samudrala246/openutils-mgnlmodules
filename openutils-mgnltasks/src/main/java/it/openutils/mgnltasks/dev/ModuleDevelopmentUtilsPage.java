@@ -21,7 +21,6 @@ package it.openutils.mgnltasks.dev;
 
 import info.magnolia.cms.beans.config.ContentRepository;
 import info.magnolia.cms.core.Content;
-import info.magnolia.cms.core.HierarchyManager;
 import info.magnolia.cms.core.ItemType;
 import info.magnolia.cms.core.MgnlNodeType;
 import info.magnolia.cms.core.Path;
@@ -280,35 +279,35 @@ public class ModuleDevelopmentUtilsPage extends TemplatedMVCHandler
 
     public String backup()
     {
-        HierarchyManager hm = MgnlContext.getHierarchyManager(RepositoryConstants.CONFIG);
+        Session hm = MgnlContext.getJCRSession(RepositoryConstants.CONFIG);
         Session session = hm.getWorkspace().getSession();
 
         try
         {
-            Content moduleroot = hm.getContent("/modules/" + module);
+            Node moduleroot = hm.getNode("/modules/" + module);
             if (templates)
             {
                 exportChildren(RepositoryConstants.CONFIG, session, moduleroot, "templates", new ItemType[]{
-                    ItemType.CONTENT,
-                    ItemType.CONTENTNODE }, false);
+                    MgnlNodeType.NT_CONTENT,
+                    MgnlNodeType.NT_CONTENTNODE }, false);
             }
             if (paragraphs)
             {
                 exportChildren(RepositoryConstants.CONFIG, session, moduleroot, "paragraphs", new ItemType[]{
-                    ItemType.CONTENT,
-                    ItemType.CONTENTNODE }, false);
+                    MgnlNodeType.NT_CONTENT,
+                    MgnlNodeType.NT_CONTENTNODE }, false);
             }
             if (pages)
             {
                 exportChildren(RepositoryConstants.CONFIG, session, moduleroot, "pages", new ItemType[]{
-                    ItemType.CONTENT,
-                    ItemType.CONTENTNODE }, false);
+                    MgnlNodeType.NT_CONTENT,
+                    MgnlNodeType.NT_CONTENTNODE }, false);
             }
             if (dialogs)
             {
                 exportChildren(RepositoryConstants.CONFIG, session, moduleroot, "dialogs", new ItemType[]{
-                    ItemType.CONTENT,
-                    ItemType.CONTENTNODE }, true);
+                    MgnlNodeType.NT_CONTENT,
+                    MgnlNodeType.NT_CONTENTNODE }, true);
             }
             if (virtualURIs)
             {
@@ -317,7 +316,7 @@ public class ModuleDevelopmentUtilsPage extends TemplatedMVCHandler
                     session,
                     moduleroot,
                     "virtualURIMapping",
-                    new ItemType[]{ItemType.CONTENTNODE },
+                    new ItemType[]{MgnlNodeType.NT_CONTENTNODE },
                     true);
             }
             AlertUtil.setMessage("Backup done to "
@@ -366,7 +365,7 @@ public class ModuleDevelopmentUtilsPage extends TemplatedMVCHandler
     {
         try
         {
-            HierarchyManager hm = MgnlContext.getHierarchyManager(repositoryName);
+            Session hm = MgnlContext.getJCRSession(repositoryName);
             Content wesiteRoot = hm.getRoot();
 
             Iterator<Content> children = wesiteRoot.getChildren(ContentUtil.MAGNOLIA_FILTER).iterator();
@@ -385,12 +384,12 @@ public class ModuleDevelopmentUtilsPage extends TemplatedMVCHandler
 
     private void backupChildren(String repository, String parentpath)
     {
-        HierarchyManager hm = MgnlContext.getHierarchyManager(repository);
+        Session hm = MgnlContext.getJCRSession(repository);
 
-        Content parentNode = null;
+        Node parentNode = null;
         try
         {
-            parentNode = hm.getContent(parentpath);
+            parentNode = hm.getNode(parentpath);
         }
         catch (RepositoryException e)
         {
@@ -440,7 +439,7 @@ public class ModuleDevelopmentUtilsPage extends TemplatedMVCHandler
         {
             Content exported = children.next();
             if (!exported.getNodeDataCollection().isEmpty() // ignore "directories"
-                || (exportContentContainingContentNodes && exported.hasChildren(ItemType.CONTENTNODE.getSystemName())))
+                || (exportContentContainingContentNodes && exported.hasChildren(MgnlNodeType.NT_CONTENTNODE.getSystemName())))
             {
 
                 String current = exported.getHandle();

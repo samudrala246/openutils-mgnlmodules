@@ -19,20 +19,18 @@
 
 package it.openutils.mgnltasks;
 
-import info.magnolia.cms.core.Content;
-import info.magnolia.cms.core.Content.ContentFilter;
-import info.magnolia.cms.core.HierarchyManager;
-import info.magnolia.cms.util.ContentUtil;
-import info.magnolia.cms.util.NodeDataUtil;
+import info.magnolia.jcr.util.NodeUtil;
 import info.magnolia.module.InstallContext;
 import info.magnolia.module.delta.AbstractRepositoryTask;
 import info.magnolia.module.delta.TaskExecutionException;
+import it.openutils.mgnlutils.api.NodeUtilsExt;
 
-import java.util.Collection;
-
+import javax.jcr.Node;
 import javax.jcr.RepositoryException;
+import javax.jcr.Session;
 
-import org.apache.commons.lang.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 /**
@@ -52,6 +50,8 @@ public class ChangePropertyForEachChildrenTask extends AbstractRepositoryTask
     private final Object newPropertyValue;
 
     private final Object previousPropertyValue;
+
+    private Logger log = LoggerFactory.getLogger(ChangePropertyForEachChildrenTask.class);
 
     public ChangePropertyForEachChildrenTask(
         String workspaceName,
@@ -81,30 +81,22 @@ public class ChangePropertyForEachChildrenTask extends AbstractRepositoryTask
     @Override
     protected void doExecute(InstallContext ctx) throws RepositoryException, TaskExecutionException
     {
-        final HierarchyManager hm = ctx.getHierarchyManager(workspaceName);
+        Session hm = ctx.getJCRSession(workspaceName);
 
-        final Content parentnode = ContentUtil.createPath(hm, nodePath, false);
+        Node parentnode = NodeUtilsExt.getNodeIfExists(hm, nodePath);
+        if (parentnode == null)
+        {
+            log.info("Node {} not found, nothing to do", nodePath);
+            return;
+        }
 
-        Collection<Content> children = parentnode.getChildren(new ContentFilter()
+        Iterable<Node> children = NodeUtil.getNodes(parentnode, NodeUtil.EXCLUDE_META_DATA_FILTER);
+
+        for (Node node : children)
         {
 
-            public boolean accept(Content content)
-            {
-                return true;
-            }
-        });
-        for (Content node : children)
-        {
-            if (node.hasNodeData(propertyName) || previousPropertyValue == null)
-            {
-                String currentvalue = node.getNodeData(propertyName).getString();
-                if (previousPropertyValue != null
-                    && StringUtils.equals(currentvalue, previousPropertyValue.toString())
-                    || !StringUtils.equals(currentvalue, newPropertyValue.toString()))
-                {
-                    NodeDataUtil.getOrCreateAndSet(node, propertyName, newPropertyValue);
-                }
-            }
+            NodeUtilsExt.setPropertyIfDifferentFromValue(node, propertyName, newPropertyValue, previousPropertyValue);
+
         }
     }
 

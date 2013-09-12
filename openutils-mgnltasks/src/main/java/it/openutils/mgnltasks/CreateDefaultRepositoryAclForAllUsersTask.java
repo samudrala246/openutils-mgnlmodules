@@ -20,8 +20,8 @@
 package it.openutils.mgnltasks;
 
 import info.magnolia.cms.core.Content;
-import info.magnolia.cms.core.HierarchyManager;
 import info.magnolia.cms.core.ItemType;
+import info.magnolia.cms.core.MgnlNodeType;
 import info.magnolia.cms.util.ContentUtil;
 import info.magnolia.module.InstallContext;
 import info.magnolia.module.delta.AbstractRepositoryTask;
@@ -30,7 +30,9 @@ import info.magnolia.repository.RepositoryConstants;
 
 import java.util.Collection;
 
+import javax.jcr.Node;
 import javax.jcr.RepositoryException;
+import javax.jcr.Session;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -67,8 +69,8 @@ public class CreateDefaultRepositoryAclForAllUsersTask extends AbstractRepositor
     @Override
     protected void doExecute(InstallContext ctx) throws RepositoryException, TaskExecutionException
     {
-        HierarchyManager hm = ctx.getHierarchyManager(RepositoryConstants.USER_ROLES);
-        final Content parentNode = hm.getContent("/");
+        Session hm = ctx.getJCRSession(RepositoryConstants.USER_ROLES);
+        final Node parentNode = hm.getNode("/");
 
         final Collection<Content> childNodes = ContentUtil.collectAllChildren(parentNode, ItemType.ROLE);
 
@@ -92,8 +94,8 @@ public class CreateDefaultRepositoryAclForAllUsersTask extends AbstractRepositor
         {
             log.info("adding permissions on {} to role {}", repository, node.getName());
 
-            Content aclnode = node.createContent(aclpath, ItemType.CONTENTNODE);
-            Content permNode = aclnode.createContent("0", ItemType.CONTENTNODE);
+            Content aclnode = node.createContent(aclpath, MgnlNodeType.NT_CONTENTNODE);
+            Content permNode = aclnode.createContent("0", MgnlNodeType.NT_CONTENTNODE);
             permNode.createNodeData("path", "/*");
             permNode.createNodeData("permissions", new Long(permissions));
         }

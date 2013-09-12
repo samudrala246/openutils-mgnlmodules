@@ -20,12 +20,12 @@
 package it.openutils.mgnltasks;
 
 import info.magnolia.cms.core.Content;
-import info.magnolia.cms.core.HierarchyManager;
-import info.magnolia.cms.core.ItemType;
+import info.magnolia.cms.core.MgnlNodeType;
 import info.magnolia.cms.util.ContentUtil;
 import info.magnolia.importexport.DataTransporter;
 import info.magnolia.module.InstallContext;
 import info.magnolia.repository.RepositoryConstants;
+import it.openutils.mgnlutils.api.NodeUtilsExt;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -36,7 +36,9 @@ import java.io.InputStream;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.jcr.Node;
 import javax.jcr.RepositoryException;
+import javax.jcr.Session;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
@@ -90,11 +92,11 @@ public class DiffModuleConfigBootstrapTask extends ModuleConfigBootstrapTask
     @Override
     protected void deleteNode(InstallContext installContext, String nodePath) throws RepositoryException
     {
-        HierarchyManager hm = installContext.getHierarchyManager(RepositoryConstants.CONFIG);
+        Session hm = installContext.getJCRSession(RepositoryConstants.CONFIG);
 
-        if (hm.isExist(nodePath))
+        if (NodeUtilsExt.exists(hm, nodePath))
         {
-            Content node = hm.getContent(nodePath);
+            Node node = hm.getNode(nodePath);
 
             Set<String> lookup = new HashSet<String>();
             for (String name : resourcesToBootstrap)
@@ -107,7 +109,7 @@ public class DiffModuleConfigBootstrapTask extends ModuleConfigBootstrapTask
                 }
             }
 
-            for (Content childNode : node.getChildren(ItemType.CONTENTNODE))
+            for (Content childNode : node.getChildren(MgnlNodeType.NT_CONTENTNODE))
             {
                 String fileName = childNode.getHierarchyManager().getName()
                     + childNode.getHandle().replace("/", ".")
@@ -145,9 +147,7 @@ public class DiffModuleConfigBootstrapTask extends ModuleConfigBootstrapTask
             pathName = "/" + StringUtils.replace(pathName, ".", "/");
             fullPath = pathName + "/" + nodeName;
         }
-        return new String[]{
-            repository, fullPath
-        };
+        return new String[]{repository, fullPath };
     }
 
     private boolean bootstrapResourceEqualsExisting(String name)
@@ -200,8 +200,14 @@ public class DiffModuleConfigBootstrapTask extends ModuleConfigBootstrapTask
             FileOutputStream out = new FileOutputStream(file);
             try
             {
-                DataTransporter.executeExport(out, false, true, content.getWorkspace().getSession(), content
-                    .getHandle(), content.getHierarchyManager().getName(), DataTransporter.XML);
+                DataTransporter.executeExport(
+                    out,
+                    false,
+                    true,
+                    content.getWorkspace().getSession(),
+                    content.getHandle(),
+                    content.getHierarchyManager().getName(),
+                    DataTransporter.XML);
             }
             finally
             {

@@ -19,12 +19,13 @@
 
 package it.openutils.mgnltasks;
 
-import info.magnolia.cms.core.HierarchyManager;
 import info.magnolia.module.InstallContext;
 import info.magnolia.module.delta.AbstractRepositoryTask;
 import info.magnolia.module.delta.TaskExecutionException;
+import it.openutils.mgnlutils.api.NodeUtilsExt;
 
 import javax.jcr.RepositoryException;
+import javax.jcr.Session;
 
 
 /**
@@ -57,12 +58,9 @@ public class DeleteNodeTask extends AbstractRepositoryTask
     protected void doExecute(InstallContext installContext) throws RepositoryException, TaskExecutionException
     {
 
-        HierarchyManager hm = installContext.getHierarchyManager(workspaceName);
+        Session hm = installContext.getJCRSession(workspaceName);
 
-        if (hm.isExist(nodePath))
-        {
-            hm.delete(nodePath);
-        }
+        NodeUtilsExt.deleteIfExisting(hm, nodePath);
     }
 
 }

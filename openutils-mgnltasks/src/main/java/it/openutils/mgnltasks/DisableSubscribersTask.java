@@ -19,18 +19,17 @@
 
 package it.openutils.mgnltasks;
 
-import info.magnolia.cms.core.Content;
-import info.magnolia.cms.core.HierarchyManager;
-import info.magnolia.cms.core.NodeData;
-import info.magnolia.cms.util.ContentUtil;
+import info.magnolia.jcr.util.NodeUtil;
+import info.magnolia.jcr.util.PropertyUtil;
 import info.magnolia.module.InstallContext;
 import info.magnolia.module.delta.AbstractRepositoryTask;
 import info.magnolia.module.delta.TaskExecutionException;
 import info.magnolia.repository.RepositoryConstants;
+import it.openutils.mgnlutils.api.NodeUtilsExt;
 
-import java.util.List;
-
+import javax.jcr.Node;
 import javax.jcr.RepositoryException;
+import javax.jcr.Session;
 
 
 /**
@@ -56,22 +55,21 @@ public class DisableSubscribersTask extends AbstractRepositoryTask
     protected void doExecute(InstallContext installContext) throws RepositoryException, TaskExecutionException
     {
 
-        HierarchyManager hm = installContext.getHierarchyManager(RepositoryConstants.CONFIG);
+        Session session = installContext.getJCRSession(RepositoryConstants.CONFIG);
 
-        if (hm.isExist(subscribersPath))
+        if (NodeUtilsExt.exists(session, subscribersPath))
         {
 
-            Content subscribersNode = hm.getContent(subscribersPath);
-            List<Content> subscribers = ContentUtil.collectAllChildren(subscribersNode);
+            Node subscribersNode = session.getNode(subscribersPath);
 
-            for (Content content : subscribers)
+            Iterable<Node> subscribers = NodeUtil.getNodes(subscribersNode, NodeUtil.EXCLUDE_META_DATA_FILTER);
+
+            for (Node node : subscribers)
             {
-                NodeData nd = content.getNodeData("active");
-                if (nd.getBoolean())
+                if (PropertyUtil.getBoolean(node, "active", true))
                 {
-                    nd.setValue(false);
+                    node.setProperty("active", false);
                 }
-
             }
         }
     }

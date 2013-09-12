@@ -19,7 +19,6 @@
 
 package it.openutils.mgnltasks;
 
-import info.magnolia.cms.core.HierarchyManager;
 import info.magnolia.module.InstallContext;
 import info.magnolia.module.delta.AbstractRepositoryTask;
 import info.magnolia.module.delta.BootstrapSingleResource;
@@ -29,6 +28,7 @@ import info.magnolia.repository.RepositoryConstants;
 
 import javax.jcr.PathNotFoundException;
 import javax.jcr.RepositoryException;
+import javax.jcr.Session;
 
 
 /**
@@ -61,11 +61,11 @@ public class CheckAndCreateGroupTask extends AbstractRepositoryTask implements T
     protected void doExecute(InstallContext installContext) throws RepositoryException, TaskExecutionException
     {
 
-        HierarchyManager hm = installContext.getHierarchyManager(RepositoryConstants.USER_GROUPS);
+        Session session = installContext.getJCRSession(RepositoryConstants.USER_GROUPS);
 
         try
         {
-            hm.getContent(group);
+            session.getRootNode().getNode(group);
         }
         catch (PathNotFoundException e)
         {

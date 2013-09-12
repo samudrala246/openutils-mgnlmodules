@@ -19,8 +19,6 @@
 
 package it.openutils.mgnltasks;
 
-import info.magnolia.cms.core.Content;
-import info.magnolia.cms.core.HierarchyManager;
 import info.magnolia.cms.core.NodeData;
 import info.magnolia.module.InstallContext;
 import info.magnolia.module.delta.AbstractRepositoryTask;
@@ -28,7 +26,9 @@ import info.magnolia.module.delta.Task;
 import info.magnolia.module.delta.TaskExecutionException;
 import info.magnolia.repository.RepositoryConstants;
 
+import javax.jcr.Node;
 import javax.jcr.RepositoryException;
+import javax.jcr.Session;
 
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
@@ -75,9 +75,9 @@ public class ChangeDefaultPasswordTask extends AbstractRepositoryTask implements
     protected void doExecute(InstallContext installContext) throws RepositoryException, TaskExecutionException
     {
 
-        HierarchyManager hm = installContext.getHierarchyManager(RepositoryConstants.USERS);
+        Session hm = installContext.getJCRSession(RepositoryConstants.USERS);
 
-        Content role = hm.getContent(user);
+        Node role = hm.getNode(user);
 
         NodeData pwdNodeData = role.getNodeData("pswd");
         String actualPassword = pwdNodeData.getString();

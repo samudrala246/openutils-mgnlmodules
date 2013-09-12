@@ -39,7 +39,7 @@ package it.openutils.mgnltasks;
 
 import info.magnolia.cms.core.Content;
 import info.magnolia.cms.core.HierarchyManager;
-import info.magnolia.cms.core.ItemType;
+import info.magnolia.cms.core.MgnlNodeType;
 import info.magnolia.cms.core.NodeData;
 import info.magnolia.cms.util.NodeDataUtil;
 import info.magnolia.module.InstallContext;
@@ -72,7 +72,7 @@ public class UpdateModuleVersionTask extends AbstractRepositoryTask
         if (!ctx.hasModulesNode())
         {
             final HierarchyManager hm = ctx.getConfigHierarchyManager();
-            hm.createContent("/", "modules", ItemType.CONTENT.getSystemName());
+            hm.createContent("/", "modules", MgnlNodeType.NT_CONTENT.getSystemName());
         }
 
         final Content moduleNode = ctx.getOrCreateCurrentModuleNode();

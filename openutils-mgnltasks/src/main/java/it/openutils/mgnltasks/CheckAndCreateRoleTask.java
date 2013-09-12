@@ -19,7 +19,6 @@
 
 package it.openutils.mgnltasks;
 
-import info.magnolia.cms.core.HierarchyManager;
 import info.magnolia.module.InstallContext;
 import info.magnolia.module.delta.AbstractRepositoryTask;
 import info.magnolia.module.delta.BootstrapSingleResource;
@@ -29,6 +28,7 @@ import info.magnolia.repository.RepositoryConstants;
 
 import javax.jcr.PathNotFoundException;
 import javax.jcr.RepositoryException;
+import javax.jcr.Session;
 
 
 /**
@@ -61,11 +61,11 @@ public class CheckAndCreateRoleTask extends AbstractRepositoryTask implements Ta
     protected void doExecute(InstallContext installContext) throws RepositoryException, TaskExecutionException
     {
 
-        HierarchyManager hm = installContext.getHierarchyManager(RepositoryConstants.USER_ROLES);
+        Session hm = installContext.getJCRSession(RepositoryConstants.USER_ROLES);
 
         try
         {
-            hm.getContent(role);
+            hm.getNode(role);
         }
         catch (PathNotFoundException e)
         {

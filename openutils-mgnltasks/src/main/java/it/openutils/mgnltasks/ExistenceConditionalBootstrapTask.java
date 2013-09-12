@@ -19,9 +19,13 @@
 
 package it.openutils.mgnltasks;
 
-import info.magnolia.cms.core.HierarchyManager;
+import info.magnolia.jcr.RuntimeRepositoryException;
 import info.magnolia.module.InstallContext;
 import info.magnolia.module.delta.BootstrapResourcesTask;
+import it.openutils.mgnlutils.api.NodeUtilsExt;
+
+import javax.jcr.RepositoryException;
+import javax.jcr.Session;
 
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
@@ -80,8 +84,18 @@ public class ExistenceConditionalBootstrapTask extends BootstrapResourcesTask
             String handle = StringUtils.substringAfter(name, "/mgnl-bootstrap/" + folderName + "/" + workspace + ".");
             handle = StringUtils.substringBeforeLast(handle, ".xml");
             handle = "/" + StringUtils.replace(handle, ".", "/");
-            HierarchyManager hm = installContext.getHierarchyManager(workspace);
-            boolean alreadyExisting = hm.isExist(handle);
+            Session session;
+
+            try
+            {
+                session = installContext.getJCRSession(workspace);
+            }
+            catch (RepositoryException e)
+            {
+                throw new RuntimeRepositoryException(e);
+            }
+
+            boolean alreadyExisting = NodeUtilsExt.exists(session, handle);
 
             if (!alreadyExisting)
             {

@@ -19,11 +19,12 @@
 
 package it.openutils.mgnltasks;
 
-import info.magnolia.cms.core.HierarchyManager;
 import info.magnolia.importexport.BootstrapUtil;
 import info.magnolia.module.InstallContext;
 import info.magnolia.module.delta.BootstrapResourcesTask;
 import info.magnolia.module.delta.TaskExecutionException;
+import info.magnolia.repository.RepositoryConstants;
+import it.openutils.mgnlutils.api.NodeUtilsExt;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -33,6 +34,7 @@ import java.util.Set;
 
 import javax.jcr.ImportUUIDBehavior;
 import javax.jcr.RepositoryException;
+import javax.jcr.Session;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -181,12 +183,11 @@ public class ModuleConfigBootstrapTask extends BootstrapResourcesTask
     protected void deleteNode(InstallContext installContext, String nodePath) throws RepositoryException
     {
 
-        HierarchyManager hm = installContext.getHierarchyManager("config");
+        Session hm = installContext.getJCRSession(RepositoryConstants.CONFIG);
 
-        if (hm.isExist(nodePath))
+        if (NodeUtilsExt.deleteIfExisting(hm, nodePath))
         {
-            log.warn("Deleting node {}", nodePath);
-            hm.delete(nodePath);
+            log.warn("Deleted node {}", nodePath);
         }
     }
 }

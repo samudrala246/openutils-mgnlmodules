@@ -19,7 +19,6 @@
 
 package it.openutils.mgnltasks;
 
-import info.magnolia.cms.core.HierarchyManager;
 import info.magnolia.cms.util.NodeDataUtil;
 import info.magnolia.module.InstallContext;
 import info.magnolia.module.delta.AbstractTask;
@@ -29,6 +28,7 @@ import info.magnolia.module.delta.TaskExecutionException;
 import java.util.List;
 
 import javax.jcr.RepositoryException;
+import javax.jcr.Session;
 
 
 /**
@@ -72,10 +72,10 @@ public abstract class ConditionalTask extends AbstractTask
      */
     public void execute(InstallContext installContext) throws TaskExecutionException
     {
-        HierarchyManager hm = installContext.getHierarchyManager(workspace);
         try
         {
-            if (verifyCondition(hm, handle))
+            Session session = installContext.getJCRSession(workspace);
+            if (verifyCondition(session, handle))
             {
                 for (Task t : tasks)
                 {
@@ -90,50 +90,26 @@ public abstract class ConditionalTask extends AbstractTask
     }
 
     /**
-     * Check if a node exists.
-     * @param hm HieararchyManager
-     * @param handle node handle
-     * @return <code>true</code> if node exists
-     */
-    public boolean existsNode(HierarchyManager hm, String handle)
-    {
-        return hm.isExist(handle);
-    }
-
-    /**
-     * Check if a nodedata exists.
-     * @param hm HieararchyManager
-     * @param handle node handle
-     * @param nodedata nodedata name
-     * @return <code>true</code> if nodedata exists
-     * @throws RepositoryException exceptions while checking content
-     */
-    public boolean existsNodedata(HierarchyManager hm, String handle, String nodedata) throws RepositoryException
-    {
-        return hm.getContent(handle).hasNodeData(nodedata);
-    }
-
-    /**
      * Check if a nodedata exists with a specific value.
-     * @param hm HieararchyManager
+     * @param session JCR session
      * @param handle node handle
      * @param nodedata nodedata name
      * @param value expected value for nodeData
      * @return <code>true</code> if nodedata has the same value
      * @throws RepositoryException exceptions while checking content
      */
-    public boolean nodeDataEquals(HierarchyManager hm, String handle, String nodedata, Object value)
+    public boolean nodeDataEquals(Session session, String handle, String nodedata, Object value)
         throws RepositoryException
     {
-        return value.equals(NodeDataUtil.getValueObject(hm.getContent(handle).getNodeData(nodedata)));
+        return value.equals(NodeDataUtil.getValueObject(session.getNode(handle).getNodeData(nodedata)));
     }
 
     /**
-     * @param hm HieararchyManager
+     * @param session JCR session
      * @param handle node handle
      * @return <code>true</code> if the task must be executed
      * @throws RepositoryException exceptions while checking content
      */
-    public abstract boolean verifyCondition(HierarchyManager hm, String handle) throws RepositoryException;
+    public abstract boolean verifyCondition(Session session, String handle) throws RepositoryException;
 
 }

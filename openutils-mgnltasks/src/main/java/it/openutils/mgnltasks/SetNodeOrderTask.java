@@ -20,7 +20,7 @@
 package it.openutils.mgnltasks;
 
 import info.magnolia.cms.core.Content;
-import info.magnolia.cms.core.ItemType;
+import info.magnolia.cms.core.MgnlNodeType;
 import info.magnolia.cms.util.ContentUtil;
 import info.magnolia.module.InstallContext;
 import info.magnolia.module.delta.AbstractRepositoryTask;
@@ -73,7 +73,7 @@ public class SetNodeOrderTask extends AbstractRepositoryTask
 
         if (children.isEmpty())
         {
-            children = (List<Content>) parent.getChildren(ItemType.CONTENTNODE);
+            children = (List<Content>) parent.getChildren(MgnlNodeType.NT_CONTENTNODE);
         }
 
         final List<String> orderedList = Arrays.asList(nodesOrder);

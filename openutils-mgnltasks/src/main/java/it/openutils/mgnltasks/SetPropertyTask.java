@@ -25,6 +25,7 @@ import info.magnolia.jcr.util.PropertyUtil;
 import info.magnolia.module.InstallContext;
 import info.magnolia.module.delta.AbstractRepositoryTask;
 import info.magnolia.module.delta.TaskExecutionException;
+import it.openutils.mgnlutils.api.NodeUtilsExt;
 
 import javax.jcr.Node;
 import javax.jcr.RepositoryException;
@@ -73,11 +74,7 @@ public class SetPropertyTask extends AbstractRepositoryTask
 
         Node node = NodeUtil.createPath(session.getRootNode(), nodePath, MgnlNodeType.NT_CONTENT);
 
-        if (!node.hasProperty(propertyName)
-            || !StringUtils.equals(node.getProperty(propertyName).getString(), newPropertyValue.toString()))
-        {
-            PropertyUtil.setProperty(node, propertyName, newPropertyValue);
-        }
+        NodeUtilsExt.setPropertyIfDifferent(node, propertyName, newPropertyValue);
 
     }
 

@@ -21,7 +21,7 @@ package it.openutils.mgnltasks;
 
 import info.magnolia.cms.core.Content;
 import info.magnolia.cms.core.HierarchyManager;
-import info.magnolia.cms.core.ItemType;
+import info.magnolia.cms.core.MgnlNodeType;
 import info.magnolia.cms.core.search.Query;
 import info.magnolia.cms.core.search.QueryManager;
 import info.magnolia.module.InstallContext;
@@ -89,7 +89,7 @@ public class ReplaceParagraphTask extends AbstractRepositoryTask
         Collection<Content> nodes = qm
             .createQuery(queryAAsString, Query.XPATH)
             .execute()
-            .getContent(ItemType.CONTENTNODE.getSystemName());
+            .getContent(MgnlNodeType.NT_CONTENTNODE.getSystemName());
 
         for (Content page : nodes)
         {

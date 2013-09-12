@@ -19,12 +19,11 @@
 
 package it.openutils.mgnltasks;
 
-import javax.jcr.RepositoryException;
-import javax.jcr.Session;
-
-import info.magnolia.jcr.util.NodeUtil;
 import info.magnolia.module.InstallContext;
 import info.magnolia.module.delta.BootstrapResourcesTask;
+
+import javax.jcr.RepositoryException;
+import javax.jcr.Session;
 
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;

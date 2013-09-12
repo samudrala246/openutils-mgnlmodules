@@ -19,10 +19,8 @@
 
 package it.openutils.mgnltasks;
 
-import info.magnolia.cms.core.Content;
-import info.magnolia.cms.core.HierarchyManager;
-import info.magnolia.cms.core.ItemType;
-import info.magnolia.cms.util.ContentUtil;
+import info.magnolia.jcr.util.NodeUtil;
+import info.magnolia.jcr.util.PropertyUtil;
 import info.magnolia.module.InstallContext;
 import info.magnolia.module.delta.AbstractRepositoryTask;
 import info.magnolia.module.delta.TaskExecutionException;
@@ -31,7 +29,11 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import javax.jcr.Node;
 import javax.jcr.RepositoryException;
+import javax.jcr.Session;
+
+import org.apache.commons.lang.StringUtils;
 
 
 /**
@@ -68,42 +70,39 @@ public class NodeSortTask extends AbstractRepositoryTask
     @Override
     protected void doExecute(InstallContext ctx) throws RepositoryException, TaskExecutionException
     {
-        HierarchyManager hm = ctx.getHierarchyManager(repository);
 
-        Content parent = hm.getContent(node);
-        List<Content> children = (List<Content>) ContentUtil.getAllChildren(parent);
+        Session session = ctx.getJCRSession(repository);
 
-        if (children.isEmpty())
-        {
-            children = (List<Content>) parent.getChildren(ItemType.CONTENTNODE);
-        }
+        Node parent = session.getNode(node);
+        List<Node> children = NodeUtil.asList(NodeUtil.getNodes(parent, NodeUtil.EXCLUDE_META_DATA_FILTER));
 
         if (this.property == null)
         {
-            Collections.sort(children, new Comparator<Content>()
+            Collections.sort(children, new Comparator<Node>()
             {
 
-                public int compare(Content o1, Content o2)
+                public int compare(Node o1, Node o2)
                 {
-                    return o2.getName().compareTo(o1.getName());
+                    return NodeUtil.getName(o2).compareTo(NodeUtil.getName(o1));
                 }
             });
         }
         else
         {
-            Collections.sort(children, new Comparator<Content>()
+            Collections.sort(children, new Comparator<Node>()
             {
 
-                public int compare(Content o1, Content o2)
+                public int compare(Node o1, Node o2)
                 {
-                    return o2.getNodeData(property).getString().compareTo(o1.getNodeData(property).getString());
+                    return StringUtils.defaultString(PropertyUtil.getString(o2, property)).compareTo(
+                        StringUtils.defaultString(PropertyUtil.getString(o1, property)));
                 }
             });
         }
 
-        Content previous = null;
+        Node previous = null;
 
-        for (Content content : children)
+        for (Node content : children)
         {
             if (previous != null)
             {

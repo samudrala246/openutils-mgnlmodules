@@ -20,7 +20,6 @@
 package it.openutils.mgnltasks;
 
 import info.magnolia.cms.core.Content;
-import info.magnolia.cms.core.HierarchyManager;
 import info.magnolia.cms.core.search.Query;
 import info.magnolia.cms.core.search.QueryManager;
 import info.magnolia.module.InstallContext;
@@ -34,6 +33,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import javax.jcr.RepositoryException;
+import javax.jcr.Session;
 import javax.jcr.query.InvalidQueryException;
 
 import org.apache.commons.lang.StringUtils;
@@ -82,9 +82,10 @@ public abstract class BaseCheckMissingTask extends AbstractRepositoryTask
             .getHierarchyManager(RepositoryConstants.CONFIG)
             .getQueryManager();
 
-        Collection<Content> templates = configQueryManager.createQuery(
-            "//modules/*/" + templateOrParagraph + "s/*",
-            Query.XPATH).execute().getContent("mgnl:contentNode");
+        Collection<Content> templates = configQueryManager
+            .createQuery("//modules/*/" + templateOrParagraph + "s/*", Query.XPATH)
+            .execute()
+            .getContent("mgnl:contentNode");
 
         List<String> templ = new ArrayList<String>();
         Iterator<Content> availableTemplates = templates.iterator();
@@ -108,7 +109,7 @@ public abstract class BaseCheckMissingTask extends AbstractRepositoryTask
     private void checkInvalidPages(InstallContext installContext, List<String> templates) throws RepositoryException,
         InvalidQueryException
     {
-        HierarchyManager hm = installContext.getHierarchyManager(RepositoryConstants.WEBSITE);
+        Session hm = installContext.getJCRSession(RepositoryConstants.WEBSITE);
 
         QueryManager qm = hm.getQueryManager();
 
