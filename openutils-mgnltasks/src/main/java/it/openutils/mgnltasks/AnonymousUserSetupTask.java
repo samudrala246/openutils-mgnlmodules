@@ -19,22 +19,22 @@
 
 package it.openutils.mgnltasks;
 
-import info.magnolia.cms.core.Content;
-import info.magnolia.cms.core.HierarchyManager;
+import info.magnolia.cms.core.MgnlNodeType;
 import info.magnolia.cms.security.AccessDeniedException;
 import info.magnolia.cms.security.Permission;
 import info.magnolia.cms.security.UserManager;
-import info.magnolia.cms.util.NodeDataUtil;
+import info.magnolia.jcr.util.NodeUtil;
 import info.magnolia.module.InstallContext;
 import info.magnolia.module.delta.AbstractRepositoryTask;
 import info.magnolia.module.delta.Task;
 import info.magnolia.module.delta.TaskExecutionException;
 import info.magnolia.repository.RepositoryConstants;
 
-import java.util.Collection;
-
+import javax.jcr.Node;
 import javax.jcr.RepositoryException;
+import javax.jcr.Session;
 
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -69,9 +69,9 @@ public class AnonymousUserSetupTask extends AbstractRepositoryTask implements Ta
     protected void doExecute(InstallContext installContext) throws RepositoryException, TaskExecutionException
     {
 
-        HierarchyManager hm = installContext.getHierarchyManager(RepositoryConstants.USER_ROLES);
+        Session hm = installContext.getJCRSession(RepositoryConstants.USER_ROLES);
 
-        Content role = hm.getContent("/" + UserManager.ANONYMOUS_USER);
+        Node role = hm.getNode("/" + UserManager.ANONYMOUS_USER);
 
         setupAcl(role, "website", "/*", this.allowAccess ? Permission.READ : Permission.NONE);
         setupAcl(role, "uri", "/*", this.allowAccess ? Permission.ALL : Permission.NONE);
@@ -85,32 +85,45 @@ public class AnonymousUserSetupTask extends AbstractRepositoryTask implements Ta
      * @throws RepositoryException
      * @throws AccessDeniedException
      */
-    private void setupAcl(Content role, String repository, String path, long newpermissions)
-        throws RepositoryException, AccessDeniedException
+    private void setupAcl(Node role, String repository, String path, long newpermissions) throws RepositoryException,
+        AccessDeniedException
     {
-        Content acls = role.getChildByName("acl_" + repository);
+        Node acls = NodeUtil.createPath(role, "acl_" + repository, MgnlNodeType.NT_CONTENTNODE);
 
-        Collection<Content> children = acls.getChildren();
+        Iterable<Node> children = NodeUtil.getNodes(acls, MgnlNodeType.NT_CONTENTNODE);
 
         boolean found = false;
-        for (Content acl : children)
+        for (Node acl : children)
         {
-            String aclPath = acl.getNodeData("path").getString();
+            if (!acl.hasProperty("path"))
+            {
+                continue;
+            }
+
+            String aclPath = acl.getProperty("path").getString();
             if (path.equals(aclPath))
             {
                 found = true;
 
-                long permissions = acl.getNodeData("permissions").getLong();
+                long permissions = acl.getProperty("permissions").getLong();
                 if (permissions != newpermissions)
                 {
-                    NodeDataUtil.getOrCreate(acl, "permissions").setValue(newpermissions);
+                    acl.setProperty("permissions", newpermissions);
                 }
             }
         }
+
+        if (!found && StringUtils.equals(path, "/*"))
+        {
+            // handle a change in URI ACLs, previously set to "/*", then to "*"
+            setupAcl(role, repository, "*", newpermissions);
+        }
+
         if (!found)
         {
             log.warn("Security not configured on anonymous user! No acl for {} found on {}", path, repository);
         }
+
     }
 
 }
