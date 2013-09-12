@@ -19,20 +19,22 @@
 
 package it.openutils.mgnltasks;
 
-import info.magnolia.cms.core.Content;
-import info.magnolia.cms.core.HierarchyManager;
+import info.magnolia.cms.core.MgnlNodeType;
 import info.magnolia.cms.core.Path;
 import info.magnolia.cms.security.AccessDeniedException;
-import info.magnolia.cms.util.NodeDataUtil;
+import info.magnolia.jcr.util.NodeUtil;
 import info.magnolia.module.InstallContext;
 import info.magnolia.module.delta.AbstractRepositoryTask;
 import info.magnolia.module.delta.Task;
 import info.magnolia.module.delta.TaskExecutionException;
 import info.magnolia.repository.RepositoryConstants;
 
-import java.util.Collection;
-
+import javax.jcr.Node;
 import javax.jcr.RepositoryException;
+import javax.jcr.Session;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 /**
@@ -50,6 +52,8 @@ public class AddPermissionTask extends AbstractRepositoryTask implements Task
     private final String path;
 
     private final long permission;
+
+    private Logger log = LoggerFactory.getLogger(AddPermissionTask.class);
 
     public AddPermissionTask(String role, String repo, String path, long permission)
     {
@@ -73,9 +77,9 @@ public class AddPermissionTask extends AbstractRepositoryTask implements Task
     protected void doExecute(InstallContext installContext) throws RepositoryException, TaskExecutionException
     {
 
-        HierarchyManager hm = installContext.getHierarchyManager(RepositoryConstants.USER_ROLES);
+        Session hm = installContext.getJCRSession(RepositoryConstants.USER_ROLES);
 
-        Content roleNode = hm.getContent("/" + role);
+        Node roleNode = hm.getNode("/" + role);
 
         setupAcl(roleNode, repo, path, permission);
     }
@@ -87,27 +91,27 @@ public class AddPermissionTask extends AbstractRepositoryTask implements Task
      * @throws RepositoryException
      * @throws AccessDeniedException
      */
-    private void setupAcl(Content role, String repository, String path, long newpermissions)
-        throws RepositoryException, AccessDeniedException
+    private void setupAcl(Node role, String repository, String path, long newpermissions) throws RepositoryException,
+        AccessDeniedException
     {
-        Content acls = role.getChildByName("acl_" + repository);
+        Node acls = NodeUtil.createPath(role, "acl_" + repository, MgnlNodeType.NT_CONTENTNODE);
 
-        if (acls == null)
-        {
-            acls = role.createContent("acl_" + repository, "mgnl:contentNode");
-        }
-
-        Collection<Content> children = acls.getChildren();
+        Iterable<Node> children = NodeUtil.getNodes(acls, MgnlNodeType.NT_CONTENTNODE);
 
         boolean found = false;
-        for (Content acl : children)
+        for (Node acl : children)
         {
-            String aclPath = acl.getNodeData("path").getString();
+            if (!acl.hasProperty("path"))
+            {
+                continue;
+            }
+
+            String aclPath = acl.getProperty("path").getString();
             if (path.equals(aclPath))
             {
                 found = true;
 
-                long permissions = acl.getNodeData("permissions").getLong();
+                long permissions = acl.getProperty("permissions").getLong();
                 if (permissions != newpermissions)
                 {
                     setPermission(acl, path, newpermissions);
@@ -116,9 +120,11 @@ public class AddPermissionTask extends AbstractRepositoryTask implements Task
         }
         if (!found)
         {
-            Content acl = acls.createContent(Path.getUniqueLabel(acls, "0"), "mgnl:contentNode");
+            Node acl = NodeUtil.createPath(
+                acls,
+                Path.getUniqueLabel(acls.getSession(), NodeUtil.getPathIfPossible(acls), "0"),
+                MgnlNodeType.NT_CONTENTNODE);
             setPermission(acl, path, newpermissions);
-
         }
     }
 
@@ -128,11 +134,11 @@ public class AddPermissionTask extends AbstractRepositoryTask implements Task
      * @throws RepositoryException
      * @throws AccessDeniedException
      */
-    private void setPermission(Content acl, String path, long newpermissions) throws RepositoryException,
+    private void setPermission(Node acl, String path, long newpermissions) throws RepositoryException,
         AccessDeniedException
     {
         log.info("Setting permissions for {} to {}", this.repo + ":" + path, this.role);
-        NodeDataUtil.getOrCreate(acl, "path").setValue(path);
-        NodeDataUtil.getOrCreate(acl, "permissions").setValue(newpermissions);
+        acl.setProperty("path", path);
+        acl.setProperty("permissions", newpermissions);
     }
 }
