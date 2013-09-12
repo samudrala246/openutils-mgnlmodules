@@ -19,10 +19,9 @@
 
 package it.openutils.mgnltasks;
 
-import info.magnolia.cms.core.Content;
 import info.magnolia.cms.core.MgnlNodeType;
-import info.magnolia.cms.util.ContentUtil;
 import info.magnolia.importexport.DataTransporter;
+import info.magnolia.jcr.util.NodeUtil;
 import info.magnolia.module.InstallContext;
 import info.magnolia.repository.RepositoryConstants;
 import it.openutils.mgnlutils.api.NodeUtilsExt;
@@ -109,18 +108,18 @@ public class DiffModuleConfigBootstrapTask extends ModuleConfigBootstrapTask
                 }
             }
 
-            for (Content childNode : node.getChildren(MgnlNodeType.NT_CONTENTNODE))
+            for (Node childNode : NodeUtil.getNodes(node, MgnlNodeType.NT_CONTENTNODE))
             {
                 String fileName = childNode.getHierarchyManager().getName()
-                    + childNode.getHandle().replace("/", ".")
+                    + childNode.getPath().replace("/", ".")
                     + ".xml";
                 String resourceToBootstrap = "/mgnl-bootstrap/" + modulename + "/" + fileName;
                 // delete only the templates not available anymore (just to handle the template removal/renaming, should
                 // not be a common case)
                 if (!lookup.contains(resourceToBootstrap))
                 {
-                    log.warn("Deleting node {}", childNode.getHandle());
-                    childNode.delete();
+                    log.warn("Deleting node {}", childNode.getPath());
+                    childNode.remove();
                 }
             }
         }
@@ -150,12 +149,14 @@ public class DiffModuleConfigBootstrapTask extends ModuleConfigBootstrapTask
         return new String[]{repository, fullPath };
     }
 
-    private boolean bootstrapResourceEqualsExisting(String name)
+    private boolean bootstrapResourceEqualsExisting(InstallContext installContext, String name)
+        throws RepositoryException
     {
         String[] repositoryAndPath = getRepositoryAndPathFromBootstrapName(name);
         String repository = repositoryAndPath[0];
         String path = repositoryAndPath[1];
-        Content content = ContentUtil.getContent(repository, path);
+
+        Node content = NodeUtilsExt.getNodeIfExists(installContext.getJCRSession(repository), path);
         if (content != null)
         {
             File file = null;
@@ -192,7 +193,7 @@ public class DiffModuleConfigBootstrapTask extends ModuleConfigBootstrapTask
         return false;
     }
 
-    private File exportToTempFile(Content content, String filenameWithoutExtension) throws IOException,
+    private File exportToTempFile(Node content, String filenameWithoutExtension) throws IOException,
         FileNotFoundException, RepositoryException
     {
         File file = File.createTempFile(filenameWithoutExtension + '-', ".xml");
@@ -200,14 +201,10 @@ public class DiffModuleConfigBootstrapTask extends ModuleConfigBootstrapTask
             FileOutputStream out = new FileOutputStream(file);
             try
             {
-                DataTransporter.executeExport(
-                    out,
-                    false,
-                    true,
-                    content.getWorkspace().getSession(),
-                    content.getHandle(),
-                    content.getHierarchyManager().getName(),
-                    DataTransporter.XML);
+                DataTransporter.executeExport(out, false, true, content.getSession(), content.getPath(), content
+                    .getSession()
+                    .getWorkspace()
+                    .getName(), DataTransporter.XML);
             }
             finally
             {
