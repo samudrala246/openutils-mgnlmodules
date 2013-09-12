@@ -19,15 +19,16 @@
 
 package it.openutils.mgnltasks;
 
-import info.magnolia.cms.core.Content;
-import info.magnolia.cms.core.HierarchyManager;
-import info.magnolia.cms.util.ContentUtil;
-import info.magnolia.cms.util.NodeDataUtil;
+import info.magnolia.cms.core.MgnlNodeType;
+import info.magnolia.jcr.util.NodeUtil;
+import info.magnolia.jcr.util.PropertyUtil;
 import info.magnolia.module.InstallContext;
 import info.magnolia.module.delta.AbstractRepositoryTask;
 import info.magnolia.module.delta.TaskExecutionException;
 
+import javax.jcr.Node;
 import javax.jcr.RepositoryException;
+import javax.jcr.Session;
 
 import org.apache.commons.lang.StringUtils;
 
@@ -78,15 +79,14 @@ public class ChangeExistingPropertyTask extends AbstractRepositoryTask
     @Override
     protected void doExecute(InstallContext ctx) throws RepositoryException, TaskExecutionException
     {
-        final HierarchyManager hm = ctx.getHierarchyManager(workspaceName);
+        Session session = ctx.getJCRSession(workspaceName);
 
-        final Content node = ContentUtil.createPath(hm, nodePath, false);
-        if (node.hasNodeData(propertyName))
+        Node node = NodeUtil.createPath(session.getRootNode(), nodePath, MgnlNodeType.NT_CONTENT);
+
+        if (node.hasProperty(propertyName)
+            && !StringUtils.equals(node.getProperty(propertyName).getString(), newPropertyValue.toString()))
         {
-            if (StringUtils.equals(node.getNodeData(propertyName).getString(), previousPropertyValue.toString()))
-            {
-                NodeDataUtil.getOrCreateAndSet(node, propertyName, newPropertyValue);
-            }
+            PropertyUtil.setProperty(node, propertyName, newPropertyValue);
         }
 
     }
