@@ -71,12 +71,10 @@ public class SetPropertyTask extends AbstractRepositoryTask
         final HierarchyManager hm = ctx.getHierarchyManager(workspaceName);
 
         final Content node = ContentUtil.createPath(hm, nodePath, false);
-        if (node.hasNodeData(propertyName))
+
+        if (!StringUtils.equals(node.getNodeData(propertyName).getString(), newPropertyValue.toString()))
         {
-            if (!StringUtils.equals(node.getNodeData(propertyName).getString(), newPropertyValue.toString()))
-            {
-                NodeDataUtil.getOrCreateAndSet(node, propertyName, newPropertyValue);
-            }
+            NodeDataUtil.getOrCreateAndSet(node, propertyName, newPropertyValue);
         }
 
     }
