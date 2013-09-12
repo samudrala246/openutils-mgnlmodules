@@ -19,14 +19,14 @@
 
 package it.openutils.mgnlutils.setup;
 
-import it.openutils.mgnltasks.DiffSimpleModuleVersionHandler;
+import info.magnolia.module.DefaultModuleVersionHandler;
 
 
 /**
  * @author fgiust
  * @version $Id$
  */
-public class MgnlUtilsModuleVersionHandler extends DiffSimpleModuleVersionHandler
+public class MgnlUtilsModuleVersionHandler extends DefaultModuleVersionHandler
 {
 
 }

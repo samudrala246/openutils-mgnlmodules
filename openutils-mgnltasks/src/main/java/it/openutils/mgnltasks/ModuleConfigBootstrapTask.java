@@ -69,22 +69,6 @@ public class ModuleConfigBootstrapTask extends BootstrapResourcesTask
         includedRepositories.add("config");
     }
 
-    @Deprecated
-    public ModuleConfigBootstrapTask(String modulename, List<String> excludeRepositories)
-    {
-        super("Bootstrap", "Bootstraps module configuration for " + modulename + " (will not overwrite website!).");
-        this.modulename = modulename;
-
-        log
-            .warn("\n\n****************************\n"
-                + "ModuleConfigBootstrapTask has changed in openutils-mgnltasks 4.1\n"
-                + "By default only the config repository is bootstrapped, and you need to specificy *additional* repositories only if needed."
-                + "The constructor with List<String> (excluded repositories) is now deprecated, you can use the default one or the one with the\n"
-                + "Set<String> incleded repositories parameter\n"
-                + "****************************\n");
-
-    }
-
     public ModuleConfigBootstrapTask(String modulename, Set<String> includedRepositories)
     {
         super("Bootstrap", "Bootstraps module configuration for "
@@ -127,7 +111,7 @@ public class ModuleConfigBootstrapTask extends BootstrapResourcesTask
      * {@inheritDoc}
      */
     @Override
-    public void execute(final InstallContext installContext) throws TaskExecutionException
+    public void execute(InstallContext installContext) throws TaskExecutionException
     {
         try
         {
@@ -144,7 +128,7 @@ public class ModuleConfigBootstrapTask extends BootstrapResourcesTask
             List<String> filteredResources = new ArrayList<String>();
             for (String name : resourcesToBootstrap)
             {
-                if (!skipResource(name))
+                if (!skipResource(installContext, name))
                 {
                     filteredResources.add(name);
                 }
@@ -169,7 +153,7 @@ public class ModuleConfigBootstrapTask extends BootstrapResourcesTask
      * @param name
      * @return
      */
-    protected boolean skipResource(String name)
+    protected boolean skipResource(InstallContext installContext, String name) throws RepositoryException
     {
         return false;
     }

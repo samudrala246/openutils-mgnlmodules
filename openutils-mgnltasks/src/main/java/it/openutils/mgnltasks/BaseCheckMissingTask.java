@@ -19,22 +19,26 @@
 
 package it.openutils.mgnltasks;
 
-import info.magnolia.cms.core.Content;
-import info.magnolia.cms.core.search.Query;
-import info.magnolia.cms.core.search.QueryManager;
+import info.magnolia.cms.core.MgnlNodeType;
+import info.magnolia.jcr.util.MetaDataUtil;
 import info.magnolia.module.InstallContext;
 import info.magnolia.module.delta.AbstractRepositoryTask;
 import info.magnolia.module.delta.TaskExecutionException;
 import info.magnolia.repository.RepositoryConstants;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
 
+import javax.jcr.Node;
 import javax.jcr.RepositoryException;
-import javax.jcr.Session;
 import javax.jcr.query.InvalidQueryException;
+
+import net.sourceforge.openutils.mgnlcriteria.jcr.query.AdvancedResult;
+import net.sourceforge.openutils.mgnlcriteria.jcr.query.AdvancedResultItem;
+import net.sourceforge.openutils.mgnlcriteria.jcr.query.Criteria;
+import net.sourceforge.openutils.mgnlcriteria.jcr.query.JCRCriteriaFactory;
+import net.sourceforge.openutils.mgnlcriteria.jcr.query.criterion.Order;
+import net.sourceforge.openutils.mgnlcriteria.jcr.query.criterion.Restrictions;
 
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
@@ -78,20 +82,27 @@ public abstract class BaseCheckMissingTask extends AbstractRepositoryTask
     protected void doExecute(InstallContext installContext) throws RepositoryException, TaskExecutionException
     {
 
-        QueryManager configQueryManager = installContext
-            .getHierarchyManager(RepositoryConstants.CONFIG)
-            .getQueryManager();
+        Criteria criteria = JCRCriteriaFactory
+            .createCriteria()
+            .setWorkspace(RepositoryConstants.CONFIG)
+            .add(Restrictions.eq("@jcr:primaryType", MgnlNodeType.NT_CONTENTNODE))
+            .addOrder(Order.desc("@jcr:score"));
 
-        Collection<Content> templates = configQueryManager
-            .createQuery("//modules/*/" + templateOrParagraph + "s/*", Query.XPATH)
-            .execute()
-            .getContent("mgnl:contentNode");
+        if (StringUtils.equals(templateOrParagraph, "template"))
+        {
+            criteria.setBasePath("//modules/*/templates/pages/*");
+        }
+        else
+        {
+            criteria.setBasePath("//modules/*/templates/components/*");
+        }
+
+        AdvancedResult result = criteria.execute();
 
         List<String> templ = new ArrayList<String>();
-        Iterator<Content> availableTemplates = templates.iterator();
-        while (availableTemplates.hasNext())
+
+        for (AdvancedResultItem template : result.getItems())
         {
-            Content template = availableTemplates.next();
             templ.add(template.getName());
         }
 
@@ -109,47 +120,29 @@ public abstract class BaseCheckMissingTask extends AbstractRepositoryTask
     private void checkInvalidPages(InstallContext installContext, List<String> templates) throws RepositoryException,
         InvalidQueryException
     {
-        Session hm = installContext.getJCRSession(RepositoryConstants.WEBSITE);
 
-        QueryManager qm = hm.getQueryManager();
+        Criteria criteria = JCRCriteriaFactory
+            .createCriteria()
+            .setWorkspace(RepositoryConstants.WEBSITE)
+            .add(Restrictions.eq("@jcr:primaryType", nodetype))
+            .add(Restrictions.not(Restrictions.in("MetaData/mgnl:template", templates)))
+            .addOrder(Order.desc("@jcr:score"));
 
-        StringBuilder query = new StringBuilder("//*[jcr:primaryType='"
-            + this.nodetype
-            + "' and MetaData/mgnl:template and not(");
+        log.debug("Running query: {}", criteria.toXpathExpression());
 
-        Iterator<String> nameIterator = templates.iterator();
-        while (nameIterator.hasNext())
-        {
-            String template = nameIterator.next();
-
-            query.append("MetaData/mgnl:template='");
-            query.append(template);
-            query.append("'");
-            if (nameIterator.hasNext())
-            {
-                query.append(" or ");
-            }
-        }
-
-        query.append(")]");
-
-        String queryAAsString = query.toString();
-
-        log.debug("Running query: {}", queryAAsString);
-
-        Collection<Content> nodes = qm.createQuery(queryAAsString, Query.XPATH).execute().getContent(this.nodetype);
+        AdvancedResult result = criteria.execute();
 
         int count = 0;
         StringBuilder sb = new StringBuilder();
 
-        for (Content page : nodes)
+        for (Node page : result.getItems())
         {
-            String template = page.getMetaData().getTemplate();
+            String template = MetaDataUtil.getTemplate(page);
 
             if (StringUtils.isNotEmpty(template))
             {
                 count++;
-                sb.append(page.getHandle());
+                sb.append(page.getPath());
                 sb.append("   ");
                 sb.append(template);
                 sb.append("\n");

@@ -19,16 +19,12 @@
 
 package it.openutils.mgnltasks;
 
-import info.magnolia.cms.core.Content;
-import info.magnolia.cms.core.ItemType;
 import info.magnolia.cms.core.MgnlNodeType;
-import info.magnolia.cms.util.ContentUtil;
+import info.magnolia.jcr.util.NodeUtil;
 import info.magnolia.module.InstallContext;
 import info.magnolia.module.delta.AbstractRepositoryTask;
 import info.magnolia.module.delta.TaskExecutionException;
 import info.magnolia.repository.RepositoryConstants;
-
-import java.util.Collection;
 
 import javax.jcr.Node;
 import javax.jcr.RepositoryException;
@@ -70,11 +66,11 @@ public class CreateDefaultRepositoryAclForAllUsersTask extends AbstractRepositor
     protected void doExecute(InstallContext ctx) throws RepositoryException, TaskExecutionException
     {
         Session hm = ctx.getJCRSession(RepositoryConstants.USER_ROLES);
-        final Node parentNode = hm.getNode("/");
+        final Node parentNode = hm.getRootNode();
 
-        final Collection<Content> childNodes = ContentUtil.collectAllChildren(parentNode, ItemType.ROLE);
+        Iterable<Node> childNodes = NodeUtil.getNodes(parentNode, MgnlNodeType.ROLE);
 
-        for (Content content : childNodes)
+        for (Node content : childNodes)
         {
             operateOnChildNode(content, ctx);
         }
@@ -85,19 +81,19 @@ public class CreateDefaultRepositoryAclForAllUsersTask extends AbstractRepositor
      * @param ctx Context
      * @throws RepositoryException for any exception wile operating on the repository
      */
-    protected void operateOnChildNode(Content node, InstallContext ctx) throws RepositoryException
+    protected void operateOnChildNode(Node node, InstallContext ctx) throws RepositoryException
     {
 
         String aclpath = "acl_" + repository;
 
-        if (!node.hasContent(aclpath))
+        if (!node.hasNode(aclpath))
         {
             log.info("adding permissions on {} to role {}", repository, node.getName());
 
-            Content aclnode = node.createContent(aclpath, MgnlNodeType.NT_CONTENTNODE);
-            Content permNode = aclnode.createContent("0", MgnlNodeType.NT_CONTENTNODE);
-            permNode.createNodeData("path", "/*");
-            permNode.createNodeData("permissions", new Long(permissions));
+            Node aclnode = node.addNode(aclpath, MgnlNodeType.NT_CONTENTNODE);
+            Node permNode = aclnode.addNode("0", MgnlNodeType.NT_CONTENTNODE);
+            permNode.setProperty("path", "/*");
+            permNode.setProperty("permissions", permissions);
         }
     }
 

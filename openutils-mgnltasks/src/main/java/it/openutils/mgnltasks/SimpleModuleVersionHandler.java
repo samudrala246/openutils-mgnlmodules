@@ -19,12 +19,12 @@
 
 package it.openutils.mgnltasks;
 
-import info.magnolia.cms.core.SystemProperty;
 import info.magnolia.module.DefaultModuleVersionHandler;
 import info.magnolia.module.InstallContext;
 import info.magnolia.module.delta.Delta;
 import info.magnolia.module.delta.DeltaBuilder;
 import info.magnolia.module.model.Version;
+import it.openutils.mgnlutils.el.MgnlUtilsDeprecatedAdapters;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -73,27 +73,6 @@ public class SimpleModuleVersionHandler extends DefaultModuleVersionHandler
     }
 
     /**
-     * Add a repository to bootstrap exclusion list
-     * @param repository repository to exclude from bootstrap
-     */
-    @Deprecated
-    public void addExcludeRepositoryFromBootstrap(String repository)
-    {
-        if (!includedRepositoriesInBootstrap.contains(repository))
-        {
-            log
-                .warn(
-                    "The behaviour of SimpleModuleVersionHandler has changed in order to bootstrap only the config repository by default.\n"
-                        + "You should not specificy anymore excluded repository, and you can use addIncludedRepositoryInBootstrap to add more.",
-                    new Exception("(This exception has been added to highlight the importance of this warning)"));
-        }
-        else
-        {
-            includedRepositoriesInBootstrap.remove(repository);
-        }
-    }
-
-    /**
      * Add a repository to bootstrap *inclusion* list
      * @param repository repository to include in bootstrap
      */
@@ -120,10 +99,10 @@ public class SimpleModuleVersionHandler extends DefaultModuleVersionHandler
                 .add(new BootstrapMissingNodesTask(ctx.getCurrentModuleDefinition().getName() + "-nooverwrite"));
 
             // only for development, add the (module)-dev bootstrap directory
-            if (SystemProperty.getBooleanProperty("magnolia.develop"))
+            if (MgnlUtilsDeprecatedAdapters.getBooleanProperty("magnolia.develop"))
             {
-                if (StringUtils.isEmpty(SystemProperty.getProperty("magnolia.bootstrapdev"))
-                    || StringUtils.contains(SystemProperty.getProperty("magnolia.bootstrapdev"), ctx
+                if (StringUtils.isEmpty(MgnlUtilsDeprecatedAdapters.getProperty("magnolia.bootstrapdev"))
+                    || StringUtils.contains(MgnlUtilsDeprecatedAdapters.getProperty("magnolia.bootstrapdev"), ctx
                         .getCurrentModuleDefinition()
                         .getName()))
                 {
@@ -143,7 +122,7 @@ public class SimpleModuleVersionHandler extends DefaultModuleVersionHandler
 
         List<Delta> deltas = new ArrayList<Delta>();
 
-        if (SystemProperty.getBooleanProperty(modulename + ".update.disabled"))
+        if (MgnlUtilsDeprecatedAdapters.getBooleanProperty(modulename + ".update.disabled"))
         {
             return deltas;
         }

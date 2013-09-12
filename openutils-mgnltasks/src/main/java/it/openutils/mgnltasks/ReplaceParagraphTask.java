@@ -19,19 +19,21 @@
 
 package it.openutils.mgnltasks;
 
-import info.magnolia.cms.core.Content;
-import info.magnolia.cms.core.HierarchyManager;
 import info.magnolia.cms.core.MgnlNodeType;
-import info.magnolia.cms.core.search.Query;
-import info.magnolia.cms.core.search.QueryManager;
+import info.magnolia.jcr.util.MetaDataUtil;
 import info.magnolia.module.InstallContext;
 import info.magnolia.module.delta.AbstractRepositoryTask;
 import info.magnolia.module.delta.TaskExecutionException;
 import info.magnolia.repository.RepositoryConstants;
 
-import java.util.Collection;
-
 import javax.jcr.RepositoryException;
+
+import net.sourceforge.openutils.mgnlcriteria.jcr.query.AdvancedResult;
+import net.sourceforge.openutils.mgnlcriteria.jcr.query.AdvancedResultItem;
+import net.sourceforge.openutils.mgnlcriteria.jcr.query.Criteria;
+import net.sourceforge.openutils.mgnlcriteria.jcr.query.JCRCriteriaFactory;
+import net.sourceforge.openutils.mgnlcriteria.jcr.query.criterion.Order;
+import net.sourceforge.openutils.mgnlcriteria.jcr.query.criterion.Restrictions;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -74,31 +76,27 @@ public class ReplaceParagraphTask extends AbstractRepositoryTask
     protected void doExecute(InstallContext installContext) throws RepositoryException, TaskExecutionException
     {
 
-        HierarchyManager hm = installContext.getHierarchyManager(RepositoryConstants.WEBSITE);
+        Criteria criteria = JCRCriteriaFactory
+            .createCriteria()
+            .setWorkspace(RepositoryConstants.WEBSITE)
+            .add(Restrictions.eq("@jcr:primaryType", MgnlNodeType.NT_COMPONENT))
+            .add(Restrictions.eq("MetaData/mgnl:template", actualTemplate))
+            .addOrder(Order.desc("@jcr:score"));
 
-        QueryManager qm = hm.getQueryManager();
+        log.debug("Running query: {}", criteria.toXpathExpression());
 
-        StringBuilder query = new StringBuilder("//*[MetaData/mgnl:template ='");
-        query.append(actualTemplate);
-        query.append("']");
+        AdvancedResult result = criteria.execute();
 
-        String queryAAsString = query.toString();
-
-        log.debug("Running query: {}", queryAAsString);
-
-        Collection<Content> nodes = qm
-            .createQuery(queryAAsString, Query.XPATH)
-            .execute()
-            .getContent(MgnlNodeType.NT_CONTENTNODE.getSystemName());
-
-        for (Content page : nodes)
+        for (AdvancedResultItem page : result.getItems())
         {
-            log.warn(
-                "Replacing template " + page.getMetaData().getTemplate() + " with {} in {}",
+            log.warn("Replacing template {} with {} in {}", new Object[]{
+                MetaDataUtil.getTemplate(page),
                 newTemplate,
-                page.getHandle());
-            page.getMetaData().setTemplate(newTemplate);
+                page.getHandle() });
+
+            MetaDataUtil.getMetaData(page).setTemplate(newTemplate);
         }
+
     }
 
 }

@@ -19,9 +19,7 @@
 
 package it.openutils.mgnltasks;
 
-import info.magnolia.cms.core.Content;
-import info.magnolia.cms.core.MgnlNodeType;
-import info.magnolia.cms.util.ContentUtil;
+import info.magnolia.jcr.util.NodeUtil;
 import info.magnolia.module.InstallContext;
 import info.magnolia.module.delta.AbstractRepositoryTask;
 import info.magnolia.module.delta.TaskExecutionException;
@@ -31,7 +29,9 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import javax.jcr.Node;
 import javax.jcr.RepositoryException;
+import javax.jcr.Session;
 
 
 /**
@@ -67,24 +67,20 @@ public class SetNodeOrderTask extends AbstractRepositoryTask
     @Override
     protected void doExecute(InstallContext installContext) throws RepositoryException, TaskExecutionException
     {
-        Content parent = installContext.getHierarchyManager(repository).getContent(parentNode);
+        Session session = installContext.getJCRSession(repository);
 
-        List<Content> children = (List<Content>) ContentUtil.getAllChildren(parent);
-
-        if (children.isEmpty())
-        {
-            children = (List<Content>) parent.getChildren(MgnlNodeType.NT_CONTENTNODE);
-        }
+        Node parent = session.getNode(parentNode);
+        List<Node> children = NodeUtil.asList(NodeUtil.getNodes(parent, NodeUtil.EXCLUDE_META_DATA_FILTER));
 
         final List<String> orderedList = Arrays.asList(nodesOrder);
 
-        Collections.sort(children, new Comparator<Content>()
+        Collections.sort(children, new Comparator<Node>()
         {
 
-            public int compare(Content o1, Content o2)
+            public int compare(Node o1, Node o2)
             {
-                Integer index1 = orderedList.indexOf(o1.getName());
-                Integer index2 = orderedList.indexOf(o2.getName());
+                Integer index1 = orderedList.indexOf(NodeUtil.getName(o1));
+                Integer index2 = orderedList.indexOf(NodeUtil.getName(o2));
                 if (index1 < 0)
                 {
                     index1 = Integer.MAX_VALUE;
@@ -98,9 +94,9 @@ public class SetNodeOrderTask extends AbstractRepositoryTask
             }
         });
 
-        Content previous = null;
+        Node previous = null;
 
-        for (Content content : children)
+        for (Node content : children)
         {
             if (previous != null)
             {

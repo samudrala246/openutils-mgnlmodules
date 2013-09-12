@@ -72,12 +72,12 @@ public class DiffModuleConfigBootstrapTask extends ModuleConfigBootstrapTask
      * {@inheritDoc}
      */
     @Override
-    protected boolean skipResource(String name)
+    protected boolean skipResource(InstallContext installContext, String name) throws RepositoryException
     {
         // export the current node in the repository to a temporary file; compare it with the new bootstrap; only if the
         // files are different import the new file (the previous node gets automatically deleted), else skip
         // it.
-        boolean unchanged = bootstrapResourceEqualsExisting(name);
+        boolean unchanged = bootstrapResourceEqualsExisting(installContext, name);
         if (unchanged)
         {
             log.debug("Skipping file {}", name);
@@ -110,7 +110,7 @@ public class DiffModuleConfigBootstrapTask extends ModuleConfigBootstrapTask
 
             for (Node childNode : NodeUtil.getNodes(node, MgnlNodeType.NT_CONTENTNODE))
             {
-                String fileName = childNode.getHierarchyManager().getName()
+                String fileName = childNode.getSession().getWorkspace().getName()
                     + childNode.getPath().replace("/", ".")
                     + ".xml";
                 String resourceToBootstrap = "/mgnl-bootstrap/" + modulename + "/" + fileName;

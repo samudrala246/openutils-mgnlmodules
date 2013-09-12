@@ -17,7 +17,6 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-
 /**
  * Copyright Openmind http://www.openmindonline.it
  *
@@ -37,15 +36,14 @@
  */
 package it.openutils.mgnltasks;
 
-import info.magnolia.cms.core.Content;
-import info.magnolia.cms.core.HierarchyManager;
 import info.magnolia.cms.core.MgnlNodeType;
-import info.magnolia.cms.core.NodeData;
-import info.magnolia.cms.util.NodeDataUtil;
+import info.magnolia.jcr.util.NodeUtil;
 import info.magnolia.module.InstallContext;
 import info.magnolia.module.delta.AbstractRepositoryTask;
 import info.magnolia.module.delta.TaskExecutionException;
+import info.magnolia.repository.RepositoryConstants;
 
+import javax.jcr.Node;
 import javax.jcr.RepositoryException;
 
 
@@ -68,16 +66,16 @@ public class UpdateModuleVersionTask extends AbstractRepositoryTask
     @Override
     protected void doExecute(InstallContext ctx) throws RepositoryException, TaskExecutionException
     {
-        // make sure we have the /modules node
-        if (!ctx.hasModulesNode())
-        {
-            final HierarchyManager hm = ctx.getConfigHierarchyManager();
-            hm.createContent("/", "modules", MgnlNodeType.NT_CONTENT.getSystemName());
-        }
+        Node modules = NodeUtil.createPath(
+            ctx.getJCRSession(RepositoryConstants.CONFIG).getRootNode(),
+            "modules",
+            MgnlNodeType.NT_CONTENT);
 
-        final Content moduleNode = ctx.getOrCreateCurrentModuleNode();
-        final NodeData nodeData = NodeDataUtil.getOrCreate(moduleNode, "version");
-        nodeData.setValue(ctx.getCurrentModuleDefinition().getVersion().toString());
+        Node moduleNode = NodeUtil.createPath(
+            modules,
+            ctx.getCurrentModuleDefinition().getName(),
+            MgnlNodeType.NT_CONTENT);
+
+        moduleNode.setProperty("version", ctx.getCurrentModuleDefinition().getVersion().toString());
     }
-
 }

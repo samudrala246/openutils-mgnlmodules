@@ -19,23 +19,22 @@
 
 package it.openutils.mgnltasks.dev;
 
-import info.magnolia.cms.beans.config.ContentRepository;
-import info.magnolia.cms.core.Content;
-import info.magnolia.cms.core.ItemType;
 import info.magnolia.cms.core.MgnlNodeType;
 import info.magnolia.cms.core.Path;
 import info.magnolia.cms.security.AccessDeniedException;
 import info.magnolia.cms.util.AlertUtil;
-import info.magnolia.cms.util.ContentUtil;
 import info.magnolia.context.MgnlContext;
 import info.magnolia.importexport.DataTransporter;
+import info.magnolia.jcr.predicate.AbstractPredicate;
 import info.magnolia.jcr.util.NodeUtil;
 import info.magnolia.module.InstallContext;
 import info.magnolia.module.ModuleRegistry;
 import info.magnolia.module.admininterface.TemplatedMVCHandler;
 import info.magnolia.module.delta.AbstractRepositoryTask;
 import info.magnolia.module.delta.TaskExecutionException;
+import info.magnolia.objectfactory.Components;
 import info.magnolia.repository.RepositoryConstants;
+import info.magnolia.repository.RepositoryManager;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -47,6 +46,8 @@ import java.util.Set;
 
 import javax.jcr.Node;
 import javax.jcr.PathNotFoundException;
+import javax.jcr.Property;
+import javax.jcr.PropertyIterator;
 import javax.jcr.RepositoryException;
 import javax.jcr.Session;
 import javax.servlet.http.HttpServletRequest;
@@ -269,15 +270,15 @@ public class ModuleDevelopmentUtilsPage extends TemplatedMVCHandler
     @SuppressWarnings("unchecked")
     public Iterator<String> getRepositories()
     {
-        return ContentRepository.getAllRepositoryNames();
+        return Components.getComponent(RepositoryManager.class).getWorkspaceNames().iterator();
     }
 
     public Set<String> getModules()
     {
-        return ModuleRegistry.Factory.getInstance().getModuleNames();
+        return Components.getComponent(ModuleRegistry.class).getModuleNames();
     }
 
-    public String backup()
+    public String backup() throws RepositoryException
     {
         Session hm = MgnlContext.getJCRSession(RepositoryConstants.CONFIG);
         Session session = hm.getWorkspace().getSession();
@@ -287,25 +288,25 @@ public class ModuleDevelopmentUtilsPage extends TemplatedMVCHandler
             Node moduleroot = hm.getNode("/modules/" + module);
             if (templates)
             {
-                exportChildren(RepositoryConstants.CONFIG, session, moduleroot, "templates", new ItemType[]{
+                exportChildren(RepositoryConstants.CONFIG, session, moduleroot, "templates", new String[]{
                     MgnlNodeType.NT_CONTENT,
                     MgnlNodeType.NT_CONTENTNODE }, false);
             }
             if (paragraphs)
             {
-                exportChildren(RepositoryConstants.CONFIG, session, moduleroot, "paragraphs", new ItemType[]{
+                exportChildren(RepositoryConstants.CONFIG, session, moduleroot, "paragraphs", new String[]{
                     MgnlNodeType.NT_CONTENT,
                     MgnlNodeType.NT_CONTENTNODE }, false);
             }
             if (pages)
             {
-                exportChildren(RepositoryConstants.CONFIG, session, moduleroot, "pages", new ItemType[]{
+                exportChildren(RepositoryConstants.CONFIG, session, moduleroot, "pages", new String[]{
                     MgnlNodeType.NT_CONTENT,
                     MgnlNodeType.NT_CONTENTNODE }, false);
             }
             if (dialogs)
             {
-                exportChildren(RepositoryConstants.CONFIG, session, moduleroot, "dialogs", new ItemType[]{
+                exportChildren(RepositoryConstants.CONFIG, session, moduleroot, "dialogs", new String[]{
                     MgnlNodeType.NT_CONTENT,
                     MgnlNodeType.NT_CONTENTNODE }, true);
             }
@@ -316,7 +317,7 @@ public class ModuleDevelopmentUtilsPage extends TemplatedMVCHandler
                     session,
                     moduleroot,
                     "virtualURIMapping",
-                    new ItemType[]{MgnlNodeType.NT_CONTENTNODE },
+                    new String[]{MgnlNodeType.NT_CONTENTNODE },
                     true);
             }
             AlertUtil.setMessage("Backup done to "
@@ -333,12 +334,12 @@ public class ModuleDevelopmentUtilsPage extends TemplatedMVCHandler
             extractWorkspaceRoots(RepositoryConstants.WEBSITE);
         }
 
-        if (media && ContentRepository.getRepositoryMapping("media") != null)
+        if (media && Components.getComponent(RepositoryManager.class).hasWorkspace("media"))
         {
             extractWorkspaceRoots("media");
         }
 
-        if (data && ContentRepository.getRepositoryMapping("data") != null)
+        if (data && Components.getComponent(RepositoryManager.class).hasWorkspace("data"))
         {
             extractWorkspaceRoots("data");
         }
@@ -366,14 +367,15 @@ public class ModuleDevelopmentUtilsPage extends TemplatedMVCHandler
         try
         {
             Session hm = MgnlContext.getJCRSession(repositoryName);
-            Content wesiteRoot = hm.getRoot();
+            Node wesiteRoot = hm.getRootNode();
 
-            Iterator<Content> children = wesiteRoot.getChildren(ContentUtil.MAGNOLIA_FILTER).iterator();
-            while (children.hasNext())
+            Iterable<Node> children = NodeUtil.getNodes(wesiteRoot, NodeUtil.EXCLUDE_META_DATA_FILTER);
+
+            for (Node node : children)
             {
-                Content exported = children.next();
-                exportNode(repositoryName, hm.getWorkspace().getSession(), exported, true);
+                exportNode(repositoryName, hm.getWorkspace().getSession(), node, true);
             }
+
         }
         catch (Exception e)
         {
@@ -382,7 +384,7 @@ public class ModuleDevelopmentUtilsPage extends TemplatedMVCHandler
         }
     }
 
-    private void backupChildren(String repository, String parentpath)
+    private void backupChildren(String repository, String parentpath) throws RepositoryException
     {
         Session hm = MgnlContext.getJCRSession(repository);
 
@@ -398,12 +400,10 @@ public class ModuleDevelopmentUtilsPage extends TemplatedMVCHandler
         }
         try
         {
-            Iterator<Content> children = parentNode
-                .getChildren(ContentUtil.ALL_NODES_EXCEPT_JCR_CONTENT_FILTER)
-                .iterator();
-            while (children.hasNext())
+            Iterable<Node> children = NodeUtil.getNodes(parentNode, NodeUtil.EXCLUDE_META_DATA_FILTER);
+
+            for (Node exported : children)
             {
-                Content exported = children.next();
                 exportNode(repository, hm.getWorkspace().getSession(), exported, false);
             }
 
@@ -416,14 +416,14 @@ public class ModuleDevelopmentUtilsPage extends TemplatedMVCHandler
 
     }
 
-    private void exportChildren(String repository, Session session, Content moduleroot, String path,
-        ItemType[] itemTypes, boolean exportContentContainingContentNodes) throws PathNotFoundException,
+    private void exportChildren(String repository, Session session, Node moduleroot, String path,
+        final String[] itemTypes, boolean exportContentContainingContentNodes) throws PathNotFoundException,
         RepositoryException, AccessDeniedException, FileNotFoundException, IOException
     {
-        Content templateRoot = null;
+        Node templateRoot = null;
         try
         {
-            templateRoot = moduleroot.getContent(path);
+            templateRoot = moduleroot.getNode(path);
         }
         catch (PathNotFoundException e)
         {
@@ -434,15 +434,55 @@ public class ModuleDevelopmentUtilsPage extends TemplatedMVCHandler
         // we need to track exported paths, or it will export any single control for dialogs
         Set<String> alreadyExported = new HashSet<String>();
 
-        Iterator<Content> children = ContentUtil.collectAllChildren(templateRoot, itemTypes).iterator();
-        while (children.hasNext())
+        Iterable<Node> children = NodeUtil.getNodes(templateRoot, new AbstractPredicate<Node>()
         {
-            Content exported = children.next();
-            if (!exported.getNodeDataCollection().isEmpty() // ignore "directories"
-                || (exportContentContainingContentNodes && exported.hasChildren(MgnlNodeType.NT_CONTENTNODE.getSystemName())))
+
+            @Override
+            public boolean evaluateTyped(Node node)
+            {
+                for (String type : itemTypes)
+                {
+                    try
+                    {
+                        if (node.getPrimaryNodeType().getName().equals(type))
+                        {
+                            return true;
+                        }
+                    }
+                    catch (RepositoryException e)
+                    {
+                        return false;
+                    }
+                }
+                return false;
+            }
+
+        });
+
+        for (Node node : children)
+        {
+            boolean hasproperties = false;
+
+            PropertyIterator properties = node.getProperties();
+
+            while (properties.hasNext())
+            {
+                Property property = properties.nextProperty();
+                if (!StringUtils.contains(property.getName(), "."))
+                {
+                    hasproperties = true;
+                    break;
+                }
+            }
+
+            if (!hasproperties
+                || (exportContentContainingContentNodes && NodeUtil
+                    .getNodes(node, MgnlNodeType.NT_CONTENTNODE)
+                    .iterator()
+                    .hasNext()))
             {
 
-                String current = exported.getHandle();
+                String current = node.getPath();
                 boolean dontexport = false;
 
                 for (Iterator<String> iterator = alreadyExported.iterator(); iterator.hasNext();)
@@ -457,17 +497,17 @@ public class ModuleDevelopmentUtilsPage extends TemplatedMVCHandler
 
                 if (!dontexport)
                 {
-                    alreadyExported.add(exported.getHandle() + "/");
-                    exportNode(repository, session, exported, false);
+                    alreadyExported.add(node.getPath() + "/");
+                    exportNode(repository, session, node, false);
                 }
             }
         }
     }
 
-    private void exportNode(String repository, Session session, Content exported, boolean dev)
-        throws FileNotFoundException, IOException
+    private void exportNode(String repository, Session session, Node exported, boolean dev) throws IOException,
+        RepositoryException
     {
-        String handle = exported.getHandle();
+        String handle = exported.getPath();
         String xmlName = repository + StringUtils.replace(handle, "/", ".") + ".xml";
         xmlName = DataTransporter.encodePath(xmlName, ".", "UTF-8");
         // create necessary parent directories

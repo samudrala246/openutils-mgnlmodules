@@ -19,7 +19,6 @@
 
 package it.openutils.mgnltasks;
 
-import info.magnolia.cms.core.HierarchyManager;
 import info.magnolia.cms.core.Path;
 import info.magnolia.module.InstallContext;
 import info.magnolia.module.delta.AbstractTask;
@@ -51,7 +50,6 @@ public class SamplesExtractionTask extends AbstractTask
      */
     public void execute(final InstallContext ctx) throws TaskExecutionException
     {
-        final HierarchyManager hm = ctx.getConfigHierarchyManager();
         final MD5CheckingFileExtractor extractor = new MD5CheckingFileExtractor(new FileExtractionLogger()
         {
 
@@ -59,7 +57,7 @@ public class SamplesExtractionTask extends AbstractTask
             {
                 ctx.warn(message);
             }
-        }, hm);
+        }, ctx.getConfigHierarchyManager());
         try
         {
             extractor.extractFiles(new FileExtractor.Transformer()
