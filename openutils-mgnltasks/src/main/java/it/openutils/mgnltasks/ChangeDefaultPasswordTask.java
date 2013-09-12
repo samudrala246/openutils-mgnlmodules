@@ -19,7 +19,7 @@
 
 package it.openutils.mgnltasks;
 
-import info.magnolia.cms.core.NodeData;
+import info.magnolia.jcr.util.PropertyUtil;
 import info.magnolia.module.InstallContext;
 import info.magnolia.module.delta.AbstractRepositoryTask;
 import info.magnolia.module.delta.Task;
@@ -79,12 +79,11 @@ public class ChangeDefaultPasswordTask extends AbstractRepositoryTask implements
 
         Node role = hm.getNode(user);
 
-        NodeData pwdNodeData = role.getNodeData("pswd");
-        String actualPassword = pwdNodeData.getString();
+        String actualPassword = PropertyUtil.getString(role, "pswd");
         if (StringUtils.equals(defaultPassword, StringUtils.trim(actualPassword)))
         {
             log.info("Found default password for {}, setting new password", user);
-            pwdNodeData.setValue(newpassword);
+            role.setProperty("pswd", newpassword);
         }
     }
 }

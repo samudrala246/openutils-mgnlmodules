@@ -19,13 +19,13 @@
 
 package it.openutils.mgnltasks;
 
-import info.magnolia.cms.core.Content;
-import info.magnolia.cms.util.ContentUtil;
-import info.magnolia.cms.util.NodeDataUtil;
+import info.magnolia.jcr.util.PropertyUtil;
 import info.magnolia.module.InstallContext;
 import info.magnolia.module.delta.AbstractRepositoryTask;
 import info.magnolia.module.delta.TaskExecutionException;
+import it.openutils.mgnlutils.api.NodeUtilsExt;
 
+import javax.jcr.Node;
 import javax.jcr.RepositoryException;
 import javax.jcr.Session;
 
@@ -82,12 +82,13 @@ public class CreateMissingPropertyTask extends AbstractRepositoryTask
     @Override
     protected void doExecute(InstallContext ctx) throws RepositoryException, TaskExecutionException
     {
-        Session hm = ctx.getJCRSession(workspaceName);
+        Session session = ctx.getJCRSession(workspaceName);
 
-        final Content node = ContentUtil.createPath(hm, nodePath, false);
-        if (!node.hasNodeData(propertyName))
+        Node node = NodeUtilsExt.getNodeIfExists(session, nodePath);
+
+        if (!node.hasProperty(propertyName))
         {
-            NodeDataUtil.getOrCreateAndSet(node, propertyName, propertyValue);
+            PropertyUtil.setProperty(node, propertyName, propertyValue);
         }
 
     }

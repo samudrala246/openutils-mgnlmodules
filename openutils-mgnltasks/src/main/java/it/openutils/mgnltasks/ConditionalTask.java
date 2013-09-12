@@ -19,7 +19,6 @@
 
 package it.openutils.mgnltasks;
 
-import info.magnolia.cms.util.NodeDataUtil;
 import info.magnolia.module.InstallContext;
 import info.magnolia.module.delta.AbstractTask;
 import info.magnolia.module.delta.Task;
@@ -87,21 +86,6 @@ public abstract class ConditionalTask extends AbstractTask
         {
             throw new TaskExecutionException(e.getMessage(), e);
         }
-    }
-
-    /**
-     * Check if a nodedata exists with a specific value.
-     * @param session JCR session
-     * @param handle node handle
-     * @param nodedata nodedata name
-     * @param value expected value for nodeData
-     * @return <code>true</code> if nodedata has the same value
-     * @throws RepositoryException exceptions while checking content
-     */
-    public boolean nodeDataEquals(Session session, String handle, String nodedata, Object value)
-        throws RepositoryException
-    {
-        return value.equals(NodeDataUtil.getValueObject(session.getNode(handle).getNodeData(nodedata)));
     }
 
     /**
