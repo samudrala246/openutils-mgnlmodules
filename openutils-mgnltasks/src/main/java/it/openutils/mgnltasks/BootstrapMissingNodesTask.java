@@ -19,7 +19,10 @@
 
 package it.openutils.mgnltasks;
 
-import info.magnolia.cms.core.HierarchyManager;
+import javax.jcr.RepositoryException;
+import javax.jcr.Session;
+
+import info.magnolia.jcr.util.NodeUtil;
 import info.magnolia.module.InstallContext;
 import info.magnolia.module.delta.BootstrapResourcesTask;
 
@@ -66,16 +69,29 @@ public class BootstrapMissingNodesTask extends BootstrapResourcesTask
             String handle = StringUtils.substringBetween(name, "/mgnl-bootstrap/" + folderName + "/", ".xml");
 
             String workspace = StringUtils.substringBefore(handle, ".");
-            handle = "/" + StringUtils.replace(StringUtils.substringAfter(handle, "."), ".", "/");
+            handle = StringUtils.replace(StringUtils.substringAfter(handle, "."), ".", "/");
 
-            HierarchyManager hm = installContext.getHierarchyManager(workspace);
-            boolean alreadyExisting = hm.isExist(handle);
-
-            if (!alreadyExisting)
+            try
             {
-                log.info("Loading {} since no content at {}:{} has been found", new Object[]{name, workspace, handle });
+                Session session = installContext.getJCRSession(workspace);
+
+                // handle is a relative path
+                boolean alreadyExisting = session.getRootNode().hasNode(handle);
+
+                if (!alreadyExisting)
+                {
+                    log.info("Loading {} since no content at {}:{} has been found", new Object[]{
+                        name,
+                        workspace,
+                        "/" + handle });
+                }
+                return !alreadyExisting;
             }
-            return !alreadyExisting;
+            catch (RepositoryException e)
+            {
+                log.debug(e.getMessage(), e);
+            }
+
         }
         return false;
     }
