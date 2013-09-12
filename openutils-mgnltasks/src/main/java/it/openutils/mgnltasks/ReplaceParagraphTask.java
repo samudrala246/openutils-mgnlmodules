@@ -33,6 +33,9 @@ import java.util.Collection;
 
 import javax.jcr.RepositoryException;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 
 /**
  * A task that replace any occurrence of a given paragraph with another at startup (handy for renamed paragraphs).
@@ -45,6 +48,8 @@ public class ReplaceParagraphTask extends AbstractRepositoryTask
     private final String actualTemplate;
 
     private final String newTemplate;
+
+    private Logger log = LoggerFactory.getLogger(AnonymousUserSetupTask.class);
 
     /**
      * @param actualTemplate template to be replaced
@@ -81,13 +86,17 @@ public class ReplaceParagraphTask extends AbstractRepositoryTask
 
         log.debug("Running query: {}", queryAAsString);
 
-        Collection<Content> nodes = qm.createQuery(queryAAsString, Query.XPATH).execute().getContent(
-            ItemType.CONTENTNODE.getSystemName());
+        Collection<Content> nodes = qm
+            .createQuery(queryAAsString, Query.XPATH)
+            .execute()
+            .getContent(ItemType.CONTENTNODE.getSystemName());
 
         for (Content page : nodes)
         {
-            log.warn("Replacing template " + page.getMetaData().getTemplate() + " with {} in {}", newTemplate, page
-                .getHandle());
+            log.warn(
+                "Replacing template " + page.getMetaData().getTemplate() + " with {} in {}",
+                newTemplate,
+                page.getHandle());
             page.getMetaData().setTemplate(newTemplate);
         }
     }

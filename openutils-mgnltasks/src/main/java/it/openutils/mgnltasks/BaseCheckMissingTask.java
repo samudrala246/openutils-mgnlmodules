@@ -37,6 +37,8 @@ import javax.jcr.RepositoryException;
 import javax.jcr.query.InvalidQueryException;
 
 import org.apache.commons.lang.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 /**
@@ -51,6 +53,8 @@ public abstract class BaseCheckMissingTask extends AbstractRepositoryTask
     private final String templateOrParagraph;
 
     private final String nodetype;
+
+    private Logger log = LoggerFactory.getLogger(AnonymousUserSetupTask.class);
 
     /**
      * @param templateOrParagraph "template" or "paragraph"

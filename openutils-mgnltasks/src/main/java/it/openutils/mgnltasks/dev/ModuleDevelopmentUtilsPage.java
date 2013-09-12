@@ -23,12 +23,14 @@ import info.magnolia.cms.beans.config.ContentRepository;
 import info.magnolia.cms.core.Content;
 import info.magnolia.cms.core.HierarchyManager;
 import info.magnolia.cms.core.ItemType;
+import info.magnolia.cms.core.MgnlNodeType;
 import info.magnolia.cms.core.Path;
 import info.magnolia.cms.security.AccessDeniedException;
 import info.magnolia.cms.util.AlertUtil;
 import info.magnolia.cms.util.ContentUtil;
 import info.magnolia.context.MgnlContext;
 import info.magnolia.importexport.DataTransporter;
+import info.magnolia.jcr.util.NodeUtil;
 import info.magnolia.module.InstallContext;
 import info.magnolia.module.ModuleRegistry;
 import info.magnolia.module.admininterface.TemplatedMVCHandler;
@@ -44,6 +46,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
+import javax.jcr.Node;
 import javax.jcr.PathNotFoundException;
 import javax.jcr.RepositoryException;
 import javax.jcr.Session;
@@ -505,24 +508,30 @@ public class ModuleDevelopmentUtilsPage extends TemplatedMVCHandler
         @Override
         protected void doExecute(InstallContext installContext) throws RepositoryException, TaskExecutionException
         {
-            HierarchyManager hm = installContext.getHierarchyManager(RepositoryConstants.CONFIG);
+
+            Session session = installContext.getJCRSession(RepositoryConstants.CONFIG);
 
             String pagename = "development-" + module2;
-            Content pages = hm.getContent("/modules/" + module2 + "/pages", true, ItemType.CONTENT);
-            if (!pages.hasContent(pagename))
+
+            Node pages = NodeUtil.createPath(
+                session.getRootNode(),
+                "modules/" + module2 + "/pages",
+                MgnlNodeType.NT_CONTENT);
+
+            if (!pages.hasNode(pagename))
             {
-                Content page = pages.createContent(pagename, ItemType.CONTENTNODE);
-                page.setNodeData("class", ModuleDevelopmentUtilsPage.class.getName());
+                Node page = pages.addNode(pagename, MgnlNodeType.NT_CONTENTNODE);
+                page.setProperty("class", ModuleDevelopmentUtilsPage.class.getName());
             }
 
-            Content menu = hm.getContent("/modules/adminInterface/config/menu/tools", true, ItemType.CONTENT);
+            Node menu = session.getNode("/modules/adminInterface/config/menu/tools");
 
-            if (!menu.hasChildren(pagename))
+            if (!menu.hasNode(pagename))
             {
-                Content page = menu.createContent(pagename, ItemType.CONTENTNODE);
-                page.setNodeData("icon", "/.resources/tasks/ico16-save.png");
-                page.setNodeData("label", "Tools * " + module2);
-                page.setNodeData("onclick", "MgnlAdminCentral.showContent('/.magnolia/pages/"
+                Node page = menu.addNode(pagename, MgnlNodeType.NT_CONTENTNODE);
+                page.setProperty("icon", "/.resources/tasks/ico16-save.png");
+                page.setProperty("label", "Tools * " + module2);
+                page.setProperty("onclick", "MgnlAdminCentral.showContent('/.magnolia/pages/"
                     + pagename
                     + ".html?module="
                     + module2

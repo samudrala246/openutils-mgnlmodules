@@ -24,6 +24,8 @@ import info.magnolia.module.InstallContext;
 import info.magnolia.module.delta.BootstrapResourcesTask;
 
 import org.apache.commons.lang.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 /**
@@ -37,6 +39,8 @@ public class ExistenceConditionalBootstrapTask extends BootstrapResourcesTask
     private String workspace;
 
     private String folderName;
+
+    private Logger log = LoggerFactory.getLogger(AnonymousUserSetupTask.class);
 
     /**
      * @param name

@@ -24,6 +24,8 @@ import info.magnolia.module.InstallContext;
 import info.magnolia.module.delta.BootstrapResourcesTask;
 
 import org.apache.commons.lang.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 /**
@@ -36,6 +38,8 @@ public class BootstrapMissingNodesTask extends BootstrapResourcesTask
 {
 
     private String folderName;
+
+    private Logger log = LoggerFactory.getLogger(AnonymousUserSetupTask.class);
 
     /**
      * Bootstrap all the files included in the /mgnl-bootstrap/(folder) directory, only if the nodes are not already

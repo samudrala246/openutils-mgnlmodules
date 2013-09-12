@@ -35,6 +35,9 @@ import java.util.Collection;
 
 import javax.jcr.RepositoryException;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 
 /**
  * A task that can be used to add or remove read only access to the anonymous user (for an easy admin/public switch).
@@ -45,6 +48,8 @@ public class AnonymousUserSetupTask extends AbstractRepositoryTask implements Ta
 {
 
     private boolean allowAccess;
+
+    private Logger log = LoggerFactory.getLogger(AnonymousUserSetupTask.class);
 
     /**
      * @param allowAccess true to add access to anonymous users, false to remove it
