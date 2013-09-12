@@ -34,6 +34,7 @@ import info.magnolia.module.ModuleRegistry;
 import info.magnolia.module.admininterface.TemplatedMVCHandler;
 import info.magnolia.module.delta.AbstractRepositoryTask;
 import info.magnolia.module.delta.TaskExecutionException;
+import info.magnolia.repository.RepositoryConstants;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -276,7 +277,7 @@ public class ModuleDevelopmentUtilsPage extends TemplatedMVCHandler
 
     public String backup()
     {
-        HierarchyManager hm = MgnlContext.getHierarchyManager(ContentRepository.CONFIG);
+        HierarchyManager hm = MgnlContext.getHierarchyManager(RepositoryConstants.CONFIG);
         Session session = hm.getWorkspace().getSession();
 
         try
@@ -284,32 +285,32 @@ public class ModuleDevelopmentUtilsPage extends TemplatedMVCHandler
             Content moduleroot = hm.getContent("/modules/" + module);
             if (templates)
             {
-                exportChildren(ContentRepository.CONFIG, session, moduleroot, "templates", new ItemType[]{
+                exportChildren(RepositoryConstants.CONFIG, session, moduleroot, "templates", new ItemType[]{
                     ItemType.CONTENT,
                     ItemType.CONTENTNODE }, false);
             }
             if (paragraphs)
             {
-                exportChildren(ContentRepository.CONFIG, session, moduleroot, "paragraphs", new ItemType[]{
+                exportChildren(RepositoryConstants.CONFIG, session, moduleroot, "paragraphs", new ItemType[]{
                     ItemType.CONTENT,
                     ItemType.CONTENTNODE }, false);
             }
             if (pages)
             {
-                exportChildren(ContentRepository.CONFIG, session, moduleroot, "pages", new ItemType[]{
+                exportChildren(RepositoryConstants.CONFIG, session, moduleroot, "pages", new ItemType[]{
                     ItemType.CONTENT,
                     ItemType.CONTENTNODE }, false);
             }
             if (dialogs)
             {
-                exportChildren(ContentRepository.CONFIG, session, moduleroot, "dialogs", new ItemType[]{
+                exportChildren(RepositoryConstants.CONFIG, session, moduleroot, "dialogs", new ItemType[]{
                     ItemType.CONTENT,
                     ItemType.CONTENTNODE }, true);
             }
             if (virtualURIs)
             {
                 exportChildren(
-                    ContentRepository.CONFIG,
+                    RepositoryConstants.CONFIG,
                     session,
                     moduleroot,
                     "virtualURIMapping",
@@ -327,7 +328,7 @@ public class ModuleDevelopmentUtilsPage extends TemplatedMVCHandler
 
         if (website)
         {
-            extractWorkspaceRoots(ContentRepository.WEBSITE);
+            extractWorkspaceRoots(RepositoryConstants.WEBSITE);
         }
 
         if (media && ContentRepository.getRepositoryMapping("media") != null)
@@ -342,17 +343,17 @@ public class ModuleDevelopmentUtilsPage extends TemplatedMVCHandler
 
         if (users)
         {
-            backupChildren(ContentRepository.USERS, "/admin");
+            backupChildren(RepositoryConstants.USERS, "/admin");
         }
 
         if (groups)
         {
-            extractWorkspaceRoots(ContentRepository.USER_GROUPS);
+            extractWorkspaceRoots(RepositoryConstants.USER_GROUPS);
         }
 
         if (roles)
         {
-            extractWorkspaceRoots(ContentRepository.USER_ROLES);
+            extractWorkspaceRoots(RepositoryConstants.USER_ROLES);
         }
 
         return this.show();
@@ -504,7 +505,7 @@ public class ModuleDevelopmentUtilsPage extends TemplatedMVCHandler
         @Override
         protected void doExecute(InstallContext installContext) throws RepositoryException, TaskExecutionException
         {
-            HierarchyManager hm = installContext.getHierarchyManager(ContentRepository.CONFIG);
+            HierarchyManager hm = installContext.getHierarchyManager(RepositoryConstants.CONFIG);
 
             String pagename = "development-" + module2;
             Content pages = hm.getContent("/modules/" + module2 + "/pages", true, ItemType.CONTENT);

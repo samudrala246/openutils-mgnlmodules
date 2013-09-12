@@ -19,7 +19,6 @@
 
 package it.openutils.mgnltasks;
 
-import info.magnolia.cms.beans.config.ContentRepository;
 import info.magnolia.cms.core.Content;
 import info.magnolia.cms.core.HierarchyManager;
 import info.magnolia.cms.core.NodeData;
@@ -27,6 +26,7 @@ import info.magnolia.module.InstallContext;
 import info.magnolia.module.delta.AbstractRepositoryTask;
 import info.magnolia.module.delta.Task;
 import info.magnolia.module.delta.TaskExecutionException;
+import info.magnolia.repository.RepositoryConstants;
 
 import javax.jcr.RepositoryException;
 
@@ -75,7 +75,7 @@ public class ChangeDefaultPasswordTask extends AbstractRepositoryTask implements
     protected void doExecute(InstallContext installContext) throws RepositoryException, TaskExecutionException
     {
 
-        HierarchyManager hm = installContext.getHierarchyManager(ContentRepository.USERS);
+        HierarchyManager hm = installContext.getHierarchyManager(RepositoryConstants.USERS);
 
         Content role = hm.getContent(user);
 

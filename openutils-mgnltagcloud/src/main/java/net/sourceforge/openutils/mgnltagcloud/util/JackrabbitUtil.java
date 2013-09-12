@@ -20,9 +20,6 @@
 package net.sourceforge.openutils.mgnltagcloud.util;
 
 import info.magnolia.context.MgnlContext;
-import info.magnolia.objectfactory.ComponentFactory;
-import info.magnolia.objectfactory.ComponentProvider;
-import info.magnolia.objectfactory.Components;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -33,7 +30,6 @@ import javax.inject.Singleton;
 import javax.jcr.RepositoryException;
 import javax.jcr.Session;
 import javax.jcr.query.InvalidQueryException;
-import javax.jws.Oneway;
 
 import org.apache.commons.lang.UnhandledException;
 import org.apache.jackrabbit.core.RepositoryImpl;

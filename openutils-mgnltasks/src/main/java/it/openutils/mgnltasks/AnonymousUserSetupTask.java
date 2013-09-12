@@ -19,7 +19,6 @@
 
 package it.openutils.mgnltasks;
 
-import info.magnolia.cms.beans.config.ContentRepository;
 import info.magnolia.cms.core.Content;
 import info.magnolia.cms.core.HierarchyManager;
 import info.magnolia.cms.security.AccessDeniedException;
@@ -30,6 +29,7 @@ import info.magnolia.module.InstallContext;
 import info.magnolia.module.delta.AbstractRepositoryTask;
 import info.magnolia.module.delta.Task;
 import info.magnolia.module.delta.TaskExecutionException;
+import info.magnolia.repository.RepositoryConstants;
 
 import java.util.Collection;
 
@@ -64,7 +64,7 @@ public class AnonymousUserSetupTask extends AbstractRepositoryTask implements Ta
     protected void doExecute(InstallContext installContext) throws RepositoryException, TaskExecutionException
     {
 
-        HierarchyManager hm = installContext.getHierarchyManager(ContentRepository.USER_ROLES);
+        HierarchyManager hm = installContext.getHierarchyManager(RepositoryConstants.USER_ROLES);
 
         Content role = hm.getContent("/" + UserManager.ANONYMOUS_USER);
 

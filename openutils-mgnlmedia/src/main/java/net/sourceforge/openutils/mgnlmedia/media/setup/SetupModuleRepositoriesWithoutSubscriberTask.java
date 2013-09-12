@@ -19,7 +19,6 @@
 
 package net.sourceforge.openutils.mgnlmedia.media.setup;
 
-import info.magnolia.cms.beans.config.ContentRepository;
 import info.magnolia.cms.security.Permission;
 import info.magnolia.cms.security.Role;
 import info.magnolia.cms.security.RoleManager;
@@ -30,6 +29,8 @@ import info.magnolia.module.delta.AbstractTask;
 import info.magnolia.module.delta.TaskExecutionException;
 import info.magnolia.module.model.ModuleDefinition;
 import info.magnolia.module.model.RepositoryDefinition;
+import info.magnolia.objectfactory.Components;
+import info.magnolia.repository.RepositoryManager;
 
 import java.util.Collection;
 import java.util.List;
@@ -65,7 +66,7 @@ public class SetupModuleRepositoriesWithoutSubscriberTask extends AbstractTask
                 for (final String workspace : workspaces)
                 {
                     // bootstrap the workspace if empty
-                    if (!ContentRepository.checkIfInitialized(workspace))
+                    if (!Components.getComponent(RepositoryManager.class).checkIfInitialized(workspace))
                     {
                         final String[] bootstrapDirs = Bootstrapper.getBootstrapDirs();
                         Bootstrapper.bootstrapRepository(bootstrapDirs, workspace, new Bootstrapper.BootstrapFilter()

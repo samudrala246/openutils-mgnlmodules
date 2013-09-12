@@ -1,11 +1,11 @@
 package info.magnolia.module.development;
 
-import info.magnolia.cms.beans.config.ContentRepository;
 import info.magnolia.cms.core.SystemProperty;
 import info.magnolia.module.DefaultModuleVersionHandler;
 import info.magnolia.module.InstallContext;
 import info.magnolia.module.delta.SetPropertyTask;
 import info.magnolia.module.delta.Task;
+import info.magnolia.repository.RepositoryConstants;
 import it.openutils.mgnltasks.NodeSortTask;
 
 import java.util.ArrayList;
@@ -41,7 +41,7 @@ public class DevModuleVersionHandler extends DefaultModuleVersionHandler
         }
 
         // I hate spending time in looking through the unsorted list of modules...
-        tasks.add(new NodeSortTask(ContentRepository.CONFIG, "/modules"));
+        tasks.add(new NodeSortTask(RepositoryConstants.CONFIG, "/modules"));
 
         return tasks;
     }

@@ -20,12 +20,8 @@
 package net.sourceforge.openutils.mgnlmedia.playlist.utils;
 
 import info.magnolia.cms.core.Content;
-import info.magnolia.cms.core.ItemType;
 import info.magnolia.cms.core.MgnlNodeType;
-import info.magnolia.cms.util.NodeDataUtil;
 import info.magnolia.context.MgnlContext;
-import info.magnolia.jcr.predicate.AbstractPredicate;
-import info.magnolia.jcr.util.ContentMap;
 import info.magnolia.jcr.util.NodeUtil;
 import info.magnolia.jcr.util.PropertyUtil;
 
@@ -51,7 +47,6 @@ import net.sourceforge.openutils.mgnlmedia.media.tags.el.MediaEl;
 import net.sourceforge.openutils.mgnlmedia.playlist.PlaylistConstants;
 
 import org.apache.commons.collections.IteratorUtils;
-import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

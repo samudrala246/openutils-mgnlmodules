@@ -19,13 +19,13 @@
 
 package it.openutils.mgnltasks;
 
-import info.magnolia.cms.beans.config.ContentRepository;
 import info.magnolia.cms.core.HierarchyManager;
 import info.magnolia.module.InstallContext;
 import info.magnolia.module.delta.AbstractRepositoryTask;
 import info.magnolia.module.delta.BootstrapSingleResource;
 import info.magnolia.module.delta.Task;
 import info.magnolia.module.delta.TaskExecutionException;
+import info.magnolia.repository.RepositoryConstants;
 
 import javax.jcr.PathNotFoundException;
 import javax.jcr.RepositoryException;
@@ -61,7 +61,7 @@ public class CheckAndCreateUserTask extends AbstractRepositoryTask implements Ta
     protected void doExecute(InstallContext installContext) throws RepositoryException, TaskExecutionException
     {
 
-        HierarchyManager hm = installContext.getHierarchyManager(ContentRepository.USERS);
+        HierarchyManager hm = installContext.getHierarchyManager(RepositoryConstants.USERS);
 
         try
         {

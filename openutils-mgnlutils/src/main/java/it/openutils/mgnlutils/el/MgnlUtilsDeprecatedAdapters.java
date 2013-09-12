@@ -19,8 +19,6 @@
 
 package it.openutils.mgnlutils.el;
 
-import java.util.Properties;
-
 import info.magnolia.cms.core.AggregationState;
 import info.magnolia.cms.core.Content;
 import info.magnolia.cms.core.DefaultContent;
@@ -28,6 +26,8 @@ import info.magnolia.cms.core.SystemProperty;
 import info.magnolia.context.MgnlContext;
 import info.magnolia.context.WebContext;
 import info.magnolia.jcr.util.ContentMap;
+
+import java.util.Properties;
 
 import javax.jcr.Node;
 

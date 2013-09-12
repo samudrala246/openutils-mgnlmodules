@@ -41,6 +41,7 @@ import org.apache.commons.lang.StringUtils;
  * @author fgiust
  * @version $Id$
  */
+@SuppressWarnings("deprecation")
 public class SafeMultiValueSaveHandler extends SaveHandlerImpl implements FieldSaveHandler
 {
 

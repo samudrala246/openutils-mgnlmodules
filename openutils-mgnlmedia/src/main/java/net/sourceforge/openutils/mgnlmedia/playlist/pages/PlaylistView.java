@@ -20,7 +20,6 @@
 package net.sourceforge.openutils.mgnlmedia.playlist.pages;
 
 import info.magnolia.cms.core.Content;
-import info.magnolia.cms.i18n.I18nContentSupportFactory;
 import info.magnolia.cms.util.ContentUtil;
 import info.magnolia.cms.util.NodeDataUtil;
 import info.magnolia.context.MgnlContext;
@@ -32,20 +31,17 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Map.Entry;
 
 import javax.jcr.Node;
 import javax.jcr.RepositoryException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.openutils.mgnlcriteria.jcr.query.AdvancedResultItem;
 import net.sourceforge.openutils.mgnlmedia.media.configuration.MediaConfigurationManager;
 import net.sourceforge.openutils.mgnlmedia.media.configuration.MediaTypeConfiguration;
 import net.sourceforge.openutils.mgnlmedia.media.lifecycle.MediaModule;
@@ -57,7 +53,6 @@ import net.sourceforge.openutils.mgnlmedia.playlist.PlaylistConstants;
 import net.sourceforge.openutils.mgnlmedia.playlist.utils.PlaylistIterateUtils;
 import net.sourceforge.openutils.mgnlmedia.playlist.utils.PlaylistIterateUtils.MediaNodeAndEntryPath;
 
-import org.apache.commons.lang.LocaleUtils;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

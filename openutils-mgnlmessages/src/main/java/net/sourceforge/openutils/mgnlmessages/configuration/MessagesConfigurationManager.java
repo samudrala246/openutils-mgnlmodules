@@ -19,7 +19,6 @@
 
 package net.sourceforge.openutils.mgnlmessages.configuration;
 
-import info.magnolia.cms.beans.config.ContentRepository;
 import info.magnolia.cms.beans.config.ObservedManager;
 import info.magnolia.cms.core.Content;
 import info.magnolia.cms.core.HierarchyManager;
@@ -29,6 +28,7 @@ import info.magnolia.cms.util.ContentUtil;
 import info.magnolia.cms.util.FactoryUtil;
 import info.magnolia.cms.util.NodeDataUtil;
 import info.magnolia.context.MgnlContext;
+import info.magnolia.repository.RepositoryConstants;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -122,7 +122,7 @@ public class MessagesConfigurationManager extends ObservedManager
     @SuppressWarnings("unchecked")
     public static List<String> getBaseNames()
     {
-        HierarchyManager mgr = MgnlContext.getSystemContext().getHierarchyManager(ContentRepository.CONFIG);
+        HierarchyManager mgr = MgnlContext.getSystemContext().getHierarchyManager(RepositoryConstants.CONFIG);
         try
         {
             Content basenamesNode = mgr.getContent("/modules/messages/basenames");

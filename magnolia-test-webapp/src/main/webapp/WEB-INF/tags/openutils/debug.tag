@@ -45,14 +45,14 @@
           <td>state.originalURI</td>
           <td>${state.originalURI}</td>
         </tr>
-<!--        <tr>
+        <tr>
           <td>state.mainContent</td>
           <td>${state.mainContent} ${state.mainContent.class}</td>
-        </tr>-->
-<!--        <tr>
+        </tr>
+        <tr>
           <td>state.mainContent.JCRNode</td>
           <td>${state.mainContent.JCRNode} ${state.mainContent.JCRNode.class}</td>
-        </tr>-->
+        </tr>
         <tr>
           <td>state.mainContent.JCRNode.identifier</td>
           <td>${state.mainContent.JCRNode.identifier}</td>

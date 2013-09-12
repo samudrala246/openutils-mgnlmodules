@@ -35,6 +35,7 @@ import info.magnolia.cms.util.SimpleUrlPattern;
 import info.magnolia.cms.util.UrlPattern;
 import info.magnolia.context.MgnlContext;
 import info.magnolia.context.MgnlContext.VoidOp;
+import info.magnolia.repository.RepositoryConstants;
 
 import java.security.Principal;
 import java.util.ArrayList;
@@ -142,7 +143,7 @@ public class StudentLevelListener extends EmptyCourseEventListener
 
         Content node = MgnlContext
             .getSystemContext()
-            .getHierarchyManager(ContentRepository.USER_ROLES)
+            .getHierarchyManager(RepositoryConstants.USER_ROLES)
             .getContent(role);
 
         Iterator it = node.getChildren(ItemType.CONTENTNODE.getSystemName(), "acl*").iterator();

@@ -19,7 +19,6 @@
 
 package it.openutils.mgnltasks;
 
-import info.magnolia.cms.beans.config.ContentRepository;
 import info.magnolia.cms.core.Content;
 import info.magnolia.cms.core.HierarchyManager;
 import info.magnolia.cms.core.Path;
@@ -29,6 +28,7 @@ import info.magnolia.module.InstallContext;
 import info.magnolia.module.delta.AbstractRepositoryTask;
 import info.magnolia.module.delta.Task;
 import info.magnolia.module.delta.TaskExecutionException;
+import info.magnolia.repository.RepositoryConstants;
 
 import java.util.Collection;
 
@@ -73,7 +73,7 @@ public class AddPermissionTask extends AbstractRepositoryTask implements Task
     protected void doExecute(InstallContext installContext) throws RepositoryException, TaskExecutionException
     {
 
-        HierarchyManager hm = installContext.getHierarchyManager(ContentRepository.USER_ROLES);
+        HierarchyManager hm = installContext.getHierarchyManager(RepositoryConstants.USER_ROLES);
 
         Content roleNode = hm.getContent("/" + role);
 

@@ -23,6 +23,8 @@ import info.magnolia.cms.beans.config.ContentRepository;
 import info.magnolia.cms.util.AlertUtil;
 import info.magnolia.context.MgnlContext;
 import info.magnolia.module.admininterface.TemplatedMVCHandler;
+import info.magnolia.objectfactory.Components;
+import info.magnolia.repository.RepositoryManager;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
@@ -82,7 +84,7 @@ public class RepositoryUtilsPage extends TemplatedMVCHandler
 
     public Iterator<String> getRepositories()
     {
-        return ContentRepository.getAllRepositoryNames();
+        return Components.getComponent(RepositoryManager.class).getWorkspaceNames().iterator();
     }
 
     public String doIndexConsistencyFix() throws Exception

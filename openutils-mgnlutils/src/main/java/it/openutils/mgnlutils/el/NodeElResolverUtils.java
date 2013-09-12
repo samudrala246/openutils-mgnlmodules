@@ -19,15 +19,13 @@
 
 package it.openutils.mgnlutils.el;
 
-import java.lang.reflect.InvocationTargetException;
-
-import info.magnolia.cms.beans.runtime.FileProperties;
 import info.magnolia.jcr.util.ContentMap;
 import info.magnolia.jcr.util.NodeUtil;
 import info.magnolia.link.LinkException;
 import info.magnolia.link.LinkTransformerManager;
 
-import javax.jcr.ItemNotFoundException;
+import java.lang.reflect.InvocationTargetException;
+
 import javax.jcr.Node;
 import javax.jcr.PathNotFoundException;
 import javax.jcr.Property;
@@ -35,7 +33,6 @@ import javax.jcr.PropertyType;
 import javax.jcr.RepositoryException;
 import javax.jcr.Value;
 
-import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;

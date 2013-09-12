@@ -19,13 +19,13 @@
 
 package it.openutils.mgnltasks;
 
-import info.magnolia.cms.beans.config.ContentRepository;
 import info.magnolia.cms.core.Content;
 import info.magnolia.cms.core.HierarchyManager;
 import info.magnolia.cms.core.ItemType;
 import info.magnolia.cms.util.ContentUtil;
 import info.magnolia.importexport.DataTransporter;
 import info.magnolia.module.InstallContext;
+import info.magnolia.repository.RepositoryConstants;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -90,7 +90,7 @@ public class DiffModuleConfigBootstrapTask extends ModuleConfigBootstrapTask
     @Override
     protected void deleteNode(InstallContext installContext, String nodePath) throws RepositoryException
     {
-        HierarchyManager hm = installContext.getHierarchyManager(ContentRepository.CONFIG);
+        HierarchyManager hm = installContext.getHierarchyManager(RepositoryConstants.CONFIG);
 
         if (hm.isExist(nodePath))
         {
@@ -100,7 +100,7 @@ public class DiffModuleConfigBootstrapTask extends ModuleConfigBootstrapTask
             for (String name : resourcesToBootstrap)
             {
                 String[] repositoryAndPath = getRepositoryAndPathFromBootstrapName(name);
-                if (ContentRepository.CONFIG.equals(repositoryAndPath[0])
+                if (RepositoryConstants.CONFIG.equals(repositoryAndPath[0])
                     && StringUtils.startsWith(repositoryAndPath[1], nodePath))
                 {
                     lookup.add(name);

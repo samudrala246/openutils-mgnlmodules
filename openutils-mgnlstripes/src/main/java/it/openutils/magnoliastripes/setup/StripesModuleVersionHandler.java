@@ -19,13 +19,13 @@
 
 package it.openutils.magnoliastripes.setup;
 
-import info.magnolia.cms.beans.config.ContentRepository;
 import info.magnolia.cms.core.SystemProperty;
 import info.magnolia.module.DefaultModuleVersionHandler;
 import info.magnolia.module.InstallContext;
 import info.magnolia.module.delta.AddMimeMappingTask;
 import info.magnolia.module.delta.FilterOrderingTask;
 import info.magnolia.module.delta.Task;
+import info.magnolia.repository.RepositoryConstants;
 import it.openutils.mgnltasks.CreateMissingPropertyTask;
 import it.openutils.mgnltasks.SamplesExtractionTask;
 
@@ -57,7 +57,7 @@ public class StripesModuleVersionHandler extends DefaultModuleVersionHandler
         tasks.add(new CreateMissingPropertyTask(
             "Adding property: /modules/stripes/config/i18nbasename",
             "Adding property: /modules/stripes/config/i18nbasename",
-            ContentRepository.CONFIG,
+            RepositoryConstants.CONFIG,
             "/modules/stripes/config",
             "i18nbasename",
             "it.openutils.magnoliastripes"));

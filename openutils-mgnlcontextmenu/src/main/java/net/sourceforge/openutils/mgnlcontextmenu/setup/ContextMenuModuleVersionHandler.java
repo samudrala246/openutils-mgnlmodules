@@ -19,10 +19,10 @@
 
 package net.sourceforge.openutils.mgnlcontextmenu.setup;
 
-import info.magnolia.cms.beans.config.ContentRepository;
 import info.magnolia.cms.core.SystemProperty;
 import info.magnolia.module.InstallContext;
 import info.magnolia.module.delta.Task;
+import info.magnolia.repository.RepositoryConstants;
 import it.openutils.mgnltasks.CreateMissingPropertyTask;
 import it.openutils.mgnltasks.SimpleModuleVersionHandler;
 
@@ -66,19 +66,19 @@ public class ContextMenuModuleVersionHandler extends SimpleModuleVersionHandler
         }
 
         tasks.add(new CreateMissingPropertyTask(
-            ContentRepository.CONFIG,
+            RepositoryConstants.CONFIG,
             "/modules/contextmenu/config/getGlobalEntriesNodeStrategy",
             "class",
             DefaultGetGlobalEntriesNodeStrategy.class.getName()));
 
         tasks.add(new CreateMissingPropertyTask(
-            ContentRepository.CONFIG,
+            RepositoryConstants.CONFIG,
             "/modules/contextmenu/config/getGlobalEntriesNodeStrategy",
             "ancestorLevel",
             Long.valueOf(1)));
 
         tasks.add(new CreateMissingPropertyTask(
-            ContentRepository.CONFIG,
+            RepositoryConstants.CONFIG,
             "/modules/contextmenu/config/persistenceStrategy",
             "class",
             DefaultPersistenceStrategy.class.getName()));

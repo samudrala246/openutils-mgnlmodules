@@ -19,13 +19,13 @@
 
 package it.openutils.mgnlbootstrapsync.lifecycle;
 
-import info.magnolia.cms.beans.config.ContentRepository;
 import info.magnolia.cms.core.HierarchyManager;
 import info.magnolia.cms.core.ItemType;
 import info.magnolia.cms.core.SystemProperty;
 import info.magnolia.context.MgnlContext;
 import info.magnolia.module.ModuleLifecycle;
 import info.magnolia.module.ModuleLifecycleContext;
+import info.magnolia.repository.RepositoryConstants;
 import it.openutils.mgnlbootstrapsync.listener.AbstractBootstrapSyncListener;
 import it.openutils.mgnlbootstrapsync.listener.BootstrapSyncListener;
 import it.openutils.mgnlbootstrapsync.watch.BootstrapSyncRepositoryWatch;
@@ -95,15 +95,15 @@ public class BootstrapSyncModuleLifecycle implements ModuleLifecycle
                 {
                     // set default nodeType
                     nodeType = ItemType.CONTENT.getSystemName();
-                    if (ContentRepository.USERS.equalsIgnoreCase(repository))
+                    if (RepositoryConstants.USERS.equalsIgnoreCase(repository))
                     {
                         nodeType = ItemType.USER.getSystemName();
                     }
-                    else if (ContentRepository.USER_ROLES.equalsIgnoreCase(repository))
+                    else if (RepositoryConstants.USER_ROLES.equalsIgnoreCase(repository))
                     {
                         nodeType = ItemType.ROLE.getSystemName();
                     }
-                    else if (ContentRepository.USER_GROUPS.equalsIgnoreCase(repository))
+                    else if (RepositoryConstants.USER_GROUPS.equalsIgnoreCase(repository))
                     {
                         nodeType = ItemType.GROUP.getSystemName();
                     }

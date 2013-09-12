@@ -19,7 +19,6 @@
 
 package it.openutils.mgnltasks;
 
-import info.magnolia.cms.beans.config.ContentRepository;
 import info.magnolia.cms.core.Content;
 import info.magnolia.cms.core.HierarchyManager;
 import info.magnolia.cms.core.search.Query;
@@ -76,7 +75,7 @@ public abstract class BaseCheckMissingTask extends AbstractRepositoryTask
     {
 
         QueryManager configQueryManager = installContext
-            .getHierarchyManager(ContentRepository.CONFIG)
+            .getHierarchyManager(RepositoryConstants.CONFIG)
             .getQueryManager();
 
         Collection<Content> templates = configQueryManager.createQuery(

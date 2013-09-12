@@ -19,12 +19,12 @@
 
 package net.sourceforge.openutils.mgnlcontrols.dialog;
 
-import info.magnolia.cms.beans.config.ContentRepository;
 import info.magnolia.cms.core.Content;
 import info.magnolia.cms.gui.control.Button;
 import info.magnolia.cms.gui.control.ControlImpl;
 import info.magnolia.cms.util.ContentUtil;
 import info.magnolia.cms.util.NodeDataUtil;
+import info.magnolia.repository.RepositoryConstants;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -226,7 +226,7 @@ public class DialogButtonSet extends info.magnolia.cms.gui.dialog.DialogButtonSe
                 }
                 else
                 {
-                    String repository = control.getConfigValue("repository", ContentRepository.WEBSITE);
+                    String repository = control.getConfigValue("repository", RepositoryConstants.WEBSITE);
                     String path = control.getConfigValue("path");
                     if (StringUtils.isNotEmpty(path))
                     {

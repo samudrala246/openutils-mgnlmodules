@@ -19,9 +19,7 @@
 
 package it.openutils.mgnlutils.el;
 
-import info.magnolia.jcr.util.ContentMap;
 import info.magnolia.jcr.util.NodeUtil;
-import info.magnolia.jcr.util.PropertyUtil;
 
 import java.beans.FeatureDescriptor;
 import java.util.ArrayList;

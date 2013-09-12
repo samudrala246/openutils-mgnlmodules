@@ -19,7 +19,9 @@
 
 package net.sourceforge.openutils.mgnltagcloud.manager;
 
-import info.magnolia.cms.beans.config.ContentRepository;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.fail;
 import info.magnolia.cms.core.Content;
 import info.magnolia.cms.core.HierarchyManager;
 import info.magnolia.cms.core.ItemType;
@@ -30,7 +32,6 @@ import info.magnolia.context.MgnlContext;
 import info.magnolia.objectfactory.Components;
 import info.magnolia.repository.RepositoryConstants;
 import info.magnolia.test.RepositoryTestCase;
-import info.magnolia.test.mock.MockSimpleComponentProvider;
 
 import java.util.Map;
 import java.util.Set;
@@ -47,9 +48,6 @@ import org.apache.jackrabbit.value.ValueFactoryImpl;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotSame;
-import static org.junit.Assert.fail;
 
 
 /**
@@ -255,7 +253,7 @@ public class TagCloudManagerTest extends RepositoryTestCase
         }
         hm.save();
 
-        HierarchyManager hmConfig = MgnlContext.getInstance().getHierarchyManager(ContentRepository.CONFIG);
+        HierarchyManager hmConfig = MgnlContext.getInstance().getHierarchyManager(RepositoryConstants.CONFIG);
         Content contentTagcloud = ContentUtil.getOrCreateContent(
             hm.getContent("/"),
             Path.getValidatedLabel("clouds"),

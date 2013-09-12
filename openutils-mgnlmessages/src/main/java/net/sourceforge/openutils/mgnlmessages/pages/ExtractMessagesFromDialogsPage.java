@@ -19,7 +19,6 @@
 
 package net.sourceforge.openutils.mgnlmessages.pages;
 
-import info.magnolia.cms.beans.config.ContentRepository;
 import info.magnolia.cms.core.Content;
 import info.magnolia.cms.core.HierarchyManager;
 import info.magnolia.cms.core.ItemType;
@@ -31,6 +30,7 @@ import info.magnolia.cms.util.ContentUtil;
 import info.magnolia.cms.util.NodeDataUtil;
 import info.magnolia.context.MgnlContext;
 import info.magnolia.module.admininterface.TemplatedMVCHandler;
+import info.magnolia.repository.RepositoryConstants;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -79,7 +79,7 @@ public class ExtractMessagesFromDialogsPage extends TemplatedMVCHandler
     public String show()
     {
         dialogsRoot = new ArrayList<String>();
-        QueryManager qm = MgnlContext.getQueryManager(ContentRepository.CONFIG);
+        QueryManager qm = MgnlContext.getQueryManager(RepositoryConstants.CONFIG);
         Query q;
         try
         {
@@ -115,7 +115,7 @@ public class ExtractMessagesFromDialogsPage extends TemplatedMVCHandler
      */
     public String extract()
     {
-        HierarchyManager hmConfig = MgnlContext.getHierarchyManager(ContentRepository.CONFIG);
+        HierarchyManager hmConfig = MgnlContext.getHierarchyManager(RepositoryConstants.CONFIG);
         QueryManager qm = hmConfig.getQueryManager();
         HierarchyManager hm = MgnlContext.getHierarchyManager(MessagesModuleLifecycle.REPO);
         for (String dialogRoot : this.request.getParameterValues("dialogsRoots"))
