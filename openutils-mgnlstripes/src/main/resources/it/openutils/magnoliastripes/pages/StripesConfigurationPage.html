@@ -58,16 +58,15 @@
             ${paragraph.dialog}
           </a>
         </td>
-        <td>${paragraph.templatePath}</td>
+        <td>${paragraph.templateScript}</td>
         <td>${this.messages.get(paragraph.title)}</td>
         <td>${this.messages.get(paragraph.description)}</td>
         [#else]
         <th align="left" scope="row">${paragraph.name}</th>
         <td>${paragraph.dialog}</td>
-        <td>${paragraph.templatePath}</td>
-        <!--          <td>${paragraph.type}</td>-->
-        <td></td>
-        <td></td>
+        <td>${paragraph.templateScript}</td>
+        <td><!--  --></td>
+        <td><!--  --></td>
         [/#if]
       </tr>
 
