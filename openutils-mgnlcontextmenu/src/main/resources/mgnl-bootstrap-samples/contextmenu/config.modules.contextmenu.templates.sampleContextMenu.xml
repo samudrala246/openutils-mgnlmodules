@@ -12,7 +12,7 @@
   <sv:property sv:name="jcr:createdBy" sv:type="String">
     <sv:value>admin</sv:value>
   </sv:property>
-  <sv:property sv:name="templatePath" sv:type="String">
+  <sv:property sv:name="templateScript" sv:type="String">
     <sv:value>/templates/samples-contextmenu/template.jsp</sv:value>
   </sv:property>
   <sv:property sv:name="title" sv:type="String">
