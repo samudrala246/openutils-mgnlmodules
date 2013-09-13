@@ -29,6 +29,9 @@ import javax.jcr.Node;
 import javax.jcr.RepositoryException;
 import javax.jcr.Session;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 
 /**
  * Set a nodedata if not existing. Also creates the full path if missing.
@@ -45,6 +48,8 @@ public class CreateMissingPropertyTask extends AbstractRepositoryTask
     private final String propertyName;
 
     private final Object propertyValue;
+    
+    private Logger log = LoggerFactory.getLogger(CreateMissingPropertyTask.class);
 
     @Deprecated
     public CreateMissingPropertyTask(
@@ -85,7 +90,11 @@ public class CreateMissingPropertyTask extends AbstractRepositoryTask
         Session session = ctx.getJCRSession(workspaceName);
 
         Node node = NodeUtilsExt.getNodeIfExists(session, nodePath);
-
+        if (node == null)
+        {
+            log.info("Node {} not found, nothing to do", nodePath);
+            return;
+        }
         if (!node.hasProperty(propertyName))
         {
             PropertyUtil.setProperty(node, propertyName, propertyValue);
