@@ -1,7 +1,7 @@
 /**
  *
- * Tasks for for Magnolia CMS (http://www.openmindlab.com/lab/products/mgnltasks.html)
- * Copyright(C) 2008-2013, Openmind S.r.l. http://www.openmindonline.it
+ * Generic utilities for Magnolia CMS (http://www.openmindlab.com/lab/products/mgnlutils.html)
+ * Copyright(C) 2009-2012, Openmind S.r.l. http://www.openmindonline.it
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -31,7 +31,7 @@ import org.apache.commons.lang.StringUtils;
 
 /**
  * @author fgiust
- * @version $Id$
+ * @version $Id: NodeUtilsExt.java 4292 2013-09-12 15:54:10Z fgiust $
  */
 public class NodeUtilsExt
 {
@@ -104,5 +104,20 @@ public class NodeUtilsExt
             throw new RuntimeRepositoryException(e);
         }
         return false;
+    }
+
+    public static void deletePropertyIfExist(Node node, String propertyname)
+    {
+        try
+        {
+            if (node != null && node.hasProperty(propertyname))
+            {
+                node.getProperty(propertyname).remove();
+            }
+        }
+        catch (RepositoryException e)
+        {
+            throw new RuntimeRepositoryException(e);
+        }
     }
 }
