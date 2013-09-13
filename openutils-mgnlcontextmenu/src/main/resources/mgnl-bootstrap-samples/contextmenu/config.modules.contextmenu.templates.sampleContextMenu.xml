@@ -18,7 +18,7 @@
   <sv:property sv:name="title" sv:type="String">
     <sv:value>Context menu sample template</sv:value>
   </sv:property>
-  <sv:property sv:name="type" sv:type="String">
+  <sv:property sv:name="renderType" sv:type="String">
     <sv:value>jsp</sv:value>
   </sv:property>
   <sv:property sv:name="visible" sv:type="String">

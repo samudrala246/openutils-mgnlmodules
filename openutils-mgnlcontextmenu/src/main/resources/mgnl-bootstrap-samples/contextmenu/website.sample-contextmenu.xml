@@ -32,7 +32,7 @@
       <sv:value>2010-05-20T14:57:52.156+02:00</sv:value>
     </sv:property>
     <sv:property sv:name="mgnl:template" sv:type="String">
-      <sv:value>sampleContextMenu</sv:value>
+      <sv:value>contextmenu:sampleContextMenu</sv:value>
     </sv:property>
   </sv:node>
   <sv:node sv:name="main">
