@@ -19,10 +19,11 @@
 
 package net.sourceforge.openutils.mgnlcontextmenu.dialog;
 
-import info.magnolia.cms.core.Content;
 import info.magnolia.cms.util.RequestFormUtil;
 import info.magnolia.module.ModuleRegistry;
+import info.magnolia.objectfactory.Components;
 
+import javax.jcr.Node;
 import javax.servlet.http.HttpServletRequest;
 
 import net.sourceforge.openutils.mgnlcontextmenu.configuration.PersistenceStrategy;
@@ -39,13 +40,13 @@ import org.apache.commons.lang.StringUtils;
 public class DialogControlUtils
 {
 
-    public static String getValue(HttpServletRequest request, Content node, String scope)
+    public static String getValue(HttpServletRequest request, Node node, String scope)
     {
         String name = new RequestFormUtil(request).getParameter("entryName");
         String value = null;
         if (name != null)
         {
-            ContextMenuModule module = ModuleRegistry.Factory.getInstance().getModuleInstance(ContextMenuModule.class);
+            ContextMenuModule module = Components.getComponent(ContextMenuModule.class);
             PersistenceStrategy strategy = module.getPersistenceStrategy();
             if (strategy != null)
             {

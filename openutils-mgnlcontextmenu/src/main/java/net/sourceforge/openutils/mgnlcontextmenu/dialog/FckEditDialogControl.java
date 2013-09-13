@@ -52,7 +52,10 @@ public class FckEditDialogControl extends FckEditorDialog
     {
         if (this.value == null)
         {
-            this.value = DialogControlUtils.getValue(request, getStorageNode(), getConfigValue("scope", "local"));
+            this.value = DialogControlUtils.getValue(
+                request,
+                getStorageNode().getJCRNode(),
+                getConfigValue("scope", "local"));
         }
         return this.value;
     }

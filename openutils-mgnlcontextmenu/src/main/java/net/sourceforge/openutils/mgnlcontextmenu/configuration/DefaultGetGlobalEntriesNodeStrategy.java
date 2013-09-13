@@ -19,8 +19,7 @@
 
 package net.sourceforge.openutils.mgnlcontextmenu.configuration;
 
-import info.magnolia.cms.core.Content;
-
+import javax.jcr.Node;
 import javax.jcr.RepositoryException;
 
 import org.slf4j.Logger;
@@ -63,11 +62,11 @@ public class DefaultGetGlobalEntriesNodeStrategy implements GetGlobalEntriesNode
     /**
      * {@inheritDoc}
      */
-    public Content getGlobalEntriesNode(Content node)
+    public Node getGlobalEntriesNode(Node node)
     {
         try
         {
-            return node.getAncestor(ancestorLevel);
+            return (Node) node.getAncestor(ancestorLevel);
         }
         catch (RepositoryException e)
         {

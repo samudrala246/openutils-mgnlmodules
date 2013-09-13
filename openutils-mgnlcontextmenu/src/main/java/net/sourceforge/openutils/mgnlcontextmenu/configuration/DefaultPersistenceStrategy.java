@@ -19,9 +19,11 @@
 
 package net.sourceforge.openutils.mgnlcontextmenu.configuration;
 
-import info.magnolia.cms.core.Content;
-import info.magnolia.cms.util.NodeDataUtil;
+import info.magnolia.jcr.util.MetaDataUtil;
+import info.magnolia.jcr.util.PropertyUtil;
+import it.openutils.mgnlutils.api.NodeUtilsExt;
 
+import javax.jcr.Node;
 import javax.jcr.RepositoryException;
 
 import org.apache.commons.lang.StringUtils;
@@ -38,15 +40,15 @@ public class DefaultPersistenceStrategy extends PersistenceStrategy
      * {@inheritDoc}
      */
     @Override
-    public String readEntry(Content node, String name, Scope scope)
+    public String readEntry(Node node, String name, Scope scope)
     {
         switch (scope)
         {
             case local :
-                return NodeDataUtil.getString(node, name);
+                return PropertyUtil.getString(node, name);
             case global :
-                Content globalNode = getGlobalNode(node);
-                return NodeDataUtil.getString(globalNode, name);
+                Node globalNode = getGlobalNode(node);
+                return PropertyUtil.getString(globalNode, name);
             default :
                 return null;
         }
@@ -56,7 +58,7 @@ public class DefaultPersistenceStrategy extends PersistenceStrategy
      * {@inheritDoc}
      */
     @Override
-    public void writeEntry(Content node, String name, String value, Scope scope) throws RepositoryException
+    public void writeEntry(Node node, String name, String value, Scope scope) throws RepositoryException
     {
         switch (scope)
         {
@@ -64,25 +66,22 @@ public class DefaultPersistenceStrategy extends PersistenceStrategy
                 setOrDelete(node, name, value);
                 break;
             case global :
-                Content globalNode = getGlobalNode(node);
+                Node globalNode = getGlobalNode(node);
                 setOrDelete(globalNode, name, value);
-                globalNode.updateMetaData();
+                MetaDataUtil.updateMetaData(globalNode);
                 break;
         }
     }
 
-    protected void setOrDelete(Content node, String name, String value) throws RepositoryException
+    protected void setOrDelete(Node node, String name, String value) throws RepositoryException
     {
         if (!StringUtils.isEmpty(value))
         {
-            NodeDataUtil.getOrCreateAndSet(node, name, value);
+            node.setProperty(name, value);
         }
         else
         {
-            if (node != null && node.hasNodeData(name))
-            {
-                node.deleteNodeData(name);
-            }
+            NodeUtilsExt.deletePropertyIfExist(node, name);
         }
     }
 }

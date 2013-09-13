@@ -19,9 +19,9 @@
 
 package net.sourceforge.openutils.mgnlcontextmenu.configuration;
 
-import info.magnolia.cms.core.Content;
-import info.magnolia.module.ModuleRegistry;
+import info.magnolia.objectfactory.Components;
 
+import javax.jcr.Node;
 import javax.jcr.RepositoryException;
 
 import net.sourceforge.openutils.mgnlcontextmenu.module.ContextMenuModule;
@@ -43,7 +43,7 @@ public abstract class PersistenceStrategy
      * @param name
      * @return the entry value
      */
-    public String readEntry(Content node, String name)
+    public String readEntry(Node node, String name)
     {
         String value = readEntry(node, name, Scope.local);
         if (StringUtils.isEmpty(value))
@@ -60,7 +60,7 @@ public abstract class PersistenceStrategy
      * @param scope
      * @return the entry value
      */
-    public abstract String readEntry(Content node, String name, Scope scope);
+    public abstract String readEntry(Node node, String name, Scope scope);
 
     /**
      * Writes an entry in the given scope.
@@ -69,16 +69,16 @@ public abstract class PersistenceStrategy
      * @param value
      * @param scope
      */
-    public abstract void writeEntry(Content node, String name, String value, Scope scope) throws RepositoryException;
+    public abstract void writeEntry(Node node, String name, String value, Scope scope) throws RepositoryException;
 
     /**
      * Gets the global entries node for the given node, using the strategy configured in the contextmenu module.
      * @param node
      * @return
      */
-    protected Content getGlobalNode(Content node)
+    protected Node getGlobalNode(Node node)
     {
-        ContextMenuModule module = ModuleRegistry.Factory.getInstance().getModuleInstance(ContextMenuModule.class);
+        ContextMenuModule module = Components.getComponent(ContextMenuModule.class);
         GetGlobalEntriesNodeStrategy strategy = module.getGetGlobalEntriesNodeStrategy();
         return strategy != null ? strategy.getGlobalEntriesNode(node) : null;
     }

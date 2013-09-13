@@ -19,7 +19,7 @@
 
 package net.sourceforge.openutils.mgnlcontextmenu.configuration;
 
-import info.magnolia.cms.core.Content;
+import javax.jcr.Node;
 
 
 /**
@@ -38,5 +38,5 @@ public interface GetGlobalEntriesNodeStrategy
      * @param node
      * @return
      */
-    Content getGlobalEntriesNode(Content node);
+    Node getGlobalEntriesNode(Node node);
 }

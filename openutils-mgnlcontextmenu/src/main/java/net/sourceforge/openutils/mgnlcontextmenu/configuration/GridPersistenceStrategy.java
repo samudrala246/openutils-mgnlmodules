@@ -19,21 +19,23 @@
 
 package net.sourceforge.openutils.mgnlcontextmenu.configuration;
 
-import info.magnolia.cms.core.Content;
-import info.magnolia.cms.core.NodeData;
-import info.magnolia.cms.util.NodeDataUtil;
 import info.magnolia.context.MgnlContext;
+import info.magnolia.jcr.util.MetaDataUtil;
+import info.magnolia.jcr.util.PropertyUtil;
 import it.openutils.mgnlutils.el.MgnlUtilsElFunctions;
 
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.jcr.Node;
 import javax.jcr.RepositoryException;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 /**
@@ -42,6 +44,11 @@ import org.apache.commons.lang.StringUtils;
  */
 public class GridPersistenceStrategy extends PersistenceStrategy
 {
+
+    /**
+     * Logger.
+     */
+    private static Logger log = LoggerFactory.getLogger(GridPersistenceStrategy.class);
 
     private static final String LOCAL_CACHE_KEY = GridPersistenceStrategy.class.getName() + ".localCache";
 
@@ -55,7 +62,7 @@ public class GridPersistenceStrategy extends PersistenceStrategy
      * {@inheritDoc}
      */
     @Override
-    public String readEntry(Content node, String name, Scope scope)
+    public String readEntry(Node node, String name, Scope scope)
     {
         switch (scope)
         {
@@ -72,7 +79,7 @@ public class GridPersistenceStrategy extends PersistenceStrategy
      * {@inheritDoc}
      */
     @Override
-    public void writeEntry(Content node, String name, String value, Scope scope) throws RepositoryException
+    public void writeEntry(Node node, String name, String value, Scope scope) throws RepositoryException
     {
         switch (scope)
         {
@@ -80,7 +87,7 @@ public class GridPersistenceStrategy extends PersistenceStrategy
                 update(node, LOCAL_PROPERTY_NAME, name, value, getLocalEntries(node), false);
                 break;
             case global :
-                Content globalNode = getGlobalNode(node);
+                Node globalNode = getGlobalNode(node);
                 update(globalNode, GLOBAL_PROPERTY_NAME, name, value, getGlobalEntries(node), true);
                 break;
         }
@@ -94,7 +101,7 @@ public class GridPersistenceStrategy extends PersistenceStrategy
      * @return
      */
     @SuppressWarnings("unchecked")
-    protected Map<String, String> getGlobalEntries(Content node)
+    protected Map<String, String> getGlobalEntries(Node node)
     {
         ServletContext servletContext = MgnlContext.getWebContext().getServletContext();
         Map map = (Map) servletContext.getAttribute(GLOBAL_CACHE_KEY);
@@ -103,10 +110,22 @@ public class GridPersistenceStrategy extends PersistenceStrategy
             map = new HashMap();
             servletContext.setAttribute(GLOBAL_CACHE_KEY, map);
         }
-        Content globalNode = getGlobalNode(node);
-        String mapKey = globalNode.getUUID();
+        Node globalNode = getGlobalNode(node);
+        String mapKey = StringUtils.EMPTY;
+        try
+        {
+            mapKey = globalNode.getIdentifier();
+        }
+        catch (UnsupportedOperationException e)
+        {
+            log.error(e.getMessage());
+        }
+        catch (RepositoryException re)
+        {
+            log.error("Exception caught", re);
+        }
         GlobalCache globalCache = (GlobalCache) map.get(mapKey);
-        Calendar modificationDate = globalNode.getMetaData().getModificationDate();
+        Calendar modificationDate = MetaDataUtil.getMetaData(globalNode).getModificationDate();
         if (globalCache != null && globalCache.getCreationDate().compareTo(modificationDate) < 0)
         {
             globalCache = null;
@@ -126,7 +145,7 @@ public class GridPersistenceStrategy extends PersistenceStrategy
      * @return
      */
     @SuppressWarnings("unchecked")
-    protected Map<String, String> getLocalEntries(Content node)
+    protected Map<String, String> getLocalEntries(Node node)
     {
         HttpServletRequest request = MgnlContext.getWebContext().getRequest();
         Map map = (Map) request.getAttribute(LOCAL_CACHE_KEY);
@@ -135,7 +154,20 @@ public class GridPersistenceStrategy extends PersistenceStrategy
             map = new HashMap();
             request.setAttribute(LOCAL_CACHE_KEY, map);
         }
-        String mapKey = node.getUUID();
+        String mapKey = StringUtils.EMPTY;
+        try
+        {
+            mapKey = node.getIdentifier();
+        }
+        catch (UnsupportedOperationException e)
+        {
+            log.error(e.getMessage());
+        }
+        catch (RepositoryException re)
+        {
+            log.error("Exception caught", re);
+        }
+
         Map<String, String> contents = (Map<String, String>) map.get(mapKey);
         if (contents == null)
         {
@@ -146,9 +178,9 @@ public class GridPersistenceStrategy extends PersistenceStrategy
         return contents;
     }
 
-    private static void collectEntries(Content node, String propertyName, Map<String, String> entries)
+    private static void collectEntries(Node node, String propertyName, Map<String, String> entries)
     {
-        String propertyValue = NodeDataUtil.getString(node, propertyName);
+        String propertyValue = PropertyUtil.getString(node, propertyName);
         if (!StringUtils.isEmpty(propertyValue))
         {
             for (String[] entry : MgnlUtilsElFunctions.splitAndTokenize(propertyValue))
@@ -161,15 +193,14 @@ public class GridPersistenceStrategy extends PersistenceStrategy
         }
     }
 
-    private void update(Content node, String propertyName, String name, String value, Map<String, String> entries,
+    private void update(Node node, String propertyName, String name, String value, Map<String, String> entries,
         boolean updateMetaData) throws RepositoryException
     {
         value = StringUtils.remove(StringUtils.replaceChars(value, "\n\t", "  "), '\r');
         boolean changed = StringUtils.isEmpty(value) ? entries.containsKey(name) : !value.equals(entries.get(name));
         if (changed)
         {
-            NodeData property = NodeDataUtil.getOrCreate(node, propertyName);
-            String propertyValue = property.getString();
+            String propertyValue = PropertyUtil.getString(node, propertyName);
             String[][] array = StringUtils.isEmpty(propertyValue) ? new String[0][] : MgnlUtilsElFunctions
                 .splitAndTokenize(propertyValue);
             StringBuilder sb = new StringBuilder();
@@ -205,10 +236,11 @@ public class GridPersistenceStrategy extends PersistenceStrategy
                 }
                 sb.append(name).append('\t').append(value);
             }
-            property.setValue(new String(sb));
+
+            node.setProperty(propertyName, new String(sb));
             if (updateMetaData)
             {
-                node.updateMetaData();
+                MetaDataUtil.updateMetaData(node);
             }
         }
     }

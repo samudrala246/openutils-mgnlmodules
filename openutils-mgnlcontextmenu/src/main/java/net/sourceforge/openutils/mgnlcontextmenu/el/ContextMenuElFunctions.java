@@ -19,8 +19,12 @@
 
 package net.sourceforge.openutils.mgnlcontextmenu.el;
 
-import info.magnolia.cms.core.Content;
-import info.magnolia.module.ModuleRegistry;
+import info.magnolia.jcr.util.NodeUtil;
+import info.magnolia.jcr.wrapper.HTMLEscapingNodeWrapper;
+import info.magnolia.objectfactory.Components;
+
+import javax.jcr.Node;
+
 import net.sourceforge.openutils.mgnlcontextmenu.configuration.PersistenceStrategy;
 import net.sourceforge.openutils.mgnlcontextmenu.module.ContextMenuModule;
 
@@ -46,11 +50,13 @@ public class ContextMenuElFunctions
      * @param name
      * @return a local contents entry value if found, or a global contents one if found, otherwise null
      */
-    public static String entryValue(Content node, String name)
+    public static String entryValue(Node node, String name)
     {
-        ContextMenuModule module = ModuleRegistry.Factory.getInstance().getModuleInstance(ContextMenuModule.class);
+        ContextMenuModule module = Components.getComponent(ContextMenuModule.class);
         PersistenceStrategy strategy = module.getPersistenceStrategy();
-        return strategy != null ? strategy.readEntry(node, name) : null;
+        // LB crazy command! mgnl argsss
+        Node nodeUnwrapped = NodeUtil.deepUnwrap(node, HTMLEscapingNodeWrapper.class); 
+        return strategy != null ? strategy.readEntry(nodeUnwrapped, name) : null;
     }
 
 }

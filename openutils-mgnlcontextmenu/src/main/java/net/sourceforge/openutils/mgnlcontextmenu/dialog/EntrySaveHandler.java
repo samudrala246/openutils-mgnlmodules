@@ -25,6 +25,7 @@ import info.magnolia.cms.security.AccessDeniedException;
 import info.magnolia.cms.util.NodeDataUtil;
 import info.magnolia.module.ModuleRegistry;
 import info.magnolia.module.admininterface.FieldSaveHandler;
+import info.magnolia.objectfactory.Components;
 
 import javax.jcr.RepositoryException;
 
@@ -54,14 +55,15 @@ public class EntrySaveHandler implements FieldSaveHandler
             entryValue = null;
         }
 
-        ContextMenuModule module = ModuleRegistry.Factory.getInstance().getModuleInstance(ContextMenuModule.class);
+        ContextMenuModule module = Components.getComponent(ContextMenuModule.class);
         PersistenceStrategy strategy = module.getPersistenceStrategy();
         if (strategy != null)
         {
-            strategy.writeEntry(parentNode, entryName, entryValue, Enum.valueOf(Scope.class, NodeDataUtil.getString(
-                configNode,
-                "scope",
-                "local")));
+            strategy.writeEntry(
+                parentNode.getJCRNode(),
+                entryName,
+                entryValue,
+                Enum.valueOf(Scope.class, NodeDataUtil.getString(configNode, "scope", "local")));
         }
     }
 

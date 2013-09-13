@@ -28,6 +28,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.jcr.Node;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.BodyTagSupport;
@@ -53,7 +54,7 @@ public class ElementTag extends BodyTagSupport
 
     private String menu;
 
-    private Content node;
+    private Node node;
 
     private String wrapper;
 
@@ -83,7 +84,7 @@ public class ElementTag extends BodyTagSupport
      * Sets the node.
      * @param node the node to set
      */
-    public void setNode(Content node)
+    public void setNode(Node node)
     {
         this.node = node;
     }
@@ -112,7 +113,7 @@ public class ElementTag extends BodyTagSupport
     @Override
     public int doStartTag() throws JspException
     {
-        Content node = this.node != null ? this.node : currentParagraph();
+        Node node = this.node != null ? this.node : currentParagraph();
         boolean readonly = this.readonly || !canEdit();
         if (!readonly)
         {
@@ -155,7 +156,7 @@ public class ElementTag extends BodyTagSupport
     @Override
     public int doEndTag() throws JspException
     {
-        Content node = this.node != null ? this.node : currentParagraph();
+        Node node = this.node != null ? this.node : currentParagraph();
         boolean readonly = this.readonly || !canEdit();
         if (!readonly)
         {
@@ -168,7 +169,7 @@ public class ElementTag extends BodyTagSupport
                 throw new JspException(e);
             }
 
-            ElementInfo info = addElementInfo(node.getHandle(), elementId);
+            ElementInfo info = addElementInfo(NodeUtil.getPathIfPossible(node), elementId);
             if (!StringUtils.isEmpty(name))
             {
                 info.setEntryName(name);
@@ -201,9 +202,9 @@ public class ElementTag extends BodyTagSupport
         return NodeUtil.isGranted(MgnlContext.getAggregationState().getMainContent().getJCRNode(), Permission.SET);
     }
 
-    private Content currentParagraph()
+    private Node currentParagraph()
     {
-        return MgnlContext.getAggregationState().getCurrentContent();
+        return MgnlContext.getAggregationState().getCurrentContent().getJCRNode();
     }
 
     /**
