@@ -19,11 +19,12 @@
 
 package it.openutils.mgnltasks;
 
+import info.magnolia.cms.core.MgnlNodeType;
+import info.magnolia.jcr.util.NodeUtil;
 import info.magnolia.jcr.util.PropertyUtil;
 import info.magnolia.module.InstallContext;
 import info.magnolia.module.delta.AbstractRepositoryTask;
 import info.magnolia.module.delta.TaskExecutionException;
-import it.openutils.mgnlutils.api.NodeUtilsExt;
 
 import javax.jcr.Node;
 import javax.jcr.RepositoryException;
@@ -48,7 +49,7 @@ public class CreateMissingPropertyTask extends AbstractRepositoryTask
     private final String propertyName;
 
     private final Object propertyValue;
-    
+
     private Logger log = LoggerFactory.getLogger(CreateMissingPropertyTask.class);
 
     @Deprecated
@@ -89,12 +90,7 @@ public class CreateMissingPropertyTask extends AbstractRepositoryTask
     {
         Session session = ctx.getJCRSession(workspaceName);
 
-        Node node = NodeUtilsExt.getNodeIfExists(session, nodePath);
-        if (node == null)
-        {
-            log.info("Node {} not found, nothing to do", nodePath);
-            return;
-        }
+        Node node = NodeUtil.createPath(session.getRootNode(), nodePath, MgnlNodeType.NT_CONTENT);
         if (!node.hasProperty(propertyName))
         {
             PropertyUtil.setProperty(node, propertyName, propertyValue);
