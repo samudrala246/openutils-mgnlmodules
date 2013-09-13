@@ -41,7 +41,7 @@ public class BootstrapMissingNodesTask extends BootstrapResourcesTask
 
     private String folderName;
 
-    private Logger log = LoggerFactory.getLogger(AnonymousUserSetupTask.class);
+    private Logger log = LoggerFactory.getLogger(BootstrapMissingNodesTask.class);
 
     /**
      * Bootstrap all the files included in the /mgnl-bootstrap/(folder) directory, only if the nodes are not already

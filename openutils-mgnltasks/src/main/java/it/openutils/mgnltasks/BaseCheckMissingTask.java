@@ -58,7 +58,7 @@ public abstract class BaseCheckMissingTask extends AbstractRepositoryTask
 
     private final String nodetype;
 
-    private Logger log = LoggerFactory.getLogger(AnonymousUserSetupTask.class);
+    private Logger log = LoggerFactory.getLogger(BaseCheckMissingTask.class);
 
     /**
      * @param templateOrParagraph "template" or "paragraph"
