@@ -38,6 +38,7 @@ import org.apache.commons.lang.StringUtils;
  * @author fgiust
  * @author dschivo
  */
+@SuppressWarnings("deprecation")
 public class FilesExtractionTask extends AbstractTask
 {
 

@@ -41,6 +41,7 @@ import org.slf4j.LoggerFactory;
  * @author dschivo
  */
 @Singleton
+@SuppressWarnings("deprecation")
 public class ContextMenuManager extends ObservedManager
 {
 

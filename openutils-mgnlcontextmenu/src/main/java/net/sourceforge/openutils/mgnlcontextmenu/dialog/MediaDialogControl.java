@@ -32,6 +32,7 @@ import net.sourceforge.openutils.mgnlmedia.media.dialog.DialogSelectMedia;
  * @author dschivo
  * @version $Id$
  */
+@SuppressWarnings("deprecation")
 public class MediaDialogControl extends DialogSelectMedia
 {
 

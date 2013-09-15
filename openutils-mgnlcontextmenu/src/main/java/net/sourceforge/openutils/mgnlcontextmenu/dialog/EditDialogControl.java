@@ -31,6 +31,7 @@ import javax.servlet.http.HttpServletResponse;
  * @author dschivo
  * @version $Id$
  */
+@SuppressWarnings("deprecation")
 public class EditDialogControl extends DialogEdit
 {
 

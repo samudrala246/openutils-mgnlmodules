@@ -112,6 +112,7 @@ public class LinksTag extends TagSupport
         return EVAL_PAGE;
     }
 
+    @SuppressWarnings("deprecation")
     private boolean canEdit()
     {
         return NodeUtil.isGranted(MgnlContext.getAggregationState().getMainContent().getJCRNode(), Permission.SET);

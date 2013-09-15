@@ -45,6 +45,7 @@ import org.apache.commons.lang.StringUtils;
  * @author dschivo
  * @version $Id$
  */
+@SuppressWarnings("deprecation")
 public class ElementTag extends BodyTagSupport
 {
 

@@ -148,6 +148,7 @@ public class ScriptTag extends TagSupport
         return "{" + sb + "}";
     }
 
+    @SuppressWarnings("deprecation")
     private boolean canEdit()
     {
         return NodeUtil.isGranted(MgnlContext.getAggregationState().getMainContent().getJCRNode(), Permission.SET);
