@@ -43,6 +43,7 @@ import org.slf4j.LoggerFactory;
  * @author dschivo
  */
 @Singleton
+@SuppressWarnings("deprecation")
 public class ExpressionFunctionManager extends ObservedManager
 {
 
@@ -98,7 +99,8 @@ public class ExpressionFunctionManager extends ObservedManager
                     if (functionNode.hasContent("parameterTypes"))
                     {
                         Content parameterTypesNode = functionNode.getContent("parameterTypes");
-                        for (Iterator iter2 = ContentUtil.getAllChildren(parameterTypesNode).iterator(); iter2.hasNext();)
+                        for (Iterator iter2 = ContentUtil.getAllChildren(parameterTypesNode).iterator(); iter2
+                            .hasNext();)
                         {
                             Content n = (Content) iter2.next();
                             String value = NodeDataUtil.getString(n, "value");
@@ -121,8 +123,9 @@ public class ExpressionFunctionManager extends ObservedManager
 
                 try
                 {
-                    functions.put("rules:" + functionName, methodClass.getMethod(methodName, parameterTypes
-                        .toArray(new Class[0])));
+                    functions.put(
+                        "rules:" + functionName,
+                        methodClass.getMethod(methodName, parameterTypes.toArray(new Class[0])));
                 }
                 catch (SecurityException e)
                 {

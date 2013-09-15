@@ -19,14 +19,13 @@
 
 package net.sourceforge.openutils.mgnlrules.configuration;
 
-import info.magnolia.cms.core.Content;
-import info.magnolia.cms.util.ContentUtil;
-import info.magnolia.cms.util.NodeDataUtil;
+import info.magnolia.jcr.util.NodeUtil;
+import info.magnolia.jcr.util.PropertyUtil;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
+import javax.jcr.Node;
 import javax.jcr.RepositoryException;
 
 
@@ -44,24 +43,25 @@ public class RepositoryExpressionLibrary implements ExpressionLibrary
 
     protected final boolean visible;
 
-    public RepositoryExpressionLibrary(Content configNode)
+    public RepositoryExpressionLibrary(Node configNode)
     {
-        name = configNode.getName();
-        label = NodeDataUtil.getString(configNode, "label");
-        visible = NodeDataUtil.getBoolean(configNode, "visible", true);
+        name = NodeUtil.getName(configNode);
+        label = PropertyUtil.getString(configNode, "label");
+        visible = PropertyUtil.getBoolean(configNode, "visible", true);
 
         expressions = new ArrayList<Expression>();
         try
         {
-            if (configNode.hasContent("expressions"))
+            if (configNode.hasNode("expressions"))
             {
-                Content expressionsNode = configNode.getContent("expressions");
-                Iterator it = ContentUtil.getAllChildren(expressionsNode).iterator();
-                while (it.hasNext())
+                Node expressionsNode = configNode.getNode("expressions");
+
+                Iterable<Node> nodes = NodeUtil.getNodes(expressionsNode, NodeUtil.EXCLUDE_META_DATA_FILTER);
+
+                for (Node node : nodes)
                 {
-                    Content n = (Content) it.next();
-                    String label = NodeDataUtil.getString(n, "label");
-                    String value = NodeDataUtil.getString(n, "value");
+                    String label = PropertyUtil.getString(node, "label");
+                    String value = PropertyUtil.getString(node, "value");
                     expressions.add(new Expression(label, value));
                 }
             }

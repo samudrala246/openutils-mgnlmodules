@@ -19,9 +19,10 @@
 
 package net.sourceforge.openutils.mgnlrules.setup;
 
-import info.magnolia.cms.core.SystemProperty;
+import info.magnolia.init.MagnoliaConfigurationProperties;
 import info.magnolia.module.InstallContext;
 import info.magnolia.module.delta.Task;
+import info.magnolia.objectfactory.Components;
 import it.openutils.mgnltasks.SimpleModuleVersionHandler;
 
 import java.util.ArrayList;
@@ -58,7 +59,8 @@ public class RuleModuleVersionHandler extends SimpleModuleVersionHandler
             }
         });
 
-        if (SystemProperty.getBooleanProperty(SystemProperty.MAGNOLIA_BOOTSTRAP_SAMPLES))
+        if (Components.getComponent(MagnoliaConfigurationProperties.class).getBooleanProperty(
+            "magnolia.bootstrap.samples"))
         {
             tasks.add(new FilesExtractionTask("Samples extraction", "Extracts jsp files for samples.")
             {

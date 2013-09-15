@@ -30,6 +30,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import javax.inject.Singleton;
+import javax.jcr.Node;
 
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
@@ -41,6 +42,7 @@ import org.slf4j.LoggerFactory;
  * @version $Id$
  */
 @Singleton
+@SuppressWarnings("deprecation")
 public class ExpressionLibraryManager extends ObservedManager
 {
 
@@ -78,9 +80,8 @@ public class ExpressionLibraryManager extends ObservedManager
             try
             {
                 Class providerClass = Class.forName(providerClassName);
-                ExpressionLibrary library = (ExpressionLibrary) providerClass
-                    .getConstructor(Content.class)
-                    .newInstance(providerNode);
+                ExpressionLibrary library = (ExpressionLibrary) providerClass.getConstructor(Node.class).newInstance(
+                    providerNode.getJCRNode());
                 if (library.isVisible())
                 {
                     libraries.add(library);
