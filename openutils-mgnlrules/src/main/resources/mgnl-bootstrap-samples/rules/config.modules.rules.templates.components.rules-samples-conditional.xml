@@ -13,7 +13,7 @@
     <sv:value>Sample paragraph using a custom conditional renderer.</sv:value>
   </sv:property>
   <sv:property sv:name="dialog" sv:type="String">
-    <sv:value>rules:samples-rules-conditional</sv:value>
+    <sv:value>rules:rules-samples-conditional</sv:value>
   </sv:property>
   <sv:property sv:name="jcr:createdBy" sv:type="String">
     <sv:value>admin</sv:value>
@@ -25,7 +25,7 @@
     <sv:value>/templates/samples-rules/paragraph-conditional.jsp</sv:value>
   </sv:property>
   <sv:property sv:name="title" sv:type="String">
-    <sv:value>Conditional sample for module expressions (jsp)</sv:value>
+    <sv:value>Conditional sample (jsp)</sv:value>
   </sv:property>
   <sv:node sv:name="MetaData">
     <sv:property sv:name="jcr:primaryType" sv:type="Name">
@@ -44,7 +44,7 @@
       <sv:value>2008-09-25T12:45:26.721+02:00</sv:value>
     </sv:property>
     <sv:property sv:name="mgnl:lastmodified" sv:type="Date">
-      <sv:value>2013-09-14T00:14:05.495+02:00</sv:value>
+      <sv:value>2013-09-15T15:44:06.381+02:00</sv:value>
     </sv:property>
   </sv:node>
 </sv:node>

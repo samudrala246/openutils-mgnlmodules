@@ -3,7 +3,11 @@
   xmlns:cmsfn="http://magnolia-cms.com/taglib/templating-components/cmsfn" xmlns:media="http://net.sourceforge.openutils/mgnlMedia"
   xmlns:mu="mgnlutils" xmlns:rules="mgnlrules">
   <jsp:directive.page contentType="text/html; charset=UTF-8" session="false" />
-  
+  <section>
+    <h3>Conditional sample (jsp)</h3>
+    <div>
   <!-- conditional evaluation is performed by the custom renderer -->
-  ${content.text}
+      ${cmsfn:decode(content).text}
+    </div>
+  </section>
 </jsp:root>

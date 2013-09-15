@@ -1,12 +1,19 @@
 <!DOCTYPE html>
-<html xml:lang="en" lang="en">
+<html lang="en">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <title>${content.title!}</title>
     [@cms.init /]
+    <link rel="stylesheet" type="text/css" href="${contextPath}/.resources/rules/css/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="${contextPath}/.resources/rules/css/rules-samples.css" />
   </head>
   <body>
-    <h1>${content.title!}</h1>
-    [@cms.area name="main" /]
+    <div class="container">
+      <header>
+        <h1>${content.title!}</h1>
+      </header>
+      <div> [@cms.area name="main" /]
+      </div>
+    </div>
   </body>
 </html>

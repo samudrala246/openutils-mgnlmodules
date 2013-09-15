@@ -146,7 +146,7 @@
             <sv:value>2013-09-13T22:52:27.241+02:00</sv:value>
           </sv:property>
         </sv:node>
-        <sv:node sv:name="samples-rules-grid">
+        <sv:node sv:name="rules-samples-grid">
           <sv:property sv:name="jcr:primaryType" sv:type="Name">
             <sv:value>mgnl:contentNode</sv:value>
           </sv:property>
@@ -157,7 +157,7 @@
             <sv:value>740c561f-c34c-485f-9668-d8974d278ce2</sv:value>
           </sv:property>
           <sv:property sv:name="id" sv:type="String">
-            <sv:value>media:components/samples-media</sv:value>
+            <sv:value>rules:components/rules-samples-grid</sv:value>
           </sv:property>
           <sv:property sv:name="jcr:createdBy" sv:type="String">
             <sv:value>admin</sv:value>
@@ -179,11 +179,11 @@
               <sv:value>2012-03-21T07:32:14.200+01:00</sv:value>
             </sv:property>
             <sv:property sv:name="mgnl:lastmodified" sv:type="Date">
-              <sv:value>2013-09-13T22:52:50.710+02:00</sv:value>
+              <sv:value>2013-09-15T15:41:25.248+02:00</sv:value>
             </sv:property>
           </sv:node>
         </sv:node>
-        <sv:node sv:name="samples-rules-evaluate">
+        <sv:node sv:name="rules-samples-evaluate">
           <sv:property sv:name="jcr:primaryType" sv:type="Name">
             <sv:value>mgnl:contentNode</sv:value>
           </sv:property>
@@ -194,7 +194,7 @@
             <sv:value>6f553927-93a6-4a38-ac90-080b1e2125f5</sv:value>
           </sv:property>
           <sv:property sv:name="id" sv:type="String">
-            <sv:value>media:components/samples-mediatag</sv:value>
+            <sv:value>rules:components/rules-samples-evaluate</sv:value>
           </sv:property>
           <sv:property sv:name="jcr:createdBy" sv:type="String">
             <sv:value>admin</sv:value>
@@ -216,11 +216,11 @@
               <sv:value>2012-03-21T07:32:14.200+01:00</sv:value>
             </sv:property>
             <sv:property sv:name="mgnl:lastmodified" sv:type="Date">
-              <sv:value>2013-09-13T22:53:04.509+02:00</sv:value>
+              <sv:value>2013-09-15T15:41:52.967+02:00</sv:value>
             </sv:property>
           </sv:node>
         </sv:node>
-        <sv:node sv:name="samples-rules-conditional">
+        <sv:node sv:name="rules-samples-conditional">
           <sv:property sv:name="jcr:primaryType" sv:type="Name">
             <sv:value>mgnl:contentNode</sv:value>
           </sv:property>
@@ -231,7 +231,7 @@
             <sv:value>84f6e327-bae3-48b5-8236-9d1733a364ad</sv:value>
           </sv:property>
           <sv:property sv:name="id" sv:type="String">
-            <sv:value>media:components/samples-playlist</sv:value>
+            <sv:value>rules:components/rules-samples-conditional</sv:value>
           </sv:property>
           <sv:property sv:name="jcr:createdBy" sv:type="String">
             <sv:value>admin</sv:value>
@@ -253,11 +253,11 @@
               <sv:value>2012-03-21T07:32:14.200+01:00</sv:value>
             </sv:property>
             <sv:property sv:name="mgnl:lastmodified" sv:type="Date">
-              <sv:value>2013-09-13T22:53:09.034+02:00</sv:value>
+              <sv:value>2013-09-15T15:41:57.226+02:00</sv:value>
             </sv:property>
           </sv:node>
         </sv:node>
-        <sv:node sv:name="samples-rules-if-then-else">
+        <sv:node sv:name="rules-samples-if-then-else">
           <sv:property sv:name="jcr:primaryType" sv:type="Name">
             <sv:value>mgnl:contentNode</sv:value>
           </sv:property>
@@ -268,7 +268,7 @@
             <sv:value>18d9eca7-7656-4f04-ae25-ce2cc1463d0c</sv:value>
           </sv:property>
           <sv:property sv:name="id" sv:type="String">
-            <sv:value>media:components/samples-media-grid</sv:value>
+            <sv:value>rules:components/rules-samples-if-then-else</sv:value>
           </sv:property>
           <sv:property sv:name="jcr:createdBy" sv:type="String">
             <sv:value>admin</sv:value>
@@ -290,7 +290,44 @@
               <sv:value>2012-03-21T07:32:14.200+01:00</sv:value>
             </sv:property>
             <sv:property sv:name="mgnl:lastmodified" sv:type="Date">
-              <sv:value>2013-09-13T22:53:13.415+02:00</sv:value>
+              <sv:value>2013-09-15T15:42:02.276+02:00</sv:value>
+            </sv:property>
+          </sv:node>
+        </sv:node>
+        <sv:node sv:name="rules-samples-conditional-freemarker">
+          <sv:property sv:name="jcr:primaryType" sv:type="Name">
+            <sv:value>mgnl:contentNode</sv:value>
+          </sv:property>
+          <sv:property sv:name="jcr:mixinTypes" sv:type="Name" sv:multiple="true">
+            <sv:value>mix:lockable</sv:value>
+          </sv:property>
+          <sv:property sv:name="jcr:uuid" sv:type="String">
+            <sv:value>022ae3d0-b966-4c5a-82cb-b90ec8ac78dd</sv:value>
+          </sv:property>
+          <sv:property sv:name="id" sv:type="String">
+            <sv:value>rules:components/rules-samples-conditional-freemarker</sv:value>
+          </sv:property>
+          <sv:property sv:name="jcr:createdBy" sv:type="String">
+            <sv:value>admin</sv:value>
+          </sv:property>
+          <sv:node sv:name="MetaData">
+            <sv:property sv:name="jcr:primaryType" sv:type="Name">
+              <sv:value>mgnl:metaData</sv:value>
+            </sv:property>
+            <sv:property sv:name="jcr:createdBy" sv:type="String">
+              <sv:value>admin</sv:value>
+            </sv:property>
+            <sv:property sv:name="mgnl:activated" sv:type="Boolean">
+              <sv:value>false</sv:value>
+            </sv:property>
+            <sv:property sv:name="mgnl:authorid" sv:type="String">
+              <sv:value>superuser</sv:value>
+            </sv:property>
+            <sv:property sv:name="mgnl:creationdate" sv:type="Date">
+              <sv:value>2012-03-21T07:32:14.200+01:00</sv:value>
+            </sv:property>
+            <sv:property sv:name="mgnl:lastmodified" sv:type="Date">
+              <sv:value>2013-09-15T15:42:06.729+02:00</sv:value>
             </sv:property>
           </sv:node>
         </sv:node>

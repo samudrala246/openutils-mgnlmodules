@@ -121,7 +121,7 @@ public class ExpressionFunctionManager extends ObservedManager
 
                 try
                 {
-                    functions.put("mexpr:" + functionName, methodClass.getMethod(methodName, parameterTypes
+                    functions.put("rules:" + functionName, methodClass.getMethod(methodName, parameterTypes
                         .toArray(new Class[0])));
                 }
                 catch (SecurityException e)

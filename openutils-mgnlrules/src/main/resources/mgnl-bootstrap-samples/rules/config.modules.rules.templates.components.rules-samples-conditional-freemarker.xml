@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<sv:node sv:name="rules-samples-grid" xmlns:sv="http://www.jcp.org/jcr/sv/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<sv:node sv:name="rules-samples-conditional-freemarker" xmlns:sv="http://www.jcp.org/jcr/sv/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <sv:property sv:name="jcr:primaryType" sv:type="Name">
     <sv:value>mgnl:contentNode</sv:value>
   </sv:property>
@@ -7,25 +7,25 @@
     <sv:value>mix:lockable</sv:value>
   </sv:property>
   <sv:property sv:name="jcr:uuid" sv:type="String">
-    <sv:value>718c787b-e76d-495d-b7e5-f01a07d3b59d</sv:value>
+    <sv:value>bac240fc-f70c-421a-b5ef-5c4b2c3c79e4</sv:value>
   </sv:property>
   <sv:property sv:name="description" sv:type="String">
-    <sv:value>Sample grid paragraph with a column of expressions.</sv:value>
+    <sv:value>Sample paragraph using a custom conditional renderer.</sv:value>
   </sv:property>
   <sv:property sv:name="dialog" sv:type="String">
-    <sv:value>rules-samples-grid</sv:value>
+    <sv:value>rules:rules-samples-conditional</sv:value>
   </sv:property>
   <sv:property sv:name="jcr:createdBy" sv:type="String">
     <sv:value>admin</sv:value>
   </sv:property>
   <sv:property sv:name="renderType" sv:type="String">
-    <sv:value>jsp</sv:value>
+    <sv:value>rules</sv:value>
   </sv:property>
   <sv:property sv:name="templateScript" sv:type="String">
-    <sv:value>/templates/samples-rules/paragraph-grid.jsp</sv:value>
+    <sv:value>/samples-rules/paragraph-conditional.ftl</sv:value>
   </sv:property>
   <sv:property sv:name="title" sv:type="String">
-    <sv:value>Grid sample (jsp)</sv:value>
+    <sv:value>Conditional sample (freemarker)</sv:value>
   </sv:property>
   <sv:node sv:name="MetaData">
     <sv:property sv:name="jcr:primaryType" sv:type="Name">
@@ -44,7 +44,7 @@
       <sv:value>2008-09-25T12:45:26.721+02:00</sv:value>
     </sv:property>
     <sv:property sv:name="mgnl:lastmodified" sv:type="Date">
-      <sv:value>2013-09-15T15:43:51.737+02:00</sv:value>
+      <sv:value>2013-09-15T16:27:01.820+02:00</sv:value>
     </sv:property>
   </sv:node>
 </sv:node>

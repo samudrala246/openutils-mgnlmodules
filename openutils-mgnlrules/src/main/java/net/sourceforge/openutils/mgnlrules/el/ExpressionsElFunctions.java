@@ -44,19 +44,10 @@ import org.slf4j.LoggerFactory;
 public class ExpressionsElFunctions
 {
 
-    /**
-     * 
-     */
     public static final String EXPRESSION_KEY = ExpressionsElFunctions.class.getName() + ".expression";
 
-    /**
-     * 
-     */
-    public static final String EVALUATE_JSP = "/WEB-INF/jsps/expressions/evaluate.jsp";
+    public static final String EVALUATE_JSP = "/WEB-INF/jsps/rules/evaluate.jsp";
 
-    /**
-     * Logger.
-     */
     private static Logger log = LoggerFactory.getLogger(ExpressionsElFunctions.class);
 
     /**
@@ -69,6 +60,8 @@ public class ExpressionsElFunctions
      */
     public static Object evaluate(String expression, PageContext pageContext) throws JspException
     {
+        WebContext wc = MgnlContext.getWebContext("Expressions can only be evaluated with a WebContext");
+
         Evaluator evaluator = (Evaluator) ExpressionEvaluatorManager
             .getEvaluatorByName(ExpressionEvaluatorManager.EVALUATOR_CLASS);
         return evaluator.evaluate(
@@ -78,7 +71,7 @@ public class ExpressionsElFunctions
             null,
             pageContext,
             ExpressionFunctionManager.getInstance().getFunctions(),
-            "mexpr");
+            "rules");
     }
 
     /**
@@ -92,6 +85,7 @@ public class ExpressionsElFunctions
     public static String evaluate(String expression) throws ServletException, IOException
     {
         WebContext wc = MgnlContext.getWebContext("Expressions can only be evaluated with a WebContext");
+
         wc.getRequest().setAttribute(EXPRESSION_KEY, expression);
         StringWriter sw = new StringWriter();
         wc.include(EVALUATE_JSP, sw);

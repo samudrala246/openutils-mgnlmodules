@@ -3,9 +3,11 @@
   xmlns:cmsfn="http://magnolia-cms.com/taglib/templating-components/cmsfn" xmlns:media="http://net.sourceforge.openutils/mgnlMedia"
   xmlns:mu="mgnlutils" xmlns:rules="mgnlrules">
   <jsp:directive.page contentType="text/html; charset=UTF-8" session="false" />
-  <pre>
-    <![CDATA[${'$'}{rules:evaluate(cmsfn:decode(content).expression, pageContext)}]]>
-  </pre>
-
-  <p>${content.expression} = ${rules:evaluate(cmsfn:decode(content).expression, pageContext)}</p>
+  <section>
+    <h3>Evaluate sample (jsp)</h3>
+    <div>
+      <pre><![CDATA[${'$'}{rules:evaluate(cmsfn:decode(content).expression, pageContext)}]]></pre>
+      <p>${content.expression} = ${rules:evaluate(cmsfn:decode(content).expression, pageContext)}</p>
+    </div>
+  </section>
 </jsp:root>

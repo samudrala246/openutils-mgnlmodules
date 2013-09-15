@@ -19,10 +19,13 @@
 
 package net.sourceforge.openutils.mgnlrules.samples.render;
 
+import info.magnolia.context.MgnlContext;
 import info.magnolia.jcr.util.PropertyUtil;
+import info.magnolia.objectfactory.Components;
 import info.magnolia.rendering.context.RenderingContext;
 import info.magnolia.rendering.engine.RenderException;
-import info.magnolia.rendering.renderer.JspRenderer;
+import info.magnolia.rendering.renderer.AbstractRenderer;
+import info.magnolia.rendering.renderer.registry.RendererRegistry;
 import info.magnolia.rendering.template.RenderableDefinition;
 
 import java.util.Map;
@@ -31,6 +34,9 @@ import javax.jcr.Node;
 
 import net.sourceforge.openutils.mgnlrules.el.ExpressionsElFunctions;
 
+import org.apache.commons.lang.BooleanUtils;
+import org.apache.commons.lang.StringUtils;
+
 
 /**
  * Custom paragraph renderer that evaluates an expression before rendering the jsp, when a pageContext is not yet
@@ -38,7 +44,7 @@ import net.sourceforge.openutils.mgnlrules.el.ExpressionsElFunctions;
  * @author dschivo
  * @version $Id$
  */
-public class ConditionalRenderer extends JspRenderer
+public class ConditionalRenderer extends AbstractRenderer
 {
 
     /**
@@ -48,20 +54,35 @@ public class ConditionalRenderer extends JspRenderer
     protected void onRender(Node content, RenderableDefinition definition, RenderingContext renderingCtx,
         Map<String, Object> ctx, String templateScript) throws RenderException
     {
+
         String expression = PropertyUtil.getString(content, "renderCondition");
         try
         {
             // expression evaluation without a pageContext
             String result = ExpressionsElFunctions.evaluate(expression);
-            if ("true".equals(result))
+            if (BooleanUtils.toBoolean(result))
             {
-                super.onRender(content, definition, renderingCtx, ctx, templateScript);
+
+                String templatetype = StringUtils.endsWith(templateScript, "jsp") ? "jsp" : "freemarker";
+
+                Components.getComponent(RendererRegistry.class).getRenderer(templatetype).render(renderingCtx, ctx);
+
+                // super.onRender(content, definition, renderingCtx, ctx, templateScript);
             }
         }
         catch (Exception e)
         {
             throw new RenderException("Can't render paragraph template " + templateScript, e);
         }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected Map<String, Object> newContext()
+    {
+        return MgnlContext.getWebContext("Rules renderer can only be used with a WebContext");
     }
 
 }
