@@ -32,12 +32,12 @@
       <sv:value>2010-09-12T17:55:19.162+02:00</sv:value>
     </sv:property>
     <sv:property sv:name="mgnl:template" sv:type="String">
-      <sv:value>sampleExpressions</sv:value>
+      <sv:value>rules:pages/rules-sample-template</sv:value>
     </sv:property>
   </sv:node>
   <sv:node sv:name="main">
     <sv:property sv:name="jcr:primaryType" sv:type="Name">
-      <sv:value>mgnl:contentNode</sv:value>
+      <sv:value>mgnl:area</sv:value>
     </sv:property>
     <sv:property sv:name="jcr:mixinTypes" sv:type="Name">
       <sv:value>mix:lockable</sv:value>
@@ -67,7 +67,7 @@
     </sv:node>
     <sv:node sv:name="00">
       <sv:property sv:name="jcr:primaryType" sv:type="Name">
-        <sv:value>mgnl:contentNode</sv:value>
+        <sv:value>mgnl:component</sv:value>
       </sv:property>
       <sv:property sv:name="jcr:mixinTypes" sv:type="Name">
         <sv:value>mix:lockable</sv:value>
@@ -98,13 +98,13 @@
           <sv:value>2010-05-27T09:15:41.531+02:00</sv:value>
         </sv:property>
         <sv:property sv:name="mgnl:template" sv:type="String">
-          <sv:value>samples-expressions-evaluate</sv:value>
+          <sv:value>rules:components/rules-samples-evaluate</sv:value>
         </sv:property>
       </sv:node>
     </sv:node>
     <sv:node sv:name="01">
       <sv:property sv:name="jcr:primaryType" sv:type="Name">
-        <sv:value>mgnl:contentNode</sv:value>
+        <sv:value>mgnl:component</sv:value>
       </sv:property>
       <sv:property sv:name="jcr:mixinTypes" sv:type="Name">
         <sv:value>mix:lockable</sv:value>
@@ -141,12 +141,12 @@
           <sv:value>2010-05-27T10:16:15.375+02:00</sv:value>
         </sv:property>
         <sv:property sv:name="mgnl:template" sv:type="String">
-          <sv:value>samples-expressions-if-then-else</sv:value>
+          <sv:value>rules:components/rules-samples-if-then-else</sv:value>
         </sv:property>
       </sv:node>
       <sv:node sv:name="thenText_files">
         <sv:property sv:name="jcr:primaryType" sv:type="Name">
-          <sv:value>mgnl:contentNode</sv:value>
+          <sv:value>mgnl:component</sv:value>
         </sv:property>
         <sv:property sv:name="jcr:mixinTypes" sv:type="Name">
           <sv:value>mix:lockable</sv:value>
@@ -171,7 +171,7 @@
       </sv:node>
       <sv:node sv:name="elseText_files">
         <sv:property sv:name="jcr:primaryType" sv:type="Name">
-          <sv:value>mgnl:contentNode</sv:value>
+          <sv:value>mgnl:component</sv:value>
         </sv:property>
         <sv:property sv:name="jcr:mixinTypes" sv:type="Name">
           <sv:value>mix:lockable</sv:value>
@@ -197,7 +197,7 @@
     </sv:node>
     <sv:node sv:name="02">
       <sv:property sv:name="jcr:primaryType" sv:type="Name">
-        <sv:value>mgnl:contentNode</sv:value>
+        <sv:value>mgnl:component</sv:value>
       </sv:property>
       <sv:property sv:name="jcr:mixinTypes" sv:type="Name">
         <sv:value>mix:lockable</sv:value>
@@ -231,12 +231,12 @@
           <sv:value>2010-09-12T17:54:33.612+02:00</sv:value>
         </sv:property>
         <sv:property sv:name="mgnl:template" sv:type="String">
-          <sv:value>samples-expressions-conditional</sv:value>
+          <sv:value>rules:components/rules-samples-conditional</sv:value>
         </sv:property>
       </sv:node>
       <sv:node sv:name="text_files">
         <sv:property sv:name="jcr:primaryType" sv:type="Name">
-          <sv:value>mgnl:contentNode</sv:value>
+          <sv:value>mgnl:component</sv:value>
         </sv:property>
         <sv:property sv:name="jcr:mixinTypes" sv:type="Name">
           <sv:value>mix:lockable</sv:value>
@@ -262,7 +262,7 @@
     </sv:node>
     <sv:node sv:name="0">
       <sv:property sv:name="jcr:primaryType" sv:type="Name">
-        <sv:value>mgnl:contentNode</sv:value>
+        <sv:value>mgnl:component</sv:value>
       </sv:property>
       <sv:property sv:name="jcr:mixinTypes" sv:type="Name">
         <sv:value>mix:lockable</sv:value>
@@ -273,13 +273,6 @@
       <sv:property sv:name="grid" sv:type="String">
         <sv:value>toInt(formatDate(now(), 'H'))
 magnoliaUser().name
-
-
-
-
-
-
-
 
 
 </sv:value>
@@ -304,7 +297,7 @@ magnoliaUser().name
           <sv:value>2010-07-02T15:27:28.312+02:00</sv:value>
         </sv:property>
         <sv:property sv:name="mgnl:template" sv:type="String">
-          <sv:value>samples-expressions-grid</sv:value>
+          <sv:value>rules:components/rules-samples-grid</sv:value>
         </sv:property>
       </sv:node>
     </sv:node>

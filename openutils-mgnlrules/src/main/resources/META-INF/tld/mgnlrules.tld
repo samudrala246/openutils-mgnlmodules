@@ -5,7 +5,7 @@
   <display-name>Magnolia expressions Tags and EL functions</display-name>
   <tlib-version>1.0</tlib-version>
   <short-name>mexpr</short-name>
-  <uri>mgnlexpressions</uri>
+  <uri>mgnlrules</uri>
   <function>
     <name>evaluate</name>
     <function-class>net.sourceforge.openutils.mgnlrules.el.ExpressionsElFunctions</function-class>

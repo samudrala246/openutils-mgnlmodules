@@ -69,7 +69,7 @@ public class RuleModuleVersionHandler extends SimpleModuleVersionHandler
                 @Override
                 protected boolean accept(String resource)
                 {
-                    return super.accept(resource) && StringUtils.contains(resource, "/samples-expressions/");
+                    return super.accept(resource) && StringUtils.contains(resource, "/samples-rules/");
                 }
             });
         }

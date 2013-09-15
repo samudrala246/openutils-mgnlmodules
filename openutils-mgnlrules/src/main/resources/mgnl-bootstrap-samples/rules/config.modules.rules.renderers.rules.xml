@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<sv:node sv:name="samples-expressions-conditional" xmlns:sv="http://www.jcp.org/jcr/sv/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<sv:node sv:name="rules" xmlns:sv="http://www.jcp.org/jcr/sv/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <sv:property sv:name="jcr:primaryType" sv:type="Name">
     <sv:value>mgnl:contentNode</sv:value>
   </sv:property>
-  <sv:property sv:name="jcr:mixinTypes" sv:type="Name">
+  <sv:property sv:name="jcr:mixinTypes" sv:type="Name" sv:multiple="true">
     <sv:value>mix:lockable</sv:value>
   </sv:property>
   <sv:property sv:name="jcr:uuid" sv:type="String">
-    <sv:value>441881dc-85ba-4469-b56e-d150067ce491</sv:value>
+    <sv:value>97035def-7c76-4aa3-bf0f-42b26d1936b0</sv:value>
   </sv:property>
   <sv:property sv:name="class" sv:type="String">
     <sv:value>net.sourceforge.openutils.mgnlrules.samples.render.ConditionalRenderer</sv:value>
