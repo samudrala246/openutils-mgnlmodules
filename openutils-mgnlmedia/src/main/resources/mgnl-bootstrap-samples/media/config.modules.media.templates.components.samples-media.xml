@@ -12,6 +12,9 @@
   <sv:property sv:name="description" sv:type="String">
     <sv:value>Sample media paragraph for image resizing</sv:value>
   </sv:property>
+  <sv:property sv:name="dialog" sv:type="String">
+    <sv:value>media:samples-media</sv:value>
+  </sv:property>
   <sv:property sv:name="jcr:createdBy" sv:type="String">
     <sv:value>admin</sv:value>
   </sv:property>
@@ -41,7 +44,7 @@
       <sv:value>2008-09-25T12:45:26.721+02:00</sv:value>
     </sv:property>
     <sv:property sv:name="mgnl:lastmodified" sv:type="Date">
-      <sv:value>2012-04-10T10:12:01.280+02:00</sv:value>
+      <sv:value>2013-09-14T00:22:00.518+02:00</sv:value>
     </sv:property>
   </sv:node>
 </sv:node>
