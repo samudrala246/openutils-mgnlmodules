@@ -14,117 +14,106 @@
     <br />
     <div class="testcontent clearfix">
       <p>Tab or click through the fields to reveal the hints.</p>
-      <dl>
-      <!-- FIRST NAME -->
-        <dt>
-          <label for="firstname">
+      <form class="form form-horizontal" action="">
+        <div class="form-group">
+          <label class="col-lg-2 control-label" for="firstname">
             <contextmenu:element name="firstname" menu="samples-form-label">First Name:</contextmenu:element>
           </label>
-        </dt>
-        <dd>
-          <input name="firstname" id="firstname" type="text" />
-        <!-- This is the name your mama called you when you were little. -->
-          <c:set var="hint" value="${contextmenu:entryValue(content.JCRNode, 'firstname-hint')}" />
-          <c:if test="${not empty hint}">
-            <span class="hint">
+          <div class="col-lg-10">
+            <input name="firstname" id="firstname" type="text" />
+            <c:set var="hint" value="${contextmenu:entryValue(content.JCRNode, 'firstname-hint')}" />
+            <c:if test="${not empty hint}">
+              <span class="hint">
             <![CDATA[${hint}<span class="hint-pointer">&nbsp;</span>]]>
-            </span>
-          </c:if>
-        </dd>
-      <!-- LAST NAME -->
-        <dt>
-          <label for="lastname">
+              </span>
+            </c:if>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-lg-2 control-label" for="lastname">
             <contextmenu:element name="lastname" menu="samples-form-label">Last Name:</contextmenu:element>
           </label>
-        </dt>
-        <dd>
-          <input name="lastname" id="lastname" type="text" />
-        <!-- This is the name your sergeant called you when you went through bootcamp. -->
-          <c:set var="hint" value="${contextmenu:entryValue(content.JCRNode, 'lastname-hint')}" />
-          <c:if test="${not empty hint}">
-            <span class="hint">
+          <div class="col-lg-10">
+            <input name="lastname" id="lastname" type="text" />
+            <c:set var="hint" value="${contextmenu:entryValue(content.JCRNode, 'lastname-hint')}" />
+            <c:if test="${not empty hint}">
+              <span class="hint">
             <![CDATA[${hint}<span class="hint-pointer">&nbsp;</span>]]>
-            </span>
-          </c:if>
-        </dd>
-      <!-- EMAIL -->
-        <dt>
-          <label for="email">
+              </span>
+            </c:if>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-lg-2 control-label" for="email">
             <contextmenu:element name="email" menu="samples-form-label">Email:</contextmenu:element>
           </label>
-        </dt>
-        <dd>
-          <input name="email" id="email" type="text" />
-        <!-- The thing with the @ symbol and the dot com at the end. -->
-          <c:set var="hint" value="${contextmenu:entryValue(content.JCRNode, 'email-hint')}" />
-          <c:if test="${not empty hint}">
-            <span class="hint">
+          <div class="col-lg-10">
+            <input name="email" id="email" type="text" />
+            <c:set var="hint" value="${contextmenu:entryValue(content.JCRNode, 'email-hint')}" />
+            <c:if test="${not empty hint}">
+              <span class="hint">
             <![CDATA[${hint}<span class="hint-pointer">&nbsp;</span>]]>
-            </span>
-          </c:if>
-        </dd>
-      <!-- BIRTH YEAR -->
-        <dt>
-          <label for="year">
+              </span>
+            </c:if>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-lg-2 control-label" for="year">
             <contextmenu:element name="year" menu="samples-form-label">Birth Year:</contextmenu:element>
           </label>
-        </dt>
-        <dd>
-          <select id="year" name="year">
-            <option value="">YYYY</option>
-            <option value="1066">1066</option>
-            <option value="1492">1492</option>
-            <option value="1776">1776</option>
-            <option value="1812">1812</option>
-            <option value="1917">1917</option>
-            <option value="1942">1942</option>
-            <option value="1999">1999</option>
-          </select>
-        <!-- Pick a famous year to be born in. -->
-          <c:set var="hint" value="${contextmenu:entryValue(content.JCRNode, 'year-hint')}" />
-          <c:if test="${not empty hint}">
-            <span class="hint">
+          <div class="col-lg-10">
+            <select id="year" name="year">
+              <option value="">YYYY</option>
+              <option value="1066">1066</option>
+              <option value="1492">1492</option>
+              <option value="1776">1776</option>
+              <option value="1812">1812</option>
+              <option value="1917">1917</option>
+              <option value="1942">1942</option>
+              <option value="1999">1999</option>
+            </select>
+            <c:set var="hint" value="${contextmenu:entryValue(content.JCRNode, 'year-hint')}" />
+            <c:if test="${not empty hint}">
+              <span class="hint">
             <![CDATA[${hint}<span class="hint-pointer">&nbsp;</span>]]>
-            </span>
-          </c:if>
-        </dd>
-      <!-- USERNAME -->
-        <dt>
-          <label for="username">
+              </span>
+            </c:if>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-lg-2 control-label" for="username">
             <contextmenu:element name="username" menu="samples-form-label">Username:</contextmenu:element>
           </label>
-        </dt>
-        <dd>
-          <input name="username" id="username" type="text" />
-        <!-- Between 4-12 characters. -->
-          <c:set var="hint" value="${contextmenu:entryValue(content.JCRNode, 'username-hint')}" />
-          <c:if test="${not empty hint}">
-            <span class="hint">
+          <div class="col-lg-10">
+            <input name="username" id="username" type="text" />
+            <c:set var="hint" value="${contextmenu:entryValue(content.JCRNode, 'username-hint')}" />
+            <c:if test="${not empty hint}">
+              <span class="hint">
             <![CDATA[${hint}<span class="hint-pointer">&nbsp;</span>]]>
-            </span>
-          </c:if>
-        </dd>
-      <!-- PASSWORD -->
-        <dt>
-          <label for="password">
+              </span>
+            </c:if>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-lg-2 control-label" for="password">
             <contextmenu:element name="password" menu="samples-form-label">Password:</contextmenu:element>
           </label>
-        </dt>
-        <dd>
-          <input name="password" id="password" type="password" />
-        <!-- Between 5-13 characters, but not 7. Never 7. -->
-          <c:set var="hint" value="${contextmenu:entryValue(content.JCRNode, 'password-hint')}" />
-          <c:if test="${not empty hint}">
-            <span class="hint">
+          <div class="col-lg-10">
+            <input name="password" id="password" type="password" />
+            <c:set var="hint" value="${contextmenu:entryValue(content.JCRNode, 'password-hint')}" />
+            <c:if test="${not empty hint}">
+              <span class="hint">
             <![CDATA[${hint}<span class="hint-pointer">&nbsp;</span>]]>
-            </span>
-          </c:if>
-        </dd>
-        <dt class="button">&amp;nbsp;</dt>
-        <dd class="button">
-          <input type="submit" class="button" value="Submit" />
-        </dd>
-      </dl>
+              </span>
+            </c:if>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="col-lg-offset-2 col-lg-10">
+            <button type="submit" class="btn btn-default">Submit</button>
+          </div>
+        </div>
+      </form>
     </div>
   </section>
 </jsp:root>
