@@ -1,0 +1,54 @@
+section {
+  margin: 30px 0;
+}
+
+.testcontent {
+  margin: 20px 0;
+  padding: 15px 30px 15px 15px;
+  border-left: 5px solid #dFb5b4;
+  background-color: #fcf2f2;
+}
+
+/* All form elements are within the definition list for this example */
+dl {
+  font: normal 12px/15px Arial;
+  position: relative;
+  width: 350px;
+}
+
+dt {
+  clear: both;
+  float: left;
+  width: 130px;
+  padding: 4px 0 2px 0;
+  text-align: left;
+}
+
+dd {
+  float: left;
+  width: 200px;
+  margin: 0 0 8px 0;
+  padding-left: 6px;
+}
+
+/* The hint to Hide and Show */
+.hint {
+  display: none;
+  position: absolute;
+  right: -250px;
+  width: 200px;
+  margin-top: -4px;
+  border: 1px solid #c93;
+  padding: 10px 12px;
+  background: #ffc url(img/pointer.gif) no-repeat -10px 5px;
+}
+
+/* The pointer image is hadded by using another span */
+.hint .hint-pointer {
+  position: absolute;
+  left: -10px;
+  top: 5px;
+  width: 10px;
+  height: 19px;
+  background: url(img/pointer.gif) left top no-repeat;
+}

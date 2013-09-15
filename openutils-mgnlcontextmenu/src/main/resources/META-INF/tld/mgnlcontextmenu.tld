@@ -106,4 +106,20 @@
     <function-class>net.sourceforge.openutils.mgnlcontextmenu.el.ContextMenuElFunctions</function-class>
     <function-signature>java.lang.String entryValue(javax.jcr.Node, java.lang.String)</function-signature>
   </function>
+  <function>
+    <description>
+      Adds the contextmenu scripts/css
+    </description>
+    <name>links</name>
+    <function-class>net.sourceforge.openutils.mgnlcontextmenu.el.ContextMenuElFunctions</function-class>
+    <function-signature>java.lang.String links()</function-signature>
+  </function>
+  <function>
+    <description>
+      Initializes the contextmenu scripts
+    </description>
+    <name>scripts</name>
+    <function-class>net.sourceforge.openutils.mgnlcontextmenu.el.ContextMenuElFunctions</function-class>
+    <function-signature>java.lang.String scripts()</function-signature>
+  </function>
 </taglib>

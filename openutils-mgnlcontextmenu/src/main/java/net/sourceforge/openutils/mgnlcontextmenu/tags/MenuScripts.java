@@ -41,37 +41,30 @@ import org.apache.commons.lang.StringUtils;
  * @author dschivo
  * @version $Id$
  */
-public class ScriptTag extends TagSupport
+public class MenuScripts
 {
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public int doStartTag() throws JspException
+    public static String write()
     {
         if (canEdit())
         {
-            JspWriter out = pageContext.getOut();
-            try
-            {
-                out.println("<script type=\"text/javascript\">");
-                out.println("var mgnlContextMenuInfo = {");
-                out.println("  contextPath: '" + MgnlContext.getContextPath() + "',");
-                out.println("  menus: " + menusJs() + ",");
-                out.println("  elements: " + elementsJs());
-                out.println("};");
-                out.println("</script>");
-            }
-            catch (IOException e)
-            {
-                throw new JspException(e);
-            }
+            StringBuilder out = new StringBuilder();
+
+            out.append("<!-- start contextmenu:scripts -->\n");
+            out.append("<script type=\"text/javascript\">\n");
+            out.append("var mgnlContextMenuInfo = {\n");
+            out.append("  contextPath: '" + MgnlContext.getContextPath() + "',\n");
+            out.append("  menus: " + menusJs() + ",\n");
+            out.append("  elements: " + elementsJs() + "\n");
+            out.append("};\n");
+            out.append("</script>\n");
+            out.append("<!-- end contextmenu:scripts -->\n");
+            return out.toString();
         }
-        return EVAL_PAGE;
+        return StringUtils.EMPTY;
     }
 
-    protected String menusJs()
+    private static String menusJs()
     {
         StringBuilder sb = new StringBuilder();
         int i = 0;
@@ -110,7 +103,7 @@ public class ScriptTag extends TagSupport
     }
 
     @SuppressWarnings("unchecked")
-    protected String elementsJs()
+    private static String elementsJs()
     {
         StringBuilder sb = new StringBuilder();
         List infos = (List) MgnlContext.getWebContext().getRequest().getAttribute(ElementTag.ELEMENT_INFOS_KEY);
@@ -149,7 +142,7 @@ public class ScriptTag extends TagSupport
     }
 
     @SuppressWarnings("deprecation")
-    private boolean canEdit()
+    private static boolean canEdit()
     {
         return NodeUtil.isGranted(MgnlContext.getAggregationState().getMainContent().getJCRNode(), Permission.SET);
     }

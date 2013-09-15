@@ -29,10 +29,10 @@
       <sv:value>2010-05-18T14:33:10.812+02:00</sv:value>
     </sv:property>
     <sv:property sv:name="mgnl:lastmodified" sv:type="Date">
-      <sv:value>2013-09-13T19:28:07.245+02:00</sv:value>
+      <sv:value>2013-09-15T17:38:45.728+02:00</sv:value>
     </sv:property>
     <sv:property sv:name="mgnl:template" sv:type="String">
-      <sv:value>contextmenu:pages/sampleContextMenu</sv:value>
+      <sv:value>contextmenu:pages/contextmenu-template-jsp</sv:value>
     </sv:property>
   </sv:node>
   <sv:node sv:name="main">
@@ -230,7 +230,7 @@
         <sv:value>291f2c89-13b7-4876-8bed-fb6869fc1ccc</sv:value>
       </sv:property>
       <sv:property sv:name="jcr:createdBy" sv:type="String">
-        <sv:value>superuser</sv:value>
+        <sv:value>admin</sv:value>
       </sv:property>
       <sv:property sv:name="text" sv:type="String">
         <sv:value>&lt;p&gt;I'm a text&lt;/p&gt;</sv:value>
@@ -240,7 +240,7 @@
           <sv:value>mgnl:metaData</sv:value>
         </sv:property>
         <sv:property sv:name="jcr:createdBy" sv:type="String">
-          <sv:value>superuser</sv:value>
+          <sv:value>admin</sv:value>
         </sv:property>
         <sv:property sv:name="mgnl:authorid" sv:type="String">
           <sv:value>superuser</sv:value>
@@ -266,14 +266,14 @@
           <sv:value>c0849975-45ec-49ec-8b03-3c9efaae4bfd</sv:value>
         </sv:property>
         <sv:property sv:name="jcr:createdBy" sv:type="String">
-          <sv:value>superuser</sv:value>
+          <sv:value>admin</sv:value>
         </sv:property>
         <sv:node sv:name="MetaData">
           <sv:property sv:name="jcr:primaryType" sv:type="Name">
             <sv:value>mgnl:metaData</sv:value>
           </sv:property>
           <sv:property sv:name="jcr:createdBy" sv:type="String">
-            <sv:value>superuser</sv:value>
+            <sv:value>admin</sv:value>
           </sv:property>
           <sv:property sv:name="mgnl:creationdate" sv:type="Date">
             <sv:value>2013-09-13T19:27:55.815+02:00</sv:value>
@@ -292,7 +292,7 @@
         <sv:value>3c8d6a5f-1b83-4959-ace5-cc3ec53236f2</sv:value>
       </sv:property>
       <sv:property sv:name="jcr:createdBy" sv:type="String">
-        <sv:value>superuser</sv:value>
+        <sv:value>admin</sv:value>
       </sv:property>
       <sv:property sv:name="message" sv:type="String">
         <sv:value>Right click here to edit</sv:value>
@@ -302,7 +302,7 @@
           <sv:value>mgnl:metaData</sv:value>
         </sv:property>
         <sv:property sv:name="jcr:createdBy" sv:type="String">
-          <sv:value>superuser</sv:value>
+          <sv:value>admin</sv:value>
         </sv:property>
         <sv:property sv:name="mgnl:authorid" sv:type="String">
           <sv:value>superuser</sv:value>
@@ -332,7 +332,7 @@
         <sv:value>label</sv:value>
       </sv:property>
       <sv:property sv:name="jcr:createdBy" sv:type="String">
-        <sv:value>superuser</sv:value>
+        <sv:value>admin</sv:value>
       </sv:property>
       <sv:property sv:name="lastname-hint" sv:type="String">
         <sv:value>&lt;p&gt;luca&lt;/p&gt;</sv:value>
@@ -342,7 +342,7 @@
           <sv:value>mgnl:metaData</sv:value>
         </sv:property>
         <sv:property sv:name="jcr:createdBy" sv:type="String">
-          <sv:value>superuser</sv:value>
+          <sv:value>admin</sv:value>
         </sv:property>
         <sv:property sv:name="mgnl:authorid" sv:type="String">
           <sv:value>superuser</sv:value>

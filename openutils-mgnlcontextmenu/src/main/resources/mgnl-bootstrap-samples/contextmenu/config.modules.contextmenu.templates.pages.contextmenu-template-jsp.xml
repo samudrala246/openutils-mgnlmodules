@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<sv:node sv:name="sampleContextMenu" xmlns:sv="http://www.jcp.org/jcr/sv/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<sv:node sv:name="contextmenu-template-jsp" xmlns:sv="http://www.jcp.org/jcr/sv/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <sv:property sv:name="jcr:primaryType" sv:type="Name">
     <sv:value>mgnl:contentNode</sv:value>
   </sv:property>
@@ -7,7 +7,7 @@
     <sv:value>mix:lockable</sv:value>
   </sv:property>
   <sv:property sv:name="jcr:uuid" sv:type="String">
-    <sv:value>0581824a-e17f-47ea-9035-3dcc8df430ce</sv:value>
+    <sv:value>b6628cbe-83ba-4175-aeb6-66074c79aa70</sv:value>
   </sv:property>
   <sv:property sv:name="jcr:createdBy" sv:type="String">
     <sv:value>admin</sv:value>
@@ -19,7 +19,7 @@
     <sv:value>/templates/samples-contextmenu/template.jsp</sv:value>
   </sv:property>
   <sv:property sv:name="title" sv:type="String">
-    <sv:value>Context menu sample template</sv:value>
+    <sv:value>Contextmenu sample (jsp)</sv:value>
   </sv:property>
   <sv:property sv:name="visible" sv:type="String">
     <sv:value>true</sv:value>
@@ -41,7 +41,7 @@
       <sv:value>2008-09-23T16:56:46.344+02:00</sv:value>
     </sv:property>
     <sv:property sv:name="mgnl:lastmodified" sv:type="Date">
-      <sv:value>2013-09-13T13:05:57.000+02:00</sv:value>
+      <sv:value>2013-09-15T17:38:00.886+02:00</sv:value>
     </sv:property>
   </sv:node>
   <sv:node sv:name="areas">
@@ -52,7 +52,7 @@
       <sv:value>mix:lockable</sv:value>
     </sv:property>
     <sv:property sv:name="jcr:uuid" sv:type="String">
-      <sv:value>4abf9065-e505-4dad-aa38-4ba4cd20fc6c</sv:value>
+      <sv:value>af60d4a8-3fd3-483f-9722-b0c0b8731b17</sv:value>
     </sv:property>
     <sv:property sv:name="jcr:createdBy" sv:type="String">
       <sv:value>admin</sv:value>
@@ -74,7 +74,7 @@
         <sv:value>2012-03-21T07:30:29.457+01:00</sv:value>
       </sv:property>
       <sv:property sv:name="mgnl:lastmodified" sv:type="Date">
-        <sv:value>2013-09-13T13:06:07.585+02:00</sv:value>
+        <sv:value>2013-09-15T17:37:08.411+02:00</sv:value>
       </sv:property>
     </sv:node>
     <sv:node sv:name="main">
@@ -85,7 +85,7 @@
         <sv:value>mix:lockable</sv:value>
       </sv:property>
       <sv:property sv:name="jcr:uuid" sv:type="String">
-        <sv:value>f2422716-9c0f-4ae2-af0c-e5aad9d76915</sv:value>
+        <sv:value>c149e129-d0b0-444c-9921-66bf38daf9a8</sv:value>
       </sv:property>
       <sv:property sv:name="jcr:createdBy" sv:type="String">
         <sv:value>admin</sv:value>
@@ -110,7 +110,7 @@
           <sv:value>2012-03-21T07:30:36.643+01:00</sv:value>
         </sv:property>
         <sv:property sv:name="mgnl:lastmodified" sv:type="Date">
-          <sv:value>2013-09-13T13:06:07.586+02:00</sv:value>
+          <sv:value>2013-09-15T17:37:08.411+02:00</sv:value>
         </sv:property>
       </sv:node>
       <sv:node sv:name="availableComponents">
@@ -121,7 +121,7 @@
           <sv:value>mix:lockable</sv:value>
         </sv:property>
         <sv:property sv:name="jcr:uuid" sv:type="String">
-          <sv:value>84b27713-7935-40d7-8f7a-7cc00bca8306</sv:value>
+          <sv:value>cf2a6d5c-703b-481c-afe7-377e82fc22f4</sv:value>
         </sv:property>
         <sv:property sv:name="jcr:createdBy" sv:type="String">
           <sv:value>admin</sv:value>
@@ -143,7 +143,7 @@
             <sv:value>2012-03-21T07:32:04.848+01:00</sv:value>
           </sv:property>
           <sv:property sv:name="mgnl:lastmodified" sv:type="Date">
-            <sv:value>2013-09-13T13:06:07.586+02:00</sv:value>
+            <sv:value>2013-09-15T17:37:08.411+02:00</sv:value>
           </sv:property>
         </sv:node>
         <sv:node sv:name="samples-contextmenu-form">
@@ -154,7 +154,7 @@
             <sv:value>mix:lockable</sv:value>
           </sv:property>
           <sv:property sv:name="jcr:uuid" sv:type="String">
-            <sv:value>ebfab1d3-1f3c-4c09-b3ff-e943cca2ac65</sv:value>
+            <sv:value>2210fc23-d9cc-416e-8a84-d94e7064adc4</sv:value>
           </sv:property>
           <sv:property sv:name="id" sv:type="String">
             <sv:value>contextmenu:components/samples-contextmenu-form</sv:value>
@@ -179,7 +179,7 @@
               <sv:value>2012-03-21T07:32:14.200+01:00</sv:value>
             </sv:property>
             <sv:property sv:name="mgnl:lastmodified" sv:type="Date">
-              <sv:value>2013-09-13T13:07:19.790+02:00</sv:value>
+              <sv:value>2013-09-15T17:37:08.412+02:00</sv:value>
             </sv:property>
           </sv:node>
         </sv:node>
@@ -191,7 +191,7 @@
             <sv:value>mix:lockable</sv:value>
           </sv:property>
           <sv:property sv:name="jcr:uuid" sv:type="String">
-            <sv:value>63001b21-2a17-4e2d-adcf-7832a6f7e196</sv:value>
+            <sv:value>17f2736a-ba93-4dcc-8e86-2f8aec9f61a6</sv:value>
           </sv:property>
           <sv:property sv:name="id" sv:type="String">
             <sv:value>contextmenu:components/samples-contextmenu-message</sv:value>
@@ -216,7 +216,7 @@
               <sv:value>2012-03-21T07:32:14.200+01:00</sv:value>
             </sv:property>
             <sv:property sv:name="mgnl:lastmodified" sv:type="Date">
-              <sv:value>2013-09-13T13:07:35.289+02:00</sv:value>
+              <sv:value>2013-09-15T17:37:08.412+02:00</sv:value>
             </sv:property>
           </sv:node>
         </sv:node>
@@ -228,7 +228,7 @@
             <sv:value>mix:lockable</sv:value>
           </sv:property>
           <sv:property sv:name="jcr:uuid" sv:type="String">
-            <sv:value>f2db7c6b-f951-4f55-85ba-78dc031db297</sv:value>
+            <sv:value>b816a1a0-cdaf-4aba-ae4e-111ef99de914</sv:value>
           </sv:property>
           <sv:property sv:name="id" sv:type="String">
             <sv:value>contextmenu:components/samples-contextmenu-textmedia</sv:value>
@@ -253,7 +253,7 @@
               <sv:value>2012-03-21T07:32:14.200+01:00</sv:value>
             </sv:property>
             <sv:property sv:name="mgnl:lastmodified" sv:type="Date">
-              <sv:value>2013-09-13T13:07:52.713+02:00</sv:value>
+              <sv:value>2013-09-15T17:37:08.412+02:00</sv:value>
             </sv:property>
           </sv:node>
         </sv:node>
