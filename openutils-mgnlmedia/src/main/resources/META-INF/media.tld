@@ -78,88 +78,6 @@
     </example>
   </function>
   <function>
-    <description>Get the description from a media, given the media node itself.</description>
-    <display-name>desc</display-name>
-    <name>desc</name>
-    <function-class>net.sourceforge.openutils.mgnlmedia.media.tags.el.MediaEl</function-class>
-    <function-signature>java.lang.String desc(info.magnolia.cms.core.Content)</function-signature>
-    <example>
-      <![CDATA[
-      <c:set var="mediaNode" value="${media:node(content.image)}" />
-      <c:out value="${media:desc(mediaNode)}" />
-      ]]>
-    </example>
-  </function>
-  <function>
-    <description>Get the description from a media, given the media node itself and a locale. Try to get the value from nodedata "description-{locale}"; if not found get the value from "description-en"; if not found again, get the value from "description".</description>
-    <display-name>descLoc</display-name>
-    <name>descLoc</name>
-    <function-class>net.sourceforge.openutils.mgnlmedia.media.tags.el.MediaEl</function-class>
-    <function-signature>java.lang.String descLoc(info.magnolia.cms.core.Content, java.util.Locale)</function-signature>
-    <example>
-      <![CDATA[
-      <c:set var="mediaNode" value="${media:node(content.image)}" />
-      <c:out value="${media:descLoc(mediaNode, pageContext.request.locale)}" />
-      ]]>
-    </example>
-  </function>
-  <function>
-    <description>Get the title from a media, given the media node itself.</description>
-    <display-name>title</display-name>
-    <name>title</name>
-    <function-class>net.sourceforge.openutils.mgnlmedia.media.tags.el.MediaEl</function-class>
-    <function-signature>java.lang.String title(info.magnolia.cms.core.Content)</function-signature>
-    <example>
-      <![CDATA[
-      <c:set var="mediaNode" value="${media:node(content.image)}" />
-      <c:out value="${media:title(mediaNode)}" />
-      ]]>
-    </example>
-  </function>
-  <function>
-    <description>Get the title from a media, given the media node itself and a locale. Try to get the value from nodedata "title-{locale}"; if not found get the value from "title-en"; if not found again, get the value from "title".</description>
-    <display-name>titleLoc</display-name>
-    <name>titleLoc</name>
-    <function-class>net.sourceforge.openutils.mgnlmedia.media.tags.el.MediaEl</function-class>
-    <function-signature>java.lang.String titleLoc(info.magnolia.cms.core.Content, java.util.Locale)</function-signature>
-    <example>
-      <![CDATA[
-      <c:set var="mediaNode" value="${media:node(content.image)}" />
-      <c:out value="${media:titleLoc(mediaNode, pageContext.request.locale)}" />
-      ]]>
-    </example>
-  </function>
-  <function>
-    <description>Get the tags from a media, given the media node itself.</description>
-    <display-name>tags</display-name>
-    <name>tags</name>
-    <function-class>net.sourceforge.openutils.mgnlmedia.media.tags.el.MediaEl</function-class>
-    <function-signature>java.lang.String[] tags(info.magnolia.cms.core.Content)</function-signature>
-    <example>
-      <![CDATA[
-      <c:set var="mediaNode" value="${media:node(content.image)}" />
-      <c:forEach var="tag" items="${media:tags(mediaNode)}">
-        <c:out value="${tag}" />
-      </c:forEach>
-      ]]>
-    </example>
-  </function>
-  <function>
-    <description>Get the tags from a media, given the media node itself and a locale. Try to get the value from nodedata "tags-{locale}"; if not found get the value from "tags-en"; if not found again, get the value from "tags".</description>
-    <display-name>tagsLoc</display-name>
-    <name>tagsLoc</name>
-    <function-class>net.sourceforge.openutils.mgnlmedia.media.tags.el.MediaEl</function-class>
-    <function-signature>java.lang.String[] tagsLoc(info.magnolia.cms.core.Content, java.util.Locale)</function-signature>
-    <example>
-      <![CDATA[
-      <c:set var="mediaNode" value="${media:node(content.image)}" />
-      <c:forEach var="tag" items="${media:tagsLoc(mediaNode, pageContext.request.locale)}">
-        <c:out value="${tag}" />
-      </c:forEach>
-      ]]>
-    </example>
-  </function>
-  <function>
     <description>Get the url to the media, given the media node itself or its UUID</description>
     <display-name>url</display-name>
     <name>url</name>
@@ -173,15 +91,8 @@
     </example>
   </function>
   <function>
-    <description>@deprecated use urlParams()</description>
-    <display-name>url2</display-name>
-    <name>url2</name>
-    <function-class>net.sourceforge.openutils.mgnlmedia.media.tags.el.MediaEl</function-class>
-    <function-signature>java.lang.String getUrl2(info.magnolia.cms.core.Content, java.util.Map)</function-signature>
-  </function>
-  <function>
     <description>Get the url to the media, given the media node itself or its UUID and a Map of options</description>
-    <display-name>url2</display-name>
+    <display-name>urlParams</display-name>
     <name>urlParams</name>
     <function-class>net.sourceforge.openutils.mgnlmedia.media.tags.el.MediaEl</function-class>
     <function-signature>java.lang.String urlParams(java.lang.Object, java.util.Map)</function-signature>
