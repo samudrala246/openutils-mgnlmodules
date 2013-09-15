@@ -25,7 +25,7 @@
     <sv:value>/templates/samples-contextmenu/paragraph-textmedia.jsp</sv:value>
   </sv:property>
   <sv:property sv:name="title" sv:type="String">
-    <sv:value>Text-media sample for module contextmenu</sv:value>
+    <sv:value>Text-media sample (jsp)</sv:value>
   </sv:property>
   <sv:node sv:name="MetaData">
     <sv:property sv:name="jcr:primaryType" sv:type="Name">
@@ -44,7 +44,7 @@
       <sv:value>2008-09-25T12:45:26.721+02:00</sv:value>
     </sv:property>
     <sv:property sv:name="mgnl:lastmodified" sv:type="Date">
-      <sv:value>2013-09-13T19:26:31.070+02:00</sv:value>
+      <sv:value>2013-09-15T20:32:01.621+02:00</sv:value>
     </sv:property>
   </sv:node>
 </sv:node>

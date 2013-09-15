@@ -5,30 +5,7 @@
   <display-name>Magnolia context menu Tags and EL functions</display-name>
   <tlib-version>1.0</tlib-version>
   <short-name>mcmenu</short-name>
-  <uri>mgnlcontextmenu</uri>
-  <tag>
-    <description>
-      <![CDATA[Imports js and css resources for the editing of contents via context menu. Should be used in the head
-      section of the page.]]>
-    </description>
-    <display-name>links</display-name>
-    <name>links</name>
-    <tag-class>net.sourceforge.openutils.mgnlcontextmenu.tags.LinksTag</tag-class>
-    <body-content>empty</body-content>
-    <attribute>
-      <description>The JavaScript framework to use: can be jquery or mootools.</description>
-      <name>jsFramework</name>
-      <required>true</required>
-      <rtexprvalue>true</rtexprvalue>
-    </attribute>
-    <attribute>
-      <description>Should be set to true if the JavaScript framework is already included in the page.</description>
-      <name>skipJsFramework</name>
-      <required>false</required>
-      <rtexprvalue>true</rtexprvalue>
-      <type>boolean</type>
-    </attribute>
-  </tag>
+  <uri>http://openutils/mgnlcontextmenu</uri>
   <tag>
     <description>
       <![CDATA[Wraps an HTML snippet and possibly replaces it with content set by the editor user.<br />
@@ -86,16 +63,6 @@
       <rtexprvalue>true</rtexprvalue>
       <type>boolean</type>
     </attribute>
-  </tag>
-  <tag>
-    <description>
-      <![CDATA[Collects all informations about context menu definitions and use, and exposes them as JavaScript
-      variables.]]>
-    </description>
-    <display-name>script</display-name>
-    <name>script</name>
-    <tag-class>net.sourceforge.openutils.mgnlcontextmenu.tags.ScriptTag</tag-class>
-    <body-content>empty</body-content>
   </tag>
   <function>
     <description>

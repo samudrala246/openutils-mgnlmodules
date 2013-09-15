@@ -25,7 +25,7 @@
     <sv:value>/templates/samples-contextmenu/paragraph-message.jsp</sv:value>
   </sv:property>
   <sv:property sv:name="title" sv:type="String">
-    <sv:value>Message sample for module contextmenu</sv:value>
+    <sv:value>Message sample (jsp)</sv:value>
   </sv:property>
   <sv:node sv:name="MetaData">
     <sv:property sv:name="jcr:primaryType" sv:type="Name">
@@ -44,7 +44,7 @@
       <sv:value>2008-09-25T12:45:26.721+02:00</sv:value>
     </sv:property>
     <sv:property sv:name="mgnl:lastmodified" sv:type="Date">
-      <sv:value>2013-09-13T19:25:35.319+02:00</sv:value>
+      <sv:value>2013-09-15T20:31:53.389+02:00</sv:value>
     </sv:property>
   </sv:node>
 </sv:node>

@@ -16,7 +16,7 @@
     <sv:value>freemarker</sv:value>
   </sv:property>
   <sv:property sv:name="templateScript" sv:type="String">
-    <sv:value>/samples-contextmenu/contextmenu-template.ftl</sv:value>
+    <sv:value>/samples-contextmenu/template-contextmenu.ftl</sv:value>
   </sv:property>
   <sv:property sv:name="title" sv:type="String">
     <sv:value>Contextmenu sample (freemarker)</sv:value>
@@ -254,6 +254,43 @@
             </sv:property>
             <sv:property sv:name="mgnl:lastmodified" sv:type="Date">
               <sv:value>2013-09-15T17:37:17.379+02:00</sv:value>
+            </sv:property>
+          </sv:node>
+        </sv:node>
+        <sv:node sv:name="samples-contextmenu-message-freemarker">
+          <sv:property sv:name="jcr:primaryType" sv:type="Name">
+            <sv:value>mgnl:contentNode</sv:value>
+          </sv:property>
+          <sv:property sv:name="jcr:mixinTypes" sv:type="Name" sv:multiple="true">
+            <sv:value>mix:lockable</sv:value>
+          </sv:property>
+          <sv:property sv:name="jcr:uuid" sv:type="String">
+            <sv:value>becb783b-3a0e-4893-9b98-9c52951707c2</sv:value>
+          </sv:property>
+          <sv:property sv:name="id" sv:type="String">
+            <sv:value>contextmenu:components/samples-contextmenu-message-freemarker</sv:value>
+          </sv:property>
+          <sv:property sv:name="jcr:createdBy" sv:type="String">
+            <sv:value>admin</sv:value>
+          </sv:property>
+          <sv:node sv:name="MetaData">
+            <sv:property sv:name="jcr:primaryType" sv:type="Name">
+              <sv:value>mgnl:metaData</sv:value>
+            </sv:property>
+            <sv:property sv:name="jcr:createdBy" sv:type="String">
+              <sv:value>admin</sv:value>
+            </sv:property>
+            <sv:property sv:name="mgnl:activated" sv:type="Boolean">
+              <sv:value>false</sv:value>
+            </sv:property>
+            <sv:property sv:name="mgnl:authorid" sv:type="String">
+              <sv:value>superuser</sv:value>
+            </sv:property>
+            <sv:property sv:name="mgnl:creationdate" sv:type="Date">
+              <sv:value>2012-03-21T07:32:14.200+01:00</sv:value>
+            </sv:property>
+            <sv:property sv:name="mgnl:lastmodified" sv:type="Date">
+              <sv:value>2013-09-15T20:32:43.126+02:00</sv:value>
             </sv:property>
           </sv:node>
         </sv:node>
