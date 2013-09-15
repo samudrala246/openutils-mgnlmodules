@@ -104,16 +104,6 @@ public class MgnlUtilsDeprecatedAdapters
         return null;
     }
 
-    public static String getProperty(String name)
-    {
-        return SystemProperty.getProperty(name);
-    }
-
-    public static boolean getBooleanProperty(String name)
-    {
-        return SystemProperty.getBooleanProperty(name);
-    }
-
     public static Properties systemProperties()
     {
         return SystemProperty.getProperties();

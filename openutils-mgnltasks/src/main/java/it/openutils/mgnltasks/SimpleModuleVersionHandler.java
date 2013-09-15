@@ -19,12 +19,13 @@
 
 package it.openutils.mgnltasks;
 
+import info.magnolia.init.MagnoliaConfigurationProperties;
 import info.magnolia.module.DefaultModuleVersionHandler;
 import info.magnolia.module.InstallContext;
 import info.magnolia.module.delta.Delta;
 import info.magnolia.module.delta.DeltaBuilder;
 import info.magnolia.module.model.Version;
-import it.openutils.mgnlutils.el.MgnlUtilsDeprecatedAdapters;
+import info.magnolia.objectfactory.Components;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -99,12 +100,14 @@ public class SimpleModuleVersionHandler extends DefaultModuleVersionHandler
                 .add(new BootstrapMissingNodesTask(ctx.getCurrentModuleDefinition().getName() + "-nooverwrite"));
 
             // only for development, add the (module)-dev bootstrap directory
-            if (MgnlUtilsDeprecatedAdapters.getBooleanProperty("magnolia.develop"))
+            if (Components.getComponent(MagnoliaConfigurationProperties.class).getBooleanProperty("magnolia.develop"))
             {
-                if (StringUtils.isEmpty(MgnlUtilsDeprecatedAdapters.getProperty("magnolia.bootstrapdev"))
-                    || StringUtils.contains(MgnlUtilsDeprecatedAdapters.getProperty("magnolia.bootstrapdev"), ctx
-                        .getCurrentModuleDefinition()
-                        .getName()))
+                if (StringUtils.isEmpty(Components.getComponent(MagnoliaConfigurationProperties.class).getProperty(
+                    "magnolia.bootstrapdev"))
+                    || StringUtils.contains(
+                        Components.getComponent(MagnoliaConfigurationProperties.class).getProperty(
+                            "magnolia.bootstrapdev"),
+                        ctx.getCurrentModuleDefinition().getName()))
                 {
                     deltas
                         .get(0)
@@ -122,7 +125,8 @@ public class SimpleModuleVersionHandler extends DefaultModuleVersionHandler
 
         List<Delta> deltas = new ArrayList<Delta>();
 
-        if (MgnlUtilsDeprecatedAdapters.getBooleanProperty(modulename + ".update.disabled"))
+        if (Components.getComponent(MagnoliaConfigurationProperties.class).getBooleanProperty(
+            modulename + ".update.disabled"))
         {
             return deltas;
         }

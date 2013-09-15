@@ -32,6 +32,7 @@ import info.magnolia.cms.security.User;
 import info.magnolia.cms.security.auth.Entity;
 import info.magnolia.context.MgnlContext;
 import info.magnolia.context.WebContext;
+import info.magnolia.init.MagnoliaConfigurationProperties;
 import info.magnolia.jaas.principal.EntityImpl;
 import info.magnolia.jcr.util.ContentMap;
 import info.magnolia.jcr.util.NodeUtil;
@@ -217,7 +218,7 @@ public final class MgnlUtilsElFunctions
      */
     public static boolean develop()
     {
-        return MgnlUtilsDeprecatedAdapters.getBooleanProperty("magnolia.develop");
+        return Components.getComponent(MagnoliaConfigurationProperties.class).getBooleanProperty("magnolia.develop");
     }
 
     /**
@@ -1249,7 +1250,7 @@ public final class MgnlUtilsElFunctions
      */
     public static String systemProperty(String key)
     {
-        return MgnlUtilsDeprecatedAdapters.getProperty(key);
+        return Components.getComponent(MagnoliaConfigurationProperties.class).getProperty(key);
     }
 
     /**
