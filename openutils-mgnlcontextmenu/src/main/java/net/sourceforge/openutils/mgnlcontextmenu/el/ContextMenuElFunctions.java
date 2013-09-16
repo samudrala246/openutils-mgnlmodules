@@ -83,7 +83,10 @@ public class ContextMenuElFunctions
                 + ctx
                 + "/.resources/contextmenu/css/contextmenu.css\" media=\"screen\" />\n");
             out.append("<script src=\"" + ctx + "/.resources/contextmenu/js/mgnladmin-custom.js\"></script>\n");
+            out.append("<script src=\"" + ctx + "/.resources/contextmenu/js/contextmenu-jquery.js\"></script>\n");
             out.append("<!-- end contextmenu:links -->\n");
+            
+            
         }
 
         return out.toString();
