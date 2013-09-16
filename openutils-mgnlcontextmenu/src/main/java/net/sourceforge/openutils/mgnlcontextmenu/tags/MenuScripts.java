@@ -23,16 +23,12 @@ import info.magnolia.cms.security.Permission;
 import info.magnolia.context.MgnlContext;
 import info.magnolia.jcr.util.NodeUtil;
 
-import java.io.IOException;
 import java.util.List;
-
-import javax.servlet.jsp.JspException;
-import javax.servlet.jsp.JspWriter;
-import javax.servlet.jsp.tagext.TagSupport;
 
 import net.sourceforge.openutils.mgnlcontextmenu.configuration.ContextMenu;
 import net.sourceforge.openutils.mgnlcontextmenu.configuration.ContextMenuItem;
 import net.sourceforge.openutils.mgnlcontextmenu.configuration.ContextMenuManager;
+import net.sourceforge.openutils.mgnlcontextmenu.el.ContextMenuElFunctions;
 
 import org.apache.commons.lang.StringUtils;
 
@@ -50,15 +46,22 @@ public class MenuScripts
         {
             StringBuilder out = new StringBuilder();
 
+            // out.append("<script type=\"text/javascript\">\n");
+            // out.append("var mgnlContextMenuInfo = {\n");
+            // out.append("  contextPath: '" + MgnlContext.getContextPath() + "',\n");
+            // out.append("  menus: " + menusJs() + ",\n");
+            // out.append("  elements: " + elementsJs() + "\n");
+            // out.append("};\n");
+            // out.append("</script>\n");
+
             out.append("<!-- start contextmenu:scripts -->\n");
             out.append("<script type=\"text/javascript\">\n");
-            out.append("var mgnlContextMenuInfo = {\n");
-            out.append("  contextPath: '" + MgnlContext.getContextPath() + "',\n");
-            out.append("  menus: " + menusJs() + ",\n");
-            out.append("  elements: " + elementsJs() + "\n");
-            out.append("};\n");
+            out.append("jQuery(document).ready(function() {\n");
+            out.append("  jQuery.mgnlAddContextMenu(" + ContextMenuElFunctions.editMessageInfosJs() + ");\n");
+            out.append("});\n");
             out.append("</script>\n");
             out.append("<!-- end contextmenu:scripts -->\n");
+
             return out.toString();
         }
         return StringUtils.EMPTY;
@@ -118,10 +121,7 @@ public class MenuScripts
                 ElementInfo info = (ElementInfo) item;
                 sb.append("'").append(info.getElementId()).append("'");
                 sb.append(":{");
-                if (!StringUtils.isEmpty(info.getEntryName()))
-                {
-                    sb.append("'entryName':'").append(info.getEntryName()).append("',");
-                }
+
                 if (!StringUtils.isEmpty(info.getContextMenu()))
                 {
                     sb.append("'contextMenu':'").append(info.getContextMenu()).append("',");

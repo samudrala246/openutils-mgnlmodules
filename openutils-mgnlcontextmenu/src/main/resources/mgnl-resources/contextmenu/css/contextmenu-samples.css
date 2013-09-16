@@ -31,11 +31,11 @@ dd {
   padding-left: 6px;
 }
 
-/* The hint to Hide and Show */
-.hint {
+/* The help to Hide and Show */
+.help {
   display: none;
   position: absolute;
-  right: -250px;
+  right: 0px;
   width: 200px;
   margin-top: -4px;
   border: 1px solid #c93;
@@ -44,7 +44,7 @@ dd {
 }
 
 /* The pointer image is hadded by using another span */
-.hint .hint-pointer {
+.help .help-pointer {
   position: absolute;
   left: -10px;
   top: 5px;

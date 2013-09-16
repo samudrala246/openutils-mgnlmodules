@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<sv:node sv:name="samples-contextmenu-form" xmlns:sv="http://www.jcp.org/jcr/sv/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<sv:node sv:name="samples-contextmenu-move-fields" xmlns:sv="http://www.jcp.org/jcr/sv/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <sv:property sv:name="jcr:primaryType" sv:type="Name">
     <sv:value>mgnl:contentNode</sv:value>
   </sv:property>
@@ -7,13 +7,13 @@
     <sv:value>mix:lockable</sv:value>
   </sv:property>
   <sv:property sv:name="jcr:uuid" sv:type="String">
-    <sv:value>9c276214-2a48-4113-aa4f-653ac07854cb</sv:value>
+    <sv:value>3e2e98d0-9f7b-4a40-87d5-9ce58bfbffef</sv:value>
   </sv:property>
   <sv:property sv:name="description" sv:type="String">
-    <sv:value>Sample paragraph showing a form where field labels and helps can be edited via context menu on labels.</sv:value>
+    <sv:value>Sample paragraph showing fields moved via context menu.</sv:value>
   </sv:property>
   <sv:property sv:name="dialog" sv:type="String">
-    <sv:value>contextmenu:samples-contextmenu-form</sv:value>
+    <sv:value>contextmenu:samples-contextmenu-move-fields</sv:value>
   </sv:property>
   <sv:property sv:name="jcr:createdBy" sv:type="String">
     <sv:value>admin</sv:value>
@@ -22,10 +22,10 @@
     <sv:value>jsp</sv:value>
   </sv:property>
   <sv:property sv:name="templateScript" sv:type="String">
-    <sv:value>/templates/samples-contextmenu/paragraph-form.jsp</sv:value>
+    <sv:value>/templates/samples-contextmenu/paragraph-move-fields.jsp</sv:value>
   </sv:property>
   <sv:property sv:name="title" sv:type="String">
-    <sv:value>Form sample (jsp)</sv:value>
+    <sv:value>Move fields sample (jsp)</sv:value>
   </sv:property>
   <sv:node sv:name="MetaData">
     <sv:property sv:name="jcr:primaryType" sv:type="Name">
@@ -44,7 +44,7 @@
       <sv:value>2008-09-25T12:45:26.721+02:00</sv:value>
     </sv:property>
     <sv:property sv:name="mgnl:lastmodified" sv:type="Date">
-      <sv:value>2013-09-15T20:31:48.082+02:00</sv:value>
+      <sv:value>2013-09-16T23:44:14.391+02:00</sv:value>
     </sv:property>
   </sv:node>
 </sv:node>

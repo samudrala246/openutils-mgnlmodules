@@ -7,15 +7,16 @@
     <h3>Text/media sample (jsp)</h3>
     <p>Right click to edit text or media</p>
     <pre>
-      <![CDATA[&lt;contextmenu:element menu="samples-textmedia"&gt;${'$'}{cmsfn:decode(content).text}&lt;/contextmenu:element&gt;]]>
+      <![CDATA[&lt;contextmenu:element menu="textmedia" name="media" &gt;${'$'}{cmsfn:decode(content).text}&lt;/contextmenu:element&gt;]]>
     </pre>
     <div class="testcontent">
       <div style="float: left; margin-right: 10px;">
-        <contextmenu:element menu="samples-textmedia" wrapper="div">
+        <contextmenu:element menu="textmedia" name="media" wrapper="div">
           <media:media item="${content.media}" width="320" height="240" />
         </contextmenu:element>
       </div>
-      <contextmenu:element menu="samples-textmedia" wrapper="div">${cmsfn:decode(content).text}</contextmenu:element>
+      <contextmenu:element menu="textmedia" name="text" wrapper="div">${cmsfn:decode(content).text}
+      </contextmenu:element>
     </div>
   </section>
 </jsp:root>

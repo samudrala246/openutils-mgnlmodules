@@ -257,6 +257,43 @@
             </sv:property>
           </sv:node>
         </sv:node>
+        <sv:node sv:name="samples-contextmenu-move-fields">
+          <sv:property sv:name="jcr:primaryType" sv:type="Name">
+            <sv:value>mgnl:contentNode</sv:value>
+          </sv:property>
+          <sv:property sv:name="jcr:mixinTypes" sv:type="Name" sv:multiple="true">
+            <sv:value>mix:lockable</sv:value>
+          </sv:property>
+          <sv:property sv:name="jcr:uuid" sv:type="String">
+            <sv:value>b27daf20-3a65-4822-a317-8dc6f9a92c76</sv:value>
+          </sv:property>
+          <sv:property sv:name="id" sv:type="String">
+            <sv:value>contextmenu:components/samples-contextmenu-move-fields</sv:value>
+          </sv:property>
+          <sv:property sv:name="jcr:createdBy" sv:type="String">
+            <sv:value>admin</sv:value>
+          </sv:property>
+          <sv:node sv:name="MetaData">
+            <sv:property sv:name="jcr:primaryType" sv:type="Name">
+              <sv:value>mgnl:metaData</sv:value>
+            </sv:property>
+            <sv:property sv:name="jcr:createdBy" sv:type="String">
+              <sv:value>admin</sv:value>
+            </sv:property>
+            <sv:property sv:name="mgnl:activated" sv:type="Boolean">
+              <sv:value>false</sv:value>
+            </sv:property>
+            <sv:property sv:name="mgnl:authorid" sv:type="String">
+              <sv:value>superuser</sv:value>
+            </sv:property>
+            <sv:property sv:name="mgnl:creationdate" sv:type="Date">
+              <sv:value>2012-03-21T07:32:14.200+01:00</sv:value>
+            </sv:property>
+            <sv:property sv:name="mgnl:lastmodified" sv:type="Date">
+              <sv:value>2013-09-16T23:46:11.009+02:00</sv:value>
+            </sv:property>
+          </sv:node>
+        </sv:node>
         <sv:node sv:name="samples-contextmenu-message-freemarker">
           <sv:property sv:name="jcr:primaryType" sv:type="Name">
             <sv:value>mgnl:contentNode</sv:value>

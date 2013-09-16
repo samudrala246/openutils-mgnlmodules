@@ -8,60 +8,60 @@
     <p>Right click any form element to edit</p>
     <pre>
       <![CDATA[
-&lt;contextmenu:element name="firstname" menu="samples-form-label"&gt;First Name:&lt;/contextmenu:element&gt;
-&lt;c:set var="hint" value="${'$'}{contextmenu:entryValue(content.JCRNode, 'firstname-hint')}" /&gt;]]>
+&lt;contextmenu:element name="firstname" menu="simpleForm"&gt;First Name:&lt;/contextmenu:element&gt;
+&lt;c:set var="help" value="${'$'}{contextmenu:entryValue(content.JCRNode, 'firstname.help')}" /&gt;]]>
     </pre>
     <br />
     <div class="testcontent clearfix">
-      <p>Tab or click through the fields to reveal the hints.</p>
+      <p>Tab or click through the fields to reveal the helps.</p>
       <form class="form form-horizontal" action="">
         <div class="form-group">
           <label class="col-lg-2 control-label" for="firstname">
-            <contextmenu:element name="firstname" menu="samples-form-label">First Name:</contextmenu:element>
+            <contextmenu:element name="firstname" menu="simpleForm">First Name:</contextmenu:element>
           </label>
-          <div class="col-lg-10">
+          <div class="col-lg-4">
             <input name="firstname" id="firstname" type="text" />
-            <c:set var="hint" value="${contextmenu:entryValue(content.JCRNode, 'firstname-hint')}" />
-            <c:if test="${not empty hint}">
-              <span class="hint">
-            <![CDATA[${hint}<span class="hint-pointer">&nbsp;</span>]]>
+            <c:set var="help" value="${contextmenu:entryValue(content.JCRNode, 'firstname.help')}" />
+            <c:if test="${not empty help}">
+              <span class="help">
+            <![CDATA[${help}<span class="help-pointer">&nbsp;</span>]]>
               </span>
             </c:if>
           </div>
         </div>
         <div class="form-group">
           <label class="col-lg-2 control-label" for="lastname">
-            <contextmenu:element name="lastname" menu="samples-form-label">Last Name:</contextmenu:element>
+            <contextmenu:element name="lastname" menu="simpleForm">Last Name:</contextmenu:element>
           </label>
-          <div class="col-lg-10">
+          <div class="col-lg-4">
             <input name="lastname" id="lastname" type="text" />
-            <c:set var="hint" value="${contextmenu:entryValue(content.JCRNode, 'lastname-hint')}" />
-            <c:if test="${not empty hint}">
-              <span class="hint">
-            <![CDATA[${hint}<span class="hint-pointer">&nbsp;</span>]]>
+            <c:set var="help" value="${contextmenu:entryValue(content.JCRNode, 'lastname.help')}" />
+            <c:if test="${not empty help}">
+              <span class="help">
+            <![CDATA[${help}<span class="help-pointer">&nbsp;</span>]]>
               </span>
             </c:if>
           </div>
         </div>
         <div class="form-group">
           <label class="col-lg-2 control-label" for="email">
-            <contextmenu:element name="email" menu="samples-form-label">Email:</contextmenu:element>
+            <contextmenu:element name="email" menu="simpleForm">Email:</contextmenu:element>
           </label>
-          <div class="col-lg-10">
+          <div class="col-lg-4">
             <input name="email" id="email" type="text" />
-            <c:set var="hint" value="${contextmenu:entryValue(content.JCRNode, 'email-hint')}" />
-            <c:if test="${not empty hint}">
-              <span class="hint">
-            <![CDATA[${hint}<span class="hint-pointer">&nbsp;</span>]]>
+            <c:set var="help" value="${contextmenu:entryValue(content.JCRNode, 'email.help')}" />
+            <c:if test="${not empty help}">
+              <span class="help">
+            <![CDATA[${help}<span class="help-pointer">&nbsp;</span>]]>
               </span>
             </c:if>
           </div>
         </div>
         <div class="form-group">
           <label class="col-lg-2 control-label" for="year">
-            <contextmenu:element name="year" menu="samples-form-label">Birth Year:</contextmenu:element>
+            <contextmenu:element name="year" menu="simpleForm">Birth Year:</contextmenu:element>
           </label>
-          <div class="col-lg-10">
+          <div class="col-lg-4">
             <select id="year" name="year">
               <option value="">YYYY</option>
               <option value="1066">1066</option>
@@ -72,44 +72,44 @@
               <option value="1942">1942</option>
               <option value="1999">1999</option>
             </select>
-            <c:set var="hint" value="${contextmenu:entryValue(content.JCRNode, 'year-hint')}" />
-            <c:if test="${not empty hint}">
-              <span class="hint">
-            <![CDATA[${hint}<span class="hint-pointer">&nbsp;</span>]]>
+            <c:set var="help" value="${contextmenu:entryValue(content.JCRNode, 'year.help')}" />
+            <c:if test="${not empty help}">
+              <span class="help">
+            <![CDATA[${help}<span class="help-pointer">&nbsp;</span>]]>
               </span>
             </c:if>
           </div>
         </div>
         <div class="form-group">
           <label class="col-lg-2 control-label" for="username">
-            <contextmenu:element name="username" menu="samples-form-label">Username:</contextmenu:element>
+            <contextmenu:element name="username" menu="simpleForm">Username:</contextmenu:element>
           </label>
-          <div class="col-lg-10">
+          <div class="col-lg-4">
             <input name="username" id="username" type="text" />
-            <c:set var="hint" value="${contextmenu:entryValue(content.JCRNode, 'username-hint')}" />
-            <c:if test="${not empty hint}">
-              <span class="hint">
-            <![CDATA[${hint}<span class="hint-pointer">&nbsp;</span>]]>
+            <c:set var="help" value="${contextmenu:entryValue(content.JCRNode, 'username.help')}" />
+            <c:if test="${not empty help}">
+              <span class="help">
+            <![CDATA[${help}<span class="help-pointer">&nbsp;</span>]]>
               </span>
             </c:if>
           </div>
         </div>
         <div class="form-group">
           <label class="col-lg-2 control-label" for="password">
-            <contextmenu:element name="password" menu="samples-form-label">Password:</contextmenu:element>
+            <contextmenu:element name="password" menu="simpleForm">Password:</contextmenu:element>
           </label>
-          <div class="col-lg-10">
+          <div class="col-lg-4">
             <input name="password" id="password" type="password" />
-            <c:set var="hint" value="${contextmenu:entryValue(content.JCRNode, 'password-hint')}" />
-            <c:if test="${not empty hint}">
-              <span class="hint">
-            <![CDATA[${hint}<span class="hint-pointer">&nbsp;</span>]]>
+            <c:set var="help" value="${contextmenu:entryValue(content.JCRNode, 'password.help')}" />
+            <c:if test="${not empty help}">
+              <span class="help">
+            <![CDATA[${help}<span class="help-pointer">&nbsp;</span>]]>
               </span>
             </c:if>
           </div>
         </div>
         <div class="form-group">
-          <div class="col-lg-offset-2 col-lg-10">
+          <div class="col-lg-offset-2 col-lg-4">
             <button type="submit" class="btn btn-default">Submit</button>
           </div>
         </div>

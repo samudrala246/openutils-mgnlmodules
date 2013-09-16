@@ -19,17 +19,13 @@
 
 package net.sourceforge.openutils.mgnlcontextmenu.tags;
 
-import info.magnolia.cms.core.Content;
 import info.magnolia.cms.security.Permission;
 import info.magnolia.context.MgnlContext;
 import info.magnolia.jcr.util.NodeUtil;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.jcr.Node;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.BodyTagSupport;
 
@@ -170,32 +166,21 @@ public class ElementTag extends BodyTagSupport
                 throw new JspException(e);
             }
 
-            ElementInfo info = addElementInfo(NodeUtil.getPathIfPossible(node), elementId);
+            ElementInfo einfo = ContextMenuElFunctions.addEditMessageInfo(
+                name,
+                NodeUtil.getPathIfPossible(node),
+                elementId);
             if (!StringUtils.isEmpty(name))
             {
-                info.setEntryName(name);
+                einfo.setEntryName(name);
             }
             if (!StringUtils.isEmpty(menu))
             {
-                info.setContextMenu(menu);
+                einfo.setContextMenu(menu);
             }
+
         }
         return EVAL_PAGE;
-    }
-
-    @SuppressWarnings("unchecked")
-    protected ElementInfo addElementInfo(String path, String elementId)
-    {
-        HttpServletRequest request = MgnlContext.getWebContext().getRequest();
-        List infos = (List) request.getAttribute(ELEMENT_INFOS_KEY);
-        if (infos == null)
-        {
-            infos = new ArrayList();
-            request.setAttribute(ELEMENT_INFOS_KEY, infos);
-        }
-        ElementInfo info = new ElementInfo(path, elementId);
-        infos.add(info);
-        return info;
     }
 
     private boolean canEdit()

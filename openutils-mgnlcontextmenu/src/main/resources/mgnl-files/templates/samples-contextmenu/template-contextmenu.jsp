@@ -10,17 +10,13 @@
     <head>
       <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
       <title>${content.title}</title>
-      
       <script src="${pageContext.request.contextPath}/.resources/contextmenu/js/jquery-1.4.2.min.js">/**/</script>
-      
       ${contextmenu:links()}
-      
       <cms:init />
-      
       <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/.resources/contextmenu/css/bootstrap.min.css" />
-      
       <!-- samples css/js -->
-      <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/.resources/contextmenu/css/contextmenu-samples.css" />
+      <link rel="stylesheet" type="text/css"
+        href="${pageContext.request.contextPath}/.resources/contextmenu/css/contextmenu-samples.css" />
       <script src="${pageContext.request.contextPath}/.resources/contextmenu/js/contextmenu-samples.js">/**/</script>
       <!-- end samples css/js -->
     </head>
@@ -32,15 +28,49 @@
           <p>
             <span>Add the following to your template in order to initialize the contextmenu module:</span>
             <ul>
-              <li>add <code>${'$'}{contextmenu:links()}</code> (just before <code>&amp;lt;/head&amp;gt;</code>)</li>
-              <li>add <code>${'$'}{contextmenu:scripts()}</code> (just before <code>&amp;lt;/body&amp;gt;</code>)</li>
+              <li>
+                add
+                <code>${'$'}{contextmenu:links()}</code>
+                (just before
+                <code>&amp;lt;/head&amp;gt;</code>
+                )
+              </li>
+              <li>
+                add
+                <code>${'$'}{contextmenu:scripts()}</code>
+                (just before
+                <code>&amp;lt;/body&amp;gt;</code>
+                )
+              </li>
               <li>add the jquery library</li>
             </ul>
           </p>
         </section>
         <cms:area name="main" />
       </div>
+      <!-- TO BE CUSTOMIZE -->
+      <jsp:include page="/templates/samples-contextmenu/page-editmenu.jsp" />
       ${contextmenu:scripts()}
+<!--       <script type="text/javascript"> -->
+<!--         <![CDATA[ -->
+<!--         jQuery(document).ready(function() { -->
+<!--               jQuery.mgnlAddContextMenu(${contextmenu:editMessageInfosJs()}); -->
+<!--         });]]> -->
+<!--       </script> -->
+      <c:if test="${!empty mgnlSortLists}">
+        <script type="text/javascript">
+          <![CDATA[ jQuery(document).ready( function() {]]>
+          <c:forEach var="item" items="${mgnlSortLists}">
+            <![CDATA[jQuery('#${item.containerId}').sortList({
+              url: '${item.url}',
+              path: '${item.path}',
+              name: '${item.name}',
+              order: ${item.order}
+            });]]>
+          </c:forEach>
+          <![CDATA[});]]>
+        </script>
+      </c:if>
     </body>
   </html>
 </jsp:root>

@@ -25,18 +25,14 @@ package net.sourceforge.openutils.mgnlcontextmenu.tags;
  * @author dschivo
  * @version $Id$
  */
+
 public class ElementInfo
 {
 
     /**
-     * Paragraph's handle
+     * Message key
      */
-    private final String path;
-
-    /**
-     * HTML identifier of the element containing the content
-     */
-    private final String elementId;
+    private final String key;
 
     /**
      * Entry name
@@ -44,14 +40,24 @@ public class ElementInfo
     private String entryName;
 
     /**
-     * Context menu name
+     * Paragraph's handle
      */
-    private String contextMenu;
+    private final String path;
+
+    /**
+     * HTML identifier of the element containing the message
+     */
+    private final String elementId;
 
     /**
      * Wrapper HTML tag to which attach context menu
      */
     private String parentTrigger;
+
+    /**
+     * Context menu type
+     */
+    private String contextMenu;
 
     /**
      * Enter mode for FCK editor
@@ -63,115 +69,73 @@ public class ElementInfo
      */
     private String showCallback;
 
-    public ElementInfo(String path, String elementId)
+    public ElementInfo(String key, String path, String elementId)
     {
+        this.key = key;
         this.path = path;
         this.elementId = elementId;
     }
 
-    /**
-     * Returns the path.
-     * @return the path
-     */
+    public String getKey()
+    {
+        return key;
+    }
+
     public String getPath()
     {
         return path;
     }
 
-    /**
-     * Returns the elementId.
-     * @return the elementId
-     */
     public String getElementId()
     {
         return elementId;
     }
 
-    /**
-     * Returns the entryName.
-     * @return the entryName
-     */
-    public String getEntryName()
-    {
-        return entryName;
-    }
-
-    /**
-     * Sets the entryName.
-     * @param entryName the entryName to set
-     */
-    public void setEntryName(String entryName)
-    {
-        this.entryName = entryName;
-    }
-
-    /**
-     * Returns the contextMenu.
-     * @return the contextMenu
-     */
-    public String getContextMenu()
-    {
-        return contextMenu;
-    }
-
-    /**
-     * Sets the contextMenu.
-     * @param contextMenu the contextMenu to set
-     */
-    public void setContextMenu(String contextMenu)
-    {
-        this.contextMenu = contextMenu;
-    }
-
-    /**
-     * Returns the parentTrigger.
-     * @return the parentTrigger
-     */
     public String getParentTrigger()
     {
         return parentTrigger;
     }
 
-    /**
-     * Sets the parentTrigger.
-     * @param parentTrigger the parentTrigger to set
-     */
     public void setParentTrigger(String parentTrigger)
     {
         this.parentTrigger = parentTrigger;
     }
 
-    /**
-     * Returns the enterMode.
-     * @return the enterMode
-     */
+    public String getContextMenu()
+    {
+        return contextMenu;
+    }
+
+    public void setContextMenu(String contextMenu)
+    {
+        this.contextMenu = contextMenu;
+    }
+
     public String getEnterMode()
     {
         return enterMode;
     }
 
-    /**
-     * Sets the enterMode.
-     * @param enterMode the enterMode to set
-     */
     public void setEnterMode(String enterMode)
     {
         this.enterMode = enterMode;
     }
 
-    /**
-     * Returns the showCallback.
-     * @return the showCallback
-     */
+    public String getEntryName()
+    {
+        return entryName;
+    }
+
+    public void setEntryName(String entryName)
+    {
+        this.entryName = entryName;
+    }
+
     public String getShowCallback()
     {
         return showCallback;
     }
 
-    /**
-     * Sets the showCallback.
-     * @param showCallback the showCallback to set
-     */
     public void setShowCallback(String showCallback)
     {
         this.showCallback = showCallback;

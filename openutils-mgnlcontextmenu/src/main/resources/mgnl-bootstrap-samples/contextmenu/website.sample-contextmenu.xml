@@ -29,7 +29,7 @@
       <sv:value>2010-05-18T14:33:10.812+02:00</sv:value>
     </sv:property>
     <sv:property sv:name="mgnl:lastmodified" sv:type="Date">
-      <sv:value>2013-09-15T20:41:36.141+02:00</sv:value>
+      <sv:value>2013-09-17T00:12:45.280+02:00</sv:value>
     </sv:property>
     <sv:property sv:name="mgnl:template" sv:type="String">
       <sv:value>contextmenu:pages/contextmenu-template-jsp</sv:value>
@@ -62,7 +62,7 @@
         <sv:value>2010-05-18T16:43:29.812+02:00</sv:value>
       </sv:property>
       <sv:property sv:name="mgnl:lastmodified" sv:type="Date">
-        <sv:value>2013-09-15T20:41:06.907+02:00</sv:value>
+        <sv:value>2013-09-17T00:12:45.280+02:00</sv:value>
       </sv:property>
     </sv:node>
     <sv:node sv:name="0">
@@ -177,25 +177,25 @@
       <sv:property sv:name="jcr:uuid" sv:type="String">
         <sv:value>65405689-02c2-40df-9ea7-3a94e947ff99</sv:value>
       </sv:property>
-      <sv:property sv:name="email-hint" sv:type="String">
+      <sv:property sv:name="email.help" sv:type="String">
         <sv:value>&lt;p&gt;The thing with the @ symbol and the dot com at the end.&lt;/p&gt;</sv:value>
       </sv:property>
-      <sv:property sv:name="firstname-hint" sv:type="String">
+      <sv:property sv:name="firstname.help" sv:type="String">
         <sv:value>&lt;p&gt;This is the name your mama called you when you were little.&lt;/p&gt;</sv:value>
       </sv:property>
       <sv:property sv:name="jcr:createdBy" sv:type="String">
         <sv:value>admin</sv:value>
       </sv:property>
-      <sv:property sv:name="lastname-hint" sv:type="String">
+      <sv:property sv:name="lastname.help" sv:type="String">
         <sv:value>&lt;p&gt;This is the name your sergeant called you when you went through bootcamp.&lt;/p&gt;</sv:value>
       </sv:property>
-      <sv:property sv:name="password-hint" sv:type="String">
+      <sv:property sv:name="password.help" sv:type="String">
         <sv:value>&lt;p&gt;Between 5-13 characters, but not 7. Never 7.&lt;/p&gt;</sv:value>
       </sv:property>
-      <sv:property sv:name="username-hint" sv:type="String">
+      <sv:property sv:name="username.help" sv:type="String">
         <sv:value>&lt;p&gt;Between 4-12 characters.&lt;/p&gt;</sv:value>
       </sv:property>
-      <sv:property sv:name="year-hint" sv:type="String">
+      <sv:property sv:name="year.help" sv:type="String">
         <sv:value>&lt;p&gt;Pick a famous year to be born in.&lt;/p&gt;</sv:value>
       </sv:property>
       <sv:node sv:name="MetaData">
@@ -267,17 +267,17 @@
         <sv:value>6c35ebd5-e5e2-4bdf-a4e7-c2fca72bf604</sv:value>
       </sv:property>
       <sv:property sv:name="jcr:createdBy" sv:type="String">
-        <sv:value>superuser</sv:value>
+        <sv:value>admin</sv:value>
       </sv:property>
       <sv:property sv:name="message" sv:type="String">
-        <sv:value>Right click here to edit</sv:value>
+        <sv:value>Right click here to edit a</sv:value>
       </sv:property>
       <sv:node sv:name="MetaData">
         <sv:property sv:name="jcr:primaryType" sv:type="Name">
           <sv:value>mgnl:metaData</sv:value>
         </sv:property>
         <sv:property sv:name="jcr:createdBy" sv:type="String">
-          <sv:value>superuser</sv:value>
+          <sv:value>admin</sv:value>
         </sv:property>
         <sv:property sv:name="mgnl:authorid" sv:type="String">
           <sv:value>superuser</sv:value>
@@ -286,7 +286,7 @@
           <sv:value>2013-09-15T20:41:06.907+02:00</sv:value>
         </sv:property>
         <sv:property sv:name="mgnl:lastmodified" sv:type="Date">
-          <sv:value>2013-09-15T20:41:06.907+02:00</sv:value>
+          <sv:value>2013-09-17T00:09:46.142+02:00</sv:value>
         </sv:property>
         <sv:property sv:name="mgnl:template" sv:type="String">
           <sv:value>contextmenu:components/samples-contextmenu-message-freemarker</sv:value>
@@ -371,7 +371,7 @@
       <sv:property sv:name="jcr:createdBy" sv:type="String">
         <sv:value>admin</sv:value>
       </sv:property>
-      <sv:property sv:name="lastname-hint" sv:type="String">
+      <sv:property sv:name="lastname.help" sv:type="String">
         <sv:value>&lt;p&gt;luca&lt;/p&gt;</sv:value>
       </sv:property>
       <sv:node sv:name="MetaData">
@@ -392,6 +392,46 @@
         </sv:property>
         <sv:property sv:name="mgnl:template" sv:type="String">
           <sv:value>contextmenu:components/samples-contextmenu-form</sv:value>
+        </sv:property>
+      </sv:node>
+    </sv:node>
+    <sv:node sv:name="06">
+      <sv:property sv:name="jcr:primaryType" sv:type="Name">
+        <sv:value>mgnl:component</sv:value>
+      </sv:property>
+      <sv:property sv:name="jcr:mixinTypes" sv:type="Name" sv:multiple="true">
+        <sv:value>mix:lockable</sv:value>
+      </sv:property>
+      <sv:property sv:name="jcr:uuid" sv:type="String">
+        <sv:value>7992f867-ed72-44bd-bff6-95027a322a2e</sv:value>
+      </sv:property>
+      <sv:property sv:name="dummy" sv:type="String">
+        <sv:value>.</sv:value>
+      </sv:property>
+      <sv:property sv:name="fieldList1" sv:type="String">
+        <sv:value>1,0</sv:value>
+      </sv:property>
+      <sv:property sv:name="jcr:createdBy" sv:type="String">
+        <sv:value>superuser</sv:value>
+      </sv:property>
+      <sv:node sv:name="MetaData">
+        <sv:property sv:name="jcr:primaryType" sv:type="Name">
+          <sv:value>mgnl:metaData</sv:value>
+        </sv:property>
+        <sv:property sv:name="jcr:createdBy" sv:type="String">
+          <sv:value>superuser</sv:value>
+        </sv:property>
+        <sv:property sv:name="mgnl:authorid" sv:type="String">
+          <sv:value>superuser</sv:value>
+        </sv:property>
+        <sv:property sv:name="mgnl:creationdate" sv:type="Date">
+          <sv:value>2013-09-17T00:12:45.279+02:00</sv:value>
+        </sv:property>
+        <sv:property sv:name="mgnl:lastmodified" sv:type="Date">
+          <sv:value>2013-09-17T00:12:45.280+02:00</sv:value>
+        </sv:property>
+        <sv:property sv:name="mgnl:template" sv:type="String">
+          <sv:value>contextmenu:components/samples-contextmenu-move-fields</sv:value>
         </sv:property>
       </sv:node>
     </sv:node>
