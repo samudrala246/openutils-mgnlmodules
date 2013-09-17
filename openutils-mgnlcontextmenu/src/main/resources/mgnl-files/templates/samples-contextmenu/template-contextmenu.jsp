@@ -48,15 +48,8 @@
         </section>
         <cms:area name="main" />
       </div>
-      <!-- TO BE CUSTOMIZE -->
-      <jsp:include page="/templates/samples-contextmenu/page-editmenu.jsp" />
+      <!-- <jsp:include page="/templates/samples-contextmenu/page-editmenu.jsp" /> -->
       ${contextmenu:scripts()}
-<!--       <script type="text/javascript"> -->
-<!--         <![CDATA[ -->
-<!--         jQuery(document).ready(function() { -->
-<!--               jQuery.mgnlAddContextMenu(${contextmenu:editMessageInfosJs()}); -->
-<!--         });]]> -->
-<!--       </script> -->
       <c:if test="${!empty mgnlSortLists}">
         <script type="text/javascript">
           <![CDATA[ jQuery(document).ready( function() {]]>

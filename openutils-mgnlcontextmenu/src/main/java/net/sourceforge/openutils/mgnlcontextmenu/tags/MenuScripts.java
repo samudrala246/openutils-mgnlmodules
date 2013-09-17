@@ -46,18 +46,20 @@ public class MenuScripts
         {
             StringBuilder out = new StringBuilder();
 
-            // out.append("<script type=\"text/javascript\">\n");
-            // out.append("var mgnlContextMenuInfo = {\n");
-            // out.append("  contextPath: '" + MgnlContext.getContextPath() + "',\n");
-            // out.append("  menus: " + menusJs() + ",\n");
-            // out.append("  elements: " + elementsJs() + "\n");
-            // out.append("};\n");
-            // out.append("</script>\n");
+            out.append("<script type=\"text/javascript\">\n");
+            out.append("var mgnlContextMenuInfo = {\n");
+            out.append("  contextPath: '" + MgnlContext.getContextPath() + "',\n");
+            out.append("  menus: " + menusJs() + ",\n");
+            out.append("  elements: " + elementsJs() + "\n");
+            out.append("};\n");
+            out.append("</script>\n");
 
             out.append("<!-- start contextmenu:scripts -->\n");
             out.append("<script type=\"text/javascript\">\n");
             out.append("jQuery(document).ready(function() {\n");
-            out.append("  jQuery.mgnlAddContextMenu(" + ContextMenuElFunctions.editMessageInfosJs() + ");\n");
+            out.append("  jQuery.mgnlAddContextMenu("
+                + ContextMenuElFunctions.editMessageInfosJs()
+                + ", mgnlContextMenuInfo );\n");
             out.append("});\n");
             out.append("</script>\n");
             out.append("<!-- end contextmenu:scripts -->\n");

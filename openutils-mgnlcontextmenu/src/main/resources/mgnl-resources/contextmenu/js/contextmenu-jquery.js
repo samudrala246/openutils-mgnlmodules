@@ -45,6 +45,7 @@ jQuery(document).ready( function() {
         globalEnabled: menuItem.globalEnabled
       });
     });
+    
     if (menu.mouseoverClass || menu.mouseoverIcon){
       var followId = 'contextmenufollow-' + menuName;
       var follow = jQuery('#' + followId);
