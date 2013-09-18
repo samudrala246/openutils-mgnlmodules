@@ -5,7 +5,7 @@
   <jsp:directive.tag description="Displays a media" pageEncoding="UTF-8"/>
   <jsp:directive.attribute name="id" required="false" rtexprvalue="true" description="html element id"/>
   <jsp:directive.attribute name="item" required="false" rtexprvalue="true" type="java.lang.Object" description="media uuid or media content node; if not specified, 'node' and 'property' attributes will be used"/>
-  <jsp:directive.attribute name="node" required="false" rtexprvalue="true" type="info.magnolia.cms.core.Content" description="the content object to use; if not specified, object 'content' will be used"/>
+  <jsp:directive.attribute name="node" required="false" rtexprvalue="true" type="java.lang.Object" description="the content object to use; if not specified, object 'content' will be used"/>
   <jsp:directive.attribute name="property" required="false" rtexprvalue="true" type="java.lang.String" description="the name of the nodeData storing the media uuid; if not specified, 'media' will be used"/>
   <jsp:directive.attribute name="player" required="false" rtexprvalue="true" type="java.lang.String" description="the swf file of the player (examples: player.swf (default), jwplayer4, jwplayer5, jwplayer5/player.swf, /.resources/media/players/jwplayer5/player.swf)"/>
   <jsp:directive.attribute name="width" required="false" rtexprvalue="true" type="java.lang.Integer" description="image or player width"/>

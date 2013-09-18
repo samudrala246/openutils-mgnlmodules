@@ -34,7 +34,6 @@ import info.magnolia.context.MgnlContext;
 import info.magnolia.context.WebContext;
 import info.magnolia.init.MagnoliaConfigurationProperties;
 import info.magnolia.jaas.principal.EntityImpl;
-import info.magnolia.jcr.util.ContentMap;
 import info.magnolia.jcr.util.NodeUtil;
 import info.magnolia.link.LinkException;
 import info.magnolia.link.LinkUtil;
@@ -137,7 +136,7 @@ public final class MgnlUtilsElFunctions
      * @param repository repository type
      * @return the content of a given path and repository
      */
-    public static ContentMap contentByPath(String path, String repository)
+    public static Node contentByPath(String path, String repository)
     {
         if (path == null || repository == null)
         {
@@ -146,10 +145,9 @@ public final class MgnlUtilsElFunctions
         try
         {
             Node node = MgnlContext.getJCRSession(repository).getNode(path);
-            if (node != null)
-            {
-                return wrapNode(node);
-            }
+
+            return node;
+
         }
         catch (RepositoryException e)
         {
@@ -414,7 +412,7 @@ public final class MgnlUtilsElFunctions
      * @deprecated avoid methods that works with collections, use iterators
      */
     @Deprecated
-    public static Collection<ContentMap> subpages(Object content)
+    public static Collection<Node> subpages(Object content)
     {
         Node node = MgnlUtilsDeprecatedAdapters.toNode(content);
         if (node == null)
@@ -433,14 +431,13 @@ public final class MgnlUtilsElFunctions
         }
         Iterator<Node> iterator = nodes.iterator();
 
-        Collection<ContentMap> result = new ArrayList<ContentMap>();
+        Collection<Node> result = new ArrayList<Node>();
         while (iterator.hasNext())
         {
-            ContentMap contentMap = wrapNode(iterator.next());
-            if (contentMap != null)
-            {
-                result.add(contentMap);
-            }
+            Node Node = iterator.next();
+
+            result.add(Node);
+
         }
 
         return result;
@@ -483,7 +480,7 @@ public final class MgnlUtilsElFunctions
      * @param content Content
      * @return the Content of the object passed or of the first parent page that has content type = mgnl:content
      */
-    public static ContentMap getPage(Object content)
+    public static Node getPage(Object content)
     {
 
         Node node = MgnlUtilsDeprecatedAdapters.toNode(content);
@@ -510,11 +507,7 @@ public final class MgnlUtilsElFunctions
             return null;
         }
 
-        if (node != null)
-        {
-            return wrapNode(node);
-        }
-        return null;
+        return node;
     }
 
     /**
@@ -791,17 +784,14 @@ public final class MgnlUtilsElFunctions
      * @return a collection with the user's content
      */
     @Deprecated
-    public static List<ContentMap> convertToCollection(List<Object> list)
+    public static List<Node> convertToCollection(List<Object> list)
     {
-        List<ContentMap> result = new ArrayList<ContentMap>();
+        List<Node> result = new ArrayList<Node>();
 
         for (Object content : list)
         {
-            ContentMap contentMap = wrapNode(MgnlUtilsDeprecatedAdapters.toNode(content));
-            if (contentMap != null)
-            {
-                result.add(contentMap);
-            }
+            result.add(MgnlUtilsDeprecatedAdapters.toNode(content));
+
         }
         return result;
     }
@@ -850,7 +840,7 @@ public final class MgnlUtilsElFunctions
      * @param contentType
      * @return
      */
-    public static Collection<ContentMap> contentChildrenOfType(Object content, String contentType)
+    public static Collection<Node> contentChildrenOfType(Object content, String contentType)
     {
 
         Node node = MgnlUtilsDeprecatedAdapters.toNode(content);
@@ -871,14 +861,10 @@ public final class MgnlUtilsElFunctions
         }
         Iterator<Node> iterator = nodes.iterator();
 
-        Collection<ContentMap> result = new ArrayList<ContentMap>();
+        Collection<Node> result = new ArrayList<Node>();
         while (iterator.hasNext())
         {
-            ContentMap contentMap = wrapNode(iterator.next());
-            if (contentMap != null)
-            {
-                result.add(contentMap);
-            }
+            result.add(iterator.next());
         }
 
         return result;
@@ -978,21 +964,8 @@ public final class MgnlUtilsElFunctions
      * @param obj
      * @param repo
      * @return
-     * @deprecated, use node()
      */
-    @Deprecated
-    public static ContentMap content(Object obj, String repo)
-    {
-
-        return node(obj, repo);
-    }
-
-    /**
-     * @param obj
-     * @param repo
-     * @return
-     */
-    public static ContentMap node(Object obj, String repo)
+    public static Node node(Object obj, String repo)
     {
 
         if (obj == null)
@@ -1000,7 +973,7 @@ public final class MgnlUtilsElFunctions
             return null;
         }
 
-        ContentMap content = null;
+        Node content = null;
 
         if (obj instanceof String)
         {
@@ -1018,12 +991,12 @@ public final class MgnlUtilsElFunctions
                 {
                     if (session.nodeExists(identifier))
                     {
-                        content = wrapNode(session.getNode(identifier));
+                        content = session.getNode(identifier);
                     }
                 }
                 else
                 {
-                    content = wrapNode(session.getNodeByIdentifier(StringUtils.trim(identifier)));
+                    content = session.getNodeByIdentifier(StringUtils.trim(identifier));
                 }
             }
             catch (ItemNotFoundException e)
@@ -1037,7 +1010,7 @@ public final class MgnlUtilsElFunctions
         }
         else
         {
-            content = wrapNode(MgnlUtilsDeprecatedAdapters.toNode(content));
+            content = MgnlUtilsDeprecatedAdapters.toNode(obj);
         }
 
         return content;
@@ -1164,12 +1137,12 @@ public final class MgnlUtilsElFunctions
     }
 
     /**
-     * Get a node by its UUID, wrapped as ContentMap.
+     * Get a node by its UUID, wrapped as Node.
      * @param uuid content UUID
      * @param repo workspace name
-     * @return ContentMap or null if not found
+     * @return Node or null if not found
      */
-    public static ContentMap contentByUUID(String uuid, String repo) throws RepositoryException
+    public static Node contentByUUID(String uuid, String repo) throws RepositoryException
     {
         if (StringUtils.isBlank(uuid))
         {
@@ -1182,10 +1155,8 @@ public final class MgnlUtilsElFunctions
             session = MgnlContext.getJCRSession(repo);
             Node loaded = session.getNodeByIdentifier(uuid);
 
-            if (loaded != null)
-            {
-                return wrapNode(loaded);
-            }
+            return loaded;
+
         }
         catch (ItemNotFoundException e)
         {
@@ -1219,18 +1190,18 @@ public final class MgnlUtilsElFunctions
      * Returns the current active page (can be set using the loadPage tag).
      * @return current page
      */
-    public static ContentMap currentPage()
+    public static Node currentPage()
     {
-        return wrapNode(MgnlUtilsDeprecatedAdapters.getCurrentContent());
+        return MgnlUtilsDeprecatedAdapters.getCurrentContent();
     }
 
     /**
      * Returns the main loaded page (doesn't change when using the loadPage tag).
      * @return loaded page
      */
-    public static ContentMap mainPage()
+    public static Node mainPage()
     {
-        return wrapNode(MgnlUtilsDeprecatedAdapters.getMainContent());
+        return MgnlUtilsDeprecatedAdapters.getMainContent();
 
     }
 
@@ -1238,9 +1209,9 @@ public final class MgnlUtilsElFunctions
      * Returns the current paragraph.
      * @return current paragraph
      */
-    public static ContentMap currentParagraph()
+    public static Node currentParagraph()
     {
-        return wrapNode(MgnlUtilsDeprecatedAdapters.getCurrentContent());
+        return MgnlUtilsDeprecatedAdapters.getCurrentContent();
     }
 
     /**
@@ -1384,7 +1355,7 @@ public final class MgnlUtilsElFunctions
         }
     }
 
-    public static ContentMap ancestor(Object nodeorcontent, int level)
+    public static Node ancestor(Object nodeorcontent, int level)
     {
 
         Node node = MgnlUtilsDeprecatedAdapters.toNode(nodeorcontent);
@@ -1402,10 +1373,10 @@ public final class MgnlUtilsElFunctions
             }
             if (node.getDepth() == level)
             {
-                return wrapNode(node);
+                return node;
             }
 
-            return wrapNode((Node) node.getAncestor(level));
+            return (Node) node.getAncestor(level);
         }
         catch (RepositoryException e)
         {
@@ -1419,12 +1390,4 @@ public final class MgnlUtilsElFunctions
 
     }
 
-    private static ContentMap wrapNode(Node node)
-    {
-        if (node == null)
-        {
-            return null;
-        }
-        return new ContentMap(node);
-    }
 }

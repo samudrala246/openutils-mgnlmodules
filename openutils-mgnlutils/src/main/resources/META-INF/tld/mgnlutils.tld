@@ -33,7 +33,7 @@
     <description>Return the object passed or the first parent page that has content type = mgnl:content</description>
     <name>getPage</name>
     <function-class>it.openutils.mgnlutils.el.MgnlUtilsElFunctions</function-class>
-    <function-signature>info.magnolia.jcr.util.ContentMap getPage(java.lang.Object)</function-signature>
+    <function-signature>javax.jcr.Node getPage(java.lang.Object)</function-signature>
     <example>
       <![CDATA[
         ${mu:getPage(actpage)}
@@ -101,7 +101,7 @@
     <description>Return the content of a given path and repository</description>
     <name>contentByPath</name>
     <function-class>it.openutils.mgnlutils.el.MgnlUtilsElFunctions</function-class>
-    <function-signature>info.magnolia.jcr.util.ContentMap contentByPath(java.lang.String, java.lang.String)</function-signature>
+    <function-signature>javax.jcr.Node contentByPath(java.lang.String, java.lang.String)</function-signature>
     <example>
       <![CDATA[
        ${mu:contentByPath('Magnolia-Utils','website')}
@@ -297,15 +297,9 @@ mu:isLine('aaa\nbb\nc', 'b') = false]]></example>
   </function>
   <function>
     <description></description>
-    <name>content</name>
-    <function-class>it.openutils.mgnlutils.el.MgnlUtilsElFunctions</function-class>
-    <function-signature>info.magnolia.jcr.util.ContentMap content(java.lang.Object, java.lang.String)</function-signature>
-  </function>
-  <function>
-    <description></description>
     <name>node</name>
     <function-class>it.openutils.mgnlutils.el.MgnlUtilsElFunctions</function-class>
-    <function-signature>info.magnolia.jcr.util.ContentMap node(java.lang.Object, java.lang.String)</function-signature>
+    <function-signature>javax.jcr.Node node(java.lang.Object, java.lang.String)</function-signature>
   </function>
   <function>
     <description>Get a user property calling MgnlContext.getUser().getProperty(propertyname)</description>
@@ -342,7 +336,7 @@ mu:isLine('aaa\nbb\nc', 'b') = false]]></example>
     <description>Get a node by its UUID, wrapped as ContentMap.</description>
     <name>contentByUUID</name>
     <function-class>it.openutils.mgnlutils.el.MgnlUtilsElFunctions</function-class>
-    <function-signature>info.magnolia.jcr.util.ContentMap contentByUUID(java.lang.String, java.lang.String)</function-signature>
+    <function-signature>javax.jcr.Node contentByUUID(java.lang.String, java.lang.String)</function-signature>
   </function>
   <function>
     <description>Check if the current user belongs the given role</description>
@@ -360,19 +354,19 @@ mu:isLine('aaa\nbb\nc', 'b') = false]]></example>
     <description>Returns the current active page (can be set using the loadPage tag).</description>
     <name>currentPage</name>
     <function-class>it.openutils.mgnlutils.el.MgnlUtilsElFunctions</function-class>
-    <function-signature>info.magnolia.jcr.util.ContentMap currentPage()</function-signature>
+    <function-signature>javax.jcr.Node currentPage()</function-signature>
   </function>
   <function>
     <description>Returns the main loaded page (doesn't change when using the loadPage tag).</description>
     <name>mainPage</name>
     <function-class>it.openutils.mgnlutils.el.MgnlUtilsElFunctions</function-class>
-    <function-signature>info.magnolia.jcr.util.ContentMap mainPage()</function-signature>
+    <function-signature>javax.jcr.Node mainPage()</function-signature>
   </function>
   <function>
     <description>Returns the current paragraph.</description>
     <name>currentParagraph</name>
     <function-class>it.openutils.mgnlutils.el.MgnlUtilsElFunctions</function-class>
-    <function-signature>info.magnolia.jcr.util.ContentMap currentParagraph()</function-signature>
+    <function-signature>javax.jcr.Node currentParagraph()</function-signature>
   </function>
   <function>
     <description>Returns the value of a system property</description>
@@ -440,7 +434,7 @@ mu:isLine('aaa\nbb\nc', 'b') = false]]></example>
     <description>Loads the ancestor of the given jcr Node/ContentMap. Returns null if the object is null or if requested level is greater than current depth</description>
     <name>ancestor</name>
     <function-class>it.openutils.mgnlutils.el.MgnlUtilsElFunctions</function-class>
-    <function-signature>info.magnolia.jcr.util.ContentMap ancestor(java.lang.Object, int)</function-signature>
+    <function-signature>javax.jcr.Node ancestor(java.lang.Object, int)</function-signature>
   </function>
   <!-- please don't add new funtions without a meaningfull <description> -->
 </taglib>

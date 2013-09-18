@@ -39,6 +39,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import javax.jcr.Node;
 import javax.jcr.PropertyType;
 import javax.jcr.RepositoryException;
 import javax.jcr.Value;
@@ -109,9 +110,9 @@ public final class MediaEl
             return null;
         }
 
-        ContentMap contentMap = it.openutils.mgnlutils.el.MgnlUtilsElFunctions.node(obj, MediaModule.REPO);
+        Node node = it.openutils.mgnlutils.el.MgnlUtilsElFunctions.node(obj, MediaModule.REPO);
 
-        if (contentMap != null)
+        if (node != null)
         {
             Content currentpage = null;
 
@@ -122,11 +123,11 @@ public final class MediaEl
 
             if (currentpage == null)
             {
-                currentpage = new DefaultContent(contentMap.getJCRNode());
+                currentpage = new DefaultContent(node);
             }
 
             Content content = new NodeMapWrapper(
-                new I18nContentWrapper(new DefaultContent(contentMap.getJCRNode())),
+                new I18nContentWrapper(new DefaultContent(node)),
                 currentpage.getHandle());
             return content;
         }
@@ -531,10 +532,10 @@ public final class MediaEl
             return null;
         }
 
-        ContentMap playlistNode = it.openutils.mgnlutils.el.MgnlUtilsElFunctions.node(obj, PlaylistConstants.REPO);
+        Node playlistNode = it.openutils.mgnlutils.el.MgnlUtilsElFunctions.node(obj, PlaylistConstants.REPO);
 
         Iterator<ContentMap> iter = Iterators.transform(
-            PlaylistIterateUtils.iterate(playlistNode.getJCRNode()),
+            PlaylistIterateUtils.iterate(playlistNode),
             new Function<MediaNodeAndEntryPath, ContentMap>()
             {
 

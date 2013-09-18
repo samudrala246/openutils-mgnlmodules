@@ -23,6 +23,7 @@ import info.magnolia.cms.core.AggregationState;
 import info.magnolia.cms.core.Content;
 import info.magnolia.cms.core.DefaultContent;
 import info.magnolia.cms.core.SystemProperty;
+import info.magnolia.cms.util.NodeMapWrapper;
 import info.magnolia.context.MgnlContext;
 import info.magnolia.context.WebContext;
 import info.magnolia.jcr.util.ContentMap;
@@ -95,6 +96,10 @@ public class MgnlUtilsDeprecatedAdapters
         else if (nodeorcontent instanceof Content)
         {
             return ((Content) nodeorcontent).getJCRNode();
+        }
+        else if (nodeorcontent instanceof NodeMapWrapper)
+        {
+            return ((NodeMapWrapper) nodeorcontent).getJCRNode();
         }
         else
         {
