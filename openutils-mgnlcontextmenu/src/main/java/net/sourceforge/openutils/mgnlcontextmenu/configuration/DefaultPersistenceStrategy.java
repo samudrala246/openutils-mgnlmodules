@@ -21,7 +21,6 @@ package net.sourceforge.openutils.mgnlcontextmenu.configuration;
 
 import info.magnolia.jcr.util.MetaDataUtil;
 import info.magnolia.jcr.util.PropertyUtil;
-import it.openutils.mgnlutils.api.NodeUtilsExt;
 
 import javax.jcr.Node;
 import javax.jcr.RepositoryException;
@@ -79,9 +78,10 @@ public class DefaultPersistenceStrategy extends PersistenceStrategy
         {
             node.setProperty(name, value);
         }
-        else
+        else if (node.hasProperty(name))
         {
-            NodeUtilsExt.deletePropertyIfExist(node, name);
+            node.getProperty(name).remove();
         }
+
     }
 }
