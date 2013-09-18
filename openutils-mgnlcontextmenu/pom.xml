@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <parent>
     <groupId>net.sourceforge.openutils</groupId>
     <artifactId>openutils-parent</artifactId>
@@ -12,7 +11,7 @@
   <artifactId>openutils-mgnlcontextmenu</artifactId>
   <name>ContextMenu Module for Magnolia CMS</name>
   <description>A magnolia module for editing content via context menu</description>
-  <version>5.0.0-SNAPSHOT</version>
+  <version>4.5.0</version>
   <inceptionYear>2010</inceptionYear>
   <licenses>
     <license>
@@ -26,9 +25,9 @@
     <url>http://jira.openmindlab.com/browse/MENU</url>
   </issueManagement>
   <scm>
-    <connection>scm:svn:svn+ssh://svn.code.sf.net/p/openutils/code/magnoliamodules/trunk/openutils-mgnlcontextmenu</connection>
-    <developerConnection>scm:svn:svn+ssh://svn.code.sf.net/p/openutils/code/magnoliamodules/trunk/openutils-mgnlcontextmenu</developerConnection>
-    <url>http://sourceforge.net/p/openutils/code/HEAD/tree/trunk/openutils-mgnlcontextmenu</url>
+    <connection>scm:svn:svn+ssh://svn.code.sf.net/p/openutils/code/tags/openutils-mgnlcontextmenu-4.5.0</connection>
+    <developerConnection>scm:svn:svn+ssh://svn.code.sf.net/p/openutils/code/tags/openutils-mgnlcontextmenu-4.5.0</developerConnection>
+    <url>scm:svn:svn+ssh://svn.code.sf.net/p/openutils/code/tags/openutils-mgnlcontextmenu-4.5.0</url>
   </scm>
   <build>
     <plugins>
