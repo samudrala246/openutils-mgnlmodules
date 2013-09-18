@@ -23,6 +23,7 @@ import info.magnolia.cms.security.Permission;
 import info.magnolia.context.MgnlContext;
 import info.magnolia.context.WebContext;
 import info.magnolia.jcr.util.NodeUtil;
+import info.magnolia.jcr.util.PropertyUtil;
 import info.magnolia.jcr.wrapper.HTMLEscapingNodeWrapper;
 import info.magnolia.objectfactory.Components;
 
@@ -79,9 +80,11 @@ public class ContextMenuElFunctions
     {
         ContextMenuModule module = Components.getComponent(ContextMenuModule.class);
         PersistenceStrategy strategy = module.getPersistenceStrategy();
-        // LB crazy command! mgnl argsss
         Node nodeUnwrapped = NodeUtil.deepUnwrap(node, HTMLEscapingNodeWrapper.class);
-        return strategy != null ? strategy.readEntry(nodeUnwrapped, name) : null;
+
+        String result = strategy != null ? strategy.readEntry(nodeUnwrapped, name) : null;
+
+        return result;
     }
 
     public static String scripts()
@@ -104,16 +107,16 @@ public class ContextMenuElFunctions
             out.append("<link rel=\"stylesheet\" type=\"text/css\" href=\""
                 + ctx
                 + "/.resources/contextmenu/css/jquery.contextMenu.css\" media=\"screen\" />\n");
-// out.append("<link rel=\"stylesheet\" type=\"text/css\" href=\""
-// + ctx
-// + "/.resources/contextmenu/css/contextmenu.css\" media=\"screen\" />\n");
-// out.append("<script src=\"" + ctx + "/.resources/contextmenu/js/contextmenu-jquery.js\"></script>\n");
+            // out.append("<link rel=\"stylesheet\" type=\"text/css\" href=\""
+            // + ctx
+            // + "/.resources/contextmenu/css/contextmenu.css\" media=\"screen\" />\n");
+            // out.append("<script src=\"" + ctx + "/.resources/contextmenu/js/contextmenu-jquery.js\"></script>\n");
             out.append("<script src=\"" + ctx + "/.resources/contextmenu/js/mgnladmin-custom.js\"></script>\n");
             out.append("<script src=\"" + ctx + "/.resources/contextmenu/js/jquery.contextMenu.js\"></script>\n");
             out.append("<script src=\"" + ctx + "/.resources/contextmenu/js/contextmenu-addMenu.js\"></script>\n");
-// if(mgnlSortLists != null){
+            // if(mgnlSortLists != null){
             out.append("<script src=\"" + ctx + "/.resources/contextmenu/js/contextmenu-sortList.js\"></script>\n");
-// }
+            // }
             out.append("<!-- end contextmenu:links -->\n");
         }
 

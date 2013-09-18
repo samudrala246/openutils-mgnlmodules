@@ -1,65 +1,97 @@
 /* Generic context menu styles */
 .contextMenu {
-	position: absolute;
-	width: 150px;
-	z-index: 99999;
-	border: solid 1px #CCC;
-	background: #EEE;
-	padding: 0px;
-	margin: 0px;
-	display: none;
+  position: absolute;
+  width: 150px;
+  z-index: 99999;
+  border: solid 1px #CCC;
+  background: #EEE;
+  padding: 0px;
+  margin: 0px;
+  display: none;
 }
 
-.contextMenu LI {
-	list-style: none;
-	padding: 0px;
-	margin: 0px;
+.contextMenu li {
+  list-style: none;
+  padding: 0px;
+  margin: 0px;
 }
 
-.contextMenu A {
-	color: #333;
-	text-decoration: none;
-	display: block;
-	line-height: 20px;
-	height: 20px;
-	background-position: 6px center;
-	background-repeat: no-repeat;
-	outline: none;
-	padding: 1px 5px;
-	padding-left: 28px;
+.contextMenu a {
+  color: #333;
+  text-decoration: none;
+  display: block;
+  line-height: 20px;
+  height: 20px;
+  background-position: 6px center;
+  background-repeat: no-repeat;
+  outline: none;
+  padding: 1px 5px;
+  padding-left: 28px;
+  font-family: arial, helvetica, sans-serif;
+  font-size: 12px;
 }
 
-.contextMenu LI.hover A {
-	color: #FFF;
-	background-color: #3399FF;
+.contextMenu LI.hover a {
+  color: #FFF;
+  background-color: #3399FF;
 }
 
-.contextMenu LI.disabled A {
-	color: #AAA;
-	cursor: default;
+.contextMenu LI.disabled a {
+  color: #AAA;
+  cursor: default;
 }
 
-.contextMenu LI.hover.disabled A {
-	background-color: transparent;
+.contextMenu LI.hover.disabled a {
+  background-color: transparent;
 }
 
 .contextMenu LI.separator {
-	border-top: solid 1px #CCC;
+  border-top: solid 1px #CCC;
 }
 
-.contextMenu LI.menuText A { background-image: url(images/menu-text.png); }
-.contextMenu LI.menuHelp A { background-image: url(images/menu-help.png); }
-.contextMenu LI.menuMove A { background-image: url(images/menu-move.gif); }
+.contextMenu li.menuText a {
+  background-image: url(images/menu-text.png);
+}
 
-.contextMenu LI.menuLabel A { background-image: url(images/menu-label.png); }
-.contextMenu LI.menuDescription A { background-image: url(images/menu-description.png); }
-.contextMenu LI.menuMedia A { background-image: url(images/menu-media.png); }
-.contextMenu LI.menuInfo A { background-image: url(images/menu-info.png); }
-.contextMenu LI.menuValidation A { background-image: url(images/menu-validation.gif); }
-.contextMenu LI.menuHeader A { background-image: url(images/menu-header.png); }
-.contextMenu LI.menuScTrackAction A { background-image: url(images/power_off.png); }
-.contextMenu LI.menuScTrackAction A.scTrackOn { background-image: url(images/power_on.png); }
+.contextMenu li.menuHelp a {
+  background-image: url(images/menu-help.png);
+}
 
+.contextMenu li.menuMove a {
+  background-image: url(images/menu-move.gif);
+}
+
+.contextMenu li.menuLabel a {
+  background-image: url(images/menu-label.png);
+}
+
+.contextMenu li.menuDescription a {
+  background-image: url(images/menu-description.png);
+}
+
+.contextMenu li.menuMedia a {
+  background-image: url(images/menu-media.png);
+}
+
+.contextMenu li.menuInfo a {
+  background-image: url(images/menu-info.png);
+}
+
+.contextMenu li.menuValidation a {
+  background-image: url(images/menu-validation.gif);
+}
+
+.contextMenu li.menuHeader a {
+  background-image: url(images/menu-header.png);
+}
+
+.contextMenu li.menuScTrackAction a {
+  background-image: url(images/power_off.png);
+}
+
+.contextMenu li.menuScTrackAction a.scTrackOn {
+  background-image: url(images/power_on.png);
+}
 
 .sort-list .drop {
   display: none;
@@ -67,13 +99,28 @@
   padding: 0;
 }
 
-.move .drop {
+.move .dropXX {
   display: block;
   height: 8px;
   border: 1px solid #666;
   background-color: #CCC;
-  -webkit-border-radius: 4px;
-  -moz-border-radius: 4px;
-  border-radius: 4px;
+  cursor: pointer;
+}
+
+.move .drop {
+  margin: 2px 0;
+  height: 12px;
+  display: block;
+  font-size: 12px;
+  color: #ffffff;
+  text-align: center;
+  background-color: #5cb85c;
+  -webkit-box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.15);
+  box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.15);
+  -webkit-transition: width 0.6s ease;
+  transition: width 0.6s ease;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  border-radius: 2px;
   cursor: pointer;
 }
