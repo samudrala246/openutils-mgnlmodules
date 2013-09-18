@@ -10,7 +10,7 @@
   <packaging>jar</packaging>
   <artifactId>openutils-mgnlrules</artifactId>
   <name>Rules module for Magnolia CMS</name>
-  <version>4.5.0</version>
+  <version>4.5.1-SNAPSHOT</version>
   <description>A simple rule engine integrated into Magnolia CMS</description>
   <licenses>
     <license>
@@ -25,9 +25,9 @@
   </issueManagement>
   <inceptionYear>2010</inceptionYear>
   <scm>
-    <connection>scm:svn:svn+ssh://svn.code.sf.net/p/openutils/code/tags/openutils-mgnlrules-4.5.0</connection>
-    <developerConnection>scm:svn:svn+ssh://svn.code.sf.net/p/openutils/code/tags/openutils-mgnlrules-4.5.0</developerConnection>
-    <url>scm:svn:svn+ssh://svn.code.sf.net/p/openutils/code/tags/openutils-mgnlrules-4.5.0</url>
+    <connection>scm:svn:svn+ssh://svn.code.sf.net/p/openutils/code/magnoliamodules/trunk/openutils-mgnlrules</connection>
+    <developerConnection>scm:svn:svn+ssh://svn.code.sf.net/p/openutils/code/magnoliamodules/trunk/openutils-mgnlrules</developerConnection>
+    <url>http://sourceforge.net/p/openutils/code/HEAD/tree/trunk/openutils-mgnlrules</url>
   </scm>
   <build>
     <plugins>
