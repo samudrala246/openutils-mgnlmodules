@@ -20,7 +20,9 @@
 package net.sourceforge.openutils.mgnlmedia.media.virtualurimapping;
 
 import info.magnolia.cms.beans.config.VirtualURIMapping;
-import info.magnolia.cms.core.Content;
+
+import javax.jcr.Node;
+
 import net.sourceforge.openutils.mgnlmedia.media.tags.el.MediaEl;
 
 import org.apache.commons.lang.StringUtils;
@@ -43,7 +45,7 @@ public class MediaThumbnailVirtualUriMapping implements VirtualURIMapping
         if (uri.startsWith(PREFIX_MAPPING))
         {
             String uuid = StringUtils.substringAfter(uri, PREFIX_MAPPING);
-            Content media = MediaEl.node(uuid);
+            Node media = MediaEl.node(uuid);
             if (media != null)
             {
                 MappingResult mr = new MappingResult();
