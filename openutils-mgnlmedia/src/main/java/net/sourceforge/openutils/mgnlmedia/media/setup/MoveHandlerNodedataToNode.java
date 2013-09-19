@@ -30,6 +30,9 @@ import java.util.Collection;
 
 import javax.jcr.RepositoryException;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 
 /**
  * Update configuration for media types.
@@ -38,6 +41,11 @@ import javax.jcr.RepositoryException;
  */
 public class MoveHandlerNodedataToNode extends AbstractRepositoryTask
 {
+
+    /**
+     * Logger.
+     */
+    private Logger log = LoggerFactory.getLogger(MoveHandlerNodedataToNode.class);
 
     /**
      * Update mediatype configuration

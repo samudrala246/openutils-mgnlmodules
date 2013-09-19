@@ -18,14 +18,14 @@
  */
 
 package net.sourceforge.openutils.mgnlmedia.playlist.pages;
-
-import info.magnolia.cms.core.Content;
-import info.magnolia.cms.util.ContentUtil;
+ 
 import info.magnolia.cms.util.NodeDataUtil;
-import info.magnolia.context.MgnlContext;
+import info.magnolia.jcr.util.MetaDataUtil;
 import info.magnolia.jcr.util.NodeUtil;
 import info.magnolia.jcr.util.PropertyUtil;
 import info.magnolia.module.ModuleRegistry;
+import info.magnolia.objectfactory.Components;
+import it.openutils.mgnlutils.api.NodeUtilsExt;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -92,7 +92,7 @@ public class PlaylistView extends MessagesTemplatedMVCHandler
 
     private boolean xml;
 
-    private List<Content> mediaContentList;
+    private List<Node> mediaContentList;
 
     private List<MediaBean> mediaBeans;
 
@@ -175,18 +175,18 @@ public class PlaylistView extends MessagesTemplatedMVCHandler
     {
         if (StringUtils.isNotBlank(path))
         {
-            Content node = ContentUtil.getContent(PlaylistConstants.REPO, path);
+            Node node = NodeUtilsExt.getNodeByIdOrPath(PlaylistConstants.REPO, path);
             if (node != null)
             {
 
                 playlist = new PlaylistBean();
                 playlist.setUuid(node.getUUID());
-                playlist.setHandle(node.getHandle());
+                playlist.setHandle(NodeUtil.getPathIfPossible(node));
                 playlist.setTitle(NodeDataUtil.getString(node, "title"));
                 playlist.setDescription(NodeDataUtil.getString(node, "description"));
                 List<PlaylistEntryBean> entries = new ArrayList<PlaylistEntryBean>();
 
-                for (Iterator<MediaNodeAndEntryPath> iterator = PlaylistIterateUtils.iterate(node.getJCRNode()); iterator
+                for (Iterator<MediaNodeAndEntryPath> iterator = PlaylistIterateUtils.iterate(node); iterator
                     .hasNext();)
                 {
                     MediaNodeAndEntryPath item = iterator.next();
@@ -236,7 +236,7 @@ public class PlaylistView extends MessagesTemplatedMVCHandler
     public String save()
     {
         success = false;
-        Content node = ContentUtil.getContent(PlaylistConstants.REPO, path);
+        Node node = NodeUtilsExt.getNodeByIdOrPath(PlaylistConstants.REPO, path);
         if (node != null)
         {
             try
@@ -245,7 +245,7 @@ public class PlaylistView extends MessagesTemplatedMVCHandler
                 NodeDataUtil.getOrCreateAndSet(node, "description", description);
                 if (MediaEl.module().isSingleinstance())
                 {
-                    node.getMetaData().setActivated();
+                MetaDataUtil.getMetaData(node).setActivated();
                 }
                 node.save();
                 success = true;
@@ -260,7 +260,7 @@ public class PlaylistView extends MessagesTemplatedMVCHandler
     public String saveMedia()
     {
         success = false;
-        Content node = ContentUtil.getContent(MediaModule.REPO, mediaHandle);
+        Node node = NodeUtilsExt.getNodeByIdOrPath(MediaModule.REPO, mediaHandle);
         if (node != null)
         {
             try
@@ -269,7 +269,7 @@ public class PlaylistView extends MessagesTemplatedMVCHandler
                 NodeDataUtil.getOrCreateAndSet(node, "description", description);
                 if (MediaEl.module().isSingleinstance())
                 {
-                    node.getMetaData().setActivated();
+                   MetaDataUtil.getMetaData(node).setActivated();
                 }
                 node.save();
                 success = true;
@@ -292,13 +292,13 @@ public class PlaylistView extends MessagesTemplatedMVCHandler
         else
         {
             // Set mediaContent
-            mediaContentList = new ArrayList<Content>();
+            mediaContentList = new ArrayList<Node>();
             for (PlaylistEntryBean plb : this.getPlaylist().getEntries())
             {
+
                 try
                 {
-                    mediaContentList.add(MgnlContext.getHierarchyManager(MediaModule.REPO).getContentByUUID(
-                        plb.getMedia()));
+                    mediaContentList.add(NodeUtil.getNodeByIdentifier(MediaModule.REPO, plb.getMedia()));
                 }
                 catch (RepositoryException e)
                 {
@@ -326,12 +326,12 @@ public class PlaylistView extends MessagesTemplatedMVCHandler
 
     public String mediaFolder()
     {
-        Content folder = ContentUtil.getContent(MediaModule.REPO, path);
+        Node folder = NodeUtilsExt.getNodeByIdOrPath(MediaModule.REPO, path);
         if (folder != null)
         {
-            Collection<Content> nodes = folder.getChildren(MediaConfigurationManager.MEDIA);
+            Collection<Node> nodes = folder.getChildren(MediaConfigurationManager.MEDIA);
             mediaBeans = new ArrayList<MediaBean>(nodes.size());
-            for (Content node : nodes)
+            for (Node node : nodes)
             {
                 MediaBean bean = new MediaBeanBuilder().apply(node);
                 mediaBeans.add(bean);
@@ -362,7 +362,7 @@ public class PlaylistView extends MessagesTemplatedMVCHandler
      * Returns the mediaContentList.
      * @return the mediaContentList
      */
-    public List<Content> getMediaContentList()
+    public List<Node> getMediaContentList()
     {
         return mediaContentList;
     }
@@ -371,7 +371,7 @@ public class PlaylistView extends MessagesTemplatedMVCHandler
      * Sets the mediaContentList.
      * @param mediaContentList the mediaContentList to set
      */
-    public void setMediaContentList(List<Content> mediaContentList)
+    public void setMediaContentList(List<Node> mediaContentList)
     {
         this.mediaContentList = mediaContentList;
     }
@@ -412,9 +412,9 @@ public class PlaylistView extends MessagesTemplatedMVCHandler
         return metas;
     }
 
-    public void writePlaylistTrackExtension(Content media, PrintWriter writer)
+    public void writePlaylistTrackExtension(Node media, PrintWriter writer)
     {
-        MediaModule module = (MediaModule) ModuleRegistry.Factory.getInstance().getModuleInstance(MediaModule.NAME);
+        MediaModule module = (MediaModule) Components.getComponent(ModuleRegistry.class).getModuleInstance(MediaModule.NAME);
         for (Object item : module.getPlaylistTrackExtensionContributors())
         {
             PlaylistTrackExtensionContributor contributor = (PlaylistTrackExtensionContributor) item;

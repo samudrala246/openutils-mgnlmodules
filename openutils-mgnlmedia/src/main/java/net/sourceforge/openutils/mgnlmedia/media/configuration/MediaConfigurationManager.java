@@ -110,11 +110,16 @@ public class MediaConfigurationManager extends ObservedManager
      */
     @Override
     @SuppressWarnings("unchecked")
-    protected void onRegister(Content node)
+    protected void onRegister(Content content)
     {
+
+        Node node = content.getJCRNode();
+        
+        
+        
         for (Iterator iter = ContentUtil.getAllChildren(node).iterator(); iter.hasNext();)
         {
-            Content typeNode = (Content) iter.next();
+            Node typeNode = iter.next();
 
             if (!NodeDataUtil.getBoolean(typeNode, "enabled", true))
             {

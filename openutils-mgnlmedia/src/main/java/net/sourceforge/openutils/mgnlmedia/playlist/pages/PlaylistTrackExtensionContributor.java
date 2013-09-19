@@ -19,9 +19,9 @@
 
 package net.sourceforge.openutils.mgnlmedia.playlist.pages;
 
-import info.magnolia.cms.core.Content;
-
 import java.io.PrintWriter;
+
+import javax.jcr.Node;
 
 
 /**
@@ -35,6 +35,6 @@ public interface PlaylistTrackExtensionContributor
      * @param media
      * @param writer
      */
-    void addMediaAttributes(Content media, PrintWriter writer);
+    void addMediaAttributes(Node media, PrintWriter writer);
 
 }

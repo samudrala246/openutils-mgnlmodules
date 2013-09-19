@@ -19,11 +19,12 @@
 
 package net.sourceforge.openutils.mgnlmedia.media.setup;
 
-import info.magnolia.cms.core.SystemProperty;
+import info.magnolia.init.MagnoliaConfigurationProperties;
 import info.magnolia.module.InstallContext;
 import info.magnolia.module.ModuleRegistry;
 import info.magnolia.module.delta.SetupModuleRepositoriesTask;
 import info.magnolia.module.delta.Task;
+import info.magnolia.objectfactory.Components;
 import info.magnolia.repository.RepositoryConstants;
 import it.openutils.mgnltasks.BootstrapMissingNodesTask;
 import it.openutils.mgnltasks.ChangeExistingPropertyTask;
@@ -79,7 +80,8 @@ public class MediaModuleVersionHandler extends SimpleModuleVersionHandler
     {
         List<Task> tasks = new ArrayList<Task>();
 
-        if (SystemProperty.getBooleanProperty(SystemProperty.MAGNOLIA_BOOTSTRAP_SAMPLES))
+        if (Components.getComponent(MagnoliaConfigurationProperties.class).getBooleanProperty(
+            "magnolia.bootstrap.samples"))
         {
             tasks.add(new SamplesExtractionTask());
         }
@@ -254,7 +256,7 @@ public class MediaModuleVersionHandler extends SimpleModuleVersionHandler
     {
         try
         {
-            return ModuleRegistry.Factory.getInstance().getDefinition(module) != null;
+            return Components.getComponent(ModuleRegistry.class).getDefinition(module) != null;
         }
         catch (IllegalArgumentException e)
         {

@@ -23,6 +23,7 @@ import info.magnolia.cms.beans.runtime.Document;
 import info.magnolia.cms.beans.runtime.FileProperties;
 import info.magnolia.cms.core.NodeData;
 import info.magnolia.cms.util.NodeDataUtil;
+import info.magnolia.jcr.util.NodeUtil;
 import info.magnolia.module.admininterface.SaveHandlerImpl;
 
 import java.awt.image.BufferedImage;
@@ -103,7 +104,7 @@ public class DocumentTypeHandler extends MediaWithPreviewImageTypeHandler
                 catch (Throwable e)
                 {
                     log.warn("Unable to generate a preview for {} due to a {}: {}", new Object[]{
-                        media.getHandle(),
+                        NodeUtil.getPathIfPossible(media),
                         e.getClass().getName(),
                         e.getMessage() });
                 }
@@ -164,12 +165,12 @@ public class DocumentTypeHandler extends MediaWithPreviewImageTypeHandler
             }
             else
             {
-                log.error("Error creating preview for " + media.getHandle(), e);
+                log.error("Error creating preview for " + NodeUtil.getPathIfPossible(media), e);
             }
         }
         catch (Throwable e)
         {
-            log.error("Error creating preview for " + media.getHandle(), e);
+            log.error("Error creating preview for " + NodeUtil.getPathIfPossible(media), e);
         }
         finally
         {

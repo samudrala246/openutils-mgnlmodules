@@ -19,9 +19,15 @@
 
 package it.openutils.mgnlutils.api;
 
+import info.magnolia.context.MgnlContext;
 import info.magnolia.jcr.RuntimeRepositoryException;
+import info.magnolia.jcr.util.NodeUtil;
 import info.magnolia.jcr.util.PropertyUtil;
 
+import java.util.regex.Pattern;
+
+import javax.jcr.ItemNotFoundException;
+import javax.jcr.LoginException;
 import javax.jcr.Node;
 import javax.jcr.RepositoryException;
 import javax.jcr.Session;
@@ -35,6 +41,9 @@ import org.apache.commons.lang.StringUtils;
  */
 public class NodeUtilsExt
 {
+
+    private static Pattern UUID_PATTERN = Pattern
+        .compile("^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$");
 
     public static boolean exists(Session session, String absolutepath)
     {
@@ -119,5 +128,53 @@ public class NodeUtilsExt
         {
             throw new RuntimeRepositoryException(e);
         }
+    }
+
+    public static Node getNodeByIdOrPath(String workspace, String uuidOrPath)
+    {
+        if (uuidOrPath == null)
+        {
+            return null;
+        }
+
+        if (isUUID(uuidOrPath))
+        {
+            try
+            {
+                return NodeUtil.getNodeByIdentifier(workspace, uuidOrPath);
+            }
+            catch (ItemNotFoundException e)
+            {
+                // ignore
+            }
+            catch (RepositoryException e)
+            {
+                throw new RuntimeRepositoryException(e);
+            }
+        }
+        else
+        {
+            try
+            {
+                return getNodeIfExists(MgnlContext.getJCRSession(workspace), uuidOrPath);
+            }
+            catch (RepositoryException e)
+            {
+                throw new RuntimeRepositoryException(e);
+            }
+        }
+
+        return null;
+    }
+
+    public static boolean isUUID(String string)
+    {
+        // 97ed692a-31a9-4670-9c36-4d8ee8f6128d
+        if (StringUtils.length(string) != 36)
+        {
+            return false;
+        }
+
+        return UUID_PATTERN.matcher(string).find();
     }
 }

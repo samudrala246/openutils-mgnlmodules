@@ -19,8 +19,9 @@
 
 package net.sourceforge.openutils.mgnlmedia.media.types.impl;
 
-import info.magnolia.cms.core.Content;
+import info.magnolia.jcr.util.NodeUtil;
 
+import javax.jcr.Node;
 import javax.jcr.RepositoryException;
 
 import net.sourceforge.openutils.mgnlmedia.media.configuration.MediaConfigurationManager;
@@ -43,7 +44,7 @@ public abstract class MediaWithPreviewImageTypeHandler extends BaseTypeHandler
     /**
      * {@inheritDoc}
      */
-    public String getThumbnailUrl(Content media)
+    public String getThumbnailUrl(Node media)
     {
 
         if (hasPreview(media))
@@ -53,7 +54,7 @@ public abstract class MediaWithPreviewImageTypeHandler extends BaseTypeHandler
                 return "";
             }
             return MediaConfigurationManager.getInstance().getURIMappingPrefix()
-                + media.getHandle()
+                +  NodeUtil.getPathIfPossible(media)
                 + "/resolutions/thumbnail/"
                 + media.getName()
                 + "."
@@ -66,7 +67,7 @@ public abstract class MediaWithPreviewImageTypeHandler extends BaseTypeHandler
 
     public abstract String getReplacementThumbnail();
 
-    protected boolean hasPreview(Content media)
+    protected boolean hasPreview(Node media)
     {
 
         if (media != null)

@@ -19,11 +19,9 @@
 
 package net.sourceforge.openutils.mgnlmedia.media.pages;
 
-import info.magnolia.cms.core.Content;
 import info.magnolia.cms.core.HierarchyManager;
 import info.magnolia.cms.core.ItemType;
 import info.magnolia.cms.core.Path;
-import info.magnolia.cms.core.SystemProperty;
 import info.magnolia.cms.exchange.ActivationManagerFactory;
 import info.magnolia.cms.exchange.ExchangeException;
 import info.magnolia.cms.security.Permission;
@@ -32,7 +30,12 @@ import info.magnolia.cms.util.ContentUtil;
 import info.magnolia.commands.CommandsManager;
 import info.magnolia.context.Context;
 import info.magnolia.context.MgnlContext;
+import info.magnolia.init.MagnoliaConfigurationProperties;
+import info.magnolia.jcr.util.MetaDataUtil;
+import info.magnolia.jcr.util.NodeUtil;
 import info.magnolia.module.admininterface.commands.ActivationCommand;
+import info.magnolia.objectfactory.Components;
+import it.openutils.mgnlutils.api.NodeUtilsExt;
 import it.openutils.mgnlutils.el.MgnlPagingElFunctions;
 import it.openutils.mgnlutils.el.MgnlPagingElFunctions.Page;
 
@@ -45,6 +48,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import javax.jcr.Node;
 import javax.jcr.RepositoryException;
 import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
@@ -61,6 +65,7 @@ import org.apache.commons.chain.Command;
 import org.apache.commons.lang.StringUtils;
 
 import com.google.common.collect.Iterators;
+import com.sun.xml.internal.ws.util.MetadataUtil;
 
 
 /**
@@ -184,7 +189,7 @@ public class MediaFolderViewPage extends MessagesTemplatedMVCHandler
             sorting = getDefaultSorting().name();
         }
         // for activation status handling
-        develop = SystemProperty.getBooleanProperty("magnolia.develop");
+        develop = Components.getComponent(MagnoliaConfigurationProperties.class).getBooleanProperty("magnolia.develop");
     }
 
     /**
@@ -216,7 +221,7 @@ public class MediaFolderViewPage extends MessagesTemplatedMVCHandler
         {
             return null;
         }
-        Content folder = ContentUtil.getContent(MediaModule.REPO, path);
+        Node folder = NodeUtilsExt.getNodeByIdOrPath(MediaModule.REPO, path);
         if (folder == null)
         {
             return null;
@@ -278,7 +283,7 @@ public class MediaFolderViewPage extends MessagesTemplatedMVCHandler
         {
 
             // casts Iterator<AdvancedResultItem> to Iterator<Content>
-            Iterator<Content> contentIterator = Iterators.filter(searchResult.getItems(), Content.class);
+            Iterator<Node> contentIterator = Iterators.filter(searchResult.getItems(), Node.class);
             medias = Iterators.transform(contentIterator, new MediaBeanBuilder());
             pages = MgnlPagingElFunctions.pageList(searchResult.getNumberOfPages(), 10, "page");
         }
@@ -374,7 +379,7 @@ public class MediaFolderViewPage extends MessagesTemplatedMVCHandler
      * @throws ExchangeException publication problem
      * @throws RepositoryException repository exception
      */
-    public Content copyMoveNode(String source, String destination, boolean move) throws ExchangeException,
+    public Node copyMoveNode(String source, String destination, boolean move) throws ExchangeException,
         RepositoryException
     {
         HierarchyManager hm = MgnlContext.getHierarchyManager(MediaModule.REPO);
@@ -412,11 +417,11 @@ public class MediaFolderViewPage extends MessagesTemplatedMVCHandler
             // copy
             hm.copyTo(source, goTo);
         }
-        Content newContent = hm.getContent(destination);
+        Node newContent = hm.getNode(destination);
         try
         {
-            newContent.updateMetaData();
-            newContent.getMetaData().setUnActivated();
+            MetaDataUtil.updateMetaData(newContent);
+            MetaDataUtil.getMetaData(newContent).setUnActivated();
         }
         catch (Exception e)
         {
@@ -499,19 +504,12 @@ public class MediaFolderViewPage extends MessagesTemplatedMVCHandler
     public String download()
     {
 
-        HierarchyManager hm = MgnlContext.getHierarchyManager(MediaModule.REPO);
+        Node media = NodeUtilsExt.getNodeByIdOrPath(MediaModule.REPO, path);
 
-        Content media;
-        try
+        if (media == null)
         {
-            media = hm.getContent(path);
-        }
-        catch (RepositoryException e)
-        {
-            log.error("Error downloading media " + path, e);
             return null;
         }
-
         MediaTypeConfiguration mtc = MediaConfigurationManager.getInstance().getMediaTypeConfigurationFromMedia(media);
         String url = mtc.getHandler().getUrl(media);
 
