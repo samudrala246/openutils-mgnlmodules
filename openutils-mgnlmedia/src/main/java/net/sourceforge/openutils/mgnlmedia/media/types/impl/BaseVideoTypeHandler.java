@@ -19,10 +19,11 @@
 
 package net.sourceforge.openutils.mgnlmedia.media.types.impl;
 
-import info.magnolia.cms.core.Content;
 import info.magnolia.cms.util.NodeDataUtil;
 
 import java.util.Map;
+
+import javax.jcr.Node;
 
 import net.sourceforge.openutils.mgnlmedia.media.utils.MediaMetadataFormatUtils;
 import net.sourceforge.openutils.mgnlmedia.media.utils.VideoMedataUtils.VideoMetaData;
@@ -42,10 +43,10 @@ public abstract class BaseVideoTypeHandler extends MediaWithPreviewImageTypeHand
      */
     private Logger log = LoggerFactory.getLogger(BaseVideoTypeHandler.class);
 
-    protected abstract VideoMetaData parseFLVMetaData(Content media) throws Exception;
+    protected abstract VideoMetaData parseFLVMetaData(Node media) throws Exception;
 
     @Override
-    public boolean onPostSave(Content media)
+    public boolean onPostSave(Node media)
     {
         try
         {
@@ -87,7 +88,7 @@ public abstract class BaseVideoTypeHandler extends MediaWithPreviewImageTypeHand
      * {@inheritDoc}
      */
     @Override
-    public Map<String, String> getMediaInfo(Content media)
+    public Map<String, String> getMediaInfo(Node media)
     {
 
         Map<String, String> info = super.getMediaInfo(media);

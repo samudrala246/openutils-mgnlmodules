@@ -70,7 +70,7 @@
     <display-name>node</display-name>
     <name>node</name>
     <function-class>net.sourceforge.openutils.mgnlmedia.media.tags.el.MediaEl</function-class>
-    <function-signature>info.magnolia.cms.core.Content node(java.lang.Object)</function-signature>
+    <function-signature>javax.jcr.Node node(java.lang.Object)</function-signature>
     <example>
       <![CDATA[
       <c:set var="mediaNode" value="${media:node(content.image)}" />

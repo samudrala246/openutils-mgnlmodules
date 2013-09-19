@@ -20,15 +20,13 @@
 package net.sourceforge.openutils.mgnlmedia.media.tags.el;
 
 import info.magnolia.cms.beans.runtime.FileProperties;
-import info.magnolia.cms.core.Content;
-import info.magnolia.cms.core.DefaultContent;
 import info.magnolia.cms.core.NodeData;
-import info.magnolia.cms.i18n.I18nContentWrapper;
-import info.magnolia.cms.util.NodeDataUtil;
-import info.magnolia.cms.util.NodeMapWrapper;
 import info.magnolia.context.MgnlContext;
 import info.magnolia.jcr.util.ContentMap;
+import info.magnolia.jcr.util.PropertyUtil;
+import info.magnolia.jcr.wrapper.NodeWrapperFactory;
 import info.magnolia.module.ModuleRegistry;
+import info.magnolia.objectfactory.Components;
 
 import java.awt.Point;
 import java.util.ArrayList;
@@ -36,13 +34,14 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 
 import javax.jcr.Node;
+import javax.jcr.PathNotFoundException;
 import javax.jcr.PropertyType;
 import javax.jcr.RepositoryException;
 import javax.jcr.Value;
+import javax.jcr.ValueFormatException;
 import javax.jcr.query.InvalidQueryException;
 import javax.servlet.http.HttpServletRequest;
 
@@ -95,7 +94,7 @@ public final class MediaEl
      */
     public static MediaModule module()
     {
-        return (MediaModule) ModuleRegistry.Factory.getInstance().getModuleInstance(MediaModule.NAME);
+        return (MediaModule) Components.getComponent(ModuleRegistry.class).getModuleInstance(MediaModule.NAME);
     }
 
     /**
@@ -103,7 +102,7 @@ public final class MediaEl
      * @param obj content node or node UUID or jcr absolute path in media repository
      * @return content node
      */
-    public static Content node(Object obj)
+    public static Node node(Object obj)
     {
         if (obj == null)
         {
@@ -114,22 +113,7 @@ public final class MediaEl
 
         if (node != null)
         {
-            Content currentpage = null;
-
-            if (MgnlContext.isWebContext())
-            {
-                currentpage = MgnlContext.getAggregationState().getMainContent();
-            }
-
-            if (currentpage == null)
-            {
-                currentpage = new DefaultContent(node);
-            }
-
-            Content content = new NodeMapWrapper(
-                new I18nContentWrapper(new DefaultContent(node)),
-                currentpage.getHandle());
-            return content;
+            return Components.getComponent(NodeWrapperFactory.class).wrapNode(node);
         }
 
         return null;
@@ -153,7 +137,7 @@ public final class MediaEl
      */
     public static String urlParams(Object mediaref, Map<String, String> options)
     {
-        Content media = node(mediaref);
+        Node media = node(mediaref);
         if (media == null)
         {
             return null;
@@ -174,7 +158,7 @@ public final class MediaEl
     public static String thumbnail(Object mediaref)
     {
 
-        Content media = node(mediaref);
+        Node media = node(mediaref);
 
         if (media == null)
         {
@@ -199,7 +183,7 @@ public final class MediaEl
         {
             return null;
         }
-        return NodeDataUtil.getString(node(media), "type");
+        return PropertyUtil.getString(node(media), "type");
     }
 
     /**
@@ -210,11 +194,11 @@ public final class MediaEl
     public static String[] resolutions(Object mediaref)
     {
 
-        Content media = node(mediaref);
+        Node media = node(mediaref);
 
         List<String> res = new ArrayList<String>();
 
-        Content resolutions = getResolutionsNode(media);
+        Node resolutions = getResolutionsNode(media);
 
         Collection<NodeData> nodeDataCollection = resolutions.getNodeDataCollection();
 
@@ -246,7 +230,7 @@ public final class MediaEl
     public static String urlres(Object mediaref, String resolution)
     {
 
-        Content media = node(mediaref);
+        Node media = node(mediaref);
 
         if (media == null)
         {
@@ -271,7 +255,7 @@ public final class MediaEl
             return null;
         }
 
-        Content resolutions = getResolutionsNode(media);
+        Node resolutions = getResolutionsNode(media);
 
         try
         {
@@ -300,7 +284,7 @@ public final class MediaEl
     public static int[] size(Object mediaref, String resolution)
     {
 
-        Content media = node(mediaref);
+        Node media = node(mediaref);
 
         if (media != null)
         {
@@ -312,7 +296,7 @@ public final class MediaEl
             }
             else
             {
-                Content resolutions = getResolutionsNode(media);
+                Node resolutions = getResolutionsNode(media);
                 if (resolutions != null)
                 {
                     try
@@ -360,7 +344,7 @@ public final class MediaEl
     public static String preview(Object mediaref)
     {
 
-        Content media = node(mediaref);
+        Node media = node(mediaref);
 
         if (media == null)
         {
@@ -382,7 +366,7 @@ public final class MediaEl
     public static String[] usedInWebPages(Object mediaref)
     {
 
-        Content media = node(mediaref);
+        Node media = node(mediaref);
 
         if (media == null)
         {
@@ -391,7 +375,7 @@ public final class MediaEl
         }
         try
         {
-            List<String> retVal = mcm.getUsedInWebPages(media.getUUID());
+            List<String> retVal = mcm.getUsedInWebPages(media.getIdentifier());
             return (CollectionUtils.isNotEmpty(retVal) ? retVal.toArray(new String[retVal.size()]) : EMPTY_STRING_ARRAY);
         }
         catch (InvalidQueryException e)
@@ -416,11 +400,11 @@ public final class MediaEl
     public static Object property(Object mediaref, String property)
     {
 
-        Content media = node(mediaref);
+        Node media = node(mediaref);
 
         try
         {
-            if (media == null || !media.hasNodeData(property))
+            if (media == null || !media.hasProperty(property))
             {
                 return null;
             }
@@ -430,7 +414,16 @@ public final class MediaEl
             // return null;
         }
 
-        return getValueAsObject(media.getNodeData(property).getValue());
+        try
+        {
+            return getValueAsObject(media.getProperty(property).getValue());
+        }
+        catch (RepositoryException e)
+        {
+            log.debug("RepositoryException reading property " + property + " from " + media, e);
+        }
+
+        return null;
 
     }
 
@@ -501,15 +494,15 @@ public final class MediaEl
      * @param media
      * @return
      */
-    protected static Content getResolutionsNode(final Content media)
+    protected static Node getResolutionsNode(final Node media)
     {
-        Content resolutions = null;
+        Node resolutions = null;
 
         try
         {
-            if (media.hasContent("resolutions"))
+            if (media.hasNode("resolutions"))
             {
-                resolutions = media.getContent("resolutions");
+                resolutions = media.getNode("resolutions");
             }
         }
         catch (RepositoryException e)

@@ -20,12 +20,13 @@
 package net.sourceforge.openutils.mgnlmedia.media.types.impl;
 
 import info.magnolia.cms.beans.runtime.FileProperties;
-import info.magnolia.cms.core.Content;
 import info.magnolia.cms.core.NodeData;
 import info.magnolia.cms.util.NodeDataUtil;
 
 import java.awt.image.BufferedImage;
 import java.io.InputStream;
+
+import javax.jcr.Node;
 
 import net.sourceforge.openutils.mgnlmedia.media.configuration.MediaConfigurationManager;
 import net.sourceforge.openutils.mgnlmedia.media.utils.IcoUtils;
@@ -54,7 +55,7 @@ public class ImageTypeHandler extends BaseTypeHandler
     /**
      * {@inheritDoc}
      */
-    public String getThumbnailUrl(Content media)
+    public String getThumbnailUrl(Node media)
     {
         if (!ImageUtils.checkOrCreateResolution(media, "thumbnail", BaseTypeHandler.ORGINAL_NODEDATA_NAME))
         {
@@ -72,7 +73,7 @@ public class ImageTypeHandler extends BaseTypeHandler
      * {@inheritDoc}
      */
     @Override
-    public String getPreviewUrl(Content media)
+    public String getPreviewUrl(Node media)
     {
         if (!ImageUtils.checkOrCreateResolution(media, "preview", BaseTypeHandler.ORGINAL_NODEDATA_NAME))
         {
@@ -87,7 +88,7 @@ public class ImageTypeHandler extends BaseTypeHandler
     }
 
     @Override
-    public boolean onPostSave(Content media)
+    public boolean onPostSave(Node media)
     {
         InputStream stream = null;
         try

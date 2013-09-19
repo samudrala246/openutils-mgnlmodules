@@ -19,7 +19,7 @@
 
 package net.sourceforge.openutils.mgnlmedia.media.types.impl;
 
-import info.magnolia.cms.core.Content;
+import javax.jcr.Node;
 
 
 /**
@@ -33,7 +33,7 @@ public class AudioTypeHandler extends BaseTypeHandler
     /**
      * {@inheritDoc}
      */
-    public String getThumbnailUrl(Content media)
+    public String getThumbnailUrl(Node media)
     {
         return "/.resources/media/icons/thumb-audio.png";
     }

@@ -20,12 +20,12 @@
 package net.sourceforge.openutils.mgnlmedia.media.types;
 
 import info.magnolia.cms.beans.runtime.MultipartForm;
-import info.magnolia.cms.core.Content;
 import info.magnolia.cms.security.AccessDeniedException;
 
 import java.io.File;
 import java.util.Map;
 
+import javax.jcr.Node;
 import javax.jcr.RepositoryException;
 import javax.servlet.http.HttpServletRequest;
 
@@ -58,105 +58,105 @@ public interface MediaTypeHandler
      * init handler
      * @param typeDefinitionNode type definition node
      */
-    void init(Content typeDefinitionNode);
+    void init(Node typeDefinitionNode);
 
     /**
      * return true if media has no binary-data
      * @param media media
      * @return true if media has no binary-data
      */
-    boolean isExternal(Content media);
+    boolean isExternal(Node media);
 
     /**
      * return thumbnail absolute url
      * @param media media
      * @return url
      */
-    String getUrl(Content media);
+    String getUrl(Node media);
 
     /**
      * @param media
      * @param options
      * @return url
      */
-    String getUrl(Content media, Map<String, String> options);
+    String getUrl(Node media, Map<String, String> options);
 
     /**
      * return thumbnail absolute url
      * @param media media
      * @return url
      */
-    String getThumbnailUrl(Content media);
+    String getThumbnailUrl(Node media);
 
     /**
      * return thumbnail absolute url
      * @param media media
      * @return url
      */
-    String getPreviewUrl(Content media);
+    String getPreviewUrl(Node media);
 
     /**
      * return filename
      * @param media media
      * @return filename
      */
-    String getFilename(Content media);
+    String getFilename(Node media);
 
     /**
      * return filename
      * @param media media
      * @return filename
      */
-    String getExtension(Content media);
+    String getExtension(Node media);
 
     /**
      * return filename
      * @param media media
      * @return filename
      */
-    String getFullFilename(Content media);
+    String getFullFilename(Node media);
 
     /**
      * return title
      * @param media media
      * @return title
      */
-    String getTitle(Content media);
+    String getTitle(Node media);
 
     /**
      * return tags
      * @param media media
      * @return tags
      */
-    String getTags(Content media);
+    String getTags(Node media);
 
     /**
      * return description
      * @param media media
      * @return description
      */
-    String getDescription(Content media);
+    String getDescription(Node media);
 
     /**
      * return abstract
      * @param media media
      * @return abstract
      */
-    String getAbstract(Content media);
+    String getAbstract(Node media);
 
     /**
      * Returns the basic media info (file type, size for images, ...)
      * @param media media
      * @return a formatted string for media info
      */
-    Map<String, String> getMediaInfo(Content media);
+    Map<String, String> getMediaInfo(Node media);
 
     /**
      * Called from dialog when saving a media
      * @param media media saving
      * @return true if continue saving
      */
-    boolean onPostSave(Content media);
+    boolean onPostSave(Node media);
 
     /**
      * Get the name for a new node
@@ -188,20 +188,20 @@ public interface MediaTypeHandler
      * @exception RepositoryException repository exception
      * @exception AccessDeniedException access denied exception
      */
-    boolean onSavingPropertyMedia(Content media, Content parentNode, Content configNode, String name,
+    boolean onSavingPropertyMedia(Node media, Node parentNode, Node configNode, String name,
         HttpServletRequest request, MultipartForm form, int type, int valueType, int isRichEditValue, int encoding)
         throws RepositoryException, AccessDeniedException;
 
     /**
      * save a media file to a newly created media content
-     * @param media media content to save to
+     * @param media media Node to save to
      * @param f file input stream
      * @param cleanFileName file name without extension
      * @param extension file extension
      * @exception RepositoryException exception working on repository
      * @exception AccessDeniedException exception accessing node
      */
-    void saveFromZipFile(Content media, File f, String cleanFileName, String extension) throws AccessDeniedException,
+    void saveFromZipFile(Node media, File f, String cleanFileName, String extension) throws AccessDeniedException,
         RepositoryException;
     
     /**

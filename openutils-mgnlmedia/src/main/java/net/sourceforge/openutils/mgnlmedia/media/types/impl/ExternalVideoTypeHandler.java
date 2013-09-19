@@ -21,7 +21,6 @@ package net.sourceforge.openutils.mgnlmedia.media.types.impl;
 
 import info.magnolia.cms.beans.runtime.Document;
 import info.magnolia.cms.beans.runtime.MultipartForm;
-import info.magnolia.cms.core.Content;
 import info.magnolia.module.admininterface.SaveHandlerImpl;
 
 import java.io.File;
@@ -38,6 +37,7 @@ import java.util.Map;
 import java.util.UUID;
 
 import javax.jcr.AccessDeniedException;
+import javax.jcr.Node;
 import javax.jcr.RepositoryException;
 import javax.servlet.http.HttpServletRequest;
 
@@ -94,7 +94,7 @@ public class ExternalVideoTypeHandler extends BaseVideoTypeHandler
      * {@inheritDoc}
      */
     @Override
-    public void init(Content typeDefinitionNode)
+    public void init(Node typeDefinitionNode)
     {
         super.init(typeDefinitionNode);
     }
@@ -131,7 +131,7 @@ public class ExternalVideoTypeHandler extends BaseVideoTypeHandler
      * {@inheritDoc}
      */
     @Override
-    public String getFilename(Content media)
+    public String getFilename(Node media)
     {
         return getUrl(media);
     }
@@ -140,13 +140,13 @@ public class ExternalVideoTypeHandler extends BaseVideoTypeHandler
      * {@inheritDoc}
      */
     @Override
-    public String getExtension(Content media)
+    public String getExtension(Node media)
     {
         return null;
     }
 
     @Override
-    public void saveFromZipFile(Content media, File f, String cleanFileName, String extension)
+    public void saveFromZipFile(Node media, File f, String cleanFileName, String extension)
         throws AccessDeniedException, RepositoryException
     {
 
@@ -156,7 +156,7 @@ public class ExternalVideoTypeHandler extends BaseVideoTypeHandler
      * {@inheritDoc}
      */
     @Override
-    public String getUrl(Content media, Map<String, String> options)
+    public String getUrl(Node media, Map<String, String> options)
     {
 
         String url = media.getNodeData("videoUrl").getString();
@@ -221,7 +221,7 @@ public class ExternalVideoTypeHandler extends BaseVideoTypeHandler
     }
 
     @Override
-    protected VideoMetaData parseFLVMetaData(Content media) throws Exception
+    protected VideoMetaData parseFLVMetaData(Node media) throws Exception
     {
         if (!parseremotefiles)
         {
@@ -301,7 +301,7 @@ public class ExternalVideoTypeHandler extends BaseVideoTypeHandler
      * {@inheritDoc}
      */
     @Override
-    public String getUrl(Content media)
+    public String getUrl(Node media)
     {
         return getUrl(media, null);
     }
@@ -310,7 +310,7 @@ public class ExternalVideoTypeHandler extends BaseVideoTypeHandler
      * {@inheritDoc}
      */
     @Override
-    public boolean onPostSave(Content media)
+    public boolean onPostSave(Node media)
     {
 
         if (parseremotefiles)
@@ -347,7 +347,7 @@ public class ExternalVideoTypeHandler extends BaseVideoTypeHandler
      * @param media
      * @param previewUrl
      */
-    private void copyPreviewImageToRepository(Content media, String previewUrl)
+    private void copyPreviewImageToRepository(Node media, String previewUrl)
     {
         InputStream is = null;
         try

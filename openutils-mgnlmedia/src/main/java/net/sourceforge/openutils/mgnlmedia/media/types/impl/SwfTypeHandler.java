@@ -19,11 +19,12 @@
 
 package net.sourceforge.openutils.mgnlmedia.media.types.impl;
 
-import info.magnolia.cms.core.Content;
 import info.magnolia.cms.util.NodeDataUtil;
 
 import java.awt.Dimension;
 import java.io.InputStream;
+
+import javax.jcr.Node;
 
 import org.apache.commons.io.IOUtils;
 import org.devlib.schmidt.imageinfo.ImageInfo;
@@ -47,7 +48,7 @@ public class SwfTypeHandler extends MediaWithPreviewImageTypeHandler
     private Logger log = LoggerFactory.getLogger(SwfTypeHandler.class);
 
     @Override
-    public boolean onPostSave(Content media)
+    public boolean onPostSave(Node media)
     {
         InputStream stream = null;
         try

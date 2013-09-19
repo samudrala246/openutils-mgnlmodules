@@ -22,11 +22,11 @@ package net.sourceforge.openutils.mgnlmedia.media.types.impl;
 import info.magnolia.cms.beans.runtime.Document;
 import info.magnolia.cms.beans.runtime.FileProperties;
 import info.magnolia.cms.beans.runtime.MultipartForm;
-import info.magnolia.cms.core.Content;
 import info.magnolia.cms.core.NodeData;
 import info.magnolia.cms.i18n.I18nContentSupportFactory;
 import info.magnolia.cms.security.AccessDeniedException;
 import info.magnolia.cms.util.NodeDataUtil;
+import info.magnolia.jcr.util.MetaDataUtil;
 import info.magnolia.module.admininterface.SaveHandlerImpl;
 
 import java.io.File;
@@ -36,6 +36,7 @@ import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import javax.jcr.Node;
 import javax.jcr.PropertyType;
 import javax.jcr.RepositoryException;
 import javax.servlet.http.HttpServletRequest;
@@ -59,7 +60,7 @@ public abstract class BaseTypeHandler implements MediaTypeHandler
 {
 
     /**
-     * Nodedata name where original media content is saved
+     * Nodedata name where original media Node is saved
      */
     public static final String ORGINAL_NODEDATA_NAME = "original";
 
@@ -73,7 +74,7 @@ public abstract class BaseTypeHandler implements MediaTypeHandler
     /**
      * {@inheritDoc}
      */
-    public void init(Content typeDefinitionNode)
+    public void init(Node typeDefinitionNode)
     {
         type = typeDefinitionNode.getName();
     }
@@ -94,7 +95,7 @@ public abstract class BaseTypeHandler implements MediaTypeHandler
     /**
      * {@inheritDoc}
      */
-    public boolean onSavingPropertyMedia(Content media, Content parentNode, Content configNode, String name,
+    public boolean onSavingPropertyMedia(Node media, Node parentNode, Node configNode, String name,
         HttpServletRequest request, MultipartForm form, int type, int valueType, int isRichEditValue, int encoding)
         throws RepositoryException, AccessDeniedException
     {
@@ -126,7 +127,7 @@ public abstract class BaseTypeHandler implements MediaTypeHandler
     /**
      * {@inheritDoc}
      */
-    public void saveFromZipFile(Content media, File f, String cleanFileName, String extension)
+    public void saveFromZipFile(Node media, File f, String cleanFileName, String extension)
         throws AccessDeniedException, RepositoryException
     {
         Document doc = new Document(f, type + extension);
@@ -138,7 +139,7 @@ public abstract class BaseTypeHandler implements MediaTypeHandler
     /**
      * {@inheritDoc}
      */
-    public boolean onPostSave(Content media)
+    public boolean onPostSave(Node media)
     {
         try
         {
@@ -165,7 +166,7 @@ public abstract class BaseTypeHandler implements MediaTypeHandler
 
             if (MediaEl.module().isSingleinstance())
             {
-                media.getMetaData().setActivated();
+                MetaDataUtil.getMetaData(media).setActivated();
                 media.save();
             }
         }
@@ -182,12 +183,12 @@ public abstract class BaseTypeHandler implements MediaTypeHandler
      * @param media media
      * @return default nodedata
      */
-    protected NodeData getOriginalFileNodeData(Content media)
+    protected NodeData getOriginalFileNodeData(Node media)
     {
         return media.getNodeData(ORGINAL_NODEDATA_NAME);
     }
 
-    public boolean isExternal(Content media)
+    public boolean isExternal(Node media)
     {
         try
         {
@@ -203,7 +204,7 @@ public abstract class BaseTypeHandler implements MediaTypeHandler
     /**
      * {@inheritDoc}
      */
-    public String getExtension(Content media)
+    public String getExtension(Node media)
     {
         return getOriginalFileNodeData(media).getAttribute(FileProperties.PROPERTY_EXTENSION);
     }
@@ -211,7 +212,7 @@ public abstract class BaseTypeHandler implements MediaTypeHandler
     /**
      * {@inheritDoc}
      */
-    public String getFilename(Content media)
+    public String getFilename(Node media)
     {
         return getOriginalFileNodeData(media).getAttribute(FileProperties.PROPERTY_FILENAME);
     }
@@ -219,7 +220,7 @@ public abstract class BaseTypeHandler implements MediaTypeHandler
     /**
      * {@inheritDoc}
      */
-    public String getFullFilename(Content media)
+    public String getFullFilename(Node media)
     {
         return getFilename(media)
             + (StringUtils.isNotBlank(getExtension(media)) ? "." + getExtension(media) : StringUtils.EMPTY);
@@ -228,7 +229,7 @@ public abstract class BaseTypeHandler implements MediaTypeHandler
     /**
      * {@inheritDoc}
      */
-    public String getUrl(Content media, Map<String, String> options)
+    public String getUrl(Node media, Map<String, String> options)
     {
         String filenameEncoded = getFullFilename(media);
         try
@@ -250,7 +251,7 @@ public abstract class BaseTypeHandler implements MediaTypeHandler
     /**
      * {@inheritDoc}
      */
-    public String getUrl(Content media)
+    public String getUrl(Node media)
     {
         return getUrl(media, null);
     }
@@ -258,7 +259,7 @@ public abstract class BaseTypeHandler implements MediaTypeHandler
     /**
      * {@inheritDoc}
      */
-    public String getPreviewUrl(Content media)
+    public String getPreviewUrl(Node media)
     {
         return getUrl(media);
     }
@@ -266,7 +267,7 @@ public abstract class BaseTypeHandler implements MediaTypeHandler
     /**
      * {@inheritDoc}
      */
-    public String getTitle(Content media)
+    public String getTitle(Node media)
     {
         return I18nContentSupportFactory.getI18nSupport().getNodeData(media, "title").getString();
     }
@@ -274,7 +275,7 @@ public abstract class BaseTypeHandler implements MediaTypeHandler
     /**
      * {@inheritDoc}
      */
-    public String getTags(Content media)
+    public String getTags(Node media)
     {
         return I18nContentSupportFactory.getI18nSupport().getNodeData(media, "tags").getString();
     }
@@ -282,7 +283,7 @@ public abstract class BaseTypeHandler implements MediaTypeHandler
     /**
      * {@inheritDoc}
      */
-    public String getDescription(Content media)
+    public String getDescription(Node media)
     {
         return I18nContentSupportFactory.getI18nSupport().getNodeData(media, "description").getString();
     }
@@ -290,7 +291,7 @@ public abstract class BaseTypeHandler implements MediaTypeHandler
     /**
      * {@inheritDoc}
      */
-    public String getAbstract(Content media)
+    public String getAbstract(Node media)
     {
         return I18nContentSupportFactory.getI18nSupport().getNodeData(media, "abstract").getString();
     }
@@ -298,7 +299,7 @@ public abstract class BaseTypeHandler implements MediaTypeHandler
     /**
      * {@inheritDoc}
      */
-    public Map<String, String> getMediaInfo(Content media)
+    public Map<String, String> getMediaInfo(Node media)
     {
 
         Map<String, String> info = new LinkedHashMap<String, String>();
@@ -352,7 +353,7 @@ public abstract class BaseTypeHandler implements MediaTypeHandler
      * @param info map containing metadata keys/values
      * @param key nodedata name
      */
-    protected void addToInfo(Content media, Map<String, String> info, String key)
+    protected void addToInfo(Node media, Map<String, String> info, String key)
     {
         NodeData data = media.getNodeData(key);
 
@@ -384,6 +385,5 @@ public abstract class BaseTypeHandler implements MediaTypeHandler
     {
         // Do nothing
     }
-    
-    
+
 }

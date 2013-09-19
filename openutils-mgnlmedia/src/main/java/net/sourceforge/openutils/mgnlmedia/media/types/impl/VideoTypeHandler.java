@@ -20,9 +20,10 @@
 package net.sourceforge.openutils.mgnlmedia.media.types.impl;
 
 import info.magnolia.cms.beans.runtime.FileProperties;
-import info.magnolia.cms.core.Content;
 
 import java.io.InputStream;
+
+import javax.jcr.Node;
 
 import net.sourceforge.openutils.mgnlmedia.media.utils.VideoMedataUtils;
 import net.sourceforge.openutils.mgnlmedia.media.utils.VideoMedataUtils.VideoMetaData;
@@ -48,7 +49,7 @@ public class VideoTypeHandler extends BaseVideoTypeHandler
     protected final String DURATION_ATTRIBUTE = "duration";
 
     @Override
-    protected VideoMetaData parseFLVMetaData(Content media) throws Exception
+    protected VideoMetaData parseFLVMetaData(Node media) throws Exception
     {
         InputStream stream = getOriginalFileNodeData(media).getStream();
         try

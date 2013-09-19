@@ -19,7 +19,6 @@
 
 package net.sourceforge.openutils.mgnlmedia.playlist.utils;
 
-import info.magnolia.cms.core.Content;
 import info.magnolia.cms.core.MgnlNodeType;
 import info.magnolia.context.MgnlContext;
 import info.magnolia.jcr.util.NodeUtil;
@@ -152,7 +151,7 @@ public final class PlaylistIterateUtils
                     public MediaNodeAndEntryPath apply(Node playlistEntry)
                     {
                         String mediaUUID = PropertyUtil.getString(playlistEntry, "media");
-                        Content mediaNode = MediaEl.node(mediaUUID);
+                        Node mediaNode = MediaEl.node(mediaUUID);
                         if (mediaNode == null)
                         {
                             log.warn(
@@ -163,7 +162,7 @@ public final class PlaylistIterateUtils
                                     NodeUtil.getPathIfPossible(playlistNode) });
                         }
 
-                        return new MediaNodeAndEntryPath(mediaNode.getJCRNode(), NodeUtil
+                        return new MediaNodeAndEntryPath(mediaNode, NodeUtil
                             .getPathIfPossible(playlistEntry));
                     }
                 });

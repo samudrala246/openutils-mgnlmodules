@@ -21,7 +21,6 @@ package net.sourceforge.openutils.mgnlmedia.media.types.impl;
 
 import info.magnolia.cms.beans.runtime.Document;
 import info.magnolia.cms.beans.runtime.FileProperties;
-import info.magnolia.cms.core.Content;
 import info.magnolia.cms.core.NodeData;
 import info.magnolia.cms.util.NodeDataUtil;
 import info.magnolia.module.admininterface.SaveHandlerImpl;
@@ -34,6 +33,7 @@ import java.util.Collections;
 import java.util.List;
 
 import javax.imageio.ImageIO;
+import javax.jcr.Node;
 import javax.jcr.PropertyType;
 import javax.jcr.RepositoryException;
 
@@ -67,7 +67,7 @@ public class DocumentTypeHandler extends MediaWithPreviewImageTypeHandler
      * {@inheritDoc}
      */
     @Override
-    public String getUrl(Content media)
+    public String getUrl(Node media)
     {
         return getUrl(media, Collections.<String, String> emptyMap());
     }
@@ -76,7 +76,7 @@ public class DocumentTypeHandler extends MediaWithPreviewImageTypeHandler
      * {@inheritDoc}
      */
     @Override
-    public boolean onPostSave(Content media)
+    public boolean onPostSave(Node media)
     {
 
         NodeData data = getOriginalFileNodeData(media);
@@ -120,7 +120,7 @@ public class DocumentTypeHandler extends MediaWithPreviewImageTypeHandler
      * @param stream inputStream for the original pdf
      * @param filename original filename
      */
-    protected void createPdfPreview(Content media, InputStream stream, String filename)
+    protected void createPdfPreview(Node media, InputStream stream, String filename)
     {
 
         PDDocument document = null;
@@ -193,7 +193,7 @@ public class DocumentTypeHandler extends MediaWithPreviewImageTypeHandler
      * @param file File to be copied
      * @param filename filename
      */
-    protected void copyPreviewImageToRepository(Content media, File file, String filename)
+    protected void copyPreviewImageToRepository(Node media, File file, String filename)
     {
 
         Document doc = new Document(file, "image/png");
