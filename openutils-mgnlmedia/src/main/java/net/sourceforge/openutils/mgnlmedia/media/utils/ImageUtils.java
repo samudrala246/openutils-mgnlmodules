@@ -20,7 +20,7 @@
 package net.sourceforge.openutils.mgnlmedia.media.utils;
 
 import info.magnolia.cms.beans.runtime.FileProperties;
-import info.magnolia.cms.core.Content;
+
 import info.magnolia.cms.core.HierarchyManager;
 import info.magnolia.cms.core.NodeData;
 import info.magnolia.context.Context;
@@ -497,7 +497,7 @@ public final class ImageUtils
      * @throws RepositoryException exception in jcr operations
      * @throws IOException exception converting image to jpg
      */
-    public static NodeData saveResolution(BufferedImage image, Content saveTo, String extension, float quality,
+    public static NodeData saveResolution(BufferedImage image, Node saveTo, String extension, float quality,
         boolean forceProgressive) throws RepositoryException, IOException
     {
         return saveResolution(image, saveTo, null, extension, quality, forceProgressive);
@@ -514,12 +514,12 @@ public final class ImageUtils
      * @throws RepositoryException exception in jcr operations
      * @throws IOException exception converting image to jpg
      */
-    public static NodeData saveResolution(final BufferedImage image, final Content saveTo, final String name,
+    public static Node saveResolution(final BufferedImage image, final Node saveTo, final String name,
         final String extension, final float quality, final boolean forceProgressive) throws RepositoryException,
         IOException
     {
 
-        Content resolutions = getResolutionsNode(saveTo);
+        Node resolutions = getResolutionsNode(saveTo);
         if (resolutions == null)
         {
             resolutions = saveTo.createContent("resolutions", MediaConfigurationManager.RESOLUTIONS);
@@ -534,9 +534,9 @@ public final class ImageUtils
         }
 
         final String resolutionNodeName = getResolutionPath(resolution);
-        final Content resolutionsFinal = resolutions;
+        final Node resolutionsFinal = resolutions;
 
-        Node resolutionsJcrNode = resolutions.getJCRNode();
+        Node resolutionsJcrNode = resolutions;
 
         Object ret;
         try
@@ -830,7 +830,7 @@ public final class ImageUtils
      * @param resolutionTarget target resolution
      * @return false if resolution doesn't exist and there is a problem in generate it; true otherwise
      */
-    public static boolean checkOrCreateResolution(final Content media, final String resolutionTarget)
+    public static boolean checkOrCreateResolution(final Node media, final String resolutionTarget)
     {
 
         return checkOrCreateResolution(media, resolutionTarget, BaseTypeHandler.ORGINAL_NODEDATA_NAME);
@@ -843,15 +843,15 @@ public final class ImageUtils
      * @param nodeDataName nodedata where the image to resize is stored
      * @return false if resolution doesn't exist and there is a problem in generate it; true otherwise
      */
-    public static boolean checkOrCreateResolution(final Content media, final String resolutionTarget,
+    public static boolean checkOrCreateResolution(final Node media, final String resolutionTarget,
         String nodeDataName)
     {
         return checkOrCreateResolution(media, resolutionTarget, nodeDataName, false);
     }
     
-    private static boolean checkResolution(final Content media, final String resolutionTarget, final boolean lazy)
+    private static boolean checkResolution(final Node media, final String resolutionTarget, final boolean lazy)
     {
-        Content resolutions = getResolutionsNode(media);
+        Node resolutions = getResolutionsNode(media);
 
         String resolution = resolutionTarget;
 
@@ -886,7 +886,7 @@ public final class ImageUtils
         return false;
     }
 
-    public static boolean checkOrCreateResolution(final Content media, final String resolutionTarget,
+    public static boolean checkOrCreateResolution(final Node media, final String resolutionTarget,
         String nodeDataName, final boolean lazy)
     {
         if (checkResolution(media, resolutionTarget, lazy))
@@ -953,7 +953,7 @@ public final class ImageUtils
                         resolutioNodeName = resolutionTarget;
                     }
 
-                    Content node;
+                    Node node;
                     try
                     {
                         node = hm.getContent(media.getHandle());
@@ -1126,15 +1126,15 @@ public final class ImageUtils
      * @param media
      * @return
      */
-    protected static Content getResolutionsNode(final Content media)
+    protected static Node getResolutionsNode(final Node media)
     {
-        Content resolutions = null;
+        Node resolutions = null;
 
         try
         {
-            if (media.hasContent("resolutions"))
+            if (media.hasNode("resolutions"))
             {
-                resolutions = media.getContent("resolutions");
+                resolutions = media.getNode("resolutions");
             }
         }
         catch (RepositoryException e)
@@ -1231,11 +1231,11 @@ public final class ImageUtils
      * @param resolution resolution
      * @return file extension for a resolution stored in a media node
      */
-    public static String getExtension(Content media, String resolution)
+    public static String getExtension(Node media, String resolution)
     {
         try
         {
-            Content resolutions = media.getContent("resolutions");
+            Node resolutions = media.getNode("resolutions");
             NodeData res = resolutions.getNodeData(resolution);
             return res.getAttribute(FileProperties.PROPERTY_EXTENSION);
         }

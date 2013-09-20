@@ -19,6 +19,7 @@
 
 package net.sourceforge.openutils.mgnlmedia.playlist.dialog;
 
+
 import info.magnolia.cms.core.Content;
 import info.magnolia.cms.gui.dialog.Dialog;
 import info.magnolia.cms.gui.misc.Sources;

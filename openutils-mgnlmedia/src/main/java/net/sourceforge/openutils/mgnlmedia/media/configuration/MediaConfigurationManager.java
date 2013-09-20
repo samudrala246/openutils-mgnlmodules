@@ -114,9 +114,7 @@ public class MediaConfigurationManager extends ObservedManager
     {
 
         Node node = content.getJCRNode();
-        
-        
-        
+
         for (Iterator iter = ContentUtil.getAllChildren(node).iterator(); iter.hasNext();)
         {
             Node typeNode = iter.next();
@@ -147,7 +145,7 @@ public class MediaConfigurationManager extends ObservedManager
             }
             catch (Throwable e)
             {
-                log.error("Error getting media type configuration for {}", typeNode.getHandle(), e);
+                log.error("Error getting media type configuration for {}", NodeUtil.getPathIfPossible(typeNode), e);
             }
         }
     }

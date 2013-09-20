@@ -20,7 +20,6 @@
 package net.sourceforge.openutils.mgnlmedia.media.setup;
 
 import info.magnolia.cms.beans.runtime.FileProperties;
-import info.magnolia.cms.core.Content;
 import info.magnolia.cms.core.HierarchyManager;
 import info.magnolia.cms.core.NodeData;
 import info.magnolia.cms.core.search.Query;
@@ -32,6 +31,7 @@ import info.magnolia.module.delta.TaskExecutionException;
 
 import java.util.Collection;
 
+import javax.jcr.Node;
 import javax.jcr.PropertyType;
 import javax.jcr.RepositoryException;
 
@@ -66,8 +66,8 @@ public class RenameThumbToImageTask extends AbstractTask
         {
             Query query = mgr.createQuery("//*", Query.XPATH);
             QueryResult result = query.execute();
-            Collection<Content> medias = result.getContent(MediaConfigurationManager.MEDIA.getSystemName());
-            for (Content node : medias)
+            Collection<Node> medias = result.getContent(MediaConfigurationManager.MEDIA.getSystemName());
+            for (Node node : medias)
             {
                 if (node.hasNodeData("thumbnail"))
                 {

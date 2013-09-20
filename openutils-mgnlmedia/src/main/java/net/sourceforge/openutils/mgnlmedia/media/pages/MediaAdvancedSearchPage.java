@@ -19,7 +19,7 @@
 
 package net.sourceforge.openutils.mgnlmedia.media.pages;
 
-import info.magnolia.cms.core.Content;
+
 import info.magnolia.context.MgnlContext;
 import info.magnolia.freemarker.FreemarkerUtil;
 
@@ -27,6 +27,7 @@ import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import javax.jcr.Node;
 import javax.jcr.RepositoryException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -214,15 +215,15 @@ public class MediaAdvancedSearchPage extends MediaFolderViewPage
         return metas;
     }
 
-    public Iterator<Content> getMediaContentList()
+    public Iterator<Node> getMediaContentList()
     {
-        return Iterators.transform(searchResult.getItems(), new Function<AdvancedResultItem, Content>()
+        return Iterators.transform(searchResult.getItems(), new Function<AdvancedResultItem, Node>()
         {
 
             /**
              * {@inheritDoc}
              */
-            public Content apply(AdvancedResultItem from)
+            public Node apply(AdvancedResultItem from)
             {
                 try
                 {

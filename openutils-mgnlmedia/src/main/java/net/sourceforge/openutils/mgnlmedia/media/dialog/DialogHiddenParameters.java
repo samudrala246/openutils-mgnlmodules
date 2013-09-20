@@ -19,6 +19,8 @@
 
 package net.sourceforge.openutils.mgnlmedia.media.dialog;
 
+
+
 import info.magnolia.cms.core.Content;
 
 import javax.jcr.RepositoryException;

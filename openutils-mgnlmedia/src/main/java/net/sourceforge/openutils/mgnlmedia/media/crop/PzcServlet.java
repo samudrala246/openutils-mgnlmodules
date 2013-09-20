@@ -19,7 +19,7 @@
 
 package net.sourceforge.openutils.mgnlmedia.media.crop;
 
-import info.magnolia.cms.core.Content;
+
 import info.magnolia.cms.core.HierarchyManager;
 import info.magnolia.cms.core.NodeData;
 import info.magnolia.cms.util.NodeDataUtil;
@@ -28,6 +28,7 @@ import info.magnolia.repository.RepositoryConstants;
 
 import java.io.IOException;
 
+import javax.jcr.Node;
 import javax.jcr.RepositoryException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -73,7 +74,7 @@ public class PzcServlet extends HttpServlet
 
         try
         {
-            final Content node = hm.getContent(handle);
+            final Node node = hm.getContent(handle);
             if ("delete".equals(command))
             {
                 NodeData nd = node.getNodeData(id);
@@ -95,7 +96,7 @@ public class PzcServlet extends HttpServlet
                         HierarchyManager hm = MgnlContext.getHierarchyManager(systemRepository);
                         try
                         {
-                            Content systemNode = hm.getContent(node.getHandle());
+                            Node systemNode = hm.getContent(node.getHandle());
                             NodeDataUtil.getOrCreateAndSet(systemNode, id, new StringBuffer()
                                 .append(zoom)
                                 .append("|")

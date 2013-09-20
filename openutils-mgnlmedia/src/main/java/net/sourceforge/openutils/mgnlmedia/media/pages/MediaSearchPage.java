@@ -19,7 +19,7 @@
 
 package net.sourceforge.openutils.mgnlmedia.media.pages;
 
-import info.magnolia.cms.core.Content;
+
 import info.magnolia.cms.core.HierarchyManager;
 import info.magnolia.context.MgnlContext;
 
@@ -28,6 +28,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
+import javax.jcr.Node;
 import javax.jcr.RepositoryException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -95,9 +96,9 @@ public class MediaSearchPage extends MessagesTemplatedMVCHandler
         HierarchyManager mgr = MgnlContext.getHierarchyManager(MediaModule.REPO);
         try
         {
-            Collection<Content> contents = mgr.getRoot().getChildren(MediaConfigurationManager.FOLDER);
+            Collection<Node> contents = mgr.getRoot().getChildren(MediaConfigurationManager.FOLDER);
             List<String> tmpPaths = new ArrayList<String>();
-            for (Content c : contents)
+            for (Node c : contents)
             {
                 tmpPaths.add(c.getName());
             }

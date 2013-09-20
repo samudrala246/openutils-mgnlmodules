@@ -19,12 +19,14 @@
 
 package net.sourceforge.openutils.mgnlmedia.media.pages;
 
-import info.magnolia.cms.core.Content;
+
 import info.magnolia.cms.core.MetaData;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+
+import javax.jcr.Node;
 
 
 /**
@@ -51,7 +53,7 @@ public class MediaBean
 
     private String dialog;
 
-    private Content content;
+    private Node content;
 
     private MetaData metaData;
 
@@ -203,7 +205,7 @@ public class MediaBean
      * Returns the content.
      * @return the content
      */
-    public Content getContent()
+    public Node getContent()
     {
         return content;
     }
@@ -212,7 +214,7 @@ public class MediaBean
      * Sets the content.
      * @param content the content to set
      */
-    public void setContent(Content content)
+    public void setContent(Node content)
     {
         this.content = content;
     }

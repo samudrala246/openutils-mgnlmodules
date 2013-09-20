@@ -19,13 +19,14 @@
 
 package net.sourceforge.openutils.mgnlmedia.media.advancedsearch;
 
-import info.magnolia.cms.core.Content;
+
 import info.magnolia.context.MgnlContext;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import javax.jcr.Node;
 import javax.jcr.RepositoryException;
 
 import org.apache.commons.lang.StringUtils;
@@ -112,7 +113,7 @@ public class SearchFilterOptionProvider extends SearchFilterAbstract
         {
             try
             {
-                Collection<Content> referenceOptions = MgnlContext
+                Collection<Node> referenceOptions = MgnlContext
                     .getHierarchyManager("config")
                     .getContent(reference)
                     .getChildren();
@@ -126,7 +127,7 @@ public class SearchFilterOptionProvider extends SearchFilterAbstract
                     addOptions(opt);
                 }
 
-                for (Content content : referenceOptions)
+                for (Node content : referenceOptions)
                 {
                     opt = new Option();
                     opt.setLabel(content.getNodeData("label").getString());

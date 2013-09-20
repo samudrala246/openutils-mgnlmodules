@@ -19,6 +19,7 @@
 
 package net.sourceforge.openutils.mgnlmedia.playlist.dialog;
 
+
 import info.magnolia.cms.core.Content;
 import info.magnolia.cms.core.HierarchyManager;
 import info.magnolia.cms.core.Path;
@@ -28,6 +29,7 @@ import info.magnolia.module.admininterface.dialogs.ConfiguredDialog;
 
 import java.io.IOException;
 
+import javax.jcr.Node;
 import javax.jcr.RepositoryException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -79,7 +81,7 @@ public class PlaylistEntryDialogMVC extends ConfiguredDialog
     protected boolean onPreSave(SaveHandler control)
     {
         HierarchyManager hm = MgnlContext.getHierarchyManager(PlaylistConstants.REPO);
-        Content c = null;
+        Node c = null;
         try
         {
             c = hm.getContent(control.getPath());

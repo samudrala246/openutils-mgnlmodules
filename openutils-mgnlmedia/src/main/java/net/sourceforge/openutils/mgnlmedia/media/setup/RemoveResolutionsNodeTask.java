@@ -19,6 +19,7 @@
 
 package net.sourceforge.openutils.mgnlmedia.media.setup;
 
+
 import info.magnolia.cms.core.Content;
 import info.magnolia.cms.core.HierarchyManager;
 import info.magnolia.cms.core.ItemType;

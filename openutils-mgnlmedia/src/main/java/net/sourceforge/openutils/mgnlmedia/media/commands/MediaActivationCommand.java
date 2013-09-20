@@ -19,6 +19,7 @@
 
 package net.sourceforge.openutils.mgnlmedia.media.commands;
 
+
 import info.magnolia.cms.core.Content;
 import info.magnolia.cms.core.ItemType;
 import info.magnolia.cms.exchange.ExchangeException;

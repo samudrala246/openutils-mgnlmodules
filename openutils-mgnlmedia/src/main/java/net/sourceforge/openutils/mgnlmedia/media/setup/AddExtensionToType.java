@@ -19,13 +19,14 @@
 
 package net.sourceforge.openutils.mgnlmedia.media.setup;
 
-import info.magnolia.cms.core.Content;
+
 import info.magnolia.cms.core.HierarchyManager;
 import info.magnolia.module.InstallContext;
 import info.magnolia.module.delta.AbstractRepositoryTask;
 import info.magnolia.module.delta.TaskExecutionException;
 import info.magnolia.repository.RepositoryConstants;
 
+import javax.jcr.Node;
 import javax.jcr.RepositoryException;
 
 import org.apache.commons.lang.StringUtils;
@@ -71,7 +72,7 @@ public class AddExtensionToType extends AbstractRepositoryTask
 
         try
         {
-            final Content mediatypenode = hm.getContent(nodePath);
+            final Node mediatypenode = hm.getContent(nodePath);
             String extensions = mediatypenode.getNodeData("extensions").getString();
             if (!StringUtils.contains(extensions, this.extension))
             {
@@ -85,7 +86,7 @@ public class AddExtensionToType extends AbstractRepositoryTask
 
         try
         {
-            final Content mediatypenode = hm.getContent(control);
+            final Node mediatypenode = hm.getContent(control);
             String extensions = mediatypenode.getNodeData("extensions").getString();
             if (!StringUtils.contains(extensions, this.extension))
             {

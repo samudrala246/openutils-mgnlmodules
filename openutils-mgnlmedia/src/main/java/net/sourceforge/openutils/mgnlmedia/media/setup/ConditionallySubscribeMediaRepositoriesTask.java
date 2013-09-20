@@ -19,7 +19,7 @@
 
 package net.sourceforge.openutils.mgnlmedia.media.setup;
 
-import info.magnolia.cms.core.Content;
+
 import info.magnolia.cms.core.ItemType;
 import info.magnolia.cms.exchange.ActivationManager;
 import info.magnolia.cms.exchange.ActivationManagerFactory;
@@ -35,6 +35,7 @@ import info.magnolia.repository.RepositoryConstants;
 import java.util.Collection;
 import java.util.List;
 
+import javax.jcr.Node;
 import javax.jcr.RepositoryException;
 
 
@@ -59,7 +60,7 @@ public class ConditionallySubscribeMediaRepositoriesTask extends AbstractTask
 
         // check for the sigleinstance flag directly in jcr, the module is not started yet
         boolean singleinstance = false;
-        Content moduleConfigNode = ContentUtil.getContent(RepositoryConstants.CONFIG, "/modules/media/config");
+        Node moduleConfigNode = ContentUtil.getContent(RepositoryConstants.CONFIG, "/modules/media/config");
         if (moduleConfigNode != null)
         {
             singleinstance = moduleConfigNode.getNodeData("singleinstance").getBoolean();
@@ -95,13 +96,13 @@ public class ConditionallySubscribeMediaRepositoriesTask extends AbstractTask
         {
             if (!subscriber.isSubscribed("/", repository))
             {
-                Content subscriptionsNode = ContentUtil.getContent(RepositoryConstants.CONFIG, sManager.getConfigPath()
+                Node subscriptionsNode = ContentUtil.getContent(RepositoryConstants.CONFIG, sManager.getConfigPath()
                     + "/"
                     + subscriber.getName()
                     + "/subscriptions");
                 try
                 {
-                    Content newSubscription = subscriptionsNode.createContent(repository, ItemType.CONTENTNODE);
+                    Node newSubscription = subscriptionsNode.createContent(repository, ItemType.CONTENTNODE);
                     newSubscription.createNodeData("toURI").setValue("/");
                     newSubscription.createNodeData("repository").setValue(repository);
                     newSubscription.createNodeData("fromURI").setValue("/");

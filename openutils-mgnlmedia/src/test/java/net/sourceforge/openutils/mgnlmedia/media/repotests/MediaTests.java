@@ -19,7 +19,7 @@
 
 package net.sourceforge.openutils.mgnlmedia.media.repotests;
 
-import info.magnolia.cms.core.Content;
+
 import info.magnolia.cms.core.HierarchyManager;
 import info.magnolia.cms.util.ContentUtil;
 import info.magnolia.context.MgnlContext;
@@ -27,6 +27,8 @@ import it.openutils.mgnlutils.test.RepositoryTestConfiguration;
 import it.openutils.mgnlutils.test.TestNgRepositoryTestcase;
 
 import java.io.InputStream;
+
+import javax.jcr.Node;
 
 import net.sourceforge.openutils.mgnlmedia.media.utils.MediaLoadUtils;
 
@@ -62,7 +64,7 @@ public class MediaTests extends TestNgRepositoryTestcase
         hm.save();
 
         InputStream is = getClass().getResourceAsStream("/images/openmind.ico");
-        Content entry = MediaLoadUtils.loadEntry(is, "/test/folder", "openmind.ico", true);
+        Node entry = MediaLoadUtils.loadEntry(is, "/test/folder", "openmind.ico", true);
 
         IOUtils.closeQuietly(is);
 

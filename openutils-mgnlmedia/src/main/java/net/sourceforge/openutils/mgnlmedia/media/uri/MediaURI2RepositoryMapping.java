@@ -20,12 +20,12 @@
 package net.sourceforge.openutils.mgnlmedia.media.uri;
 
 import info.magnolia.cms.beans.config.URI2RepositoryMapping;
-import info.magnolia.cms.core.Content;
 import info.magnolia.cms.core.NodeData;
 import info.magnolia.cms.util.ContentUtil;
 import info.magnolia.context.MgnlContext;
 import info.magnolia.link.Link;
 
+import javax.jcr.Node;
 import javax.jcr.RepositoryException;
 
 import net.sourceforge.openutils.mgnlmedia.media.lifecycle.MediaModule;
@@ -116,10 +116,10 @@ public class MediaURI2RepositoryMapping extends URI2RepositoryMapping
             if (p != -1)
             {
                 String mediaPath = handle.substring(0, p);
-                Content mediaNode = ContentUtil.getContent(MediaModule.REPO, mediaPath);
+                Node mediaNode = ContentUtil.getContent(MediaModule.REPO, mediaPath);
                 if (mediaNode != null)
                 {
-                    Content resolutionsNode = ContentUtil.getContent(mediaNode, resolutionsName);
+                    Node resolutionsNode = ContentUtil.getContent(mediaNode, resolutionsName);
                     String ndName = StringUtils.substringBefore(handle.substring(p + search.length()), "/");
                     if (resolutionsNode != null && !StringUtils.isEmpty(ndName))
                     {

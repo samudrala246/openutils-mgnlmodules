@@ -20,7 +20,6 @@
 package net.sourceforge.openutils.mgnlmedia.media.pages;
 
 import info.magnolia.cms.beans.runtime.Document;
-import info.magnolia.cms.core.Content;
 import info.magnolia.cms.core.HierarchyManager;
 import info.magnolia.cms.i18n.Messages;
 import info.magnolia.cms.util.AlertUtil;
@@ -39,6 +38,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.zip.ZipFile;
 
+import javax.jcr.Node;
 import javax.jcr.RepositoryException;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -116,7 +116,7 @@ public class MediaBrowserPage extends MessagesTemplatedMVCHandler
             HierarchyManager mgr = MgnlContext.getHierarchyManager(MediaModule.REPO);
             try
             {
-                Content media = mgr.getContentByUUID(actMedia);
+                Node media = mgr.getContentByUUID(actMedia);
                 openPath = media.getParent().getHandle();
                 actMediaHandle = media.getHandle();
             }
@@ -127,13 +127,13 @@ public class MediaBrowserPage extends MessagesTemplatedMVCHandler
         }
         if (!StringUtils.isEmpty(playlistHandle))
         {
-            Content playlistContent = ContentUtil.getContent(PlaylistConstants.REPO, playlistHandle);
+            Node playlistContent = ContentUtil.getContent(PlaylistConstants.REPO, playlistHandle);
             try
             {
                 if (playlistContent.hasContent("search"))
                 {
                     List<String> params = new ArrayList<String>();
-                    for (Content content : playlistContent.getContent("search").getChildren())
+                    for (Node content : playlistContent.getContent("search").getChildren())
                     {
                         String paramName = NodeDataUtil.getString(content, "name");
                         String paramValue = NodeDataUtil.getString(content, "value");

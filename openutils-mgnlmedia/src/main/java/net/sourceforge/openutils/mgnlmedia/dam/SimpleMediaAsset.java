@@ -19,6 +19,7 @@
 
 package net.sourceforge.openutils.mgnlmedia.dam;
 
+
 import info.magnolia.cms.core.Content;
 import info.magnolia.cms.core.NodeData;
 import info.magnolia.module.templatingkit.dam.AssetNotFoundException;

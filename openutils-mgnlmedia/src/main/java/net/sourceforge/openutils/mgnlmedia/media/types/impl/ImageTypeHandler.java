@@ -22,6 +22,7 @@ package net.sourceforge.openutils.mgnlmedia.media.types.impl;
 import info.magnolia.cms.beans.runtime.FileProperties;
 import info.magnolia.cms.core.NodeData;
 import info.magnolia.cms.util.NodeDataUtil;
+import info.magnolia.jcr.util.NodeUtil;
 
 import java.awt.image.BufferedImage;
 import java.io.InputStream;
@@ -62,7 +63,7 @@ public class ImageTypeHandler extends BaseTypeHandler
             return StringUtils.EMPTY;
         }
         return MediaConfigurationManager.getInstance().getURIMappingPrefix()
-            + media.getHandle()
+            + NodeUtil.getPathIfPossible(media)
             + "/resolutions/thumbnail/"
             + media.getName()
             + "."
@@ -80,7 +81,7 @@ public class ImageTypeHandler extends BaseTypeHandler
             return StringUtils.EMPTY;
         }
         return MediaConfigurationManager.getInstance().getURIMappingPrefix()
-            + media.getHandle()
+            + NodeUtil.getPathIfPossible(media)
             + "/resolutions/preview/"
             + media.getName()
             + "."

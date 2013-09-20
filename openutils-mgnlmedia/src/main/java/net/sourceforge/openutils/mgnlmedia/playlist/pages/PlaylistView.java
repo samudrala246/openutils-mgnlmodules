@@ -180,7 +180,7 @@ public class PlaylistView extends MessagesTemplatedMVCHandler
             {
 
                 playlist = new PlaylistBean();
-                playlist.setUuid(node.getUUID());
+                playlist.setUuid(node.getIdentifier());
                 playlist.setHandle(NodeUtil.getPathIfPossible(node));
                 playlist.setTitle(NodeDataUtil.getString(node, "title"));
                 playlist.setDescription(NodeDataUtil.getString(node, "description"));
@@ -218,7 +218,7 @@ public class PlaylistView extends MessagesTemplatedMVCHandler
 
                 try
                 {
-                    playlist.setSearchBased(node.hasContent("search"));
+                    playlist.setSearchBased(node.hasNode("search"));
                 }
                 catch (RepositoryException e)
                 {
@@ -247,7 +247,7 @@ public class PlaylistView extends MessagesTemplatedMVCHandler
                 {
                 MetaDataUtil.getMetaData(node).setActivated();
                 }
-                node.save();
+                node.getSession().save();
                 success = true;
             }
             catch (RepositoryException e)
@@ -271,7 +271,7 @@ public class PlaylistView extends MessagesTemplatedMVCHandler
                 {
                    MetaDataUtil.getMetaData(node).setActivated();
                 }
-                node.save();
+                node.getSession().save();
                 success = true;
             }
             catch (RepositoryException e)

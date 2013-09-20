@@ -27,6 +27,8 @@ import info.magnolia.cms.i18n.I18nContentSupportFactory;
 import info.magnolia.cms.security.AccessDeniedException;
 import info.magnolia.cms.util.NodeDataUtil;
 import info.magnolia.jcr.util.MetaDataUtil;
+import info.magnolia.jcr.util.NodeUtil;
+import info.magnolia.jcr.util.PropertyUtil;
 import info.magnolia.module.admininterface.SaveHandlerImpl;
 
 import java.io.File;
@@ -148,15 +150,15 @@ public abstract class BaseTypeHandler implements MediaTypeHandler
             String name = p != -1 ? filename.substring(p + 1) : filename;
             // lowercase at saving for case insensitive sorting
             name = StringUtils.lowerCase(name);
-            if (!StringUtils.equals(name, NodeDataUtil.getString(media, METADATA_NAME)))
+            if (!StringUtils.equals(name, PropertyUtil.getString(media, METADATA_NAME)))
             {
                 NodeDataUtil.getOrCreateAndSet(media, METADATA_NAME, name);
                 media.save();
             }
 
-            if (media.hasContent("resolutions"))
+            if (media.hasNode("resolutions"))
             {
-                Collection<NodeData> nodedatas = media.getChildByName("resolutions").getNodeDataCollection();
+                Collection<NodeData> nodedatas = media.getNode("resolutions").getNodeDataCollection();
                 for (NodeData nd : nodedatas)
                 {
                     nd.delete();
@@ -241,7 +243,7 @@ public abstract class BaseTypeHandler implements MediaTypeHandler
             // should never happen
         }
         return MediaConfigurationManager.getInstance().getURIMappingPrefix()
-            + media.getHandle()
+            + NodeUtil.getPathIfPossible(media)
             + "/"
             + ORGINAL_NODEDATA_NAME
             + "/"

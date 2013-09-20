@@ -19,7 +19,7 @@
 
 package net.sourceforge.openutils.mgnlmedia.media.utils;
 
-import info.magnolia.cms.core.Content;
+
 import info.magnolia.cms.core.HierarchyManager;
 import info.magnolia.cms.core.Path;
 import info.magnolia.cms.security.AccessDeniedException;
@@ -33,6 +33,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Calendar;
 
+import javax.jcr.Node;
 import javax.jcr.RepositoryException;
 
 import net.sourceforge.openutils.mgnlmedia.media.configuration.MediaConfigurationManager;
@@ -70,7 +71,7 @@ public class MediaLoadUtils
      * @throws RepositoryException exception working on media repository
      * @throws IOException exception working with file stream
      */
-    public static Content loadExternalVideo(String videourl, String parent, String filename, boolean overwrite)
+    public static Node loadExternalVideo(String videourl, String parent, String filename, boolean overwrite)
         throws RepositoryException, IOException
     {
         log.debug("loading external video {}/{} with url {}", new Object[]{parent, filename, videourl });
@@ -79,7 +80,7 @@ public class MediaLoadUtils
 
         String cleanFilename = Path.getValidatedLabel(videourl);
 
-        Content media = createMediaNode(mtc, parent, cleanFilename, overwrite);
+        Node media = createMediaNode(mtc, parent, cleanFilename, overwrite);
         media.setNodeData("videoUrl", videourl);
 
         mtc.getHandler().onPostSave(media);
@@ -98,7 +99,7 @@ public class MediaLoadUtils
      * @throws RepositoryException exception working on media repository
      * @throws IOException exception working with file stream
      */
-    public static Content loadEntry(InputStream inputStream, String parent, String filename, boolean overwrite)
+    public static Node loadEntry(InputStream inputStream, String parent, String filename, boolean overwrite)
         throws RepositoryException, IOException
     {
 
@@ -110,7 +111,7 @@ public class MediaLoadUtils
 
         if (mtc != null)
         {
-            Content media = createMediaNode(mtc, parent, cleanFilename, overwrite);
+            Node media = createMediaNode(mtc, parent, cleanFilename, overwrite);
 
             File f = File.createTempFile("entry", "." + extension);
             FileOutputStream fTemp = new FileOutputStream(f);
@@ -137,18 +138,18 @@ public class MediaLoadUtils
      * @throws RepositoryException
      * @throws AccessDeniedException
      */
-    private static Content createMediaNode(MediaTypeConfiguration mtc, String parent, String filename, boolean overwrite)
+    private static Node createMediaNode(MediaTypeConfiguration mtc, String parent, String filename, boolean overwrite)
         throws RepositoryException, AccessDeniedException
     {
 
         HierarchyManager mgr = MgnlContext.getSystemContext().getHierarchyManager(MediaModule.REPO);
 
-        Content parentNode = getOrCreateFullPath(mgr, parent);
+        Node parentNode = getOrCreateFullPath(mgr, parent);
         String mediaName = Path.getValidatedLabel(filename);
 
         if (overwrite)
         {
-            Content existing = parentNode.getChildByName(mediaName);
+            Node existing = parentNode.getChildByName(mediaName);
             if (existing != null)
             {
                 existing.delete();
@@ -156,7 +157,7 @@ public class MediaLoadUtils
             }
         }
 
-        Content media = mgr.createContent(
+        Node media = mgr.createContent(
             parent,
             Path.getUniqueLabel(parentNode, mediaName),
             MediaConfigurationManager.MEDIA.getSystemName());
@@ -184,7 +185,7 @@ public class MediaLoadUtils
      * @throws RepositoryException
      * @throws AccessDeniedException
      */
-    private static void setNodedataOnlyIfNotExisting(Content media, String key, Object value)
+    private static void setNodedataOnlyIfNotExisting(Node media, String key, Object value)
         throws RepositoryException, AccessDeniedException
     {
         if (media.hasNodeData(key))
@@ -201,10 +202,10 @@ public class MediaLoadUtils
      * @return content to required path
      * @throws RepositoryException exception getting or creating path
      */
-    public static Content getOrCreateFullPath(HierarchyManager mgr, String path) throws RepositoryException
+    public static Node getOrCreateFullPath(HierarchyManager mgr, String path) throws RepositoryException
     {
         String[] contentNodeNames = path.split("/");
-        Content currContent = mgr.getRoot();
+        Node currContent = mgr.getRoot();
         for (String contentNodeName : contentNodeNames)
         {
             if (StringUtils.isNotEmpty(contentNodeName))

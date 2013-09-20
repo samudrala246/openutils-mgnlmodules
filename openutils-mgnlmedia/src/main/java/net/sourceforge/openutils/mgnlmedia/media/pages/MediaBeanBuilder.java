@@ -20,7 +20,6 @@
 package net.sourceforge.openutils.mgnlmedia.media.pages;
 
 import info.magnolia.cms.beans.config.URI2RepositoryManager;
-import info.magnolia.cms.core.Content;
 import info.magnolia.cms.exchange.ActivationManagerFactory;
 import info.magnolia.cms.security.Permission;
 import info.magnolia.cms.util.NodeDataUtil;
@@ -29,6 +28,7 @@ import info.magnolia.repository.RepositoryConstants;
 import java.util.List;
 import java.util.Map;
 
+import javax.jcr.Node;
 import javax.jcr.RepositoryException;
 
 import net.sourceforge.openutils.mgnlmedia.media.configuration.MediaConfigurationManager;
@@ -48,7 +48,7 @@ import com.google.common.base.Function;
  * @author dschivo
  * @version $Id$
  */
-public class MediaBeanBuilder implements Function<Content, MediaBean>
+public class MediaBeanBuilder implements Function<Node, MediaBean>
 {
 
     /**
@@ -59,7 +59,7 @@ public class MediaBeanBuilder implements Function<Content, MediaBean>
     /**
      * {@inheritDoc}
      */
-    public MediaBean apply(Content media)
+    public MediaBean apply(Node media)
     {
 
         String mediatype = media.getNodeData("type").getString();
