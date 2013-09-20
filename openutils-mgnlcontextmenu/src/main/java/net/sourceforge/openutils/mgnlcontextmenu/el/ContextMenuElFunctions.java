@@ -78,6 +78,11 @@ public class ContextMenuElFunctions
      */
     public static String entryValue(Node node, String name)
     {
+        if (node == null)
+        {
+            return null;
+        }
+
         ContextMenuModule module = Components.getComponent(ContextMenuModule.class);
         PersistenceStrategy strategy = module.getPersistenceStrategy();
         Node nodeUnwrapped = NodeUtil.deepUnwrap(node, HTMLEscapingNodeWrapper.class);

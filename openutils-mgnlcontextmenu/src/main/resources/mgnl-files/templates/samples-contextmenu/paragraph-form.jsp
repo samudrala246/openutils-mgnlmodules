@@ -9,7 +9,7 @@
     <pre>
       <![CDATA[
 &lt;contextmenu:element name="firstname" menu="simpleForm"&gt;First Name:&lt;/contextmenu:element&gt;
-&lt;c:set var="help" value="${'$'}{contextmenu:entryValue(content.JCRNode, 'firstname.help')}" /&gt;]]>
+&lt;c:set var="help" value="${'$'}{contextmenu:entryValue(cmsfn:asJCRNode(content), 'firstname.help')}" /&gt;]]>
     </pre>
     <br />
     <div class="testcontent clearfix">
@@ -21,7 +21,7 @@
           </label>
           <div class="col-lg-4">
             <input name="firstname" id="firstname" type="text" />
-            <c:set var="help" value="${contextmenu:entryValue(content.JCRNode, 'firstname.help')}" />
+            <c:set var="help" value="${contextmenu:entryValue(cmsfn:asJCRNode(content), 'firstname.help')}" />
             <c:if test="${not empty help}">
               <span class="help">
             <![CDATA[${help}<span class="help-pointer">&nbsp;</span>]]>
@@ -35,7 +35,7 @@
           </label>
           <div class="col-lg-4">
             <input name="lastname" id="lastname" type="text" />
-            <c:set var="help" value="${contextmenu:entryValue(content.JCRNode, 'lastname.help')}" />
+            <c:set var="help" value="${contextmenu:entryValue(cmsfn:asJCRNode(content), 'lastname.help')}" />
             <c:if test="${not empty help}">
               <span class="help">
             <![CDATA[${help}<span class="help-pointer">&nbsp;</span>]]>
@@ -49,7 +49,7 @@
           </label>
           <div class="col-lg-4">
             <input name="email" id="email" type="text" />
-            <c:set var="help" value="${contextmenu:entryValue(content.JCRNode, 'email.help')}" />
+            <c:set var="help" value="${contextmenu:entryValue(cmsfn:asJCRNode(content), 'email.help')}" />
             <c:if test="${not empty help}">
               <span class="help">
             <![CDATA[${help}<span class="help-pointer">&nbsp;</span>]]>
@@ -72,7 +72,7 @@
               <option value="1942">1942</option>
               <option value="1999">1999</option>
             </select>
-            <c:set var="help" value="${contextmenu:entryValue(content.JCRNode, 'year.help')}" />
+            <c:set var="help" value="${contextmenu:entryValue(cmsfn:asJCRNode(content), 'year.help')}" />
             <c:if test="${not empty help}">
               <span class="help">
             <![CDATA[${help}<span class="help-pointer">&nbsp;</span>]]>
@@ -86,7 +86,7 @@
           </label>
           <div class="col-lg-4">
             <input name="username" id="username" type="text" />
-            <c:set var="help" value="${contextmenu:entryValue(content.JCRNode, 'username.help')}" />
+            <c:set var="help" value="${contextmenu:entryValue(cmsfn:asJCRNode(content), 'username.help')}" />
             <c:if test="${not empty help}">
               <span class="help">
             <![CDATA[${help}<span class="help-pointer">&nbsp;</span>]]>
@@ -100,7 +100,7 @@
           </label>
           <div class="col-lg-4">
             <input name="password" id="password" type="password" />
-            <c:set var="help" value="${contextmenu:entryValue(content.JCRNode, 'password.help')}" />
+            <c:set var="help" value="${contextmenu:entryValue(cmsfn:asJCRNode(content), 'password.help')}" />
             <c:if test="${not empty help}">
               <span class="help">
             <![CDATA[${help}<span class="help-pointer">&nbsp;</span>]]>

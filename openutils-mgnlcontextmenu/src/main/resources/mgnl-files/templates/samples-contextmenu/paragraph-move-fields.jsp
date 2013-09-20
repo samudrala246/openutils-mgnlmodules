@@ -33,7 +33,7 @@
               </label>
               <div class="controls">
                 <input name="field1" id="field1" type="text" />
-                <c:set var="help" value="${contextmenu:entryValue(content.JCRNode, 'field1.help')}" />
+                <c:set var="help" value="${contextmenu:entryValue(cmsfn:asJCRNode(content), 'field1.help')}" />
                 <c:if test="${not empty help}">
                   <span class="help">
                     <![CDATA[${help}<span class="help-pointer">&nbsp;</span>]]>
@@ -49,7 +49,7 @@
               </label>
               <div class="controls">
                 <input name="field2" id="field2" type="text" />
-                <c:set var="help" value="${contextmenu:entryValue(content.JCRNode, 'field2.help')}" />
+                <c:set var="help" value="${contextmenu:entryValue(cmsfn:asJCRNode(content), 'field2.help')}" />
                 <c:if test="${not empty help}">
                   <span class="help">
                    <![CDATA[${help}<span class="help-pointer">&nbsp;</span>]]>
