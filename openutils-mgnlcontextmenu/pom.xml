@@ -11,7 +11,7 @@
   <artifactId>openutils-mgnlcontextmenu</artifactId>
   <name>ContextMenu Module for Magnolia CMS</name>
   <description>A magnolia module for editing content via context menu</description>
-  <version>4.5.1-SNAPSHOT</version>
+  <version>4.5.1</version>
   <inceptionYear>2010</inceptionYear>
   <licenses>
     <license>
@@ -25,9 +25,9 @@
     <url>http://jira.openmindlab.com/browse/MENU</url>
   </issueManagement>
   <scm>
-    <connection>scm:svn:svn+ssh://svn.code.sf.net/p/openutils/code/magnoliamodules/trunk/openutils-mgnlcontextmenu</connection>
-    <developerConnection>scm:svn:svn+ssh://svn.code.sf.net/p/openutils/code/magnoliamodules/trunk/openutils-mgnlcontextmenu</developerConnection>
-    <url>http://sourceforge.net/p/openutils/code/HEAD/tree/trunk/openutils-mgnlcontextmenu</url>
+    <connection>scm:svn:svn+ssh://svn.code.sf.net/p/openutils/code/tags/openutils-mgnlcontextmenu-4.5.1</connection>
+    <developerConnection>scm:svn:svn+ssh://svn.code.sf.net/p/openutils/code/tags/openutils-mgnlcontextmenu-4.5.1</developerConnection>
+    <url>scm:svn:svn+ssh://svn.code.sf.net/p/openutils/code/tags/openutils-mgnlcontextmenu-4.5.1</url>
   </scm>
   <build>
     <plugins>
