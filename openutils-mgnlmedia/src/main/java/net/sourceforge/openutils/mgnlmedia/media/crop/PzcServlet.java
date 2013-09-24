@@ -19,7 +19,6 @@
 
 package net.sourceforge.openutils.mgnlmedia.media.crop;
 
-
 import info.magnolia.cms.core.HierarchyManager;
 import info.magnolia.cms.core.NodeData;
 import info.magnolia.cms.util.NodeDataUtil;
@@ -30,6 +29,7 @@ import java.io.IOException;
 
 import javax.jcr.Node;
 import javax.jcr.RepositoryException;
+import javax.jcr.Session;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -70,19 +70,17 @@ public class PzcServlet extends HttpServlet
             repository = RepositoryConstants.WEBSITE;
         }
 
-        HierarchyManager hm = MgnlContext.getHierarchyManager(repository);
-
         try
         {
-            final Node node = hm.getContent(handle);
+            Session hm = MgnlContext.getJCRSession(repository);
+            final Node node = hm.getNode(handle);
             if ("delete".equals(command))
             {
-                NodeData nd = node.getNodeData(id);
-                if (nd != null)
+                if (node != null && node.hasProperty(id))
                 {
-                    nd.delete();
-                    node.save();
+                    node.getProperty(id).remove();
                 }
+                hm.save();
                 resp.getWriter().println("true");
             }
             else
@@ -93,11 +91,11 @@ public class PzcServlet extends HttpServlet
 
                     public Void exec() throws RepositoryException
                     {
-                        HierarchyManager hm = MgnlContext.getHierarchyManager(systemRepository);
+                        Session session = MgnlContext.getJCRSession(systemRepository);
                         try
                         {
-                            Node systemNode = hm.getContent(node.getHandle());
-                            NodeDataUtil.getOrCreateAndSet(systemNode, id, new StringBuffer()
+                            Node systemNode = session.getNode(node.getPath());
+                            systemNode.setProperty(id, new StringBuffer()
                                 .append(zoom)
                                 .append("|")
                                 .append(x)
@@ -111,7 +109,8 @@ public class PzcServlet extends HttpServlet
                         }
                         return null;
                     }
-                }, true);
+                },
+                    true);
                 resp.getWriter().println("true");
             }
         }

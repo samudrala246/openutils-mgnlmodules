@@ -22,6 +22,7 @@ package net.sourceforge.openutils.mgnlmedia.media.commands;
 import info.magnolia.commands.CommandsManager;
 import info.magnolia.context.Context;
 import info.magnolia.module.admininterface.commands.BaseRepositoryCommand;
+import info.magnolia.objectfactory.Components;
 import net.sourceforge.openutils.mgnlmedia.media.tags.el.MediaEl;
 
 import org.apache.commons.chain.Command;
@@ -42,7 +43,9 @@ public class MediaDeactivationCommand extends BaseRepositoryCommand
     {
         if (!MediaEl.module().isSingleinstance())
         {
-            Command cmd = CommandsManager.getInstance().getCommand(CommandsManager.DEFAULT_CATALOG, "deactivate");
+            Command cmd = Components.getSingleton(CommandsManager.class).getCommand(
+                CommandsManager.DEFAULT_CATALOG,
+                "deactivate");
             return cmd.execute(context);
         }
         return true;

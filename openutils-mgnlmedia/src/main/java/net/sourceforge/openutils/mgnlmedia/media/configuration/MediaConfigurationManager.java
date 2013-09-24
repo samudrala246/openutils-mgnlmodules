@@ -115,38 +115,47 @@ public class MediaConfigurationManager extends ObservedManager
 
         Node node = content.getJCRNode();
 
-        for (Iterator iter = ContentUtil.getAllChildren(node).iterator(); iter.hasNext();)
+        try
         {
-            Node typeNode = iter.next();
-
-            if (!NodeDataUtil.getBoolean(typeNode, "enabled", true))
+            for (Iterator<Node> iter = NodeUtil.getNodes(node, NodeUtil.EXCLUDE_META_DATA_FILTER).iterator(); iter
+                .hasNext();)
             {
-                continue;
-            }
+                Node typeNode = iter.next();
 
-            try
-            {
-                MediaTypeConfiguration conf = (MediaTypeConfiguration) Content2BeanUtil.toBean(
-                    typeNode,
-                    true,
-                    MediaTypeConfiguration.class);
-
-                if (conf.getHandler() != null)
+                if (!PropertyUtil.getBoolean(typeNode, "enabled", true))
                 {
-                    conf.getHandler().init(typeNode);
-                }
-                else
-                {
-                    log.error("Missing handler for media type {}", typeNode.getName());
                     continue;
                 }
 
-                types.put(typeNode.getName(), conf);
+                try
+                {
+                    Content typeContent = ContentUtil.asContent(typeNode);
+                    MediaTypeConfiguration conf = (MediaTypeConfiguration) Content2BeanUtil.toBean(
+                        typeContent,
+                        true,
+                        MediaTypeConfiguration.class);
+
+                    if (conf.getHandler() != null)
+                    {
+                        conf.getHandler().init(typeNode);
+                    }
+                    else
+                    {
+                        log.error("Missing handler for media type {}", typeNode.getName());
+                        continue;
+                    }
+
+                    types.put(typeNode.getName(), conf);
+                }
+                catch (Throwable e)
+                {
+                    log.error("Error getting media type configuration for {}", NodeUtil.getPathIfPossible(typeNode), e);
+                }
             }
-            catch (Throwable e)
-            {
-                log.error("Error getting media type configuration for {}", NodeUtil.getPathIfPossible(typeNode), e);
-            }
+        }
+        catch (RepositoryException e)
+        {
+            log.error("Error getting nodes for {}", NodeUtil.getPathIfPossible(node), e);
         }
     }
 

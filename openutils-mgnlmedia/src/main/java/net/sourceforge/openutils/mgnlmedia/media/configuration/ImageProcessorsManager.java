@@ -22,8 +22,8 @@ package net.sourceforge.openutils.mgnlmedia.media.configuration;
 import info.magnolia.cms.beans.config.ObservedManager;
 import info.magnolia.cms.core.Content;
 import info.magnolia.cms.util.ContentUtil;
-import info.magnolia.cms.util.FactoryUtil;
 import info.magnolia.cms.util.NodeDataUtil;
+import info.magnolia.objectfactory.Components;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -97,7 +97,7 @@ public class ImageProcessorsManager extends ObservedManager
      */
     public static ImageProcessorsManager getInstance()
     {
-        return (ImageProcessorsManager) FactoryUtil.getSingleton(ImageProcessorsManager.class);
+        return Components.getSingleton(ImageProcessorsManager.class);
     }
 
     /**

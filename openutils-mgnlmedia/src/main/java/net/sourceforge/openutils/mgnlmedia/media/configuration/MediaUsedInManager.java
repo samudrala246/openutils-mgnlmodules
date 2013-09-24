@@ -22,9 +22,9 @@ package net.sourceforge.openutils.mgnlmedia.media.configuration;
 import info.magnolia.cms.beans.config.ObservedManager;
 import info.magnolia.cms.core.Content;
 import info.magnolia.cms.core.ItemType;
-import info.magnolia.cms.util.FactoryUtil;
 import info.magnolia.content2bean.Content2BeanException;
 import info.magnolia.content2bean.Content2BeanUtil;
+import info.magnolia.objectfactory.Components;
 import info.magnolia.repository.RepositoryConstants;
 
 import java.util.ArrayList;
@@ -62,7 +62,7 @@ public class MediaUsedInManager extends ObservedManager
 
     public static MediaUsedInManager getInstance()
     {
-        return (MediaUsedInManager) FactoryUtil.getSingleton(MediaUsedInManager.class);
+        return Components.getSingleton(MediaUsedInManager.class);
     }
 
     private static Logger log = LoggerFactory.getLogger(MediaUsedInManager.class);

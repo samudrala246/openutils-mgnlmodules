@@ -19,15 +19,17 @@
 
 package net.sourceforge.openutils.mgnlmedia.media.advancedsearch;
 
-
+import info.magnolia.cms.core.MgnlNodeType;
 import info.magnolia.context.MgnlContext;
+import info.magnolia.jcr.util.NodeUtil;
+import info.magnolia.repository.RepositoryConstants;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 import javax.jcr.Node;
 import javax.jcr.RepositoryException;
+import javax.jcr.Session;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.builder.ToStringBuilder;
@@ -113,10 +115,9 @@ public class SearchFilterOptionProvider extends SearchFilterAbstract
         {
             try
             {
-                Collection<Node> referenceOptions = MgnlContext
-                    .getHierarchyManager("config")
-                    .getContent(reference)
-                    .getChildren();
+                Session session = MgnlContext.getJCRSession(RepositoryConstants.CONFIG);
+                Node node = session.getNode(reference);
+                Iterable<Node> referenceOptions = NodeUtil.getNodes(node, MgnlNodeType.NT_CONTENTNODE); 
 
                 Option opt = new Option();
 
@@ -127,11 +128,11 @@ public class SearchFilterOptionProvider extends SearchFilterAbstract
                     addOptions(opt);
                 }
 
-                for (Node content : referenceOptions)
+                for (Node option : referenceOptions)
                 {
                     opt = new Option();
-                    opt.setLabel(content.getNodeData("label").getString());
-                    opt.setValue(content.getNodeData("value").getString());
+                    opt.setLabel(option.getProperty("label").getString());
+                    opt.setValue(option.getProperty("value").getString());
                     addOptions(opt);
                 }
             }
