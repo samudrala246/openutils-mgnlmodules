@@ -20,12 +20,13 @@
 package net.sourceforge.openutils.mgnlmedia.media.pages;
 
 import info.magnolia.cms.beans.runtime.Document;
-import info.magnolia.cms.core.HierarchyManager;
+import info.magnolia.cms.core.MgnlNodeType;
 import info.magnolia.cms.i18n.Messages;
 import info.magnolia.cms.util.AlertUtil;
-import info.magnolia.cms.util.ContentUtil;
-import info.magnolia.cms.util.NodeDataUtil;
 import info.magnolia.context.MgnlContext;
+import info.magnolia.jcr.util.NodeUtil;
+import info.magnolia.jcr.util.PropertyUtil;
+import it.openutils.mgnlutils.api.NodeUtilsExt;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -40,6 +41,7 @@ import java.util.zip.ZipFile;
 
 import javax.jcr.Node;
 import javax.jcr.RepositoryException;
+import javax.jcr.Session;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -113,12 +115,12 @@ public class MediaBrowserPage extends MessagesTemplatedMVCHandler
         super.init();
         if (StringUtils.isNotBlank(actMedia))
         {
-            HierarchyManager mgr = MgnlContext.getHierarchyManager(MediaModule.REPO);
             try
             {
-                Node media = mgr.getContentByUUID(actMedia);
-                openPath = media.getParent().getHandle();
-                actMediaHandle = media.getHandle();
+                Session mgr = MgnlContext.getJCRSession(MediaModule.REPO);
+                Node media = mgr.getNodeByIdentifier(actMedia);
+                openPath = media.getParent().getPath();
+                actMediaHandle = media.getPath();
             }
             catch (RepositoryException ex)
             {
@@ -127,16 +129,18 @@ public class MediaBrowserPage extends MessagesTemplatedMVCHandler
         }
         if (!StringUtils.isEmpty(playlistHandle))
         {
-            Node playlistContent = ContentUtil.getContent(PlaylistConstants.REPO, playlistHandle);
+            Node playlistContent = NodeUtilsExt.getNodeByIdOrPath(PlaylistConstants.REPO, playlistHandle);
             try
             {
-                if (playlistContent.hasContent("search"))
+                if (playlistContent.hasNode("search"))
                 {
                     List<String> params = new ArrayList<String>();
-                    for (Node content : playlistContent.getContent("search").getChildren())
+                    Node search = playlistContent.getNode("search");
+                    Iterable<Node> nodes = NodeUtil.getNodes(search, MgnlNodeType.NT_CONTENTNODE);
+                    for (Node content : nodes)
                     {
-                        String paramName = NodeDataUtil.getString(content, "name");
-                        String paramValue = NodeDataUtil.getString(content, "value");
+                        String paramName = PropertyUtil.getString(content, "name");
+                        String paramValue = PropertyUtil.getString(content, "value");
                         params.add(paramName + "=" + paramValue);
                     }
                     playlistSearch = StringUtils.join(params, '&');

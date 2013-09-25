@@ -20,6 +20,9 @@
 package net.sourceforge.openutils.mgnlmedia.media.types.impl;
 
 import info.magnolia.cms.beans.runtime.FileProperties;
+import info.magnolia.cms.core.MgnlNodeType;
+import info.magnolia.jcr.util.PropertyUtil;
+import it.openutils.mgnlutils.api.NodeUtilsExt;
 
 import java.io.InputStream;
 
@@ -51,14 +54,20 @@ public class VideoTypeHandler extends BaseVideoTypeHandler
     @Override
     protected VideoMetaData parseFLVMetaData(Node media) throws Exception
     {
-        InputStream stream = getOriginalFileNodeData(media).getStream();
+        InputStream stream = getOriginalFileNodeData(media)
+            .getProperty(MgnlNodeType.JCR_DATA)
+            .getValue()
+            .getBinary()
+            .getStream();
         try
         {
-            VideoMetaData metaData = VideoMedataUtils.parsefromStream(getOriginalFileNodeData(media).getAttribute(
-                FileProperties.PROPERTY_EXTENSION), stream);
+            VideoMetaData metaData = VideoMedataUtils.parsefromStream(
+                PropertyUtil.getString(getOriginalFileNodeData(media), FileProperties.PROPERTY_EXTENSION),
+                stream);
             if (metaData != null && metaData.getFileSize() == 0)
             {
-                metaData.setFileSize(Long.parseLong(getOriginalFileNodeData(media).getAttribute(
+                metaData.setFileSize(Long.parseLong(PropertyUtil.getString(
+                    getOriginalFileNodeData(media),
                     FileProperties.PROPERTY_SIZE)));
             }
             return metaData;

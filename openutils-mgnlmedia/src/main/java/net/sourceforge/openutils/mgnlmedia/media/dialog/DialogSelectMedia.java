@@ -21,7 +21,6 @@ package net.sourceforge.openutils.mgnlmedia.media.dialog;
 
 import info.magnolia.cms.beans.runtime.FileProperties;
 import info.magnolia.cms.core.Content;
-import info.magnolia.cms.core.HierarchyManager;
 import info.magnolia.cms.core.NodeData;
 import info.magnolia.cms.i18n.Messages;
 import info.magnolia.cms.i18n.MessagesUtil;
@@ -33,9 +32,11 @@ import java.util.List;
 import java.util.Map;
 
 import javax.jcr.ItemNotFoundException;
+import javax.jcr.Node;
 import javax.jcr.PathNotFoundException;
 import javax.jcr.PropertyType;
 import javax.jcr.RepositoryException;
+import javax.jcr.Session;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -121,7 +122,7 @@ public class DialogSelectMedia extends ConfigurableFreemarkerDialog
     @Override
     protected void addToParameters(Map<String, Object> parameters)
     {
-        Content media = null;
+        Node media = null;
 
         NodeData nd = null;
         if (getStorageNode() != null)
@@ -139,8 +140,8 @@ public class DialogSelectMedia extends ConfigurableFreemarkerDialog
             {
                 try
                 {
-                    HierarchyManager hm = MgnlContext.getHierarchyManager(MediaModule.REPO);
-                    media = hm.getContentByUUID(this.getValue());
+                    Session hm = MgnlContext.getJCRSession(MediaModule.REPO);
+                    media = hm.getNodeByIdentifier(this.getValue());
                 }
                 catch (ItemNotFoundException ex)
                 {
@@ -156,7 +157,15 @@ public class DialogSelectMedia extends ConfigurableFreemarkerDialog
         parameters.put("thumbnailUrl", this.getThumbnailUrl(media, nd));
         parameters.put("msgs", this.getMessages());
         parameters.put("filename", this.getFilename(media, nd));
-        parameters.put("handle", media != null ? media.getHandle() : null);
+
+        try
+        {
+            parameters.put("handle", media != null ? media.getPath() : null);
+        }
+        catch (RepositoryException e)
+        {
+            log.error("RepositoryException {}", e);
+        }
 
         if ("true".equals(this.getConfigValue("resizing")))
         {
@@ -185,12 +194,12 @@ public class DialogSelectMedia extends ConfigurableFreemarkerDialog
      * @return media content
      * @throws RepositoryException exception retrieving media
      */
-    protected Content getMedia() throws RepositoryException
+    protected Node getMedia() throws RepositoryException
     {
         if (this.getValue() != null && this.getValue().length() > 0)
         {
-            HierarchyManager hm = MgnlContext.getHierarchyManager(MediaModule.REPO);
-            return hm.getContentByUUID(this.getValue());
+            Session hm = MgnlContext.getJCRSession(MediaModule.REPO);
+            return hm.getNodeByIdentifier(this.getValue());
         }
         return null;
     }
@@ -201,7 +210,7 @@ public class DialogSelectMedia extends ConfigurableFreemarkerDialog
      * @param nd
      * @return thumbnail url
      */
-    public String getThumbnailUrl(Content media, NodeData nd)
+    public String getThumbnailUrl(Node media, NodeData nd)
     {
 
         if (nd != null && nd.getType() == PropertyType.BINARY)
@@ -252,7 +261,7 @@ public class DialogSelectMedia extends ConfigurableFreemarkerDialog
      * @param media2
      * @return filename
      */
-    public String getFilename(Content media, NodeData nd)
+    public String getFilename(Node media, NodeData nd)
     {
 
         if (nd != null && nd.getType() == PropertyType.BINARY)

@@ -19,11 +19,12 @@
 
 package net.sourceforge.openutils.mgnlmedia.media.types.impl;
 
-import info.magnolia.cms.util.NodeDataUtil;
-
 import java.util.Map;
 
 import javax.jcr.Node;
+import javax.jcr.PathNotFoundException;
+import javax.jcr.RepositoryException;
+import javax.jcr.ValueFormatException;
 
 import net.sourceforge.openutils.mgnlmedia.media.utils.MediaMetadataFormatUtils;
 import net.sourceforge.openutils.mgnlmedia.media.utils.VideoMedataUtils.VideoMetaData;
@@ -58,7 +59,7 @@ public abstract class BaseVideoTypeHandler extends MediaWithPreviewImageTypeHand
             catch (Throwable e)
             {
                 log.warn("Error parsing video file "
-                    + getOriginalFileNodeData(media).getHandle()
+                    + getOriginalFileNodeData(media).getPath()
                     + " "
                     + e.getClass().getName()
                     + " "
@@ -68,11 +69,11 @@ public abstract class BaseVideoTypeHandler extends MediaWithPreviewImageTypeHand
             if (flvMetaData != null)
             {
 
-                NodeDataUtil.getOrCreateAndSet(media, METADATA_EXTENSION, getExtension(media));
-                NodeDataUtil.getOrCreateAndSet(media, METADATA_WIDTH, flvMetaData.getWidth());
-                NodeDataUtil.getOrCreateAndSet(media, METADATA_HEIGHT, flvMetaData.getHeight());
-                NodeDataUtil.getOrCreateAndSet(media, METADATA_DURATION, flvMetaData.getDuration());
-                NodeDataUtil.getOrCreateAndSet(media, METADATA_FRAMERATE, flvMetaData.getFrameRate());
+                media.setProperty(METADATA_EXTENSION, getExtension(media));
+                media.setProperty(METADATA_WIDTH, flvMetaData.getWidth());
+                media.setProperty(METADATA_HEIGHT, flvMetaData.getHeight());
+                media.setProperty(METADATA_DURATION, flvMetaData.getDuration());
+                media.setProperty(METADATA_FRAMERATE, flvMetaData.getFrameRate());
 
                 media.save();
             }
@@ -93,16 +94,34 @@ public abstract class BaseVideoTypeHandler extends MediaWithPreviewImageTypeHand
 
         Map<String, String> info = super.getMediaInfo(media);
 
-        long duration = media.getNodeData(METADATA_DURATION).getLong();
-        if (duration > 0)
+        long duration;
+        try
         {
-            info.put(METADATA_DURATION, MediaMetadataFormatUtils.formatDuration(duration));
-        }
+            duration = media.getProperty(METADATA_DURATION).getLong();
 
-        long framerate = media.getNodeData(METADATA_FRAMERATE).getLong();
-        if (framerate > 0)
+            if (duration > 0)
+            {
+                info.put(METADATA_DURATION, MediaMetadataFormatUtils.formatDuration(duration));
+            }
+
+            long framerate = media.getProperty(METADATA_FRAMERATE).getLong();
+            if (framerate > 0)
+            {
+                info.put(METADATA_FRAMERATE, Long.toString(framerate));
+            }
+        }
+        catch (ValueFormatException e)
         {
-            info.put(METADATA_FRAMERATE, Long.toString(framerate));
+            // do nothing
+        }
+        catch (PathNotFoundException e)
+        {
+            // do nothing
+        }
+        catch (RepositoryException e)
+        {
+            // do nothing
+
         }
 
         return info;

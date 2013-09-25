@@ -19,7 +19,7 @@
 
 package net.sourceforge.openutils.mgnlmedia.media.utils;
 
-import info.magnolia.cms.core.NodeData;
+import info.magnolia.cms.core.MgnlNodeType;
 
 import java.awt.image.BufferedImage;
 import java.io.IOException;
@@ -29,6 +29,9 @@ import java.util.Iterator;
 import javax.imageio.ImageIO;
 import javax.imageio.ImageReader;
 import javax.imageio.stream.ImageInputStream;
+import javax.jcr.Node;
+import javax.jcr.RepositoryException;
+import javax.jcr.ValueFormatException;
 
 import org.apache.commons.io.IOUtils;
 
@@ -40,13 +43,15 @@ import org.apache.commons.io.IOUtils;
 public class IcoUtils
 {
 
-    public static BufferedImage createBufferedImage(NodeData image) throws IOException
+    public static BufferedImage createBufferedImage(Node image) throws IOException
     {
         // this should work for any image type, but better don't change the ImageIO.read() that worked till
         // now...
-        InputStream is = image.getStream();
+        InputStream is = null;
         try
         {
+            is = image.getProperty(MgnlNodeType.JCR_DATA).getValue().getBinary().getStream();
+            ;
             nl.ikarus.nxt.priv.imageio.icoreader.lib.ICOReaderSpi.registerIcoReader();
             ImageInputStream in = ImageIO.createImageInputStream(is);
             Iterator<ImageReader> it = ImageIO.getImageReaders(in);
@@ -67,10 +72,22 @@ public class IcoUtils
                 catch (Throwable ex)
                 {
                     IOUtils.closeQuietly(is);
-                    is = image.getStream();
-                    in = ImageIO.createImageInputStream(image.getStream());
+                    is = image.getProperty(MgnlNodeType.JCR_DATA).getValue().getBinary().getStream();
+                    in = ImageIO.createImageInputStream(image
+                        .getProperty(MgnlNodeType.JCR_DATA)
+                        .getValue()
+                        .getBinary()
+                        .getStream());
                 }
             }
+        }
+        catch (ValueFormatException e)
+        {
+            throw new RuntimeException();
+        }
+        catch (RepositoryException e)
+        {
+            throw new RuntimeException();
         }
         finally
         {
@@ -79,5 +96,4 @@ public class IcoUtils
 
         return null;
     }
-
 }

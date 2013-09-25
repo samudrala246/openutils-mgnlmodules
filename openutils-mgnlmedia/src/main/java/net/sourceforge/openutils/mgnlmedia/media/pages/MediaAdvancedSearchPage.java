@@ -19,7 +19,6 @@
 
 package net.sourceforge.openutils.mgnlmedia.media.pages;
 
-
 import info.magnolia.context.MgnlContext;
 import info.magnolia.freemarker.FreemarkerUtil;
 
@@ -227,7 +226,7 @@ public class MediaAdvancedSearchPage extends MediaFolderViewPage
             {
                 try
                 {
-                    return MgnlContext.getHierarchyManager(MediaModule.REPO).getContentByUUID(from.getUUID());
+                    return MgnlContext.getJCRSession(MediaModule.REPO).getNodeByIdentifier(from.getUUID());
                 }
                 catch (RepositoryException e)
                 {

@@ -21,6 +21,8 @@ package net.sourceforge.openutils.mgnlmedia.media.types.impl;
 
 import info.magnolia.cms.beans.runtime.Document;
 import info.magnolia.cms.beans.runtime.MultipartForm;
+import info.magnolia.cms.util.ContentUtil;
+import info.magnolia.jcr.util.PropertyUtil;
 import info.magnolia.module.admininterface.SaveHandlerImpl;
 
 import java.io.File;
@@ -159,11 +161,11 @@ public class ExternalVideoTypeHandler extends BaseVideoTypeHandler
     public String getUrl(Node media, Map<String, String> options)
     {
 
-        String url = media.getNodeData("videoUrl").getString();
+        String url = PropertyUtil.getString(media, "videoUrl");
 
         if (!StringUtils.startsWith(url, "http") && !StringUtils.startsWith(url, "rtmpt"))
         {
-            String basepath = media.getNodeData(BASEPATH_ATTRIBUTE).getString();
+            String basepath = PropertyUtil.getString(media, "BASEPATH_ATTRIBUTE");
             if (StringUtils.isNotBlank(basepath))
             {
                 return basepath + url;
@@ -317,7 +319,7 @@ public class ExternalVideoTypeHandler extends BaseVideoTypeHandler
         {
             try
             {
-                if (!media.hasNodeData(PREVIEW_NODEDATA_NAME))
+                if (!media.hasProperty(PREVIEW_NODEDATA_NAME))
                 {
                     String downloadUrl = getUrl(media);
                     for (ExternalVideoSupport external : videoSupportHandlers)
@@ -373,7 +375,12 @@ public class ExternalVideoTypeHandler extends BaseVideoTypeHandler
                 Document doc = new Document(file, contentType);
                 try
                 {
-                    SaveHandlerImpl.saveDocument(media, doc, PREVIEW_NODEDATA_NAME, "preview", null);
+                    SaveHandlerImpl.saveDocument(
+                        ContentUtil.asContent(media),
+                        doc,
+                        PREVIEW_NODEDATA_NAME,
+                        "preview",
+                        null);
                 }
                 catch (RepositoryException e)
                 {

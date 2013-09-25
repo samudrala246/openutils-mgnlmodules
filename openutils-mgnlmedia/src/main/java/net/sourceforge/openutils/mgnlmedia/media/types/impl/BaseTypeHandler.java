@@ -25,7 +25,7 @@ import info.magnolia.cms.beans.runtime.MultipartForm;
 import info.magnolia.cms.core.NodeData;
 import info.magnolia.cms.i18n.I18nContentSupportFactory;
 import info.magnolia.cms.security.AccessDeniedException;
-import info.magnolia.cms.util.NodeDataUtil;
+import info.magnolia.cms.util.ContentUtil;
 import info.magnolia.jcr.util.MetaDataUtil;
 import info.magnolia.jcr.util.NodeUtil;
 import info.magnolia.jcr.util.PropertyUtil;
@@ -39,8 +39,12 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import javax.jcr.Node;
+import javax.jcr.PathNotFoundException;
+import javax.jcr.Property;
 import javax.jcr.PropertyType;
 import javax.jcr.RepositoryException;
+import javax.jcr.ValueFormatException;
+import javax.jcr.nodetype.NodeType;
 import javax.servlet.http.HttpServletRequest;
 
 import net.sourceforge.openutils.mgnlmedia.media.configuration.MediaConfigurationManager;
@@ -78,7 +82,14 @@ public abstract class BaseTypeHandler implements MediaTypeHandler
      */
     public void init(Node typeDefinitionNode)
     {
-        type = typeDefinitionNode.getName();
+        try
+        {
+            type = typeDefinitionNode.getName();
+        }
+        catch (RepositoryException e)
+        {
+            // do nothing
+        }
     }
 
     /**
@@ -103,19 +114,19 @@ public abstract class BaseTypeHandler implements MediaTypeHandler
     {
         String uuid = request.getParameter(name);
 
-        NodeData nd;
+        Property nd;
 
-        if (!parentNode.hasNodeData(name))
+        if (!parentNode.hasProperty(name))
         {
-            nd = parentNode.createNodeData(name, uuid);
+            nd = parentNode.setProperty(name, uuid);
         }
         else
         {
-            nd = parentNode.getNodeData(name);
+            nd = parentNode.getProperty(name);
             if (nd.getType() == PropertyType.BINARY)
             {
-                nd.delete();
-                nd = parentNode.createNodeData(name, uuid);
+                nd.remove();
+                nd = parentNode.setProperty(name, uuid);
             }
             else
             {
@@ -134,7 +145,7 @@ public abstract class BaseTypeHandler implements MediaTypeHandler
     {
         Document doc = new Document(f, type + extension);
         doc.setExtention(extension);
-        SaveHandlerImpl.saveDocument(media, doc, ORGINAL_NODEDATA_NAME, cleanFileName, null);
+        SaveHandlerImpl.saveDocument(ContentUtil.asContent(media), doc, ORGINAL_NODEDATA_NAME, cleanFileName, null);
         this.onPostSave(media);
     }
 
@@ -152,13 +163,15 @@ public abstract class BaseTypeHandler implements MediaTypeHandler
             name = StringUtils.lowerCase(name);
             if (!StringUtils.equals(name, PropertyUtil.getString(media, METADATA_NAME)))
             {
-                NodeDataUtil.getOrCreateAndSet(media, METADATA_NAME, name);
+                media.setProperty(METADATA_NAME, name);
                 media.save();
             }
 
             if (media.hasNode("resolutions"))
             {
-                Collection<NodeData> nodedatas = media.getNode("resolutions").getNodeDataCollection();
+                Collection<NodeData> nodedatas = ContentUtil
+                    .asContent(media.getNode("resolutions"))
+                    .getNodeDataCollection();
                 for (NodeData nd : nodedatas)
                 {
                     nd.delete();
@@ -185,16 +198,27 @@ public abstract class BaseTypeHandler implements MediaTypeHandler
      * @param media media
      * @return default nodedata
      */
-    protected NodeData getOriginalFileNodeData(Node media)
+    protected Node getOriginalFileNodeData(Node media)
     {
-        return media.getNodeData(ORGINAL_NODEDATA_NAME);
+        try
+        {
+            return media.getNode(ORGINAL_NODEDATA_NAME);
+        }
+        catch (PathNotFoundException e)
+        {
+            return null;
+        }
+        catch (RepositoryException e)
+        {
+            return null;
+        }
     }
 
     public boolean isExternal(Node media)
     {
         try
         {
-            return !media.hasNodeData(ORGINAL_NODEDATA_NAME);
+            return !media.hasProperty(ORGINAL_NODEDATA_NAME);
         }
         catch (RepositoryException e)
         {
@@ -208,7 +232,7 @@ public abstract class BaseTypeHandler implements MediaTypeHandler
      */
     public String getExtension(Node media)
     {
-        return getOriginalFileNodeData(media).getAttribute(FileProperties.PROPERTY_EXTENSION);
+        return PropertyUtil.getString(getOriginalFileNodeData(media), FileProperties.PROPERTY_EXTENSION);
     }
 
     /**
@@ -216,7 +240,7 @@ public abstract class BaseTypeHandler implements MediaTypeHandler
      */
     public String getFilename(Node media)
     {
-        return getOriginalFileNodeData(media).getAttribute(FileProperties.PROPERTY_FILENAME);
+        return PropertyUtil.getString(getOriginalFileNodeData(media), FileProperties.PROPERTY_FILENAME);
     }
 
     /**
@@ -271,7 +295,18 @@ public abstract class BaseTypeHandler implements MediaTypeHandler
      */
     public String getTitle(Node media)
     {
-        return I18nContentSupportFactory.getI18nSupport().getNodeData(media, "title").getString();
+        try
+        {
+            return I18nContentSupportFactory.getI18nSupport().getProperty(media, "title").getString();
+        }
+        catch (ValueFormatException e)
+        {
+            return StringUtils.EMPTY;
+        }
+        catch (RepositoryException e)
+        {
+            return StringUtils.EMPTY;
+        }
     }
 
     /**
@@ -279,7 +314,18 @@ public abstract class BaseTypeHandler implements MediaTypeHandler
      */
     public String getTags(Node media)
     {
-        return I18nContentSupportFactory.getI18nSupport().getNodeData(media, "tags").getString();
+        try
+        {
+            return I18nContentSupportFactory.getI18nSupport().getProperty(media, "tags").getString();
+        }
+        catch (ValueFormatException e)
+        {
+            return StringUtils.EMPTY;
+        }
+        catch (RepositoryException e)
+        {
+            return StringUtils.EMPTY;
+        }
     }
 
     /**
@@ -287,7 +333,18 @@ public abstract class BaseTypeHandler implements MediaTypeHandler
      */
     public String getDescription(Node media)
     {
-        return I18nContentSupportFactory.getI18nSupport().getNodeData(media, "description").getString();
+        try
+        {
+            return I18nContentSupportFactory.getI18nSupport().getProperty(media, "description").getString();
+        }
+        catch (ValueFormatException e)
+        {
+            return StringUtils.EMPTY;
+        }
+        catch (RepositoryException e)
+        {
+            return StringUtils.EMPTY;
+        }
     }
 
     /**
@@ -295,7 +352,18 @@ public abstract class BaseTypeHandler implements MediaTypeHandler
      */
     public String getAbstract(Node media)
     {
-        return I18nContentSupportFactory.getI18nSupport().getNodeData(media, "abstract").getString();
+        try
+        {
+            return I18nContentSupportFactory.getI18nSupport().getProperty(media, "abstract").getString();
+        }
+        catch (ValueFormatException e)
+        {
+            return StringUtils.EMPTY;
+        }
+        catch (RepositoryException e)
+        {
+            return StringUtils.EMPTY;
+        }
     }
 
     /**
@@ -306,44 +374,52 @@ public abstract class BaseTypeHandler implements MediaTypeHandler
 
         Map<String, String> info = new LinkedHashMap<String, String>();
 
-        NodeData originalFileNodeData = getOriginalFileNodeData(media);
-        if (originalFileNodeData.getType() == PropertyType.BINARY)
+        try
         {
+            Node originalFileNodeData = getOriginalFileNodeData(media);
 
-            FileProperties fp = new FileProperties(media, ORGINAL_NODEDATA_NAME);
-
-            String extension = fp.getProperty(FileProperties.PROPERTY_EXTENSION);
-            info.put(METADATA_EXTENSION, extension);
-
-            String size = StringUtils.EMPTY;
-
-            try
+            if (NodeUtil.isNodeType(originalFileNodeData, NodeType.NT_RESOURCE))
             {
-                size = fp.getProperty(FileProperties.PROPERTY_SIZE);
+
+                FileProperties fp = new FileProperties(ContentUtil.asContent(media), ORGINAL_NODEDATA_NAME);
+
+                String extension = fp.getProperty(FileProperties.PROPERTY_EXTENSION);
+                info.put(METADATA_EXTENSION, extension);
+
+                String size = StringUtils.EMPTY;
+
+                try
+                {
+                    size = fp.getProperty(FileProperties.PROPERTY_SIZE);
+                }
+                catch (NumberFormatException nfe)
+                {
+                    // just ignore, no file size info
+                }
+                info.put(METADATA_SIZE, size);
+
+                int width = NumberUtils.toInt(fp.getProperty(FileProperties.PROPERTY_WIDTH));
+                if (width > 0)
+                {
+                    info.put(METADATA_WIDTH, Integer.toString(width));
+                }
+
+                int height = NumberUtils.toInt(fp.getProperty(FileProperties.PROPERTY_HEIGHT));
+                if (height > 0)
+                {
+                    info.put(METADATA_HEIGHT, Integer.toString(height));
+                }
             }
-            catch (NumberFormatException nfe)
-            {
-                // just ignore, no file size info
-            }
-            info.put(METADATA_SIZE, size);
 
-            int width = NumberUtils.toInt(fp.getProperty(FileProperties.PROPERTY_WIDTH));
-            if (width > 0)
+            Collection<NodeData> propertyList = ContentUtil.asContent(media).getNodeDataCollection("media_*");
+            for (NodeData property : propertyList)
             {
-                info.put(METADATA_WIDTH, Integer.toString(width));
-            }
-
-            int height = NumberUtils.toInt(fp.getProperty(FileProperties.PROPERTY_HEIGHT));
-            if (height > 0)
-            {
-                info.put(METADATA_HEIGHT, Integer.toString(height));
+                addToInfo(media, info, property.getName());
             }
         }
-
-        Collection<NodeData> propertyList = media.getNodeDataCollection("media_*");
-        for (NodeData property : propertyList)
+        catch (Exception e)
         {
-            addToInfo(media, info, property.getName());
+            // TODO: handle exception
         }
 
         return info;
@@ -357,27 +433,42 @@ public abstract class BaseTypeHandler implements MediaTypeHandler
      */
     protected void addToInfo(Node media, Map<String, String> info, String key)
     {
-        NodeData data = media.getNodeData(key);
-
-        String string = null;
-        if (data.getType() == PropertyType.LONG || data.getType() == PropertyType.DOUBLE)
+        try
         {
-            int numeric = (int) data.getLong();
-            if (numeric > 0)
+            Property data = media.getProperty(key);
+
+            String string = null;
+            if (data.getType() == PropertyType.LONG || data.getType() == PropertyType.DOUBLE)
             {
-                string = String.valueOf(numeric);
+                int numeric = (int) data.getLong();
+
+                if (numeric > 0)
+                {
+                    string = String.valueOf(numeric);
+                }
+            }
+            else
+            {
+                string = data.getString();
+            }
+
+            if (StringUtils.isNotEmpty(string))
+            {
+                info.put(key, string);
             }
         }
-        else
+        catch (ValueFormatException e)
         {
-            string = data.getString();
+            // do nothing
         }
-
-        if (StringUtils.isNotEmpty(string))
+        catch (PathNotFoundException e)
         {
-            info.put(key, string);
+            // do nothing
         }
-
+        catch (RepositoryException e)
+        {
+            // do nothing
+        }
     }
 
     /**

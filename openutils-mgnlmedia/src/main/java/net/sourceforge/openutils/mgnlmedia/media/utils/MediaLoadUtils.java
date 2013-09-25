@@ -19,13 +19,11 @@
 
 package net.sourceforge.openutils.mgnlmedia.media.utils;
 
-
-import info.magnolia.cms.core.HierarchyManager;
 import info.magnolia.cms.core.Path;
 import info.magnolia.cms.security.AccessDeniedException;
 import info.magnolia.cms.util.ContentUtil;
-import info.magnolia.cms.util.NodeDataUtil;
 import info.magnolia.context.MgnlContext;
+import info.magnolia.jcr.util.MetaDataUtil;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -35,6 +33,7 @@ import java.util.Calendar;
 
 import javax.jcr.Node;
 import javax.jcr.RepositoryException;
+import javax.jcr.Session;
 
 import net.sourceforge.openutils.mgnlmedia.media.configuration.MediaConfigurationManager;
 import net.sourceforge.openutils.mgnlmedia.media.configuration.MediaTypeConfiguration;
@@ -81,7 +80,7 @@ public class MediaLoadUtils
         String cleanFilename = Path.getValidatedLabel(videourl);
 
         Node media = createMediaNode(mtc, parent, cleanFilename, overwrite);
-        media.setNodeData("videoUrl", videourl);
+        media.setProperty("videoUrl", videourl);
 
         mtc.getHandler().onPostSave(media);
 
@@ -142,39 +141,46 @@ public class MediaLoadUtils
         throws RepositoryException, AccessDeniedException
     {
 
-        HierarchyManager mgr = MgnlContext.getSystemContext().getHierarchyManager(MediaModule.REPO);
+        Session session = MgnlContext.getJCRSession(MediaModule.REPO);
 
-        Node parentNode = getOrCreateFullPath(mgr, parent);
+        Node parentNode = getOrCreateFullPath(session, parent);
         String mediaName = Path.getValidatedLabel(filename);
 
         if (overwrite)
         {
-            Node existing = parentNode.getChildByName(mediaName);
-            if (existing != null)
+            if (parentNode.hasNode(mediaName))
             {
-                existing.delete();
-                mgr.save();
+                Node existing = parentNode.getNode(mediaName);
+                existing.remove();
+                session.save();
             }
+
         }
 
-        Node media = mgr.createContent(
-            parent,
-            Path.getUniqueLabel(parentNode, mediaName),
+        // [LB] FIXME TESTME
+        Node media = parentNode.addNode(
+            Path.getUniqueLabel(ContentUtil.asContent(parentNode), mediaName),
             MediaConfigurationManager.MEDIA.getSystemName());
 
-        setNodedataOnlyIfNotExisting(media, "creator", MgnlContext.getUser().getName());
-        setNodedataOnlyIfNotExisting(media, "creationDate", Calendar.getInstance());
+        if (!media.hasProperty("creator"))
+        {
+            media.setProperty("creator", MgnlContext.getUser().getName());
+        }
+        if (!media.hasProperty("creationDate"))
+        {
+            media.setProperty("creationDate", Calendar.getInstance());
+        }
 
-        NodeDataUtil.getOrCreateAndSet(media, "type", mtc.getName());
-        NodeDataUtil.getOrCreateAndSet(media, "modificationDate", Calendar.getInstance());
-        NodeDataUtil.getOrCreateAndSet(media, "modificationUser", MgnlContext.getUser().getName());
+        media.setProperty("type", mtc.getName());
+        media.setProperty("modificationDate", Calendar.getInstance());
+        media.setProperty("modificationUser", MgnlContext.getUser().getName());
 
         if (MediaEl.module().isSingleinstance())
         {
-            media.getMetaData().setActivated();
+            MetaDataUtil.getMetaData(media).setActivated();
         }
 
-        mgr.save();
+        session.save();
         return media;
     }
 
@@ -185,12 +191,12 @@ public class MediaLoadUtils
      * @throws RepositoryException
      * @throws AccessDeniedException
      */
-    private static void setNodedataOnlyIfNotExisting(Node media, String key, Object value)
-        throws RepositoryException, AccessDeniedException
+    private static void setNodedataOnlyIfNotExisting(Node media, String key, String value) throws RepositoryException,
+        AccessDeniedException
     {
-        if (media.hasNodeData(key))
+        if (media.hasProperty(key))
         {
-            NodeDataUtil.getOrCreateAndSet(media, key, value);
+            media.setProperty(key, value);
         }
     }
 
@@ -202,22 +208,19 @@ public class MediaLoadUtils
      * @return content to required path
      * @throws RepositoryException exception getting or creating path
      */
-    public static Node getOrCreateFullPath(HierarchyManager mgr, String path) throws RepositoryException
+    public static Node getOrCreateFullPath(Session session, String path) throws RepositoryException
     {
         String[] contentNodeNames = path.split("/");
-        Node currContent = mgr.getRoot();
+        Node currContent = session.getRootNode();
         for (String contentNodeName : contentNodeNames)
         {
             if (StringUtils.isNotEmpty(contentNodeName))
             {
-                currContent = ContentUtil.getOrCreateContent(
-                    currContent,
-                    contentNodeName,
-                    MediaConfigurationManager.FOLDER);
+                currContent = currContent.addNode(contentNodeName, MediaConfigurationManager.FOLDER.getSystemName());
 
-                if (MediaEl.module().isSingleinstance() && !currContent.getMetaData().getIsActivated())
+                if (MediaEl.module().isSingleinstance() && !MetaDataUtil.getMetaData(currContent).getIsActivated())
                 {
-                    currContent.getMetaData().setActivated();
+                    MetaDataUtil.getMetaData(currContent).setActivated();
                 }
             }
         }

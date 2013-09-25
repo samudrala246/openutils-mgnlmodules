@@ -21,15 +21,16 @@ package net.sourceforge.openutils.mgnlmedia.media.save;
 
 import info.magnolia.cms.beans.runtime.MultipartForm;
 import info.magnolia.cms.core.Content;
-import info.magnolia.cms.core.HierarchyManager;
 import info.magnolia.cms.security.AccessDeniedException;
 import info.magnolia.cms.util.NodeDataUtil;
 import info.magnolia.context.MgnlContext;
 import info.magnolia.module.admininterface.FieldSaveHandler;
 
 import javax.jcr.ItemNotFoundException;
+import javax.jcr.Node;
 import javax.jcr.PropertyType;
 import javax.jcr.RepositoryException;
+import javax.jcr.Session;
 import javax.servlet.http.HttpServletRequest;
 
 import net.sourceforge.openutils.mgnlmedia.media.configuration.MediaConfigurationManager;
@@ -83,19 +84,19 @@ public class MediaCustomSaveHandler implements FieldSaveHandler
         else
         {
 
-            HierarchyManager hm = MgnlContext.getHierarchyManager(MediaModule.REPO);
+            Session hm = MgnlContext.getJCRSession(MediaModule.REPO);
 
             try
             {
-                Content media = hm.getContentByUUID(value);
+                Node media = hm.getNodeByIdentifier(value);
 
                 MediaTypeConfiguration mtc = MediaConfigurationManager
                     .getInstance()
                     .getMediaTypeConfigurationFromMedia(media);
                 mtc.getHandler().onSavingPropertyMedia(
                     media,
-                    parentNode,
-                    configNode,
+                    parentNode.getJCRNode(),
+                    configNode.getJCRNode(),
                     name,
                     request,
                     form,

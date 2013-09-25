@@ -19,15 +19,18 @@
 
 package net.sourceforge.openutils.mgnlmedia.media.setup;
 
-
-import info.magnolia.cms.core.HierarchyManager;
+import info.magnolia.jcr.util.PropertyUtil;
 import info.magnolia.module.InstallContext;
 import info.magnolia.module.delta.AbstractRepositoryTask;
 import info.magnolia.module.delta.TaskExecutionException;
-import info.magnolia.repository.RepositoryConstants;
 
 import javax.jcr.Node;
 import javax.jcr.RepositoryException;
+import javax.jcr.Session;
+import javax.jcr.ValueFormatException;
+import javax.jcr.lock.LockException;
+import javax.jcr.nodetype.ConstraintViolationException;
+import javax.jcr.version.VersionException;
 
 import org.apache.commons.lang.StringUtils;
 
@@ -67,17 +70,13 @@ public class AddExtensionToType extends AbstractRepositoryTask
     protected void doExecute(InstallContext ctx) throws RepositoryException, TaskExecutionException
     {
 
-        final HierarchyManager hm = ctx.getHierarchyManager(RepositoryConstants.CONFIG);
+        final Session hm = ctx.getConfigJCRSession();
         String nodePath = "/modules/media/mediatypes/" + this.mediatype;
 
         try
         {
-            final Node mediatypenode = hm.getContent(nodePath);
-            String extensions = mediatypenode.getNodeData("extensions").getString();
-            if (!StringUtils.contains(extensions, this.extension))
-            {
-                mediatypenode.setNodeData("extensions", extensions + "," + this.extension);
-            }
+            final Node mediatypenode = hm.getNode(nodePath);
+            setExtensions(mediatypenode);
         }
         catch (RepositoryException e)
         {
@@ -86,18 +85,32 @@ public class AddExtensionToType extends AbstractRepositoryTask
 
         try
         {
-            final Node mediatypenode = hm.getContent(control);
-            String extensions = mediatypenode.getNodeData("extensions").getString();
-            if (!StringUtils.contains(extensions, this.extension))
-            {
-                mediatypenode.setNodeData("extensions", extensions + "," + this.extension);
-            }
+            final Node mediatypenode = hm.getNode(control);
+            setExtensions(mediatypenode);
         }
         catch (RepositoryException e)
         {
             // ignore and skip
         }
 
+    }
+
+    /**
+     * @param mediatypenode
+     * @throws ValueFormatException
+     * @throws VersionException
+     * @throws LockException
+     * @throws ConstraintViolationException
+     * @throws RepositoryException
+     */
+    private void setExtensions(final Node mediatypenode) throws ValueFormatException, VersionException, LockException,
+        ConstraintViolationException, RepositoryException
+    {
+        String extensions = PropertyUtil.getString(mediatypenode, "extensions");
+        if (!StringUtils.contains(extensions, this.extension))
+        {
+            mediatypenode.setProperty("extensions", extensions + "," + this.extension);
+        }
     }
 
 }

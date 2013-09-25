@@ -19,16 +19,16 @@
 
 package net.sourceforge.openutils.mgnlmedia.media.repotests;
 
-
-import info.magnolia.cms.core.HierarchyManager;
-import info.magnolia.cms.util.ContentUtil;
+import info.magnolia.cms.core.MgnlNodeType;
 import info.magnolia.context.MgnlContext;
+import info.magnolia.jcr.util.NodeUtil;
 import it.openutils.mgnlutils.test.RepositoryTestConfiguration;
 import it.openutils.mgnlutils.test.TestNgRepositoryTestcase;
 
 import java.io.InputStream;
 
 import javax.jcr.Node;
+import javax.jcr.Session;
 
 import net.sourceforge.openutils.mgnlmedia.media.utils.MediaLoadUtils;
 
@@ -59,8 +59,8 @@ public class MediaTests extends TestNgRepositoryTestcase
     public void uploadIco() throws Exception
     {
 
-        HierarchyManager hm = MgnlContext.getHierarchyManager("media");
-        ContentUtil.createPath(hm, "/test/folder");
+        Session hm = MgnlContext.getJCRSession("media");
+        NodeUtil.createPath(hm.getRootNode(), "/test/folder", MgnlNodeType.NT_CONTENT);
         hm.save();
 
         InputStream is = getClass().getResourceAsStream("/images/openmind.ico");

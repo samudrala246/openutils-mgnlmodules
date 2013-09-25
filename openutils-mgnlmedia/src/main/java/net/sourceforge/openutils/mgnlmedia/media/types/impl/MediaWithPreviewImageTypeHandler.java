@@ -27,6 +27,8 @@ import javax.jcr.RepositoryException;
 import net.sourceforge.openutils.mgnlmedia.media.configuration.MediaConfigurationManager;
 import net.sourceforge.openutils.mgnlmedia.media.utils.ImageUtils;
 
+import org.apache.commons.lang.StringUtils;
+
 
 /**
  * Base class for medias that has a dynamic image as thumbnail
@@ -51,14 +53,22 @@ public abstract class MediaWithPreviewImageTypeHandler extends BaseTypeHandler
         {
             if (!ImageUtils.checkOrCreateResolution(media, "thumbnail", PREVIEW_NODEDATA_NAME))
             {
-                return "";
+                return StringUtils.EMPTY;
             }
-            return MediaConfigurationManager.getInstance().getURIMappingPrefix()
-                +  NodeUtil.getPathIfPossible(media)
-                + "/resolutions/thumbnail/"
-                + media.getName()
-                + "."
-                + ImageUtils.getExtension(media, "thumbnail");
+
+            try
+            {
+                return MediaConfigurationManager.getInstance().getURIMappingPrefix()
+                    + NodeUtil.getPathIfPossible(media)
+                    + "/resolutions/thumbnail/"
+                    + media.getName()
+                    + "."
+                    + ImageUtils.getExtension(media, "thumbnail");
+            }
+            catch (RepositoryException e)
+            {
+                return StringUtils.EMPTY;
+            }
         }
 
         return getReplacementThumbnail();
@@ -74,7 +84,7 @@ public abstract class MediaWithPreviewImageTypeHandler extends BaseTypeHandler
         {
             try
             {
-                return media.hasNodeData(PREVIEW_NODEDATA_NAME);
+                return media.hasProperty(PREVIEW_NODEDATA_NAME);
             }
             catch (RepositoryException e)
             {

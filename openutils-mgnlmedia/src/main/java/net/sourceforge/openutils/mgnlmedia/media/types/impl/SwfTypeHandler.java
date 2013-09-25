@@ -19,12 +19,13 @@
 
 package net.sourceforge.openutils.mgnlmedia.media.types.impl;
 
-import info.magnolia.cms.util.NodeDataUtil;
+import info.magnolia.cms.core.MgnlNodeType;
 
 import java.awt.Dimension;
 import java.io.InputStream;
 
 import javax.jcr.Node;
+import javax.jcr.RepositoryException;
 
 import org.apache.commons.io.IOUtils;
 import org.devlib.schmidt.imageinfo.ImageInfo;
@@ -53,7 +54,11 @@ public class SwfTypeHandler extends MediaWithPreviewImageTypeHandler
         InputStream stream = null;
         try
         {
-            stream = getOriginalFileNodeData(media).getStream();
+            stream = getOriginalFileNodeData(media)
+                .getProperty(MgnlNodeType.JCR_DATA)
+                .getValue()
+                .getBinary()
+                .getStream();
 
             Dimension dimension = null;
             Integer flashversion = null;
@@ -71,22 +76,22 @@ public class SwfTypeHandler extends MediaWithPreviewImageTypeHandler
 
             if (dimension != null)
             {
-                NodeDataUtil.getOrCreateAndSet(media, METADATA_WIDTH, dimension.getWidth());
-                NodeDataUtil.getOrCreateAndSet(media, METADATA_HEIGHT, dimension.getHeight());
-                NodeDataUtil.getOrCreateAndSet(media, "media_flashversion", flashversion);
+                media.setProperty(METADATA_WIDTH, dimension.getWidth());
+                media.setProperty(METADATA_HEIGHT, dimension.getHeight());
+                media.setProperty("media_flashversion", flashversion);
                 media.save();
             }
             else if (hasPreview(media))
             {
                 IOUtils.closeQuietly(stream);
-                stream = media.getNodeData(getPreviewImageNodeDataName()).getStream();
+                stream = media.getProperty(getPreviewImageNodeDataName()).getBinary().getStream();
 
                 ImageInfo ii = new ImageInfo();
                 ii.setInput(stream);
                 if (ii.check())
                 {
-                    NodeDataUtil.getOrCreateAndSet(media, METADATA_WIDTH, ii.getWidth());
-                    NodeDataUtil.getOrCreateAndSet(media, METADATA_HEIGHT, ii.getHeight());
+                    media.setProperty(METADATA_WIDTH, ii.getWidth());
+                    media.setProperty(METADATA_HEIGHT, ii.getHeight());
                     media.save();
                 }
             }
@@ -94,12 +99,19 @@ public class SwfTypeHandler extends MediaWithPreviewImageTypeHandler
         }
         catch (Throwable e)
         {
-            log.warn("Error extracting metadata "
-                + getOriginalFileNodeData(media).getHandle()
-                + " "
-                + e.getClass().getName()
-                + " "
-                + e.getMessage(), e);
+            try
+            {
+                log.warn("Error extracting metadata "
+                    + getOriginalFileNodeData(media).getPath()
+                    + " "
+                    + e.getClass().getName()
+                    + " "
+                    + e.getMessage(), e);
+            }
+            catch (RepositoryException e1)
+            {
+                // do nothing
+            }
         }
         finally
         {

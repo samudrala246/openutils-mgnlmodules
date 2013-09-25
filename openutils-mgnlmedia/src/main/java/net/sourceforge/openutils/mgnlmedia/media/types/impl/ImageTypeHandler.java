@@ -20,14 +20,16 @@
 package net.sourceforge.openutils.mgnlmedia.media.types.impl;
 
 import info.magnolia.cms.beans.runtime.FileProperties;
-import info.magnolia.cms.core.NodeData;
-import info.magnolia.cms.util.NodeDataUtil;
+import info.magnolia.cms.core.MgnlNodeType;
 import info.magnolia.jcr.util.NodeUtil;
+import info.magnolia.jcr.util.PropertyUtil;
+import it.openutils.mgnlutils.api.NodeUtilsExt;
 
 import java.awt.image.BufferedImage;
 import java.io.InputStream;
 
 import javax.jcr.Node;
+import javax.jcr.RepositoryException;
 
 import net.sourceforge.openutils.mgnlmedia.media.configuration.MediaConfigurationManager;
 import net.sourceforge.openutils.mgnlmedia.media.utils.IcoUtils;
@@ -62,12 +64,20 @@ public class ImageTypeHandler extends BaseTypeHandler
         {
             return StringUtils.EMPTY;
         }
-        return MediaConfigurationManager.getInstance().getURIMappingPrefix()
-            + NodeUtil.getPathIfPossible(media)
-            + "/resolutions/thumbnail/"
-            + media.getName()
-            + "."
-            + ImageUtils.getExtension(media, "thumbnail");
+
+        try
+        {
+            return MediaConfigurationManager.getInstance().getURIMappingPrefix()
+                + NodeUtil.getPathIfPossible(media)
+                + "/resolutions/thumbnail/"
+                + media.getName()
+                + "."
+                + ImageUtils.getExtension(media, "thumbnail");
+        }
+        catch (RepositoryException e)
+        {
+            return StringUtils.EMPTY;
+        }
     }
 
     /**
@@ -80,12 +90,19 @@ public class ImageTypeHandler extends BaseTypeHandler
         {
             return StringUtils.EMPTY;
         }
-        return MediaConfigurationManager.getInstance().getURIMappingPrefix()
-            + NodeUtil.getPathIfPossible(media)
-            + "/resolutions/preview/"
-            + media.getName()
-            + "."
-            + ImageUtils.getExtension(media, "preview");
+        try
+        {
+            return MediaConfigurationManager.getInstance().getURIMappingPrefix()
+                + NodeUtil.getPathIfPossible(media)
+                + "/resolutions/preview/"
+                + media.getName()
+                + "."
+                + ImageUtils.getExtension(media, "preview");
+        }
+        catch (RepositoryException e)
+        {
+            throw new RuntimeException();
+        }
     }
 
     @Override
@@ -94,26 +111,30 @@ public class ImageTypeHandler extends BaseTypeHandler
         InputStream stream = null;
         try
         {
-            NodeData nodeData = getOriginalFileNodeData(media);
-            stream = getOriginalFileNodeData(media).getStream();
+            Node nodeData = getOriginalFileNodeData(media);
+            stream = getOriginalFileNodeData(media)
+                .getProperty(MgnlNodeType.JCR_DATA)
+                .getValue()
+                .getBinary()
+                .getStream();
             ImageInfo ii = new ImageInfo();
             ii.setInput(stream);
             if (ii.check())
             {
-                NodeDataUtil.getOrCreateAndSet(media, METADATA_BITDEPTH, ii.getBitsPerPixel());
-                NodeDataUtil.getOrCreateAndSet(media, METADATA_WIDTH, ii.getWidth());
-                NodeDataUtil.getOrCreateAndSet(media, METADATA_HEIGHT, ii.getHeight());
+                media.setProperty(METADATA_BITDEPTH, ii.getBitsPerPixel());
+                media.setProperty(METADATA_WIDTH, ii.getWidth());
+                media.setProperty(METADATA_HEIGHT, ii.getHeight());
                 media.save();
             }
-            else if (StringUtils.equals(nodeData.getAttribute(FileProperties.EXTENSION), "ico"))
+            else if (StringUtils.equals(PropertyUtil.getString(nodeData, FileProperties.EXTENSION), "ico"))
             {
                 BufferedImage bi = IcoUtils.createBufferedImage(nodeData);
                 if (bi != null)
                 {
 
-                    NodeDataUtil.getOrCreateAndSet(media, METADATA_BITDEPTH, bi.getColorModel().getPixelSize());
-                    NodeDataUtil.getOrCreateAndSet(media, METADATA_WIDTH, bi.getWidth());
-                    NodeDataUtil.getOrCreateAndSet(media, METADATA_HEIGHT, bi.getHeight());
+                    media.setProperty(METADATA_BITDEPTH, bi.getColorModel().getPixelSize());
+                    media.setProperty(METADATA_WIDTH, bi.getWidth());
+                    media.setProperty(METADATA_HEIGHT, bi.getHeight());
                     media.save();
                 }
                 bi.flush();
@@ -121,12 +142,19 @@ public class ImageTypeHandler extends BaseTypeHandler
         }
         catch (Throwable e)
         {
-            log.warn("Error determining bit depth "
-                + getOriginalFileNodeData(media).getHandle()
-                + " "
-                + e.getClass().getName()
-                + " "
-                + e.getMessage(), e);
+            try
+            {
+                log.warn("Error determining bit depth "
+                    + getOriginalFileNodeData(media).getPath()
+                    + " "
+                    + e.getClass().getName()
+                    + " "
+                    + e.getMessage(), e);
+            }
+            catch (RepositoryException re)
+            {
+                // do nothing
+            }
         }
         finally
         {

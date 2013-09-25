@@ -19,8 +19,7 @@
 
 package net.sourceforge.openutils.mgnlmedia.playlist.pages;
 
-
-import info.magnolia.cms.util.NodeDataUtil;
+import info.magnolia.jcr.util.PropertyUtil;
 
 import java.io.PrintWriter;
 
@@ -39,7 +38,7 @@ public class DefaultPlaylistTrackExtensionContributor implements PlaylistTrackEx
      */
     public void addMediaAttributes(Node media, PrintWriter writer)
     {
-        writer.println("<media:type>" + NodeDataUtil.getString(media, "type") + "</media:type>");
+        writer.println("<media:type>" + PropertyUtil.getString(media, "type") + "</media:type>");
     }
 
 }

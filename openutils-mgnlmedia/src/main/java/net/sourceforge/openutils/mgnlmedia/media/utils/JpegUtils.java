@@ -19,7 +19,7 @@
 
 package net.sourceforge.openutils.mgnlmedia.media.utils;
 
-import info.magnolia.cms.core.NodeData;
+import info.magnolia.cms.core.MgnlNodeType;
 
 import java.awt.Transparency;
 import java.awt.color.ColorSpace;
@@ -39,6 +39,9 @@ import java.util.Iterator;
 import javax.imageio.ImageIO;
 import javax.imageio.ImageReader;
 import javax.imageio.stream.ImageInputStream;
+import javax.jcr.Node;
+import javax.jcr.RepositoryException;
+import javax.jcr.ValueFormatException;
 
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
@@ -147,12 +150,14 @@ public class JpegUtils
      * @param image
      * @return image
      */
-    public static BufferedImage processNonStandardImage(NodeData image)
+    public static BufferedImage processNonStandardImage(Node image)
     {
-        log.debug("Processing {}", image.getHandle());
-        InputStream is2 = image.getStream();
+        InputStream is2 = null;
+
         try
         {
+            log.debug("Processing {}", image.getPath());
+            is2 = image.getProperty(MgnlNodeType.JCR_DATA).getValue().getBinary().getStream();
             // Get an ImageReader.
             ImageInputStream input = ImageIO.createImageInputStream(is2);
             Iterator<ImageReader> readers = ImageIO.getImageReaders(input);
@@ -171,9 +176,10 @@ public class JpegUtils
                 boolean ycckProfile = false;
 
                 // yes, we need to read it once again to extract metadata
-                InputStream is3 = image.getStream();
+                InputStream is3 = null;
                 try
                 {
+                    is3 = image.getProperty(MgnlNodeType.JCR_DATA).getValue().getBinary().getStream();
 
                     JpegSegmentReader segmentReader = new JpegSegmentReader(is3);
                     byte[] exifSegment = segmentReader.readSegment(JpegSegmentReader.SEGMENT_APPE);
@@ -218,7 +224,7 @@ public class JpegUtils
                 else
                 {
                     // may be either an RGB or CMYK image, try and see if it's RGB first
-                    InputStream is4 = image.getStream();
+                    InputStream is4 = image.getProperty(MgnlNodeType.JCR_DATA).getValue().getBinary().getStream();
                     try
                     {
                         // see MEDIA-72, we need the sun codec to make this work properly
@@ -263,13 +269,28 @@ public class JpegUtils
                 }
 
             }
-            throw new BadImageFormatException("No ImageReaders found for " + image.getHandle());
+            throw new BadImageFormatException("No ImageReaders found for " + image.getPath());
 
+        }
+        catch (ValueFormatException e)
+        {
+            throw new RuntimeException();
+        }
+        catch (RepositoryException e)
+        {
+            throw new RuntimeException();
         }
         catch (IOException e1)
         {
-            log.error("Unable to handle " + image.getHandle() + ": " + e1.getMessage(), e1);
-            throw new BadImageFormatException(image.getHandle(), e1);
+            try
+            {
+                log.error("Unable to handle " + image.getPath() + ": " + e1.getMessage(), e1);
+                throw new BadImageFormatException(image.getPath(), e1);
+            }
+            catch (RepositoryException e)
+            {
+                throw new RuntimeException();
+            }
         }
         finally
         {

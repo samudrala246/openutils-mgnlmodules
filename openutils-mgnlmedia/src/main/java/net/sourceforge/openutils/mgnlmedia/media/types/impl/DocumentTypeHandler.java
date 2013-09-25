@@ -21,10 +21,12 @@ package net.sourceforge.openutils.mgnlmedia.media.types.impl;
 
 import info.magnolia.cms.beans.runtime.Document;
 import info.magnolia.cms.beans.runtime.FileProperties;
-import info.magnolia.cms.core.NodeData;
-import info.magnolia.cms.util.NodeDataUtil;
+import info.magnolia.cms.core.MgnlNodeType;
+import info.magnolia.cms.util.ContentUtil;
 import info.magnolia.jcr.util.NodeUtil;
+import info.magnolia.jcr.util.PropertyUtil;
 import info.magnolia.module.admininterface.SaveHandlerImpl;
+import it.openutils.mgnlutils.api.NodeUtilsExt;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -35,8 +37,10 @@ import java.util.List;
 
 import javax.imageio.ImageIO;
 import javax.jcr.Node;
+import javax.jcr.Property;
 import javax.jcr.PropertyType;
 import javax.jcr.RepositoryException;
+import javax.jcr.nodetype.NodeType;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
@@ -80,36 +84,46 @@ public class DocumentTypeHandler extends MediaWithPreviewImageTypeHandler
     public boolean onPostSave(Node media)
     {
 
-        NodeData data = getOriginalFileNodeData(media);
-        if (data.getType() == PropertyType.BINARY)
+        Node data = getOriginalFileNodeData(media);
+        try
         {
-
-            if (StringUtils.equalsIgnoreCase(data.getAttribute(FileProperties.EXTENSION), "pdf"))
+            if (NodeUtil.isNodeType(data, NodeType.NT_RESOURCE))
             {
 
-                try
+                if (StringUtils.equalsIgnoreCase(PropertyUtil.getString(data, FileProperties.EXTENSION), "pdf"))
                 {
-                    String filename = data.getAttribute(FileProperties.PROPERTY_FILENAME) + ".png";
 
-                    InputStream stream = data.getStream();
                     try
                     {
-                        createPdfPreview(media, stream, filename);
-                    }
-                    finally
-                    {
-                        IOUtils.closeQuietly(stream);
-                    }
-                }
-                catch (Throwable e)
-                {
-                    log.warn("Unable to generate a preview for {} due to a {}: {}", new Object[]{
-                        NodeUtil.getPathIfPossible(media),
-                        e.getClass().getName(),
-                        e.getMessage() });
-                }
-            }
+                        String filename = PropertyUtil.getString(data, FileProperties.PROPERTY_FILENAME) + ".png";
 
+                        InputStream stream = getOriginalFileNodeData(data)
+                            .getProperty(MgnlNodeType.JCR_DATA)
+                            .getValue()
+                            .getBinary()
+                            .getStream();
+                        try
+                        {
+                            createPdfPreview(media, stream, filename);
+                        }
+                        finally
+                        {
+                            IOUtils.closeQuietly(stream);
+                        }
+                    }
+                    catch (Throwable e)
+                    {
+                        log.warn(
+                            "Unable to generate a preview for {} due to a {}: {}",
+                            new Object[]{NodeUtil.getPathIfPossible(media), e.getClass().getName(), e.getMessage() });
+                    }
+                }
+
+            }
+        }
+        catch (RepositoryException e)
+        {
+            // do nothing
         }
 
         return super.onPostSave(media);
@@ -132,7 +146,7 @@ public class DocumentTypeHandler extends MediaWithPreviewImageTypeHandler
 
             List<PDPage> pages = document.getDocumentCatalog().getAllPages();
 
-            NodeDataUtil.getOrCreateAndSet(media, METADATA_PAGES, document.getNumberOfPages());
+            media.setProperty(METADATA_PAGES, document.getNumberOfPages());
 
             if (!pages.isEmpty())
             {
@@ -200,7 +214,12 @@ public class DocumentTypeHandler extends MediaWithPreviewImageTypeHandler
         Document doc = new Document(file, "image/png");
         try
         {
-            SaveHandlerImpl.saveDocument(media, doc, DocumentTypeHandler.PREVIEW_NODEDATA_NAME, filename, null);
+            SaveHandlerImpl.saveDocument(
+                ContentUtil.asContent(media),
+                doc,
+                DocumentTypeHandler.PREVIEW_NODEDATA_NAME,
+                filename,
+                null);
         }
         catch (RepositoryException e)
         {

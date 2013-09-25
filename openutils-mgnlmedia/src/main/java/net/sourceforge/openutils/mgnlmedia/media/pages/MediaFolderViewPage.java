@@ -19,6 +19,7 @@
 
 package net.sourceforge.openutils.mgnlmedia.media.pages;
 
+import info.magnolia.cms.core.Content;
 import info.magnolia.cms.core.HierarchyManager;
 import info.magnolia.cms.core.ItemType;
 import info.magnolia.cms.core.Path;
@@ -26,7 +27,6 @@ import info.magnolia.cms.exchange.ActivationManagerFactory;
 import info.magnolia.cms.exchange.ExchangeException;
 import info.magnolia.cms.security.Permission;
 import info.magnolia.cms.util.AlertUtil;
-import info.magnolia.cms.util.ContentUtil;
 import info.magnolia.commands.CommandsManager;
 import info.magnolia.context.Context;
 import info.magnolia.context.MgnlContext;
@@ -65,7 +65,6 @@ import org.apache.commons.chain.Command;
 import org.apache.commons.lang.StringUtils;
 
 import com.google.common.collect.Iterators;
-import com.sun.xml.internal.ws.util.MetadataUtil;
 
 
 /**
@@ -226,7 +225,8 @@ public class MediaFolderViewPage extends MessagesTemplatedMVCHandler
         {
             return null;
         }
-        writable = folder.isGranted(Permission.WRITE);
+
+        writable = NodeUtil.isGranted(folder, Permission.SET);
         canPublish = writable && ActivationManagerFactory.getActivationManager().hasAnyActiveSubscriber();
         MediaModule module = MediaEl.module();
         Integer itemsPerPage = module.getFolderViewPageSizes().get(pagesizeSelector);
@@ -417,11 +417,11 @@ public class MediaFolderViewPage extends MessagesTemplatedMVCHandler
             // copy
             hm.copyTo(source, goTo);
         }
-        Node newContent = hm.getNode(destination);
+        Content newContent = hm.getContent(destination);
         try
         {
-            MetaDataUtil.updateMetaData(newContent);
-            MetaDataUtil.getMetaData(newContent).setUnActivated();
+            MetaDataUtil.updateMetaData(newContent.getJCRNode());
+            MetaDataUtil.getMetaData(newContent.getJCRNode()).setUnActivated();
         }
         catch (Exception e)
         {
@@ -431,7 +431,7 @@ public class MediaFolderViewPage extends MessagesTemplatedMVCHandler
             }
         }
         newContent.save();
-        return newContent;
+        return newContent.getJCRNode();
     }
 
     /**

@@ -22,7 +22,9 @@ package net.sourceforge.openutils.mgnlmedia.media.pages;
 import info.magnolia.cms.beans.config.URI2RepositoryManager;
 import info.magnolia.cms.exchange.ActivationManagerFactory;
 import info.magnolia.cms.security.Permission;
-import info.magnolia.cms.util.NodeDataUtil;
+import info.magnolia.jcr.util.MetaDataUtil;
+import info.magnolia.jcr.util.NodeUtil;
+import info.magnolia.jcr.util.PropertyUtil;
 import info.magnolia.repository.RepositoryConstants;
 
 import java.util.List;
@@ -62,44 +64,44 @@ public class MediaBeanBuilder implements Function<Node, MediaBean>
     public MediaBean apply(Node media)
     {
 
-        String mediatype = media.getNodeData("type").getString();
+        String mediatype = PropertyUtil.getString(media, "type");
         MediaTypeConfiguration mtc = MediaConfigurationManager.getInstance().getTypes().get(mediatype);
-
-        if (mtc == null)
-        {
-            log.warn("Skipping media {} with invalid media type \"{}\"", media.getHandle(), mediatype);
-            return null;
-        }
-
         MediaBean mb = new MediaBean();
-        mb.setContent(media);
-        mb.setMetaData(media.getMetaData());
-        mb.setHandle(media.getHandle());
-        mb.setName(NodeDataUtil.getString(media, MediaTypeHandler.METADATA_NAME));
-        mb.setFilename(mtc.getHandler().getFilename(media));
-        // backward compatibility
-        if (StringUtils.isEmpty(mb.getName()) && !StringUtils.isEmpty(mb.getFilename()))
-        {
-            int p = StringUtils.lastIndexOf(mb.getFilename(), '/');
-            mb.setName(p != -1 ? mb.getFilename().substring(p + 1) : mb.getFilename());
-        }
-        mb.setTitle(mtc.getHandler().getTitle(media));
-        mb.setThumbnailUrl(mtc.getHandler().getThumbnailUrl(media));
-        mb.setPreviewUrl(mtc.getHandler().getPreviewUrl(media));
-        mb.setDescription(mtc.getHandler().getDescription(media));
-        mb.setDialog(mtc.getDialog());
-        mb.setUuid(media.getUUID());
-        mb.setType(mediatype);
-        mb.setIcon(mtc.getMenuIcon());
-
         try
         {
-            mb.setWritable(media.getParent().isGranted(Permission.WRITE));
+            if (mtc == null)
+            {
+                log.warn("Skipping media {} with invalid media type \"{}\"", media.getPath(), mediatype);
+                return null;
+            }
+
+            mb.setContent(media);
+            mb.setMetaData(MetaDataUtil.getMetaData(media));
+            mb.setHandle(media.getPath());
+            mb.setName(PropertyUtil.getString(media, MediaTypeHandler.METADATA_NAME));
+            mb.setFilename(mtc.getHandler().getFilename(media));
+            // backward compatibility
+            if (StringUtils.isEmpty(mb.getName()) && !StringUtils.isEmpty(mb.getFilename()))
+            {
+                int p = StringUtils.lastIndexOf(mb.getFilename(), '/');
+                mb.setName(p != -1 ? mb.getFilename().substring(p + 1) : mb.getFilename());
+            }
+            mb.setTitle(mtc.getHandler().getTitle(media));
+            mb.setThumbnailUrl(mtc.getHandler().getThumbnailUrl(media));
+            mb.setPreviewUrl(mtc.getHandler().getPreviewUrl(media));
+            mb.setDescription(mtc.getHandler().getDescription(media));
+            mb.setDialog(mtc.getDialog());
+            mb.setUuid(media.getIdentifier());
+            mb.setType(mediatype);
+            mb.setIcon(mtc.getMenuIcon());
+
+            mb.setWritable(NodeUtil.isGranted(media.getParent(), Permission.SET));
             mb.setCanPublish(!MediaEl.module().isSingleinstance()
                 && mb.isWritable()
                 && ActivationManagerFactory.getActivationManager().hasAnyActiveSubscriber());
 
-            Map<String, List<String>> workspacePaths = MediaUsedInManager.getInstance().getUsedInPaths(media.getUUID());
+            Map<String, List<String>> workspacePaths = MediaUsedInManager.getInstance().getUsedInPaths(
+                media.getIdentifier());
             mb.getUsedInWebPages().addAll(workspacePaths.get(RepositoryConstants.WEBSITE));
             for (Map.Entry<String, List<String>> entry : workspacePaths.entrySet())
             {
@@ -115,11 +117,9 @@ public class MediaBeanBuilder implements Function<Node, MediaBean>
         {
             log.error("Exception caught", ex);
         }
-
         mb.setMediaInfo(mtc.getHandler().getMediaInfo(media));
         mb.setExternal(mtc.getHandler().isExternal(media));
 
         return mb;
     }
-
 }

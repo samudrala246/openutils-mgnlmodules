@@ -18,8 +18,7 @@
  */
 
 package net.sourceforge.openutils.mgnlmedia.playlist.pages;
- 
-import info.magnolia.cms.util.NodeDataUtil;
+
 import info.magnolia.jcr.util.MetaDataUtil;
 import info.magnolia.jcr.util.NodeUtil;
 import info.magnolia.jcr.util.PropertyUtil;
@@ -30,7 +29,6 @@ import it.openutils.mgnlutils.api.NodeUtilsExt;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -179,45 +177,45 @@ public class PlaylistView extends MessagesTemplatedMVCHandler
             if (node != null)
             {
 
-                playlist = new PlaylistBean();
-                playlist.setUuid(node.getIdentifier());
-                playlist.setHandle(NodeUtil.getPathIfPossible(node));
-                playlist.setTitle(NodeDataUtil.getString(node, "title"));
-                playlist.setDescription(NodeDataUtil.getString(node, "description"));
-                List<PlaylistEntryBean> entries = new ArrayList<PlaylistEntryBean>();
-
-                for (Iterator<MediaNodeAndEntryPath> iterator = PlaylistIterateUtils.iterate(node); iterator
-                    .hasNext();)
-                {
-                    MediaNodeAndEntryPath item = iterator.next();
-                    Node media = item.getMediaNode();
-                    if (media == null)
-                    {
-                        continue;
-                    }
-
-                    PlaylistEntryBean entry = new PlaylistEntryBean();
-                    entry.setHandle(item.getPlaylistEntryPath());
-                    entry.setMedia(NodeUtil.getNodeIdentifierIfPossible(media));
-                    entry.setMediaHandle(NodeUtil.getPathIfPossible(media));
-                    MediaTypeConfiguration typeConf = MediaConfigurationManager
-                        .getInstance()
-                        .getMediaTypeConfigurationFromMedia(media);
-                    if (typeConf != null)
-                    {
-                        entry.setMediaDialog(typeConf.getDialog());
-                    }
-                    entry.setThumbnail(MediaEl.thumbnail(media));
-                    entry.setType(PropertyUtil.getString(media, "type"));
-                    entry.setTitle(PropertyUtil.getString(media, "title"));
-                    entry.setDescription(PropertyUtil.getString(media, "description"));
-                    entry.setTags(PropertyUtil.getString(media, "tags"));
-                    entries.add(entry);
-                }
-                playlist.setEntries(entries);
-
                 try
                 {
+                    playlist = new PlaylistBean();
+                    playlist.setUuid(node.getIdentifier());
+                    playlist.setHandle(NodeUtil.getPathIfPossible(node));
+                    playlist.setTitle(PropertyUtil.getString(node, "title"));
+                    playlist.setDescription(PropertyUtil.getString(node, "description"));
+                    List<PlaylistEntryBean> entries = new ArrayList<PlaylistEntryBean>();
+
+                    for (Iterator<MediaNodeAndEntryPath> iterator = PlaylistIterateUtils.iterate(node); iterator
+                        .hasNext();)
+                    {
+                        MediaNodeAndEntryPath item = iterator.next();
+                        Node media = item.getMediaNode();
+                        if (media == null)
+                        {
+                            continue;
+                        }
+
+                        PlaylistEntryBean entry = new PlaylistEntryBean();
+                        entry.setHandle(item.getPlaylistEntryPath());
+                        entry.setMedia(NodeUtil.getNodeIdentifierIfPossible(media));
+                        entry.setMediaHandle(NodeUtil.getPathIfPossible(media));
+                        MediaTypeConfiguration typeConf = MediaConfigurationManager
+                            .getInstance()
+                            .getMediaTypeConfigurationFromMedia(media);
+                        if (typeConf != null)
+                        {
+                            entry.setMediaDialog(typeConf.getDialog());
+                        }
+                        entry.setThumbnail(MediaEl.thumbnail(media));
+                        entry.setType(PropertyUtil.getString(media, "type"));
+                        entry.setTitle(PropertyUtil.getString(media, "title"));
+                        entry.setDescription(PropertyUtil.getString(media, "description"));
+                        entry.setTags(PropertyUtil.getString(media, "tags"));
+                        entries.add(entry);
+                    }
+                    playlist.setEntries(entries);
+
                     playlist.setSearchBased(node.hasNode("search"));
                 }
                 catch (RepositoryException e)
@@ -241,11 +239,11 @@ public class PlaylistView extends MessagesTemplatedMVCHandler
         {
             try
             {
-                NodeDataUtil.getOrCreateAndSet(node, "title", title);
-                NodeDataUtil.getOrCreateAndSet(node, "description", description);
+                node.setProperty("title", title);
+                node.setProperty("description", description);
                 if (MediaEl.module().isSingleinstance())
                 {
-                MetaDataUtil.getMetaData(node).setActivated();
+                    MetaDataUtil.getMetaData(node).setActivated();
                 }
                 node.getSession().save();
                 success = true;
@@ -265,11 +263,11 @@ public class PlaylistView extends MessagesTemplatedMVCHandler
         {
             try
             {
-                NodeDataUtil.getOrCreateAndSet(node, "title", title);
-                NodeDataUtil.getOrCreateAndSet(node, "description", description);
+                node.setProperty("title", title);
+                node.setProperty("description", description);
                 if (MediaEl.module().isSingleinstance())
                 {
-                   MetaDataUtil.getMetaData(node).setActivated();
+                    MetaDataUtil.getMetaData(node).setActivated();
                 }
                 node.getSession().save();
                 success = true;
@@ -329,12 +327,21 @@ public class PlaylistView extends MessagesTemplatedMVCHandler
         Node folder = NodeUtilsExt.getNodeByIdOrPath(MediaModule.REPO, path);
         if (folder != null)
         {
-            Collection<Node> nodes = folder.getChildren(MediaConfigurationManager.MEDIA);
-            mediaBeans = new ArrayList<MediaBean>(nodes.size());
-            for (Node node : nodes)
+            try
             {
-                MediaBean bean = new MediaBeanBuilder().apply(node);
-                mediaBeans.add(bean);
+                Iterable<Node> nodes = NodeUtil.getNodes(folder, MediaConfigurationManager.MEDIA.getSystemName());
+
+                mediaBeans = new ArrayList<MediaBean>();
+                for (Node node : nodes)
+                {
+                    MediaBean bean = new MediaBeanBuilder().apply(node);
+                    mediaBeans.add(bean);
+                }
+            }
+            catch (RepositoryException e)
+            {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
             }
         }
         return "-mediaFolder";
@@ -414,7 +421,8 @@ public class PlaylistView extends MessagesTemplatedMVCHandler
 
     public void writePlaylistTrackExtension(Node media, PrintWriter writer)
     {
-        MediaModule module = (MediaModule) Components.getComponent(ModuleRegistry.class).getModuleInstance(MediaModule.NAME);
+        MediaModule module = (MediaModule) Components.getComponent(ModuleRegistry.class).getModuleInstance(
+            MediaModule.NAME);
         for (Object item : module.getPlaylistTrackExtensionContributors())
         {
             PlaylistTrackExtensionContributor contributor = (PlaylistTrackExtensionContributor) item;

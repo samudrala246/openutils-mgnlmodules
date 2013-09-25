@@ -19,12 +19,14 @@
 
 package net.sourceforge.openutils.mgnlmedia.media.setup;
 
-
 import info.magnolia.cms.core.ItemType;
+import info.magnolia.cms.core.MgnlNodeType;
 import info.magnolia.cms.exchange.ActivationManager;
 import info.magnolia.cms.exchange.ActivationManagerFactory;
 import info.magnolia.cms.exchange.Subscriber;
 import info.magnolia.cms.util.ContentUtil;
+import info.magnolia.context.MgnlContext;
+import info.magnolia.jcr.util.PropertyUtil;
 import info.magnolia.module.InstallContext;
 import info.magnolia.module.delta.AbstractTask;
 import info.magnolia.module.delta.TaskExecutionException;
@@ -60,26 +62,33 @@ public class ConditionallySubscribeMediaRepositoriesTask extends AbstractTask
 
         // check for the sigleinstance flag directly in jcr, the module is not started yet
         boolean singleinstance = false;
-        Node moduleConfigNode = ContentUtil.getContent(RepositoryConstants.CONFIG, "/modules/media/config");
-        if (moduleConfigNode != null)
+        try
         {
-            singleinstance = moduleConfigNode.getNodeData("singleinstance").getBoolean();
-        }
-        if (singleinstance)
-        {
-            return;
-        }
-
-        final ModuleDefinition def = ctx.getCurrentModuleDefinition();
-
-        Collection<RepositoryDefinition> repositories = def.getRepositories();
-        for (RepositoryDefinition repDef : repositories)
-        {
-            List<String> workspaces = repDef.getWorkspaces();
-            for (final String workspace : workspaces)
+            Node moduleConfigNode = ctx.getConfigJCRSession().getNode("/modules/media/config");
+            if (moduleConfigNode != null)
             {
-                subscribeRepository(workspace);
+                singleinstance = PropertyUtil.getBoolean(moduleConfigNode, "singleinstance", false);
             }
+            if (singleinstance)
+            {
+                return;
+            }
+
+            final ModuleDefinition def = ctx.getCurrentModuleDefinition();
+
+            Collection<RepositoryDefinition> repositories = def.getRepositories();
+            for (RepositoryDefinition repDef : repositories)
+            {
+                List<String> workspaces = repDef.getWorkspaces();
+                for (final String workspace : workspaces)
+                {
+                    subscribeRepository(workspace);
+                }
+            }
+        }
+        catch (RepositoryException re)
+        {
+            throw new TaskExecutionException("wasn't able to config singleinstance", re);
         }
 
     }
@@ -96,16 +105,15 @@ public class ConditionallySubscribeMediaRepositoriesTask extends AbstractTask
         {
             if (!subscriber.isSubscribed("/", repository))
             {
-                Node subscriptionsNode = ContentUtil.getContent(RepositoryConstants.CONFIG, sManager.getConfigPath()
-                    + "/"
-                    + subscriber.getName()
-                    + "/subscriptions");
                 try
                 {
-                    Node newSubscription = subscriptionsNode.createContent(repository, ItemType.CONTENTNODE);
-                    newSubscription.createNodeData("toURI").setValue("/");
-                    newSubscription.createNodeData("repository").setValue(repository);
-                    newSubscription.createNodeData("fromURI").setValue("/");
+                    Node subscriptionsNode = MgnlContext.getJCRSession(RepositoryConstants.CONFIG).getNode(
+                        sManager.getConfigPath() + "/" + subscriber.getName() + "/subscriptions");
+
+                    Node newSubscription = subscriptionsNode.addNode(repository, MgnlNodeType.NT_CONTENTNODE);
+                    newSubscription.setProperty("toURI", "/");
+                    newSubscription.setProperty("repository", repository);
+                    newSubscription.setProperty("fromURI", "/");
                     // subscriptionsNode.save();
                 }
                 catch (RepositoryException re)

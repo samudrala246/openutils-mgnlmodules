@@ -19,7 +19,6 @@
 
 package net.sourceforge.openutils.mgnlmedia.media.utils;
 
-import info.magnolia.cms.core.NodeData;
 import info.magnolia.test.ComponentsTestUtil;
 
 import java.awt.image.BufferedImage;
@@ -29,6 +28,8 @@ import java.io.FileOutputStream;
 import java.io.OutputStream;
 import java.util.HashMap;
 import java.util.Map;
+
+import javax.jcr.Node;
 
 import net.sourceforge.openutils.mgnlmedia.media.configuration.ImageProcessorsManager;
 
@@ -61,7 +62,7 @@ public class ImageUtilsTest
     public void testYcck() throws Exception
     {
 
-        NodeData cmyk = new FileNodeData("/images/ycck.jpg");
+        Node cmyk = new FileNode("/images/ycck.jpg");
         BufferedImage bufferedImage = ImageUtils.createBufferedImage(cmyk);
         Assert.assertNotNull(bufferedImage);
 
@@ -86,7 +87,7 @@ public class ImageUtilsTest
     public void testInvalidJpeg() throws Exception
     {
 
-        NodeData cmyk = new FileNodeData("/images/sample_invalid_colors.jpg");
+        Node cmyk = new FileNode("/images/sample_invalid_colors.jpg");
         BufferedImage bufferedImage = ImageUtils.createBufferedImage(cmyk);
         Assert.assertNotNull(bufferedImage);
 
@@ -110,7 +111,7 @@ public class ImageUtilsTest
     public void testBorders() throws Exception
     {
 
-        NodeData cmyk = new FileNodeData("/images/openmind.png");
+        Node cmyk = new FileNode("/images/openmind.png");
         BufferedImage bufferedImage = ImageUtils.createBufferedImage(cmyk);
         Assert.assertNotNull(bufferedImage);
 
@@ -135,7 +136,7 @@ public class ImageUtilsTest
     public void testIco() throws Exception
     {
 
-        NodeData ico = new FileNodeData("/images/openmind.ico");
+        Node ico = new FileNode("/images/openmind.ico");
         BufferedImage bufferedImage = ImageUtils.createBufferedImage(ico);
         Assert.assertNotNull(bufferedImage);
     }
@@ -147,7 +148,7 @@ public class ImageUtilsTest
     public void testBadImageTxt() throws Exception
     {
 
-        NodeData cmyk = new FileNodeData("/images/badimage.txt");
+        Node cmyk = new FileNode("/images/badimage.txt");
         BufferedImage bufferedImage = ImageUtils.createBufferedImage(cmyk);
     }
 
@@ -158,7 +159,7 @@ public class ImageUtilsTest
     public void testBadImageJpg() throws Exception
     {
 
-        NodeData cmyk = new FileNodeData("/images/badimage.jpg");
+        Node cmyk = new FileNode("/images/badimage.jpg");
         BufferedImage bufferedImage = ImageUtils.createBufferedImage(cmyk);
     }
 
@@ -170,7 +171,7 @@ public class ImageUtilsTest
     public void testBadPaletteGif() throws Exception
     {
 
-        NodeData badpalette = new FileNodeData("/images/badpalette.gif");
+        Node badpalette = new FileNode("/images/badpalette.gif");
         BufferedImage bufferedImage = ImageUtils.createBufferedImage(badpalette);
         Assert.assertNotNull(bufferedImage);
 
@@ -194,7 +195,7 @@ public class ImageUtilsTest
     public void testTransparentGif() throws Exception
     {
 
-        NodeData badpalette = new FileNodeData("/images/transparent.gif");
+        Node badpalette = new FileNode("/images/transparent.gif");
         BufferedImage bufferedImage = ImageUtils.createBufferedImage(badpalette);
         int transparency = bufferedImage.getColorModel().getTransparency();
         Assert.assertNotNull(bufferedImage);

@@ -150,7 +150,7 @@ public class LayerDialogMVC extends ConfiguredDialog
 
         // TODO rename dei nodi in base al filename?
 
-        return MediaConfigurationManager.getInstance().getTypes().get(type).getHandler().onPostSave(node);
+        return MediaConfigurationManager.getInstance().getTypes().get(type).getHandler().onPostSave(node.getJCRNode());
     }
 
     /**

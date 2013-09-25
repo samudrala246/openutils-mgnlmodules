@@ -21,20 +21,28 @@ package net.sourceforge.openutils.mgnlmedia.media.setup;
 
 import info.magnolia.cms.beans.runtime.FileProperties;
 import info.magnolia.cms.core.HierarchyManager;
-import info.magnolia.cms.core.NodeData;
 import info.magnolia.cms.core.search.Query;
 import info.magnolia.cms.core.search.QueryManager;
 import info.magnolia.cms.core.search.QueryResult;
 import info.magnolia.module.InstallContext;
 import info.magnolia.module.delta.AbstractTask;
 import info.magnolia.module.delta.TaskExecutionException;
+import it.openutils.mgnlutils.api.NodeUtilsExt;
 
 import java.util.Collection;
 
+import javax.jcr.Binary;
 import javax.jcr.Node;
+import javax.jcr.Property;
 import javax.jcr.PropertyType;
 import javax.jcr.RepositoryException;
+import javax.jcr.Session;
 
+import net.sourceforge.openutils.mgnlcriteria.jcr.query.AdvancedResult;
+import net.sourceforge.openutils.mgnlcriteria.jcr.query.AdvancedResultItem;
+import net.sourceforge.openutils.mgnlcriteria.jcr.query.Criteria;
+import net.sourceforge.openutils.mgnlcriteria.jcr.query.JCRCriteriaFactory;
+import net.sourceforge.openutils.mgnlcriteria.jcr.query.criterion.Order;
 import net.sourceforge.openutils.mgnlmedia.media.configuration.MediaConfigurationManager;
 import net.sourceforge.openutils.mgnlmedia.media.lifecycle.MediaModule;
 
@@ -60,43 +68,57 @@ public class RenameThumbToImageTask extends AbstractTask
     @SuppressWarnings("unchecked")
     public void execute(InstallContext installContext) throws TaskExecutionException
     {
-        HierarchyManager hm = installContext.getHierarchyManager(MediaModule.REPO);
-        QueryManager mgr = hm.getQueryManager();
         try
         {
-            Query query = mgr.createQuery("//*", Query.XPATH);
-            QueryResult result = query.execute();
-            Collection<Node> medias = result.getContent(MediaConfigurationManager.MEDIA.getSystemName());
-            for (Node node : medias)
+            // [LB] FIXME
+            Session hm = installContext.getJCRSession(MediaModule.REPO);
+            Criteria criteria = JCRCriteriaFactory
+                .createCriteria()
+                .setWorkspace(MediaConfigurationManager.MEDIA.getSystemName())
+                .setBasePath("//*")
+                // .add(Restrictions.eq("jcr:primaryType", "mgnl:contentNode"))
+                .addOrder(Order.desc("@jcr:score"));
+            AdvancedResult result = criteria.execute();
+            for (AdvancedResultItem node : result.getItems())
             {
-                if (node.hasNodeData("thumbnail"))
+                if (node.hasProperty("thumbnail"))
                 {
-                    NodeData thumbnail = node.getNodeData("thumbnail");
+                    Property thumbnail = node.getProperty("thumbnail");
                     if (thumbnail.getType() == PropertyType.BINARY)
                     {
-                        NodeData image = node.createNodeData("image", PropertyType.BINARY);
-                        image.setValue(thumbnail.getStream());
-
-                        image.setAttribute(
+                        // [LB] FIXME
+                        NodeUtilsExt.setAttribute(
+                            thumbnail,
+                            "image",
                             FileProperties.PROPERTY_EXTENSION,
-                            thumbnail.getAttribute(FileProperties.PROPERTY_EXTENSION));
-                        image.setAttribute(
+                            NodeUtilsExt.getAttribute(thumbnail, FileProperties.PROPERTY_EXTENSION));
+                        NodeUtilsExt.setAttribute(
+                            thumbnail,
+                            "image",
                             FileProperties.PROPERTY_FILENAME,
-                            thumbnail.getAttribute(FileProperties.PROPERTY_FILENAME));
-                        image.setAttribute(
+                            NodeUtilsExt.getAttribute(thumbnail, FileProperties.PROPERTY_FILENAME));
+                        NodeUtilsExt.setAttribute(
+                            thumbnail,
+                            "image",
                             FileProperties.PROPERTY_CONTENTTYPE,
-                            thumbnail.getAttribute(FileProperties.PROPERTY_CONTENTTYPE));
-                        image.setAttribute(
+                            NodeUtilsExt.getAttribute(thumbnail, FileProperties.PROPERTY_CONTENTTYPE));
+                        NodeUtilsExt.setAttribute(
+                            thumbnail,
+                            "image",
                             FileProperties.PROPERTY_LASTMODIFIED,
-                            thumbnail.getAttribute(FileProperties.PROPERTY_LASTMODIFIED));
-                        image.setAttribute(
+                            NodeUtilsExt.getAttribute(thumbnail, FileProperties.PROPERTY_LASTMODIFIED));
+                        NodeUtilsExt.setAttribute(
+                            thumbnail,
+                            "image",
                             FileProperties.PROPERTY_WIDTH,
-                            thumbnail.getAttribute(FileProperties.PROPERTY_WIDTH));
-                        image.setAttribute(
+                            NodeUtilsExt.getAttribute(thumbnail, FileProperties.PROPERTY_WIDTH));
+                        NodeUtilsExt.setAttribute(
+                            thumbnail,
+                            "image",
                             FileProperties.PROPERTY_HEIGHT,
-                            thumbnail.getAttribute(FileProperties.PROPERTY_HEIGHT));
+                            NodeUtilsExt.getAttribute(thumbnail, FileProperties.PROPERTY_HEIGHT));
 
-                        thumbnail.delete();
+                        thumbnail.remove();
                     }
                 }
             }

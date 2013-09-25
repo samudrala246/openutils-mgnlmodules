@@ -20,12 +20,13 @@
 package net.sourceforge.openutils.mgnlmedia.media.uri;
 
 import info.magnolia.cms.beans.config.URI2RepositoryMapping;
-import info.magnolia.cms.core.NodeData;
-import info.magnolia.cms.util.ContentUtil;
 import info.magnolia.context.MgnlContext;
 import info.magnolia.link.Link;
+import it.openutils.mgnlutils.api.NodeUtilsExt;
 
 import javax.jcr.Node;
+import javax.jcr.PathNotFoundException;
+import javax.jcr.Property;
 import javax.jcr.RepositoryException;
 
 import net.sourceforge.openutils.mgnlmedia.media.lifecycle.MediaModule;
@@ -116,19 +117,33 @@ public class MediaURI2RepositoryMapping extends URI2RepositoryMapping
             if (p != -1)
             {
                 String mediaPath = handle.substring(0, p);
-                Node mediaNode = ContentUtil.getContent(MediaModule.REPO, mediaPath);
+                Node mediaNode = NodeUtilsExt.getNodeByIdOrPath(MediaModule.REPO, mediaPath);
                 if (mediaNode != null)
                 {
-                    Node resolutionsNode = ContentUtil.getContent(mediaNode, resolutionsName);
-                    String ndName = StringUtils.substringBefore(handle.substring(p + search.length()), "/");
-                    if (resolutionsNode != null && !StringUtils.isEmpty(ndName))
+                    try
                     {
-                        NodeData nd = resolutionsNode.getNodeData(ndName);
-                        String resolution = nd.getAttribute("resolutionNotYetCreated");
-                        if (!StringUtils.isEmpty(resolution))
+                        Node resolutionsNode = mediaNode.getNode(resolutionsName);
+
+                        String ndName = StringUtils.substringBefore(handle.substring(p + search.length()), "/");
+                        if (resolutionsNode != null && !StringUtils.isEmpty(ndName))
                         {
-                            ImageUtils.checkOrCreateResolution(mediaNode, resolution, null);
+                            Property nd = resolutionsNode.getProperty(ndName);
+                            String resolution = NodeUtilsExt.getAttribute(nd, "resolutionNotYetCreated");
+                            if (!StringUtils.isEmpty(resolution))
+                            {
+                                ImageUtils.checkOrCreateResolution(mediaNode, resolution, null);
+                            }
                         }
+                    }
+                    catch (PathNotFoundException e)
+                    {
+                        log.error("PathNotFoundException {}", e);
+                        return handle;
+                    }
+                    catch (RepositoryException e)
+                    {
+                        log.error("RepositoryException {}", e);
+                        return handle;
                     }
                 }
             }
