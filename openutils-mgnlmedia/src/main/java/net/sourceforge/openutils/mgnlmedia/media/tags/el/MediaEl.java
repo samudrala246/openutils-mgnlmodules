@@ -284,7 +284,7 @@ public final class MediaEl
 
             Node resolutions = getResolutionsNode(media);
             String resString = "res-" + ImageUtils.getResolutionPath(resolution);
-            if (resolutions != null && resolutions.hasProperty(resString))
+            if (resolutions != null && resolutions.hasNode(resString))
             {
                 String resPath = new FileProperties(ContentUtil.asContent(resolutions), resString)
                     .getProperty(FileProperties.PATH);
