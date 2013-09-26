@@ -314,51 +314,52 @@ public final class MediaEl
 
         if (media != null)
         {
-
-            Property res = null;
-            if ("original".equals(resolution))
+            try
             {
-                res = PropertyUtil.getPropertyOrNull(media, "original");
-            }
-            else
-            {
-                Node resolutions = getResolutionsNode(media);
-                if (resolutions != null)
+                Node res = null;
+                if ("original".equals(resolution))
                 {
-                    try
+                    res = media.getNode("original");
+                }
+                else
+                {
+                    Node resolutions = getResolutionsNode(media);
+                    if (resolutions != null)
                     {
-                        if (resolutions.hasProperty(ImageUtils.getResolutionPath("res-" + resolution)))
+
+                        if (resolutions.hasNode(ImageUtils.getResolutionPath("res-" + resolution)))
                         {
-                            res = resolutions.getProperty(ImageUtils.getResolutionPath("res-" + resolution));
+                            res = resolutions.getNode(ImageUtils.getResolutionPath("res-" + resolution));
                         }
-                    }
-                    catch (RepositoryException e)
-                    {
-                        // do nothing
+
                     }
                 }
-            }
 
-            if (res != null)
-            {
-                return new int[]{
-                    NumberUtils.toInt(NodeUtilsExt.getAttribute(res, FileProperties.PROPERTY_WIDTH)),
-                    NumberUtils.toInt(NodeUtilsExt.getAttribute(res, FileProperties.PROPERTY_HEIGHT)) };
-            }
-            else
-            {
-                // MEDIA-231
-                res = PropertyUtil.getPropertyOrNull(media, "original");
                 if (res != null)
                 {
-                    Point size = ImageUtils.parseForSize(resolution);
-                    if (NumberUtils.toInt(NodeUtilsExt.getAttribute(res, FileProperties.PROPERTY_WIDTH)) == size.x
-                        && NumberUtils.toInt(NodeUtilsExt.getAttribute(res, FileProperties.PROPERTY_HEIGHT)) == size.y)
-                    {
-                        return new int[]{size.x, size.y };
-                    }
+                    return new int[]{
+                        NumberUtils.toInt(PropertyUtil.getString(res, FileProperties.PROPERTY_WIDTH)),
+                        NumberUtils.toInt(PropertyUtil.getString(res, FileProperties.PROPERTY_HEIGHT)) };
                 }
+                else
+                {
+                    // MEDIA-231
+                    res = media.getNode("original");
+                    if (res != null)
+                    {
+                        Point size = ImageUtils.parseForSize(resolution);
+                        if (NumberUtils.toInt(PropertyUtil.getString(res, FileProperties.PROPERTY_WIDTH)) == size.x
+                            && NumberUtils.toInt(PropertyUtil.getString(res, FileProperties.PROPERTY_HEIGHT)) == size.y)
+                        {
+                            return new int[]{size.x, size.y };
+                        }
+                    }
 
+                }
+            }
+            catch (RepositoryException e)
+            {
+                // do nothing
             }
         }
 

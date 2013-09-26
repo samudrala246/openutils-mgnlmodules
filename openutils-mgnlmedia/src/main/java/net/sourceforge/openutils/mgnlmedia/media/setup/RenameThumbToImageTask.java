@@ -19,24 +19,23 @@
 
 package net.sourceforge.openutils.mgnlmedia.media.setup;
 
+import java.io.InputStream;
+
 import info.magnolia.cms.beans.runtime.FileProperties;
-import info.magnolia.cms.core.HierarchyManager;
-import info.magnolia.cms.core.search.Query;
-import info.magnolia.cms.core.search.QueryManager;
-import info.magnolia.cms.core.search.QueryResult;
+import info.magnolia.cms.core.MgnlNodeType;
+import info.magnolia.jcr.util.NodeUtil;
+import info.magnolia.jcr.util.PropertyUtil;
 import info.magnolia.module.InstallContext;
 import info.magnolia.module.delta.AbstractTask;
 import info.magnolia.module.delta.TaskExecutionException;
 import it.openutils.mgnlutils.api.NodeUtilsExt;
 
-import java.util.Collection;
-
-import javax.jcr.Binary;
 import javax.jcr.Node;
-import javax.jcr.Property;
-import javax.jcr.PropertyType;
 import javax.jcr.RepositoryException;
 import javax.jcr.Session;
+import javax.jcr.nodetype.NodeType;
+
+import org.apache.jackrabbit.value.BinaryValue;
 
 import net.sourceforge.openutils.mgnlcriteria.jcr.query.AdvancedResult;
 import net.sourceforge.openutils.mgnlcriteria.jcr.query.AdvancedResultItem;
@@ -70,7 +69,7 @@ public class RenameThumbToImageTask extends AbstractTask
     {
         try
         {
-            // [LB] FIXME
+            // [LB] FIXME?
             Session hm = installContext.getJCRSession(MediaModule.REPO);
             Criteria criteria = JCRCriteriaFactory
                 .createCriteria()
@@ -81,42 +80,37 @@ public class RenameThumbToImageTask extends AbstractTask
             AdvancedResult result = criteria.execute();
             for (AdvancedResultItem node : result.getItems())
             {
-                if (node.hasProperty("thumbnail"))
+                if (node.hasNode("thumbnail"))
                 {
-                    Property thumbnail = node.getProperty("thumbnail");
-                    if (thumbnail.getType() == PropertyType.BINARY)
+                    Node thumbnail = node.getNode("thumbnail");
+                    if (NodeUtil.isNodeType(thumbnail, NodeType.NT_RESOURCE))
                     {
-                        // [LB] FIXME
-                        NodeUtilsExt.setAttribute(
-                            thumbnail,
-                            "image",
+                        Node image = node.addNode("image", NodeType.NT_RESOURCE);
+                        InputStream stream = node.getProperty(MgnlNodeType.JCR_DATA).getValue().getBinary().getStream();
+                        try
+                        {
+                            image.setProperty(MgnlNodeType.JCR_DATA, new BinaryValue(stream));
+                        }
+                        catch (RepositoryException e)
+                        {
+                            log.error(e.getMessage(), e);
+                        }
+
+                        image.setProperty(
                             FileProperties.PROPERTY_EXTENSION,
-                            NodeUtilsExt.getAttribute(thumbnail, FileProperties.PROPERTY_EXTENSION));
-                        NodeUtilsExt.setAttribute(
-                            thumbnail,
-                            "image",
+                            PropertyUtil.getString(thumbnail, FileProperties.PROPERTY_EXTENSION));
+                        image.setProperty(
                             FileProperties.PROPERTY_FILENAME,
-                            NodeUtilsExt.getAttribute(thumbnail, FileProperties.PROPERTY_FILENAME));
-                        NodeUtilsExt.setAttribute(
-                            thumbnail,
-                            "image",
-                            FileProperties.PROPERTY_CONTENTTYPE,
-                            NodeUtilsExt.getAttribute(thumbnail, FileProperties.PROPERTY_CONTENTTYPE));
-                        NodeUtilsExt.setAttribute(
-                            thumbnail,
-                            "image",
+                            PropertyUtil.getString(thumbnail, FileProperties.PROPERTY_FILENAME));
+                        image.setProperty(
                             FileProperties.PROPERTY_LASTMODIFIED,
-                            NodeUtilsExt.getAttribute(thumbnail, FileProperties.PROPERTY_LASTMODIFIED));
-                        NodeUtilsExt.setAttribute(
-                            thumbnail,
-                            "image",
+                            PropertyUtil.getString(thumbnail, FileProperties.PROPERTY_LASTMODIFIED));
+                        image.setProperty(
                             FileProperties.PROPERTY_WIDTH,
-                            NodeUtilsExt.getAttribute(thumbnail, FileProperties.PROPERTY_WIDTH));
-                        NodeUtilsExt.setAttribute(
-                            thumbnail,
-                            "image",
+                            PropertyUtil.getString(thumbnail, FileProperties.PROPERTY_WIDTH));
+                        image.setProperty(
                             FileProperties.PROPERTY_HEIGHT,
-                            NodeUtilsExt.getAttribute(thumbnail, FileProperties.PROPERTY_HEIGHT));
+                            PropertyUtil.getString(thumbnail, FileProperties.PROPERTY_HEIGHT));
 
                         thumbnail.remove();
                     }

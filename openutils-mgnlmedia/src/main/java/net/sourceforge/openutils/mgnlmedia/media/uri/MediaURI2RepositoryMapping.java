@@ -21,12 +21,12 @@ package net.sourceforge.openutils.mgnlmedia.media.uri;
 
 import info.magnolia.cms.beans.config.URI2RepositoryMapping;
 import info.magnolia.context.MgnlContext;
+import info.magnolia.jcr.util.PropertyUtil;
 import info.magnolia.link.Link;
 import it.openutils.mgnlutils.api.NodeUtilsExt;
 
 import javax.jcr.Node;
 import javax.jcr.PathNotFoundException;
-import javax.jcr.Property;
 import javax.jcr.RepositoryException;
 
 import net.sourceforge.openutils.mgnlmedia.media.lifecycle.MediaModule;
@@ -127,8 +127,8 @@ public class MediaURI2RepositoryMapping extends URI2RepositoryMapping
                         String ndName = StringUtils.substringBefore(handle.substring(p + search.length()), "/");
                         if (resolutionsNode != null && !StringUtils.isEmpty(ndName))
                         {
-                            Property nd = resolutionsNode.getProperty(ndName);
-                            String resolution = NodeUtilsExt.getAttribute(nd, "resolutionNotYetCreated");
+                            Node nd = resolutionsNode.getNode(ndName);
+                            String resolution = PropertyUtil.getString(nd, "resolutionNotYetCreated");
                             if (!StringUtils.isEmpty(resolution))
                             {
                                 ImageUtils.checkOrCreateResolution(mediaNode, resolution, null);
