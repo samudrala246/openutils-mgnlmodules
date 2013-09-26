@@ -12,12 +12,12 @@ if(jQuery)(function(){
         $ol.find('> .control-group').each(function(i, el){
           if (el.nodeType === 1){
             drags.push(el);
-            var li = $('<div class="control-drop"></div>');
-            $(el).before(li);
+            var li = jQuery('<div class="control-drop"></div>');
+            jQuery(el).before(li);
             drops.push(li[0]);
           }
         });
-        var li = $('<div class="control-group"></div>');
+        var li = jQuery('<div class="control-group"></div>');
         $ol.append(li);
         drops.push(li[0]);
 

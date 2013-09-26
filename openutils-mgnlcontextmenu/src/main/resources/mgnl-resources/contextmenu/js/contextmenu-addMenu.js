@@ -21,68 +21,53 @@ jQuery.extend({
 	  });  
 	  
     jQuery.each(mgnlEditMessages, function(id, info){
+      var menu;
+      var menuName = info.contextMenu || 'default';
+      jQuery.each(mgnlContextMenuInfo.menus, function(){
+          if (this.name == menuName) {
+        	menu = this;
+          }
+      });
+      
       var initTrigger = function(trigger){
-        $(trigger).contextMenu({
+    	jQuery(trigger).contextMenu({
           menu: 'contextmenu-' + (info.contextMenu || 'default'),
           showCallback: info.showCallback
-        }, function(action) {
-          switch (action){
-            case 'default':
-            case 'text':
-            case 'header':
-              mgnlOpenDialogEx(info.path,null,null,null,'website','.magnolia/dialogs/contextmenu-edit.html',null,null,null,{
-            	entryName: info.key
-              });
-              break;
-            case 'fckText':
-              mgnlOpenDialogEx(info.path,null,null,null,'website','.magnolia/dialogs/contextmenu-fckEdit.html',null,null,null,{
-            	entryName: info.key,
-                enterMode: info.enterMode
-              });
-              break;
-            case 'label':
-              mgnlOpenDialogEx(info.path,null,null,null,'website','.magnolia/dialogs/contextmenu-edit.html',null,null,null,{
-                entryName: info.key
-              });
-              break;
-            case 'description':
-              mgnlOpenDialogEx(info.path,null,null,null,'website','.magnolia/dialogs/contextmenu-edit.html',null,null,null,{
-                entryName: info.key + '.description'
-              });
-              break;
-            case 'media':
-               mgnlOpenDialogEx(info.path,null,null,null,'website','.magnolia/dialogs/contextmenu-media.html',null,null,null,{
-                entryName: info.key 
-              });
-              break;  
-            case 'textmedia':
-            	// TO BE FIX
-              mgnlOpenDialogEx(info.path,null,null,null,'website','.magnolia/dialogs/samples-contextmenu-textmedia.html',null,null,null,{
-            	 entryName: info.key 
-            	});
-            	break;  
-            case 'help':
-              mgnlOpenDialogEx(info.path,null,null,null,'website','.magnolia/dialogs/contextmenu-fckEdit.html',null,null,null,{
-                entryName: info.key + '.help',
-                enterMode: 'br'
-              });
-              break;
-            case 'info':
-              mgnlOpenDialogEx(info.path,null,null,null,'website','.magnolia/dialogs/contextmenu-fckEdit.html',null,null,null,{
-                entryName: info.key + '.info',
-                enterMode: info.enterMode || 'br'
-              });
-              break;
+        }, function(itemName) {
+          switch (itemName){
             case 'move':
               el.parents('.control-group:first').trigger('drag');
-              break;
-            
+              return;
           }
+          
+          var entryName = info.entryName || '';
+          if (itemName && itemName != 'default'){
+            if (entryName) {
+            	entryName += '.';
+            }
+            entryName += itemName;
+          }
+          var menuItem;
+          jQuery.each(menu.items, function(){
+            if (this.name == itemName) 
+            {
+            	menuItem = this;
+            }
+          });
+          mgnlOpenDialogEx(info.path,null,null,null,'website','.magnolia/dialogs/contextmenu-' + menuItem.controlType + '.html',null,null,null,{
+            entryName: entryName,
+            globalEnabled: menuItem.globalEnabled,
+            enterMode: info.enterMode 
+          });
+          
         });
       };
+      
       var el = jQuery('#' + id);
-      initTrigger(info.parentTrigger ? el.parents(info.parentTrigger + ':first') : el);
+      var trigger = info.parentTrigger ? el.parents(info.parentTrigger + ':first') : el;
+      initTrigger(trigger);
       el.data("initTrigger", initTrigger);
+      
     });
     
     
