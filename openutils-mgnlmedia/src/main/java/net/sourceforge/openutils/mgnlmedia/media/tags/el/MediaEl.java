@@ -27,11 +27,10 @@ import info.magnolia.cms.i18n.I18nContentWrapper;
 import info.magnolia.cms.util.ContentUtil;
 import info.magnolia.cms.util.NodeMapWrapper;
 import info.magnolia.context.MgnlContext;
-import info.magnolia.jcr.util.ContentMap;
+import info.magnolia.jcr.util.NodeUtil;
 import info.magnolia.jcr.util.PropertyUtil;
 import info.magnolia.module.ModuleRegistry;
 import info.magnolia.objectfactory.Components;
-import it.openutils.mgnlutils.api.NodeUtilsExt;
 
 import java.awt.Point;
 import java.util.ArrayList;
@@ -42,10 +41,10 @@ import java.util.List;
 import java.util.Map;
 
 import javax.jcr.Node;
-import javax.jcr.Property;
 import javax.jcr.PropertyType;
 import javax.jcr.RepositoryException;
 import javax.jcr.Value;
+import javax.jcr.nodetype.NodeType;
 import javax.jcr.query.InvalidQueryException;
 import javax.servlet.http.HttpServletRequest;
 
@@ -263,8 +262,8 @@ public final class MediaEl
 
         try
         {
-            // MEDIA-90 may be simply a url
-            if (media.getProperty(BaseTypeHandler.ORGINAL_NODEDATA_NAME).getType() == PropertyType.BINARY)
+            // MEDIA-90 may be simply a url [LB] TEST ME AGAIN
+            if (NodeUtil.isNodeType(media.getNode(BaseTypeHandler.ORGINAL_NODEDATA_NAME), NodeType.NT_RESOURCE))
             {
                 FileProperties prop = new FileProperties(
                     ContentUtil.asContent(media),
@@ -548,7 +547,7 @@ public final class MediaEl
      * @param obj playlist node or UUID
      * @return Iterator of media nodes
      */
-    public static Iterator<ContentMap> mediaNodesInPlaylist(Object obj)
+    public static Iterator<Node> mediaNodesInPlaylist(Object obj)
     {
         if (obj == null)
         {
@@ -557,17 +556,17 @@ public final class MediaEl
 
         Node playlistNode = it.openutils.mgnlutils.el.MgnlUtilsElFunctions.node(obj, PlaylistConstants.REPO);
 
-        Iterator<ContentMap> iter = Iterators.transform(
+        Iterator<Node> iter = Iterators.transform(
             PlaylistIterateUtils.iterate(playlistNode),
-            new Function<MediaNodeAndEntryPath, ContentMap>()
+            new Function<MediaNodeAndEntryPath, Node>()
             {
 
                 /**
                  * {@inheritDoc}
                  */
-                public ContentMap apply(MediaNodeAndEntryPath from)
+                public Node apply(MediaNodeAndEntryPath from)
                 {
-                    return (ContentMap) from.getMediaNode();
+                    return (Node) from.getMediaNode();
                 }
             });
         return Iterators.filter(iter, Predicates.notNull());

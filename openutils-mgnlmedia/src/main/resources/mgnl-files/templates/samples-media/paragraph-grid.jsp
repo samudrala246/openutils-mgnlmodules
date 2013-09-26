@@ -11,7 +11,7 @@
       </tr>
     </thead>
     <tbody>
-      <c:forEach var="row" items="${mu:splitAndTokenize(node.grid)}">
+      <c:forEach var="row" items="${mu:splitAndTokenize(cmsfn:decode(content).grid)}">
         <tr>
           <td>
             <media:media item="${row[0]}" />
