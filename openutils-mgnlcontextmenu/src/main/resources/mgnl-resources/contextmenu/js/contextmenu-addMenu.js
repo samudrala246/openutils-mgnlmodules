@@ -43,7 +43,7 @@ jQuery.extend({
           var entryName = info.entryName || '';
           if (itemName && itemName != 'default'){
             if (entryName) {
-            	entryName += '.';
+            	entryName += '_';
             }
             entryName += itemName;
           }

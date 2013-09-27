@@ -59,6 +59,17 @@ public class ElementTag extends BodyTagSupport
 
     private String elementId;
 
+    private boolean usebody;
+
+    /**
+     * Sets the usebody.
+     * @param usebody the usebody to set
+     */
+    public void setUsebody(boolean usebody)
+    {
+        this.usebody = usebody;
+    }
+
     /**
      * Sets the name.
      * @param name the name to set
@@ -129,7 +140,7 @@ public class ElementTag extends BodyTagSupport
             }
         }
         String value = !StringUtils.isEmpty(name) ? ContextMenuElFunctions.entryValue(node, name) : null;
-        if (!StringUtils.isEmpty(value))
+        if (!StringUtils.isEmpty(value) && !usebody)
         {
             try
             {

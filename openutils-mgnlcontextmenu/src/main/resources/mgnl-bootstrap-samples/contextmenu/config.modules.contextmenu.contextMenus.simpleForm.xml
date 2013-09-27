@@ -71,7 +71,7 @@
         <sv:value>2013-09-17T14:16:19.712+02:00</sv:value>
       </sv:property>
     </sv:node>
-    <sv:node sv:name="label">
+    <sv:node sv:name="default">
       <sv:property sv:name="jcr:primaryType" sv:type="Name">
         <sv:value>mgnl:contentNode</sv:value>
       </sv:property>
@@ -110,7 +110,7 @@
           <sv:value>2010-05-18T18:22:45.406+02:00</sv:value>
         </sv:property>
         <sv:property sv:name="mgnl:lastmodified" sv:type="Date">
-          <sv:value>2013-09-17T14:16:19.712+02:00</sv:value>
+          <sv:value>2013-09-27T14:36:17.882+02:00</sv:value>
         </sv:property>
       </sv:node>
     </sv:node>

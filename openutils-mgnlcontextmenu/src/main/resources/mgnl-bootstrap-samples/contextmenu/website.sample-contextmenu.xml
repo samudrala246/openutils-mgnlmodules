@@ -29,7 +29,7 @@
       <sv:value>2010-05-18T14:33:10.812+02:00</sv:value>
     </sv:property>
     <sv:property sv:name="mgnl:lastmodified" sv:type="Date">
-      <sv:value>2013-09-18T12:52:41.534+02:00</sv:value>
+      <sv:value>2013-09-27T15:38:09.156+02:00</sv:value>
     </sv:property>
     <sv:property sv:name="mgnl:template" sv:type="String">
       <sv:value>contextmenu:pages/contextmenu-template-jsp</sv:value>
@@ -62,7 +62,7 @@
         <sv:value>2010-05-18T16:43:29.812+02:00</sv:value>
       </sv:property>
       <sv:property sv:name="mgnl:lastmodified" sv:type="Date">
-        <sv:value>2013-09-18T12:52:41.534+02:00</sv:value>
+        <sv:value>2013-09-27T15:38:09.155+02:00</sv:value>
       </sv:property>
     </sv:node>
     <sv:node sv:name="0">
@@ -306,9 +306,6 @@
       <sv:property sv:name="jcr:createdBy" sv:type="String">
         <sv:value>admin</sv:value>
       </sv:property>
-      <sv:property sv:name="text" sv:type="String">
-        <sv:value>&lt;p&gt;I'm a text&lt;/p&gt;</sv:value>
-      </sv:property>
       <sv:node sv:name="MetaData">
         <sv:property sv:name="jcr:primaryType" sv:type="Name">
           <sv:value>mgnl:metaData</sv:value>
@@ -323,7 +320,7 @@
           <sv:value>2013-09-13T19:18:16.577+02:00</sv:value>
         </sv:property>
         <sv:property sv:name="mgnl:lastmodified" sv:type="Date">
-          <sv:value>2013-09-13T19:27:55.818+02:00</sv:value>
+          <sv:value>2013-09-27T15:21:17.754+02:00</sv:value>
         </sv:property>
         <sv:property sv:name="mgnl:template" sv:type="String">
           <sv:value>contextmenu:components/samples-contextmenu-textmedia</sv:value>
@@ -365,10 +362,10 @@
       <sv:property sv:name="jcr:uuid" sv:type="String">
         <sv:value>f9c61bcf-32de-45c2-8ceb-1435e1411060</sv:value>
       </sv:property>
-      <sv:property sv:name="firstname" sv:type="String">
-        <sv:value>First Name:</sv:value>
+      <sv:property sv:name="firstname-label" sv:type="String">
+        <sv:value>asdad</sv:value>
       </sv:property>
-      <sv:property sv:name="firstname.help" sv:type="String">
+      <sv:property sv:name="firstname_help" sv:type="String">
         <sv:value>&lt;p&gt;help!&lt;/p&gt;</sv:value>
       </sv:property>
       <sv:property sv:name="jcr:createdBy" sv:type="String">
@@ -388,7 +385,7 @@
           <sv:value>2013-09-13T18:56:07.081+02:00</sv:value>
         </sv:property>
         <sv:property sv:name="mgnl:lastmodified" sv:type="Date">
-          <sv:value>2013-09-18T12:52:41.533+02:00</sv:value>
+          <sv:value>2013-09-27T15:38:09.155+02:00</sv:value>
         </sv:property>
         <sv:property sv:name="mgnl:template" sv:type="String">
           <sv:value>contextmenu:components/samples-contextmenu-form</sv:value>
@@ -407,6 +404,9 @@
       </sv:property>
       <sv:property sv:name="dummy" sv:type="String">
         <sv:value>.</sv:value>
+      </sv:property>
+      <sv:property sv:name="field2_label" sv:type="String">
+        <sv:value>asd</sv:value>
       </sv:property>
       <sv:property sv:name="fieldList1" sv:type="String">
         <sv:value>1,0</sv:value>
@@ -428,10 +428,87 @@
           <sv:value>2013-09-17T00:12:45.279+02:00</sv:value>
         </sv:property>
         <sv:property sv:name="mgnl:lastmodified" sv:type="Date">
-          <sv:value>2013-09-17T00:12:45.280+02:00</sv:value>
+          <sv:value>2013-09-27T15:13:31.452+02:00</sv:value>
         </sv:property>
         <sv:property sv:name="mgnl:template" sv:type="String">
           <sv:value>contextmenu:components/samples-contextmenu-move-fields</sv:value>
+        </sv:property>
+      </sv:node>
+    </sv:node>
+    <sv:node sv:name="07">
+      <sv:property sv:name="jcr:primaryType" sv:type="Name">
+        <sv:value>mgnl:component</sv:value>
+      </sv:property>
+      <sv:property sv:name="jcr:mixinTypes" sv:type="Name" sv:multiple="true">
+        <sv:value>mix:lockable</sv:value>
+      </sv:property>
+      <sv:property sv:name="jcr:uuid" sv:type="String">
+        <sv:value>3d7f87ad-5783-40ad-a6bc-0cb66c089c99</sv:value>
+      </sv:property>
+      <sv:property sv:name="dummy" sv:type="String">
+        <sv:value>.</sv:value>
+      </sv:property>
+      <sv:property sv:name="jcr:createdBy" sv:type="String">
+        <sv:value>superuser</sv:value>
+      </sv:property>
+      <sv:property sv:name="media" sv:type="String">
+        <sv:value>0f076956-3642-48a4-8efd-8cb17f3be49b</sv:value>
+      </sv:property>
+      <sv:node sv:name="MetaData">
+        <sv:property sv:name="jcr:primaryType" sv:type="Name">
+          <sv:value>mgnl:metaData</sv:value>
+        </sv:property>
+        <sv:property sv:name="jcr:createdBy" sv:type="String">
+          <sv:value>superuser</sv:value>
+        </sv:property>
+        <sv:property sv:name="mgnl:authorid" sv:type="String">
+          <sv:value>superuser</sv:value>
+        </sv:property>
+        <sv:property sv:name="mgnl:creationdate" sv:type="Date">
+          <sv:value>2013-09-27T15:28:21.349+02:00</sv:value>
+        </sv:property>
+        <sv:property sv:name="mgnl:lastmodified" sv:type="Date">
+          <sv:value>2013-09-27T15:28:45.099+02:00</sv:value>
+        </sv:property>
+        <sv:property sv:name="mgnl:template" sv:type="String">
+          <sv:value>contextmenu:components/samples-contextmenu-media</sv:value>
+        </sv:property>
+      </sv:node>
+    </sv:node>
+    <sv:node sv:name="08">
+      <sv:property sv:name="jcr:primaryType" sv:type="Name">
+        <sv:value>mgnl:component</sv:value>
+      </sv:property>
+      <sv:property sv:name="jcr:mixinTypes" sv:type="Name" sv:multiple="true">
+        <sv:value>mix:lockable</sv:value>
+      </sv:property>
+      <sv:property sv:name="jcr:uuid" sv:type="String">
+        <sv:value>613084f9-3b50-429e-82c6-602c4c70d455</sv:value>
+      </sv:property>
+      <sv:property sv:name="dummy" sv:type="String">
+        <sv:value>.</sv:value>
+      </sv:property>
+      <sv:property sv:name="jcr:createdBy" sv:type="String">
+        <sv:value>superuser</sv:value>
+      </sv:property>
+      <sv:node sv:name="MetaData">
+        <sv:property sv:name="jcr:primaryType" sv:type="Name">
+          <sv:value>mgnl:metaData</sv:value>
+        </sv:property>
+        <sv:property sv:name="jcr:createdBy" sv:type="String">
+          <sv:value>superuser</sv:value>
+        </sv:property>
+        <sv:property sv:name="mgnl:authorid" sv:type="String">
+          <sv:value>superuser</sv:value>
+        </sv:property>
+        <sv:property sv:name="mgnl:creationdate" sv:type="Date">
+          <sv:value>2013-09-27T15:32:52.046+02:00</sv:value>
+        </sv:property>
+        <sv:property sv:name="mgnl:lastmodified" sv:type="Date">
+          <sv:value>2013-09-27T15:32:52.047+02:00</sv:value>
+        </sv:property>
+        <sv:property sv:name="mgnl:template" sv:type="String">
+          <sv:value>contextmenu:components/samples-contextmenu-media</sv:value>
         </sv:property>
       </sv:node>
     </sv:node>

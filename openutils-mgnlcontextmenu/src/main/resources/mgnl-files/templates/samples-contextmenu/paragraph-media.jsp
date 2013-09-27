@@ -4,19 +4,19 @@
   xmlns:contextmenu="http://openutils/mgnlcontextmenu">
   <jsp:directive.page contentType="text/html; charset=UTF-8" session="false" />
   <section>
-    <h3>Text/media sample (jsp)</h3>
+    <h3>Media sample (jsp)</h3>
     <p>Right click to edit text or media</p>
     <pre>
       <![CDATA[
-        &ltmedia:media item="${'$'}{content.text_media}" width="60" height="60" /&gt
-        &lt;contextmenu:element menu="textmedia" name="text" &gt;${'$'}{cmsfn:decode(content).text}&lt;/contextmenu:element&gt;
+        &lt;contextmenu:element menu="media" name="media" &gt;
+        &lt;media:media item="${'$'}{content.media}" width="60" height="60" usebody="true" /&gt;
+        &lt;/contextmenu:element&gt;
       ]]>
     </pre>
     <div class="testcontent">
-      <div style="float: left; margin-right: 10px;">
-        <media:media item="${content.text_media}" width="60" height="60" />
-      </div>
-      <contextmenu:element menu="textmedia" name="text" wrapper="div"> Right click to modify text
+      <contextmenu:element menu="media" name="media" wrapper="div" usebody="true">
+        Right Click on media to modify it
+        <media:media item="${content.media}" width="60" height="60" />
       </contextmenu:element>
     </div>
   </section>

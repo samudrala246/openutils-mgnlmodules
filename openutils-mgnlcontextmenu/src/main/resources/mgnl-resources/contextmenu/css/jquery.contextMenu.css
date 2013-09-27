@@ -124,3 +124,8 @@
   border-radius: 2px;
   cursor: pointer;
 }
+
+
+.edit-content{
+  min-height: 20px;
+  }

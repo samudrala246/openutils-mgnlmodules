@@ -4,7 +4,7 @@
     <sv:value>mgnl:contentNode</sv:value>
   </sv:property>
   <sv:property sv:name="jcr:uuid" sv:type="String">
-    <sv:value>9b45b361-9122-4c4f-a43c-ee48a62b471f</sv:value>
+    <sv:value>4c541dd6-2577-4b53-99aa-0fe688063b2c</sv:value>
   </sv:property>
   <sv:property sv:name="i18nBasename" sv:type="String">
     <sv:value>net.sourceforge.openutils.mgnltestwebapp.lang.messages</sv:value>
@@ -38,18 +38,18 @@
       <sv:value>2008-04-28T23:43:10.557+02:00</sv:value>
     </sv:property>
     <sv:property sv:name="mgnl:lastmodified" sv:type="Date">
-      <sv:value>2010-05-20T14:45:53.687+02:00</sv:value>
+      <sv:value>2013-09-27T15:19:52.894+02:00</sv:value>
     </sv:property>
     <sv:property sv:name="mgnl:title" sv:type="String">
       <sv:value/>
     </sv:property>
   </sv:node>
-  <sv:node sv:name="tabText">
+  <sv:node sv:name="tabTextMedia">
     <sv:property sv:name="jcr:primaryType" sv:type="Name">
       <sv:value>mgnl:contentNode</sv:value>
     </sv:property>
     <sv:property sv:name="jcr:uuid" sv:type="String">
-      <sv:value>ab492338-a560-42e1-856d-f534faff5c7d</sv:value>
+      <sv:value>9793af28-e024-4eb9-8621-efa34a6455a3</sv:value>
     </sv:property>
     <sv:property sv:name="controlType" sv:type="String">
       <sv:value>tab</sv:value>
@@ -58,7 +58,7 @@
       <sv:value>admin</sv:value>
     </sv:property>
     <sv:property sv:name="label" sv:type="String">
-      <sv:value>Text</sv:value>
+      <sv:value>TextMedia</sv:value>
     </sv:property>
     <sv:node sv:name="MetaData">
       <sv:property sv:name="jcr:primaryType" sv:type="Name">
@@ -86,27 +86,24 @@
         <sv:value>2008-06-19T14:49:08.436+02:00</sv:value>
       </sv:property>
       <sv:property sv:name="mgnl:lastmodified" sv:type="Date">
-        <sv:value>2010-05-20T14:46:56.890+02:00</sv:value>
+        <sv:value>2013-09-27T15:26:34.965+02:00</sv:value>
       </sv:property>
     </sv:node>
-    <sv:node sv:name="text">
+    <sv:node sv:name="dummy">
       <sv:property sv:name="jcr:primaryType" sv:type="Name">
         <sv:value>mgnl:contentNode</sv:value>
       </sv:property>
       <sv:property sv:name="jcr:uuid" sv:type="String">
-        <sv:value>98d67fa7-2631-4356-8322-820f5ec4e3d3</sv:value>
+        <sv:value>cd6b9585-db46-42c5-b3af-158d09c82b17</sv:value>
       </sv:property>
       <sv:property sv:name="controlType" sv:type="String">
-        <sv:value>fckEdit</sv:value>
+        <sv:value>hidden</sv:value>
       </sv:property>
-      <sv:property sv:name="description" sv:type="String">
-        <sv:value>The text to display (also editable via context menu).</sv:value>
+      <sv:property sv:name="defaultValue" sv:type="String">
+        <sv:value>.</sv:value>
       </sv:property>
       <sv:property sv:name="jcr:createdBy" sv:type="String">
         <sv:value>admin</sv:value>
-      </sv:property>
-      <sv:property sv:name="label" sv:type="String">
-        <sv:value>Text</sv:value>
       </sv:property>
       <sv:property sv:name="type" sv:type="String">
         <sv:value>String</sv:value>
@@ -137,77 +134,28 @@
           <sv:value>2008-07-07T14:56:33.437+02:00</sv:value>
         </sv:property>
         <sv:property sv:name="mgnl:lastmodified" sv:type="Date">
-          <sv:value>2010-05-20T14:48:07.906+02:00</sv:value>
+          <sv:value>2013-09-27T15:18:50.239+02:00</sv:value>
         </sv:property>
       </sv:node>
     </sv:node>
-  </sv:node>
-  <sv:node sv:name="tabMedia">
-    <sv:property sv:name="jcr:primaryType" sv:type="Name">
-      <sv:value>mgnl:contentNode</sv:value>
-    </sv:property>
-    <sv:property sv:name="jcr:uuid" sv:type="String">
-      <sv:value>8aff74b8-5ca1-48c0-a8df-8ce218e19dff</sv:value>
-    </sv:property>
-    <sv:property sv:name="controlType" sv:type="String">
-      <sv:value>tab</sv:value>
-    </sv:property>
-    <sv:property sv:name="jcr:createdBy" sv:type="String">
-      <sv:value>admin</sv:value>
-    </sv:property>
-    <sv:property sv:name="label" sv:type="String">
-      <sv:value>Media</sv:value>
-    </sv:property>
-    <sv:node sv:name="MetaData">
-      <sv:property sv:name="jcr:primaryType" sv:type="Name">
-        <sv:value>mgnl:metaData</sv:value>
-      </sv:property>
-      <sv:property sv:name="jcr:createdBy" sv:type="String">
-        <sv:value>admin</sv:value>
-      </sv:property>
-      <sv:property sv:name="mgnl:Data" sv:type="String">
-        <sv:value>MetaData</sv:value>
-      </sv:property>
-      <sv:property sv:name="mgnl:activated" sv:type="Boolean">
-        <sv:value>false</sv:value>
-      </sv:property>
-      <sv:property sv:name="mgnl:activatorid" sv:type="String">
-        <sv:value>superuser</sv:value>
-      </sv:property>
-      <sv:property sv:name="mgnl:authorid" sv:type="String">
-        <sv:value>superuser</sv:value>
-      </sv:property>
-      <sv:property sv:name="mgnl:creationdate" sv:type="String">
-        <sv:value>2004-11-02T15:34:29.217+01:00</sv:value>
-      </sv:property>
-      <sv:property sv:name="mgnl:lastaction" sv:type="Date">
-        <sv:value>2008-06-19T14:49:08.436+02:00</sv:value>
-      </sv:property>
-      <sv:property sv:name="mgnl:lastmodified" sv:type="Date">
-        <sv:value>2010-05-20T14:48:27.187+02:00</sv:value>
-      </sv:property>
-    </sv:node>
-    <sv:node sv:name="media">
+    <sv:node sv:name="description">
       <sv:property sv:name="jcr:primaryType" sv:type="Name">
         <sv:value>mgnl:contentNode</sv:value>
       </sv:property>
       <sv:property sv:name="jcr:uuid" sv:type="String">
-        <sv:value>0484f652-5433-4cfc-8be7-59cca17b3659</sv:value>
+        <sv:value>7bac9722-2b8d-4e6f-82d6-3d931d5a8343</sv:value>
       </sv:property>
       <sv:property sv:name="controlType" sv:type="String">
-        <sv:value>media</sv:value>
-      </sv:property>
-      <sv:property sv:name="description" sv:type="String">
-        <sv:value>The media to display (also editable via context menu).</sv:value>
+        <sv:value>static</sv:value>
       </sv:property>
       <sv:property sv:name="jcr:createdBy" sv:type="String">
         <sv:value>admin</sv:value>
       </sv:property>
-      <sv:property sv:name="label" sv:type="String">
-        <sv:value>Media</sv:value>
-      </sv:property>
       <sv:property sv:name="type" sv:type="String">
         <sv:value>String</sv:value>
+      </sv:property>
+      <sv:property sv:name="value" sv:type="String">
+        <sv:value>text and media are editable via context menu: just right click on the label</sv:value>
       </sv:property>
       <sv:node sv:name="MetaData">
         <sv:property sv:name="jcr:primaryType" sv:type="Name">
@@ -235,7 +183,7 @@
           <sv:value>2008-07-07T14:56:33.437+02:00</sv:value>
         </sv:property>
         <sv:property sv:name="mgnl:lastmodified" sv:type="Date">
-          <sv:value>2010-05-20T14:49:30.203+02:00</sv:value>
+          <sv:value>2013-09-27T15:19:45.834+02:00</sv:value>
         </sv:property>
       </sv:node>
     </sv:node>

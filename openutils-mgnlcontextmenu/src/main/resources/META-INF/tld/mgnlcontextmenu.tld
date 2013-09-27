@@ -63,6 +63,14 @@
       <rtexprvalue>true</rtexprvalue>
       <type>boolean</type>
     </attribute>
+    <attribute>
+      <description>
+        <![CDATA[If true, the body is always rendered. false as default.]]>
+      </description>
+      <name>usebody</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
   </tag>
   <tag>
     <description></description>
