@@ -24,6 +24,7 @@ import info.magnolia.context.MgnlContext;
 import info.magnolia.jcr.util.NodeUtil;
 
 import java.util.List;
+import java.util.Map;
 
 import net.sourceforge.openutils.mgnlcontextmenu.configuration.ContextMenu;
 import net.sourceforge.openutils.mgnlcontextmenu.configuration.ContextMenuItem;
@@ -63,6 +64,29 @@ public class MenuScripts
             out.append("});\n");
             out.append("</script>\n");
             out.append("<!-- end contextmenu:scripts -->\n");
+
+            out.append("<!-- start sortList script -->\n");
+            out.append("<script type=\"text/javascript\">\n");
+            out.append("jQuery(document).ready(function() {\n");
+            List<Map<String, String>> items = (List<Map<String, String>>) MgnlContext
+                .getWebContext()
+                .getRequest()
+                .getAttribute("mgnlSortLists");
+            if (items != null)
+            {
+                for (Map<String, String> item : items)
+                {
+                    out.append("jQuery('#" + item.get("containerId") + "').sortList({\n");
+                    out.append(" url: '" + item.get("url") + "',\n");
+                    out.append(" path: '" + item.get("path") + "',\n");
+                    out.append(" name: '" + item.get("name") + "',\n");
+                    out.append(" order: " + item.get("order") + "\n");
+                    out.append("});\n");
+                }
+            }
+            out.append("});\n");
+            out.append("</script>\n");
+            out.append("<!-- end sortList script -->\n");
 
             return out.toString();
         }
