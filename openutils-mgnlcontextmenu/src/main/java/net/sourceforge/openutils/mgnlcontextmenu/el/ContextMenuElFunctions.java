@@ -173,6 +173,18 @@ public class ContextMenuElFunctions
         return output;
     }
 
+    @SuppressWarnings({"rawtypes" })
+    public static void initContextMenu()
+    {
+        HttpServletRequest request = getRequest();
+        List list = (List) request.getAttribute(EDIT_MESSAGE_INFOS_KEY);
+        if (list == null)
+        {
+            list = new ArrayList();
+            request.setAttribute(EDIT_MESSAGE_INFOS_KEY, list);
+        }
+    }
+
     @SuppressWarnings({"unchecked", "rawtypes" })
     public static ElementInfo addEditMessageInfo(String key, String path, String elementId)
     {

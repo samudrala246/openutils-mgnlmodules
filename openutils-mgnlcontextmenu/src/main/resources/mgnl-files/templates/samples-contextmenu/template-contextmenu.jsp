@@ -11,6 +11,7 @@
       <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
       <title>${content.title}</title>
       <script src="${pageContext.request.contextPath}/.resources/contextmenu/js/jquery-1.4.2.min.js">/**/</script>
+      ${contextmenu:init()} 
       ${contextmenu:links()}
       <cms:init />
       <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/.resources/contextmenu/css/bootstrap.min.css" />
@@ -30,6 +31,14 @@
             <ul>
               <li>
                 add
+                <code>${'$'}{contextmenu:init()}</code>
+                if you are using blossom (just before
+                <code>&amp;lt;/head&amp;gt;</code>
+                )
+              </li>
+              <li>add the jquery library</li>
+              <li>
+                add
                 <code>${'$'}{contextmenu:links()}</code>
                 (just before
                 <code>&amp;lt;/head&amp;gt;</code>
@@ -42,28 +51,12 @@
                 <code>&amp;lt;/body&amp;gt;</code>
                 )
               </li>
-              <li>add the jquery library</li>
             </ul>
           </p>
         </section>
         <cms:area name="main" />
       </div>
-      <!-- <jsp:include page="/templates/samples-contextmenu/page-editmenu.jsp" /> -->
       ${contextmenu:scripts()}
-      <c:if test="${!empty mgnlSortLists}">
-        <script type="text/javascript">
-          <![CDATA[ jQuery(document).ready( function() {]]>
-          <c:forEach var="item" items="${mgnlSortLists}">
-            <![CDATA[jQuery('#${item.containerId}').sortList({
-              url: '${item.url}',
-              path: '${item.path}',
-              name: '${item.name}',
-              order: ${item.order}
-            });]]>
-          </c:forEach>
-          <![CDATA[});]]>
-        </script>
-      </c:if>
     </body>
   </html>
 </jsp:root>

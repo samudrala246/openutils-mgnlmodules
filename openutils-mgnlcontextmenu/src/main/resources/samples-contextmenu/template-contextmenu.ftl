@@ -4,8 +4,9 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <title>${content.title!}</title>
     
+    ${contextmenu.init()}
+
     <script src="${contextPath}/.resources/contextmenu/js/jquery-1.4.2.min.js">/**/</script>
-    
     ${contextmenu.links()}
     
     [@cms.init /]
@@ -25,9 +26,10 @@
         <p>
           <span>Add the following to your template in order to initialize the contextmenu module:</span>
           <ul>
+            <li>add <code>${'$'}{contextmenu.init()}</code> if you are using blossom (just before <code>&lt;/head&gt;</code>)</li>
+            <li>add the jquery library</li>
             <li>add <code>${'$'}{contextmenu.links()}</code> (just before <code>&lt;/head&gt;</code>)</li>
             <li>add <code>${'$'}{contextmenu.scripts()}</code> (just before <code>&lt;/body&gt;</code>)</li>
-            <li>add the jquery library</li>
           </ul>
         </p>
       </section>

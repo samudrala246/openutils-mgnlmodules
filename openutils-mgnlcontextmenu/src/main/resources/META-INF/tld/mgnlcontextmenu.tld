@@ -139,10 +139,15 @@
     <function-signature>java.util.List endSortList(java.lang.String)</function-signature>
   </function>
   <function>
+    <name>init</name>
+    <function-class>net.sourceforge.openutils.mgnlcontextmenu.el.ContextMenuElFunctions</function-class>
+    <function-signature>void initContextMenu()</function-signature>
+  </function>
+  <function>
     <name>addEditMessageInfo</name>
     <function-class>net.sourceforge.openutils.mgnlcontextmenu.el.ContextMenuElFunctions</function-class>
-    <function-signature>net.sourceforge.openutils.mgnlcontextmenu.el.ElementInfo
-      addEditMessageInfo(java.lang.String, java.lang.String, java.lang.String)</function-signature>
+    <function-signature>net.sourceforge.openutils.mgnlcontextmenu.el.ElementInfo addEditMessageInfo(java.lang.String,
+      java.lang.String, java.lang.String)</function-signature>
   </function>
   <function>
     <name>editMessageInfos</name>
