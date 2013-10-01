@@ -37,12 +37,12 @@
     <dependency>
       <groupId>info.magnolia</groupId>
       <artifactId>magnolia-module-legacy-admininterface</artifactId>
-      <version>5.0.2</version>
+      <version>${magnolia.version}</version>
     </dependency>
     <dependency>
       <groupId>info.magnolia.dam</groupId>
       <artifactId>magnolia-dam</artifactId>
-      <version>1.0.2</version>
+      <version>1.1-rc1</version>
     </dependency>
     <!-- <dependency> -->
     <!-- <groupId>info.magnolia</groupId> -->
@@ -58,7 +58,7 @@
     <dependency>
       <groupId>info.magnolia</groupId>
       <artifactId>magnolia-module-mail</artifactId>
-      <version>5.0.1</version>
+      <version>${magnolia.version}</version>
     </dependency>
     <!-- <dependency> -->
     <!-- <groupId>info.magnolia</groupId> -->
@@ -68,7 +68,7 @@
     <dependency>
       <groupId>info.magnolia.activation</groupId>
       <artifactId>magnolia-module-activation</artifactId>
-      <version>5.0</version>
+      <version>5.0.2</version>
     </dependency>
     <dependency>
       <groupId>info.magnolia</groupId>
@@ -83,11 +83,6 @@
     <dependency>
       <groupId>info.magnolia</groupId>
       <artifactId>magnolia-jaas</artifactId>
-      <version>${magnolia.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>info.magnolia</groupId>
-      <artifactId>magnolia-templating-jsp</artifactId>
       <version>${magnolia.version}</version>
     </dependency>
     <dependency>
@@ -247,7 +242,7 @@
     </dependencies>
   </dependencyManagement>
   <properties>
-    <magnolia.version>5.0.4</magnolia.version>
+    <magnolia.version>5.1-rc1</magnolia.version>
     <magnolia.version2>5.0-prev1-rc1</magnolia.version2>
     <!-- <magnolia.version2>5.0.4</magnolia.version2> -->
     <stk.version>2.5.3</stk.version>
