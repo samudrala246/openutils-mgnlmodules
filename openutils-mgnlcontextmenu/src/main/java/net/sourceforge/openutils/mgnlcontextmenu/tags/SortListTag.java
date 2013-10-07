@@ -107,11 +107,11 @@ public class SortListTag extends TagSupport
             item.put("path", MgnlContext.getAggregationState().getCurrentContent().getHandle());
             item.put("name", orderProperty);
             item.put("order", '[' + order + ']');
-            List items = (List) pageContext.getRequest().getAttribute("mgnlSortLists");
+            List items = (List) pageContext.getRequest().getAttribute(ContextMenuElFunctions.SORT_LIST_KEY);
             if (items == null)
             {
                 items = new ArrayList();
-                pageContext.getRequest().setAttribute("mgnlSortLists", items);
+                pageContext.getRequest().setAttribute(ContextMenuElFunctions.SORT_LIST_KEY, items);
             }
             items.add(item);
         }

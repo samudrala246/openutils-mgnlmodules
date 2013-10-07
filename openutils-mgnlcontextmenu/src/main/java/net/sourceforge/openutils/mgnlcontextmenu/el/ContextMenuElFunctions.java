@@ -58,6 +58,8 @@ public class ContextMenuElFunctions
      */
     private static Logger log = LoggerFactory.getLogger(ContextMenuElFunctions.class);
 
+    public static final String SORT_LIST_KEY = "mgnlSortLists";
+
     private static final String EDIT_MESSAGE_INFOS_KEY = "mgnlEditMessageInfos";
 
     /**
@@ -183,11 +185,11 @@ public class ContextMenuElFunctions
             list = new ArrayList();
             request.setAttribute(EDIT_MESSAGE_INFOS_KEY, list);
         }
-        List items = (List) request.getAttribute("mgnlSortLists");
+        List items = (List) request.getAttribute(SORT_LIST_KEY);
         if (items == null)
         {
             items = new ArrayList();
-            request.setAttribute("mgnlSortLists", items);
+            request.setAttribute(SORT_LIST_KEY, items);
         }
     }
 

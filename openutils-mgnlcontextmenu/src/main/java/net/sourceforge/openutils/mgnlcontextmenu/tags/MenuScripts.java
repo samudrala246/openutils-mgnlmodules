@@ -71,7 +71,7 @@ public class MenuScripts
             List<Map<String, String>> items = (List<Map<String, String>>) MgnlContext
                 .getWebContext()
                 .getRequest()
-                .getAttribute("mgnlSortLists");
+                .getAttribute(ContextMenuElFunctions.SORT_LIST_KEY);
             if (items != null)
             {
                 for (Map<String, String> item : items)
