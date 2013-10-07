@@ -206,7 +206,7 @@
     <dependency>
       <groupId>net.sourceforge.openutils</groupId>
       <artifactId>openutils-mgnlcontextmenu</artifactId>
-      <version>4.5.1-SNAPSHOT</version>
+      <version>4.5.3-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>net.sourceforge.openutils</groupId>
