@@ -174,7 +174,7 @@ public class ContextMenuElFunctions
     }
 
     @SuppressWarnings({"rawtypes" })
-    public static void initContextMenu()
+    public static void init()
     {
         HttpServletRequest request = getRequest();
         List list = (List) request.getAttribute(EDIT_MESSAGE_INFOS_KEY);
@@ -182,6 +182,12 @@ public class ContextMenuElFunctions
         {
             list = new ArrayList();
             request.setAttribute(EDIT_MESSAGE_INFOS_KEY, list);
+        }
+        List items = (List) request.getAttribute("mgnlSortLists");
+        if (items == null)
+        {
+            items = new ArrayList();
+            request.setAttribute("mgnlSortLists", items);
         }
     }
 

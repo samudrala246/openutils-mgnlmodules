@@ -141,7 +141,7 @@
   <function>
     <name>init</name>
     <function-class>net.sourceforge.openutils.mgnlcontextmenu.el.ContextMenuElFunctions</function-class>
-    <function-signature>void initContextMenu()</function-signature>
+    <function-signature>void init()</function-signature>
   </function>
   <function>
     <name>addEditMessageInfo</name>
