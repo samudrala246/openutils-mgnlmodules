@@ -29,7 +29,7 @@
       <sv:value>2010-05-18T14:33:10.812+02:00</sv:value>
     </sv:property>
     <sv:property sv:name="mgnl:lastmodified" sv:type="Date">
-      <sv:value>2013-09-27T15:38:09.156+02:00</sv:value>
+      <sv:value>2013-10-07T23:55:31.955+02:00</sv:value>
     </sv:property>
     <sv:property sv:name="mgnl:template" sv:type="String">
       <sv:value>contextmenu:pages/contextmenu-template-jsp</sv:value>
@@ -62,7 +62,7 @@
         <sv:value>2010-05-18T16:43:29.812+02:00</sv:value>
       </sv:property>
       <sv:property sv:name="mgnl:lastmodified" sv:type="Date">
-        <sv:value>2013-09-27T15:38:09.155+02:00</sv:value>
+        <sv:value>2013-10-07T23:55:31.953+02:00</sv:value>
       </sv:property>
     </sv:node>
     <sv:node sv:name="0">
@@ -392,49 +392,6 @@
         </sv:property>
       </sv:node>
     </sv:node>
-    <sv:node sv:name="06">
-      <sv:property sv:name="jcr:primaryType" sv:type="Name">
-        <sv:value>mgnl:component</sv:value>
-      </sv:property>
-      <sv:property sv:name="jcr:mixinTypes" sv:type="Name" sv:multiple="true">
-        <sv:value>mix:lockable</sv:value>
-      </sv:property>
-      <sv:property sv:name="jcr:uuid" sv:type="String">
-        <sv:value>7992f867-ed72-44bd-bff6-95027a322a2e</sv:value>
-      </sv:property>
-      <sv:property sv:name="dummy" sv:type="String">
-        <sv:value>.</sv:value>
-      </sv:property>
-      <sv:property sv:name="field2_label" sv:type="String">
-        <sv:value>asd</sv:value>
-      </sv:property>
-      <sv:property sv:name="fieldList1" sv:type="String">
-        <sv:value>1,0</sv:value>
-      </sv:property>
-      <sv:property sv:name="jcr:createdBy" sv:type="String">
-        <sv:value>admin</sv:value>
-      </sv:property>
-      <sv:node sv:name="MetaData">
-        <sv:property sv:name="jcr:primaryType" sv:type="Name">
-          <sv:value>mgnl:metaData</sv:value>
-        </sv:property>
-        <sv:property sv:name="jcr:createdBy" sv:type="String">
-          <sv:value>admin</sv:value>
-        </sv:property>
-        <sv:property sv:name="mgnl:authorid" sv:type="String">
-          <sv:value>superuser</sv:value>
-        </sv:property>
-        <sv:property sv:name="mgnl:creationdate" sv:type="Date">
-          <sv:value>2013-09-17T00:12:45.279+02:00</sv:value>
-        </sv:property>
-        <sv:property sv:name="mgnl:lastmodified" sv:type="Date">
-          <sv:value>2013-09-27T15:13:31.452+02:00</sv:value>
-        </sv:property>
-        <sv:property sv:name="mgnl:template" sv:type="String">
-          <sv:value>contextmenu:components/samples-contextmenu-move-fields</sv:value>
-        </sv:property>
-      </sv:node>
-    </sv:node>
     <sv:node sv:name="07">
       <sv:property sv:name="jcr:primaryType" sv:type="Name">
         <sv:value>mgnl:component</sv:value>
@@ -449,7 +406,7 @@
         <sv:value>.</sv:value>
       </sv:property>
       <sv:property sv:name="jcr:createdBy" sv:type="String">
-        <sv:value>superuser</sv:value>
+        <sv:value>admin</sv:value>
       </sv:property>
       <sv:property sv:name="media" sv:type="String">
         <sv:value>0f076956-3642-48a4-8efd-8cb17f3be49b</sv:value>
@@ -459,7 +416,7 @@
           <sv:value>mgnl:metaData</sv:value>
         </sv:property>
         <sv:property sv:name="jcr:createdBy" sv:type="String">
-          <sv:value>superuser</sv:value>
+          <sv:value>admin</sv:value>
         </sv:property>
         <sv:property sv:name="mgnl:authorid" sv:type="String">
           <sv:value>superuser</sv:value>
@@ -489,6 +446,43 @@
         <sv:value>.</sv:value>
       </sv:property>
       <sv:property sv:name="jcr:createdBy" sv:type="String">
+        <sv:value>admin</sv:value>
+      </sv:property>
+      <sv:node sv:name="MetaData">
+        <sv:property sv:name="jcr:primaryType" sv:type="Name">
+          <sv:value>mgnl:metaData</sv:value>
+        </sv:property>
+        <sv:property sv:name="jcr:createdBy" sv:type="String">
+          <sv:value>admin</sv:value>
+        </sv:property>
+        <sv:property sv:name="mgnl:authorid" sv:type="String">
+          <sv:value>superuser</sv:value>
+        </sv:property>
+        <sv:property sv:name="mgnl:creationdate" sv:type="Date">
+          <sv:value>2013-09-27T15:32:52.046+02:00</sv:value>
+        </sv:property>
+        <sv:property sv:name="mgnl:lastmodified" sv:type="Date">
+          <sv:value>2013-09-27T15:32:52.047+02:00</sv:value>
+        </sv:property>
+        <sv:property sv:name="mgnl:template" sv:type="String">
+          <sv:value>contextmenu:components/samples-contextmenu-media</sv:value>
+        </sv:property>
+      </sv:node>
+    </sv:node>
+    <sv:node sv:name="06">
+      <sv:property sv:name="jcr:primaryType" sv:type="Name">
+        <sv:value>mgnl:component</sv:value>
+      </sv:property>
+      <sv:property sv:name="jcr:mixinTypes" sv:type="Name" sv:multiple="true">
+        <sv:value>mix:lockable</sv:value>
+      </sv:property>
+      <sv:property sv:name="jcr:uuid" sv:type="String">
+        <sv:value>69fd5ce5-9560-453d-bad6-ef572443f6e1</sv:value>
+      </sv:property>
+      <sv:property sv:name="dummy" sv:type="String">
+        <sv:value>.</sv:value>
+      </sv:property>
+      <sv:property sv:name="jcr:createdBy" sv:type="String">
         <sv:value>superuser</sv:value>
       </sv:property>
       <sv:node sv:name="MetaData">
@@ -502,13 +496,13 @@
           <sv:value>superuser</sv:value>
         </sv:property>
         <sv:property sv:name="mgnl:creationdate" sv:type="Date">
-          <sv:value>2013-09-27T15:32:52.046+02:00</sv:value>
+          <sv:value>2013-10-07T23:55:31.953+02:00</sv:value>
         </sv:property>
         <sv:property sv:name="mgnl:lastmodified" sv:type="Date">
-          <sv:value>2013-09-27T15:32:52.047+02:00</sv:value>
+          <sv:value>2013-10-07T23:55:31.953+02:00</sv:value>
         </sv:property>
         <sv:property sv:name="mgnl:template" sv:type="String">
-          <sv:value>contextmenu:components/samples-contextmenu-media</sv:value>
+          <sv:value>contextmenu:components/samples-contextmenu-move-fields</sv:value>
         </sv:property>
       </sv:node>
     </sv:node>

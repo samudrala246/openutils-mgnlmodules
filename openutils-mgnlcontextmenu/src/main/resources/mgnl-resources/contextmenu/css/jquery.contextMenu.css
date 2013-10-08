@@ -99,14 +99,6 @@
   padding: 0;
 }
 
-.move .dropXX {
-  display: block;
-  height: 8px;
-  border: 1px solid #666;
-  background-color: #CCC;
-  cursor: pointer;
-}
-
 .move .drop {
   margin: 2px 0;
   height: 12px;
@@ -114,18 +106,31 @@
   font-size: 12px;
   color: #ffffff;
   text-align: center;
-  background-color: #5cb85c;
-  -webkit-box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.15);
-  box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.15);
-  -webkit-transition: width 0.6s ease;
-  transition: width 0.6s ease;
-  -webkit-border-radius: 2px;
-  -moz-border-radius: 2px;
-  border-radius: 2px;
-  cursor: pointer;
+  height: 23px !important;
+  line-height: 20px !important;
+  border-top: 1px solid #bcd56f !important;
+  border-left: 1px solid #bcd56f !important;
+  border-bottom: 1px solid #678b0f !important;
+  border-right: 1px solid #678b0f !important;
+  background: url("../../magnolia-templating-editor/img/bars/mgnl-bar.component.png") repeat !important;
+  color: #2f491b !important;
+  clear: both;
 }
 
+.move .sort-list .drop {
+  display: none;
+  margin: 0;
+  padding: 0;
+}
 
-.edit-content{
+.move .drop.highlighted {
+  border-top: 1px solid #deeab7 !important;
+  border-left: 1px solid #deeab7 !important;
+  border-bottom: 1px solid #b3c587 !important;
+  border-right: 1px solid #b3c587 !important;
+  background-image: url("../../magnolia-templating-editor/img/bars/mgnl-bar.component.deemphasized.png") !important;
+}
+
+.edit-content {
   min-height: 20px;
-  }
+}
