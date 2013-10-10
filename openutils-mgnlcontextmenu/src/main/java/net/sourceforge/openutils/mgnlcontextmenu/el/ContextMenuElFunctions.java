@@ -178,18 +178,21 @@ public class ContextMenuElFunctions
     @SuppressWarnings({"rawtypes" })
     public static void init()
     {
-        HttpServletRequest request = getRequest();
-        List list = (List) request.getAttribute(EDIT_MESSAGE_INFOS_KEY);
-        if (list == null)
+        if (MgnlContext.isWebContext())
         {
-            list = new ArrayList();
-            request.setAttribute(EDIT_MESSAGE_INFOS_KEY, list);
-        }
-        List items = (List) request.getAttribute(SORT_LIST_KEY);
-        if (items == null)
-        {
-            items = new ArrayList();
-            request.setAttribute(SORT_LIST_KEY, items);
+            HttpServletRequest request = getRequest();
+            List list = (List) request.getAttribute(EDIT_MESSAGE_INFOS_KEY);
+            if (list == null)
+            {
+                list = new ArrayList();
+                request.setAttribute(EDIT_MESSAGE_INFOS_KEY, list);
+            }
+            List items = (List) request.getAttribute(SORT_LIST_KEY);
+            if (items == null)
+            {
+                items = new ArrayList();
+                request.setAttribute(SORT_LIST_KEY, items);
+            }
         }
     }
 
