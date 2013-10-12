@@ -75,7 +75,7 @@ public abstract class BaseVideoTypeHandler extends MediaWithPreviewImageTypeHand
                 media.setProperty(METADATA_DURATION, flvMetaData.getDuration());
                 media.setProperty(METADATA_FRAMERATE, flvMetaData.getFrameRate());
 
-                media.save();
+                media.getSession().save();
             }
         }
         catch (Exception e)

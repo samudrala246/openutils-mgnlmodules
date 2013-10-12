@@ -44,6 +44,7 @@ import org.slf4j.LoggerFactory;
 /**
  * @author dschivo
  */
+@SuppressWarnings("deprecation")
 public class PlaylistEntryDialogMVC extends ConfiguredDialog
 {
 
@@ -71,7 +72,7 @@ public class PlaylistEntryDialogMVC extends ConfiguredDialog
     protected void configureSaveHandler(SaveHandler saveHandler)
     {
         super.configureSaveHandler(saveHandler);
-        saveHandler.setCreationItemType(PlaylistConstants.PLAYLIST_ENTRY);
+        saveHandler.setCreationItemType(PlaylistConstants.NT_PLAYLIST_ENTRY);
     }
 
     /**

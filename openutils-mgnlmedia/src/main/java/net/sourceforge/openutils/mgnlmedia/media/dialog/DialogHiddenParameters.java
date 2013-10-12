@@ -39,6 +39,7 @@ import org.slf4j.LoggerFactory;
  * @author ADMIN
  * @version $Id: $
  */
+@SuppressWarnings("deprecation")
 public class DialogHiddenParameters extends ConfigurableFreemarkerDialog
 {
 

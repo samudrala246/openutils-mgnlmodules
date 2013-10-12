@@ -19,7 +19,8 @@
 
 package it.openutils.mgnlutils.jmx;
 
-import info.magnolia.cms.core.SystemProperty;
+import info.magnolia.init.MagnoliaConfigurationProperties;
+import info.magnolia.objectfactory.Components;
 
 import java.io.IOException;
 import java.lang.management.ManagementFactory;
@@ -62,7 +63,7 @@ public class JmxServerContextListener implements ServletContextListener
     public void contextInitialized(ServletContextEvent sce)
     {
 
-        String serviceUrl = SystemProperty.getProperty("jmx.serviceUrl");
+        String serviceUrl = Components.getComponent(MagnoliaConfigurationProperties.class).getProperty("jmx.serviceUrl");
 
         if (StringUtils.isBlank(serviceUrl))
         {
@@ -108,6 +109,7 @@ public class JmxServerContextListener implements ServletContextListener
             Thread connectorThread = new Thread()
             {
 
+                @Override
                 public void run()
                 {
                     try

@@ -79,7 +79,7 @@ public class SwfTypeHandler extends MediaWithPreviewImageTypeHandler
                 media.setProperty(METADATA_WIDTH, dimension.getWidth());
                 media.setProperty(METADATA_HEIGHT, dimension.getHeight());
                 media.setProperty("media_flashversion", flashversion);
-                media.save();
+                media.getSession().save();
             }
             else if (hasPreview(media))
             {
@@ -92,7 +92,7 @@ public class SwfTypeHandler extends MediaWithPreviewImageTypeHandler
                 {
                     media.setProperty(METADATA_WIDTH, ii.getWidth());
                     media.setProperty(METADATA_HEIGHT, ii.getHeight());
-                    media.save();
+                    media.getSession().save();
                 }
             }
 

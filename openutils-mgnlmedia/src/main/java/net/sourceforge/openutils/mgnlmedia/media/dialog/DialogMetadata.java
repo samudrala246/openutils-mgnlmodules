@@ -32,6 +32,7 @@ import org.apache.commons.lang.time.FastDateFormat;
  * @author fgiust
  * @version $Id$
  */
+@SuppressWarnings("deprecation")
 public class DialogMetadata extends DialogStatic
 {
 

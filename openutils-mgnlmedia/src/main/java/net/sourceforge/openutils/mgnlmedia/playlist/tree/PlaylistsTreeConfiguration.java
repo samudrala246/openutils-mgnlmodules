@@ -27,6 +27,7 @@ import info.magnolia.cms.gui.control.Tree;
 import info.magnolia.cms.gui.control.TreeColumn;
 import info.magnolia.cms.i18n.Messages;
 import info.magnolia.module.admininterface.AbstractTreeConfiguration;
+import info.magnolia.objectfactory.Components;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -54,10 +55,10 @@ public class PlaylistsTreeConfiguration extends AbstractTreeConfiguration
         menuNewFolder.setLabel(msgs.get("tree.config.menu.newFolder")); //$NON-NLS-1$
         menuNewFolder.setIcon(request.getContextPath() + "/.resources/media/icons/ico16-folder.png"); //$NON-NLS-1$
         menuNewFolder.setOnclick(tree.getJavascriptTree()
-            + ".createNode('" + MediaConfigurationManager.FOLDER.getSystemName() + "');"); //$NON-NLS-1$ //$NON-NLS-2$
+            + ".createNode('" + MediaConfigurationManager.NT_FOLDER + "');"); //$NON-NLS-1$ //$NON-NLS-2$
         menuNewFolder.addJavascriptCondition("new mgnlTreeMenuItemConditionSelectedNotItemType(" //$NON-NLS-1$
             + tree.getJavascriptTree()
-            + ", '" + PlaylistConstants.PLAYLIST.getSystemName() + "')"); //$NON-NLS-1$
+            + ", '" + PlaylistConstants.NT_PLAYLIST + "')"); //$NON-NLS-1$
         menuNewFolder.addJavascriptCondition("new mgnlTreeMenuItemConditionPermissionWrite("
             + tree.getJavascriptTree()
             + ")");
@@ -66,10 +67,10 @@ public class PlaylistsTreeConfiguration extends AbstractTreeConfiguration
         menuNewPlaylist.setLabel(msgs.get("tree.playlists.new"));
         menuNewPlaylist.setIcon(request.getContextPath() + "/.resources/media/icons/ico16-playlist.png"); //$NON-NLS-1$
         menuNewPlaylist.setOnclick(tree.getJavascriptTree()
-            + ".createNode('" + PlaylistConstants.PLAYLIST.getSystemName() + "');"); //$NON-NLS-1$ //$NON-NLS-2$
+            + ".createNode('" + PlaylistConstants.NT_PLAYLIST + "');"); //$NON-NLS-1$ //$NON-NLS-2$
         menuNewPlaylist.addJavascriptCondition("new mgnlTreeMenuItemConditionSelectedItemType(" //$NON-NLS-1$
             + tree.getJavascriptTree()
-            + ", '" + PlaylistConstants.FOLDER.getSystemName() + "')"); //$NON-NLS-1$
+            + ", '" + PlaylistConstants.NT_FOLDER + "')"); //$NON-NLS-1$
         menuNewPlaylist.addJavascriptCondition("new mgnlTreeMenuItemConditionPermissionWrite("
             + tree.getJavascriptTree()
             + ")");
@@ -137,7 +138,7 @@ public class PlaylistsTreeConfiguration extends AbstractTreeConfiguration
             + ")");
         menuActivate.addJavascriptCondition("new mgnlTreeMenuItemConditionSelectedNotItemType(" //$NON-NLS-1$
             + tree.getJavascriptTree()
-            + ", '" + PlaylistConstants.PLAYLIST.getSystemName() + "')"); //$NON-NLS-1$
+            + ", '" + PlaylistConstants.NT_PLAYLIST + "')"); //$NON-NLS-1$
 
         ContextMenuItem menuDeactivate = new ContextMenuItem("deactivate");
         menuDeactivate.setLabel(msgs.get("tree.config.menu.deactivate")); //$NON-NLS-1$
@@ -168,7 +169,7 @@ public class PlaylistsTreeConfiguration extends AbstractTreeConfiguration
             .setOnclick("location.href = '" + request.getContextPath() + "/playlists' + " + tree.getJavascriptTree() + ".selectedNode.id + '.xspf';"); //$NON-NLS-1$ //$NON-NLS-2$
         menuXspf.addJavascriptCondition("new mgnlTreeMenuItemConditionSelectedItemType(" //$NON-NLS-1$
             + tree.getJavascriptTree()
-            + ", '" + PlaylistConstants.PLAYLIST.getSystemName() + "')"); //$NON-NLS-1$
+            + ", '" + PlaylistConstants.NT_PLAYLIST + "')"); //$NON-NLS-1$
 
         tree.addMenuItem(menuNewFolder);
         tree.addMenuItem(menuNewPlaylist);
@@ -205,9 +206,9 @@ public class PlaylistsTreeConfiguration extends AbstractTreeConfiguration
     {
         final Messages msgs = getMessages();
 
-        tree.addItemType(PlaylistConstants.FOLDER.getSystemName(), "/.resources/media/icons/ico16-folder.png");
+        tree.addItemType(PlaylistConstants.NT_FOLDER, "/.resources/media/icons/ico16-folder.png");
         tree.addItemType(
-            PlaylistConstants.PLAYLIST.getSystemName(),
+            PlaylistConstants.NT_PLAYLIST,
             "/.resources/media/icons/ico16-playlist-standard.png");
 
         TreeColumn column0 = TreeColumn.createLabelColumn(tree, msgs.get("tree.playlists.column"), true);
@@ -217,7 +218,7 @@ public class PlaylistsTreeConfiguration extends AbstractTreeConfiguration
         if (!browseMode && !MediaEl.module().isSingleinstance())
         {
 
-            if (ServerConfiguration.getInstance().isAdmin()
+            if (Components.getComponent(ServerConfiguration.class).isAdmin()
                 || ActivationManagerFactory.getActivationManager().hasAnyActiveSubscriber())
             {
                 TreeColumn column1 = TreeColumn.createIconColumn(tree, msgs.get("tree.config.status"), null);

@@ -19,9 +19,10 @@
 
 package net.sourceforge.openutils.mgnltagcloud.setup;
 
-import info.magnolia.cms.core.SystemProperty;
+import info.magnolia.init.MagnoliaConfigurationProperties;
 import info.magnolia.module.InstallContext;
 import info.magnolia.module.delta.Task;
+import info.magnolia.objectfactory.Components;
 import it.openutils.mgnltasks.SamplesExtractionTask;
 import it.openutils.mgnltasks.SimpleModuleVersionHandler;
 
@@ -45,7 +46,8 @@ public class TagCloudModuleVersionHandler extends SimpleModuleVersionHandler
 
         List<Task> tasks = new ArrayList<Task>();
 
-        if (SystemProperty.getBooleanProperty(SystemProperty.MAGNOLIA_BOOTSTRAP_SAMPLES))
+        if (Components.getComponent(MagnoliaConfigurationProperties.class).getBooleanProperty(
+            "magnolia.bootstrap.samples"))
         {
             tasks.add(new SamplesExtractionTask());
         }

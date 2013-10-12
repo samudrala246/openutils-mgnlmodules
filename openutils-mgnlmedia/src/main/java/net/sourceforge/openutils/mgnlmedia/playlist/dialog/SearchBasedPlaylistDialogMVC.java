@@ -91,7 +91,7 @@ public class SearchBasedPlaylistDialogMVC extends ConfiguredDialog
         {
             saveHandler.setNodeName(form.getParameter("playlistName"));
         }
-        saveHandler.setCreationItemType(PlaylistConstants.PLAYLIST);
+        saveHandler.setCreationItemType(PlaylistConstants.NT_PLAYLIST);
     }
 
     /**

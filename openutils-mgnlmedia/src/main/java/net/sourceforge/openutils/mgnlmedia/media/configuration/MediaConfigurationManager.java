@@ -24,6 +24,7 @@ import info.magnolia.cms.beans.config.URI2RepositoryManager;
 import info.magnolia.cms.beans.config.URI2RepositoryMapping;
 import info.magnolia.cms.core.Content;
 import info.magnolia.cms.core.ItemType;
+import info.magnolia.cms.core.MgnlNodeType;
 import info.magnolia.cms.core.search.Query;
 import info.magnolia.cms.core.search.QueryManager;
 import info.magnolia.cms.core.search.QueryResult;
@@ -34,6 +35,7 @@ import info.magnolia.content2bean.Content2BeanUtil;
 import info.magnolia.context.MgnlContext;
 import info.magnolia.jcr.util.NodeUtil;
 import info.magnolia.jcr.util.PropertyUtil;
+import info.magnolia.objectfactory.Components;
 import info.magnolia.repository.RepositoryConstants;
 
 import java.util.ArrayList;
@@ -80,17 +82,17 @@ public class MediaConfigurationManager extends ObservedManager
     /**
      * Folder type
      */
-    public static final ItemType FOLDER = ItemType.CONTENT;
+    public static final String NT_FOLDER = MgnlNodeType.NT_CONTENT;
 
     /**
      * Media type
      */
-    public static final ItemType MEDIA = new ItemType(MGNL_MEDIA_TYPE);
+    public static final String NT_MEDIA = MGNL_MEDIA_TYPE;
 
     /**
      * Resolutions node type
      */
-    public static final ItemType RESOLUTIONS = new ItemType(MGNL_RESOLUTION_TYPE);
+    public static final String NT_RESOLUTIONS = MGNL_RESOLUTION_TYPE;
 
     private Logger log = LoggerFactory.getLogger(MediaConfigurationManager.class);
 
@@ -259,7 +261,7 @@ public class MediaConfigurationManager extends ObservedManager
         {
             sbQuery.append('/');
         }
-        sbQuery.append("element(*," + MediaConfigurationManager.MEDIA.getSystemName() + ")");
+        sbQuery.append("element(*," + MediaConfigurationManager.NT_MEDIA + ")");
         List<String> clauses = new ArrayList<String>();
         if (StringUtils.isNotBlank(search))
         {
@@ -317,7 +319,7 @@ public class MediaConfigurationManager extends ObservedManager
      */
     public String getURIMappingPrefix()
     {
-        Collection<URI2RepositoryMapping> mappings = URI2RepositoryManager.getInstance().getMappings();
+        Collection<URI2RepositoryMapping> mappings = Components.getComponent(URI2RepositoryManager.class).getMappings();
         for (URI2RepositoryMapping mapping : mappings)
         {
             if (mapping.getRepository().equals(MediaModule.REPO))

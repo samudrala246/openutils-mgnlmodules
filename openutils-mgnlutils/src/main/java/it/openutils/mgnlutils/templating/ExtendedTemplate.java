@@ -19,10 +19,11 @@
 
 package it.openutils.mgnlutils.templating;
 
-import info.magnolia.cms.core.Content;
-import info.magnolia.cms.util.ContentUtil;
+import info.magnolia.jcr.util.MetaDataUtil;
+import info.magnolia.jcr.util.NodeUtil;
 import info.magnolia.rendering.template.TemplateAvailability;
 import info.magnolia.rendering.template.TemplateDefinition;
+import info.magnolia.rendering.template.configured.ConfiguredTemplateAvailability;
 import info.magnolia.rendering.template.configured.ConfiguredTemplateDefinition;
 
 import java.util.HashSet;
@@ -74,6 +75,16 @@ public class ExtendedTemplate extends ConfiguredTemplateDefinition
      * Logger.
      */
     private Logger log = LoggerFactory.getLogger(ExtendedTemplate.class);
+
+    public ExtendedTemplate()
+    {
+        super(new ConfiguredTemplateAvailability());
+    }
+
+    public ExtendedTemplate(TemplateAvailability templateAvailability)
+    {
+        super(templateAvailability);
+    }
 
     /**
      * Returns the autogenerate.
@@ -164,22 +175,21 @@ public class ExtendedTemplate extends ConfiguredTemplateDefinition
         final TemplateAvailability x = super.getTemplateAvailability();
         return new TemplateAvailability()
         {
-            
-            public boolean isAvailable(Node content, TemplateDefinition templateDefinition)
+
+            public boolean isAvailable(Node node, TemplateDefinition templateDefinition)
             {
-                boolean available = x != null ? !x.isAvailable(content, templateDefinition) : true;
+                boolean available = x != null ? !x.isAvailable(node, templateDefinition) : true;
 
                 if (!available)
                 {
                     return false;
                 }
 
-                Content node = ContentUtil.asContent(content);
                 if (repositories != null && !repositories.isEmpty())
                 {
                     try
                     {
-                        if (!repositories.contains(node.getWorkspace().getName()))
+                        if (!repositories.contains(node.getSession().getWorkspace().getName()))
                         {
                             return false;
                         }
@@ -194,7 +204,7 @@ public class ExtendedTemplate extends ConfiguredTemplateDefinition
                 {
                     try
                     {
-                        int currentLevel = node.getLevel();
+                        int currentLevel = node.getDepth();
                         if (!levels.contains(currentLevel))
                         {
                             return false;
@@ -208,7 +218,7 @@ public class ExtendedTemplate extends ConfiguredTemplateDefinition
 
                 if (available && StringUtils.isNotBlank(parentPath))
                 {
-                    if (!StringUtils.contains(node.getHandle(), parentPath))
+                    if (!StringUtils.contains(NodeUtil.getPathIfPossible(node), parentPath))
                     {
                         return false;
                     }
@@ -218,10 +228,10 @@ public class ExtendedTemplate extends ConfiguredTemplateDefinition
                 {
                     try
                     {
-                        Content parent = node.getParent();
-                        while (parent.getLevel() > 0)
+                        Node parent = node.getParent();
+                        while (parent.getDepth() > 0)
                         {
-                            if (parentTemplates.contains(parent.getTemplate()))
+                            if (parentTemplates.contains(MetaDataUtil.getMetaData(parent).getTemplate()))
                             {
                                 return true;
                             }

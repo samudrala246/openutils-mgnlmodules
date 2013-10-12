@@ -4,6 +4,8 @@ import info.magnolia.cms.beans.runtime.FileProperties;
 import info.magnolia.cms.core.Content;
 import info.magnolia.cms.core.NodeData;
 import info.magnolia.context.MgnlContext;
+import info.magnolia.context.SystemContext;
+import info.magnolia.objectfactory.Components;
 
 import java.io.IOException;
 
@@ -29,8 +31,8 @@ public abstract class FtpAsyncUploadExternalVideoProvider extends AsyncUploadExt
     @Override
     public void uploadVideo(final String mediaUUID) throws IOException, RepositoryException
     {
-        Content media = MgnlContext
-            .getSystemContext()
+        Content media = Components
+            .getComponent(SystemContext.class)
             .getHierarchyManager(MediaModule.REPO)
             .getContentByUUID(mediaUUID);
         NodeData file = media.getNodeData(BaseVideoTypeHandler.ORGINAL_NODEDATA_NAME);

@@ -23,7 +23,9 @@ import info.magnolia.cms.core.Path;
 import info.magnolia.cms.security.AccessDeniedException;
 import info.magnolia.cms.util.ContentUtil;
 import info.magnolia.context.MgnlContext;
+import info.magnolia.context.SystemContext;
 import info.magnolia.jcr.util.MetaDataUtil;
+import info.magnolia.objectfactory.Components;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -120,7 +122,7 @@ public class MediaLoadUtils
 
             mtc.getHandler().saveFromZipFile(media, f, cleanFilename, extension);
 
-            MgnlContext.getSystemContext().getHierarchyManager(MediaModule.REPO).save();
+            Components.getComponent(SystemContext.class).getHierarchyManager(MediaModule.REPO).save();
             FileUtils.deleteQuietly(f);
 
             return media;
@@ -160,7 +162,7 @@ public class MediaLoadUtils
         // [LB] FIXME TESTME
         Node media = parentNode.addNode(
             Path.getUniqueLabel(ContentUtil.asContent(parentNode), mediaName),
-            MediaConfigurationManager.MEDIA.getSystemName());
+            MediaConfigurationManager.NT_MEDIA);
 
         if (!media.hasProperty("creator"))
         {
@@ -216,7 +218,7 @@ public class MediaLoadUtils
         {
             if (StringUtils.isNotEmpty(contentNodeName))
             {
-                currContent = currContent.addNode(contentNodeName, MediaConfigurationManager.FOLDER.getSystemName());
+                currContent = currContent.addNode(contentNodeName, MediaConfigurationManager.NT_FOLDER);
 
                 if (MediaEl.module().isSingleinstance() && !MetaDataUtil.getMetaData(currContent).getIsActivated())
                 {

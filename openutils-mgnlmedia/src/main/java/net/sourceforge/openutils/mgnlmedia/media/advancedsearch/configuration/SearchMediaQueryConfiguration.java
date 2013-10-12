@@ -106,7 +106,7 @@ public class SearchMediaQueryConfiguration
         Criteria c = JCRCriteriaFactory
             .createCriteria()
             .setWorkspace(MediaModule.REPO)
-            .add(Restrictions.eq("@jcr:primaryType", MediaConfigurationManager.MEDIA.getSystemName()));
+            .add(Restrictions.eq("@jcr:primaryType", MediaConfigurationManager.NT_MEDIA));
 
         // media type
         if (!StringUtils.isEmpty(mediaType))

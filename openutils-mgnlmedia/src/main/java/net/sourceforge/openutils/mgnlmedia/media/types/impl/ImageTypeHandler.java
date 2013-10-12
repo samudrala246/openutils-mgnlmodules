@@ -124,7 +124,7 @@ public class ImageTypeHandler extends BaseTypeHandler
                 media.setProperty(METADATA_BITDEPTH, ii.getBitsPerPixel());
                 media.setProperty(METADATA_WIDTH, ii.getWidth());
                 media.setProperty(METADATA_HEIGHT, ii.getHeight());
-                media.save();
+                media.getSession().save();
             }
             else if (StringUtils.equals(PropertyUtil.getString(nodeData, FileProperties.EXTENSION), "ico"))
             {
@@ -135,7 +135,7 @@ public class ImageTypeHandler extends BaseTypeHandler
                     media.setProperty(METADATA_BITDEPTH, bi.getColorModel().getPixelSize());
                     media.setProperty(METADATA_WIDTH, bi.getWidth());
                     media.setProperty(METADATA_HEIGHT, bi.getHeight());
-                    media.save();
+                    media.getSession().save();
                 }
                 bi.flush();
             }

@@ -60,7 +60,7 @@ public class PlaylistFoldersTreeConfiguration extends AbstractTreeConfiguration
     {
         final Messages msgs = getMessages();
 
-        tree.addItemType(PlaylistConstants.FOLDER.getSystemName(), "/.resources/media/icons/ico16-folder.png");
+        tree.addItemType(PlaylistConstants.NT_FOLDER, "/.resources/media/icons/ico16-folder.png");
 
         TreeColumn column0 = TreeColumn.createLabelColumn(tree, msgs.get("tree.playlists.column"), true);
         column0.setWidth(3);

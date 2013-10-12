@@ -23,6 +23,7 @@ import info.magnolia.cms.security.Permission;
 import info.magnolia.cms.util.NodeDataUtil;
 import info.magnolia.context.MgnlContext;
 import info.magnolia.jcr.util.NodeUtil;
+import it.openutils.mgnlutils.el.MgnlUtilsDeprecatedAdapters;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -91,7 +92,7 @@ public class SortListTag extends TagSupport
         try
         {
             canEdit = NodeUtil.isGranted(
-                MgnlContext.getAggregationState().getMainContent().getJCRNode(),
+                MgnlUtilsDeprecatedAdapters.getMainContent(),
                 Permission.SET);
 
         }
@@ -104,7 +105,7 @@ public class SortListTag extends TagSupport
             Map<String, String> item = new HashMap<String, String>();
             item.put("containerId", containerId);
             item.put("url", MgnlContext.getContextPath()  + "/mgnl-set-property");
-            item.put("path", MgnlContext.getAggregationState().getCurrentContent().getHandle());
+            item.put("path", NodeUtil.getPathIfPossible(MgnlUtilsDeprecatedAdapters.getCurrentContent()));
             item.put("name", orderProperty);
             item.put("order", '[' + order + ']');
             List items = (List) pageContext.getRequest().getAttribute(ContextMenuElFunctions.SORT_LIST_KEY);

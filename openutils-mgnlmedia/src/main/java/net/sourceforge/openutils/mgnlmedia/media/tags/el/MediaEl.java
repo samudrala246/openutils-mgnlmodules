@@ -130,11 +130,11 @@ public final class MediaEl
 
             if (currentpage == null)
             {
-                currentpage = new DefaultContent(node);
+                currentpage = ContentUtil.asContent(node);
             }
 
             Content content = new NodeMapWrapper(
-                new I18nContentWrapper(new DefaultContent(node)),
+                new I18nContentWrapper(ContentUtil.asContent(node)),
                 currentpage.getHandle());
             return content.getJCRNode();
         }
@@ -566,7 +566,7 @@ public final class MediaEl
                  */
                 public Node apply(MediaNodeAndEntryPath from)
                 {
-                    return (Node) from.getMediaNode();
+                    return from.getMediaNode();
                 }
             });
         return Iterators.filter(iter, Predicates.notNull());

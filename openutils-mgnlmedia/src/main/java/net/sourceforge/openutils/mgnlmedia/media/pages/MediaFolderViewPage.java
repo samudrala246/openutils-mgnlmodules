@@ -22,6 +22,7 @@ package net.sourceforge.openutils.mgnlmedia.media.pages;
 import info.magnolia.cms.core.Content;
 import info.magnolia.cms.core.HierarchyManager;
 import info.magnolia.cms.core.ItemType;
+import info.magnolia.cms.core.MgnlNodeType;
 import info.magnolia.cms.core.Path;
 import info.magnolia.cms.exchange.ActivationManagerFactory;
 import info.magnolia.cms.exchange.ExchangeException;
@@ -441,14 +442,14 @@ public class MediaFolderViewPage extends MessagesTemplatedMVCHandler
     @SuppressWarnings("unchecked")
     public String activate()
     {
-        Command cmd = CommandsManager.getInstance().getCommand("media", "activate");
+        Command cmd = Components.getComponent(CommandsManager.class).getCommand("media", "activate");
 
         ActivationCommand actCmd = (ActivationCommand) cmd;
 
         StringBuffer sb = new StringBuffer();
-        sb.append(MediaConfigurationManager.MEDIA.getSystemName());
+        sb.append(MediaConfigurationManager.NT_MEDIA);
         sb.append(",");
-        sb.append(ItemType.CONTENTNODE.getSystemName());
+        sb.append(MgnlNodeType.NT_CONTENTNODE);
         actCmd.setItemTypes(sb.toString());
 
         Context context = MgnlContext.getInstance();
@@ -477,7 +478,7 @@ public class MediaFolderViewPage extends MessagesTemplatedMVCHandler
     @SuppressWarnings("unchecked")
     public String deactivate()
     {
-        Command cmd = CommandsManager.getInstance().getCommand("media", "deactivate");
+        Command cmd = Components.getComponent(CommandsManager.class).getCommand("media", "deactivate");
 
         Context context = MgnlContext.getInstance();
         context.put(Context.ATTRIBUTE_REPOSITORY, MediaModule.REPO);

@@ -27,6 +27,7 @@ import info.magnolia.cms.gui.control.Tree;
 import info.magnolia.cms.gui.control.TreeColumn;
 import info.magnolia.cms.i18n.Messages;
 import info.magnolia.module.admininterface.AbstractTreeConfiguration;
+import info.magnolia.objectfactory.Components;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -60,7 +61,7 @@ public class MediaModuleTreeConfiguration extends AbstractTreeConfiguration
         menuNewPage.setLabel(msgs.get("tree.config.menu.newFolder")); //$NON-NLS-1$
         menuNewPage.setIcon(request.getContextPath() + "/.resources/media/icons/ico16-folder.png"); //$NON-NLS-1$
         menuNewPage.setOnclick(tree.getJavascriptTree()
-            + ".createNode('" + MediaConfigurationManager.FOLDER.getSystemName() + "');"); //$NON-NLS-1$ //$NON-NLS-2$
+            + ".createNode('" + MediaConfigurationManager.NT_FOLDER + "');"); //$NON-NLS-1$ //$NON-NLS-2$
         menuNewPage.addJavascriptCondition("new mgnlTreeMenuItemConditionSelectedNotNodeData(" //$NON-NLS-1$
             + tree.getJavascriptTree()
             + ")"); //$NON-NLS-1$
@@ -248,7 +249,7 @@ public class MediaModuleTreeConfiguration extends AbstractTreeConfiguration
     {
         final Messages msgs = getMessages();
 
-        tree.addItemType(MediaConfigurationManager.FOLDER.getSystemName(), "/.resources/media/icons/ico16-folder.png");
+        tree.addItemType(MediaConfigurationManager.NT_FOLDER, "/.resources/media/icons/ico16-folder.png");
 
         TreeColumn column0 = TreeColumn.createLabelColumn(tree, msgs.get("tree.media.folders"), true);
         column0.setWidth(3);
@@ -258,7 +259,7 @@ public class MediaModuleTreeConfiguration extends AbstractTreeConfiguration
         if (!browseMode && !MediaEl.module().isSingleinstance())
         {
 
-            if (ServerConfiguration.getInstance().isAdmin()
+            if (Components.getComponent(ServerConfiguration.class).isAdmin()
                 || ActivationManagerFactory.getActivationManager().hasAnyActiveSubscriber())
             {
                 TreeColumn columnIcons = TreeColumn.createIconColumn(tree, msgs.get("tree.config.status"), null);

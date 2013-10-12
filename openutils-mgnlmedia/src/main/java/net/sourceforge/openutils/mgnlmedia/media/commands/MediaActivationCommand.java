@@ -22,6 +22,7 @@ package net.sourceforge.openutils.mgnlmedia.media.commands;
 
 import info.magnolia.cms.core.Content;
 import info.magnolia.cms.core.ItemType;
+import info.magnolia.cms.core.MgnlNodeType;
 import info.magnolia.cms.exchange.ExchangeException;
 import info.magnolia.cms.i18n.MessagesManager;
 import info.magnolia.cms.util.AlertUtil;
@@ -131,8 +132,8 @@ public class MediaActivationCommand extends ActivationCommand
                 try
                 {
                     return !getRule().isAllowed(content.getNodeTypeName())
-                        && !ItemType.CONTENT.getSystemName().equals(content.getNodeTypeName())
-                        && !MediaConfigurationManager.RESOLUTIONS.getSystemName().equals(content.getNodeTypeName());
+                        && !MgnlNodeType.NT_CONTENT.equals(content.getNodeTypeName())
+                        && !MediaConfigurationManager.NT_RESOLUTIONS.equals(content.getNodeTypeName());
                 }
                 catch (RepositoryException e)
                 {
@@ -156,7 +157,7 @@ public class MediaActivationCommand extends ActivationCommand
      */
     protected void activateSingleNode(String parentPath, Content node) throws RepositoryException, ExchangeException
     {
-        if (MediaConfigurationManager.MEDIA.equals(node.getItemType()) && node.getMetaData().getIsActivated())
+        if (MediaConfigurationManager.NT_MEDIA.equals(node.getItemType()) && node.getMetaData().getIsActivated())
         {
             // already activated media, should deactivate in order to remove stale resolutions
             log
@@ -196,7 +197,7 @@ public class MediaActivationCommand extends ActivationCommand
                 {
                     log.info("Activating parent folder {}", folder.getHandle());
                     // folder only, no content
-                    setRule(new Rule(new String[]{ItemType.NT_METADATA, ItemType.NT_RESOURCE }));
+                    setRule(new Rule(new String[]{MgnlNodeType.NT_METADATA, MgnlNodeType.NT_RESOURCE }));
                     getSyndicator().activate(folder.getParent().getHandle(), folder, getOrderingInfo(folder));
                 }
 
@@ -226,7 +227,7 @@ public class MediaActivationCommand extends ActivationCommand
                 try
                 {
                     return !getRule().isAllowed(content.getNodeTypeName())
-                        && !MediaConfigurationManager.RESOLUTIONS.getSystemName().equals(content.getNodeTypeName());
+                        && !MediaConfigurationManager.NT_RESOLUTIONS.equals(content.getNodeTypeName());
                 }
                 catch (RepositoryException e)
                 {

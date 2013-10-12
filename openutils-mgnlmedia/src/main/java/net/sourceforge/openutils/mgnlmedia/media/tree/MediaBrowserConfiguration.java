@@ -19,9 +19,8 @@
 
 package net.sourceforge.openutils.mgnlmedia.media.tree;
 
-
 import info.magnolia.cms.core.Content;
-import info.magnolia.cms.core.ItemType;
+import info.magnolia.cms.core.MgnlNodeType;
 import info.magnolia.cms.gui.control.Tree;
 import info.magnolia.cms.gui.control.TreeColumn;
 import info.magnolia.cms.gui.control.TreeColumnHtmlRenderer;
@@ -50,8 +49,8 @@ public class MediaBrowserConfiguration extends JcrBrowserTreeConfiguration
 
         tree.getItemTypes().clear();
 
-        tree.addItemType(ItemType.CONTENT);
-        tree.addItemType(MediaConfigurationManager.MEDIA);
+        tree.addItemType(MgnlNodeType.NT_CONTENT, null);
+        tree.addItemType(MediaConfigurationManager.NT_MEDIA, null);
 
         TreeColumn tc = TreeColumn.createColumn(tree, "Media type", new TreeColumnHtmlRenderer()
         {

@@ -49,6 +49,7 @@ import org.slf4j.LoggerFactory;
  * @author molaschi
  * @version $Id$
  */
+@SuppressWarnings("deprecation")
 public class MediaCustomSaveHandler implements FieldSaveHandler
 {
 

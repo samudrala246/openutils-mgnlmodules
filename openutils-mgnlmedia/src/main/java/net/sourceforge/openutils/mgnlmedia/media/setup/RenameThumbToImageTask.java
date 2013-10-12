@@ -19,8 +19,6 @@
 
 package net.sourceforge.openutils.mgnlmedia.media.setup;
 
-import java.io.InputStream;
-
 import info.magnolia.cms.beans.runtime.FileProperties;
 import info.magnolia.cms.core.MgnlNodeType;
 import info.magnolia.jcr.util.NodeUtil;
@@ -28,14 +26,13 @@ import info.magnolia.jcr.util.PropertyUtil;
 import info.magnolia.module.InstallContext;
 import info.magnolia.module.delta.AbstractTask;
 import info.magnolia.module.delta.TaskExecutionException;
-import it.openutils.mgnlutils.api.NodeUtilsExt;
+
+import java.io.InputStream;
 
 import javax.jcr.Node;
 import javax.jcr.RepositoryException;
 import javax.jcr.Session;
 import javax.jcr.nodetype.NodeType;
-
-import org.apache.jackrabbit.value.BinaryValue;
 
 import net.sourceforge.openutils.mgnlcriteria.jcr.query.AdvancedResult;
 import net.sourceforge.openutils.mgnlcriteria.jcr.query.AdvancedResultItem;
@@ -45,6 +42,10 @@ import net.sourceforge.openutils.mgnlcriteria.jcr.query.criterion.Order;
 import net.sourceforge.openutils.mgnlmedia.media.configuration.MediaConfigurationManager;
 import net.sourceforge.openutils.mgnlmedia.media.lifecycle.MediaModule;
 
+import org.apache.jackrabbit.value.BinaryValue;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 
 /**
  * @author molaschi
@@ -52,6 +53,11 @@ import net.sourceforge.openutils.mgnlmedia.media.lifecycle.MediaModule;
  */
 public class RenameThumbToImageTask extends AbstractTask
 {
+
+    /**
+     * Logger.
+     */
+    private Logger log = LoggerFactory.getLogger(RenameThumbToImageTask.class);
 
     /**
      * Constructor
@@ -73,7 +79,7 @@ public class RenameThumbToImageTask extends AbstractTask
             Session hm = installContext.getJCRSession(MediaModule.REPO);
             Criteria criteria = JCRCriteriaFactory
                 .createCriteria()
-                .setWorkspace(MediaConfigurationManager.MEDIA.getSystemName())
+                .setWorkspace(MediaConfigurationManager.NT_MEDIA)
                 .setBasePath("//*")
                 // .add(Restrictions.eq("jcr:primaryType", "mgnl:contentNode"))
                 .addOrder(Order.desc("@jcr:score"));

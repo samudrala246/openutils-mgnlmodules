@@ -20,6 +20,7 @@
 package net.sourceforge.openutils.mgnlmedia.playlist;
 
 import info.magnolia.cms.core.ItemType;
+import info.magnolia.cms.core.MgnlNodeType;
 
 
 /**
@@ -40,17 +41,17 @@ public final class PlaylistConstants
     /**
      * Folder type
      */
-    public static final ItemType FOLDER = ItemType.CONTENT;
+    public static final String NT_FOLDER = MgnlNodeType.NT_CONTENT;
 
     /**
      * Playlist type
      */
-    public static final ItemType PLAYLIST = new ItemType(MGNL_PLAYLIST_TYPE);
+    public static final String NT_PLAYLIST = MGNL_PLAYLIST_TYPE;
 
     /**
      * Playlist entry type
      */
-    public static final ItemType PLAYLIST_ENTRY = new ItemType(MGNL_PLAYLIST_ENTRY_TYPE);
+    public static final String NT_PLAYLIST_ENTRY = MGNL_PLAYLIST_ENTRY_TYPE;
 
     /**
      * 

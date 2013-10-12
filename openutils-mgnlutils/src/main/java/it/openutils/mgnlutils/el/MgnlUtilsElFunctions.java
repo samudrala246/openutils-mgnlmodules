@@ -28,12 +28,10 @@ import info.magnolia.cms.i18n.MessagesManager;
 import info.magnolia.cms.security.Permission;
 import info.magnolia.cms.security.PermissionUtil;
 import info.magnolia.cms.security.SecurityUtil;
-import info.magnolia.cms.security.User;
-import info.magnolia.cms.security.auth.Entity;
+import info.magnolia.cms.security.User; 
 import info.magnolia.context.MgnlContext;
 import info.magnolia.context.WebContext;
-import info.magnolia.init.MagnoliaConfigurationProperties;
-import info.magnolia.jaas.principal.EntityImpl;
+import info.magnolia.init.MagnoliaConfigurationProperties; 
 import info.magnolia.jcr.util.NodeUtil;
 import info.magnolia.link.LinkException;
 import info.magnolia.link.LinkUtil;
@@ -1046,16 +1044,16 @@ public final class MgnlUtilsElFunctions
      * info.magnolia.jaas.principal.EntityImpl internals)
      * @return
      */
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings({"unchecked", "deprecation" })
     public static Map<String, Object> userProperties()
     {
         Subject subject = MgnlContext.getSubject();
 
-        Set<Entity> principalDetails = subject.getPrincipals(Entity.class);
-        Iterator<Entity> entityIterator = principalDetails.iterator();
-        Entity userDetails = entityIterator.next();
+        Set<info.magnolia.cms.security.auth.Entity> principalDetails = subject.getPrincipals(info.magnolia.cms.security.auth.Entity.class);
+        Iterator<info.magnolia.cms.security.auth.Entity> entityIterator = principalDetails.iterator();
+        info.magnolia.cms.security.auth.Entity userDetails = entityIterator.next();
 
-        if (userDetails instanceof EntityImpl)
+        if (userDetails instanceof info.magnolia.jaas.principal.EntityImpl)
         {
             try
             {

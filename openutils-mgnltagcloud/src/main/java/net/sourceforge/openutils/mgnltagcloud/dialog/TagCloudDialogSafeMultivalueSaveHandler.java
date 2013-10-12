@@ -42,6 +42,7 @@ import org.apache.jackrabbit.value.ValueFactoryImpl;
  * @author fgiust
  * @version $Id$
  */
+@SuppressWarnings("deprecation")
 public class TagCloudDialogSafeMultivalueSaveHandler extends SaveHandlerImpl implements FieldSaveHandler
 {
 
@@ -86,7 +87,6 @@ public class TagCloudDialogSafeMultivalueSaveHandler extends SaveHandlerImpl imp
     /**
      * {@inheritDoc}
      */
-    @SuppressWarnings("deprecation")
     public void save(Content parentNode, Content configNode, String name, MultipartForm form, int type, int valueType,
         int isRichEditValue, int encoding) throws RepositoryException, AccessDeniedException
     {

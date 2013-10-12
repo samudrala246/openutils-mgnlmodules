@@ -97,7 +97,7 @@ public class MediaSearchPage extends MessagesTemplatedMVCHandler
             Session session = MgnlContext.getJCRSession(MediaModule.REPO);
             Iterable<Node> nodes = NodeUtil.getNodes(
                 session.getRootNode(),
-                MediaConfigurationManager.FOLDER.getSystemName());
+                MediaConfigurationManager.NT_FOLDER);
             List<String> tmpPaths = new ArrayList<String>();
             for (Node c : nodes)
             {

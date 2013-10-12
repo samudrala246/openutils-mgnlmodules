@@ -109,14 +109,15 @@ public class MgnlUtilsElFunctionsTest extends TestNgRepositoryTestcase
     {
         super.setUp();
 
-        DefaultI18nContentSupport i18nSupport = (DefaultI18nContentSupport) Components.getComponent(I18nContentSupport.class);
+        DefaultI18nContentSupport i18nSupport = (DefaultI18nContentSupport) Components
+            .getComponent(I18nContentSupport.class);
         i18nSupport.setEnabled(true);
         i18nSupport.addLocale(en);
         i18nSupport.addLocale(it);
         i18nSupport.setFallbackLocale(en.getLocale());
 
         ((MockWebContext) MgnlContext.getInstance()).setContextPath("/testcontextpath");
-        ServerConfiguration.getInstance().setDefaultExtension("html");
+        Components.getComponent(ServerConfiguration.class).setDefaultExtension("html");
         try
         {
             Class classI18nContentSupport = Class.forName("info.magnolia.cms.i18n.DefaultI18nContentSupport");

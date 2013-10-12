@@ -50,6 +50,7 @@ import org.slf4j.LoggerFactory;
  * @author molaschi
  * @version $Id$
  */
+@SuppressWarnings("deprecation")
 public class LayerDialogMVC extends ConfiguredDialog
 {
 
@@ -134,7 +135,7 @@ public class LayerDialogMVC extends ConfiguredDialog
     {
         super.configureSaveHandler(saveHandler);
 
-        saveHandler.setCreationItemType(MediaConfigurationManager.MEDIA);
+        saveHandler.setCreationItemType(MediaConfigurationManager.NT_MEDIA);
     }
 
     /**

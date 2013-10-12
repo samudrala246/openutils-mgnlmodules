@@ -36,6 +36,7 @@ import org.slf4j.LoggerFactory;
 /**
  * @author dschivo
  */
+@SuppressWarnings("deprecation")
 public class PlaylistsTree extends Tree
 {
 
@@ -68,7 +69,7 @@ public class PlaylistsTree extends Tree
             sb.insert(
                 StringUtils.indexOf(s, '>', s.indexOf("mgnlTreeControl.nodeHighlight")),
                 "onclick=\"mgnlTreeControl.openPlaylist('"
-                    + (PlaylistConstants.PLAYLIST.getSystemName().equals(itemType) ? node.getHandle() : "")
+                    + (PlaylistConstants.NT_PLAYLIST.equals(itemType) ? node.getHandle() : "")
                     + "');\"");
         }
         html.append(sb);
@@ -77,12 +78,13 @@ public class PlaylistsTree extends Tree
     /**
      * {@inheritDoc}
      */
+    @Override
     protected String getIcon(Content node, NodeData nodedata, String itemType)
     {
         try
         {
             // handle dynamic playlist icon
-            if (node != null && PlaylistConstants.PLAYLIST.equals(node.getItemType()) && node.hasContent("search"))
+            if (node != null && PlaylistConstants.NT_PLAYLIST.equals(node.getItemType()) && node.hasContent("search"))
             {
                 return "/.resources/media/icons/ico16-playlist-dynamic.png";
             }

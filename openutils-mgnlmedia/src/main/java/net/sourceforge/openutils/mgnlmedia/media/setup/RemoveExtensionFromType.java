@@ -20,8 +20,6 @@
 package net.sourceforge.openutils.mgnlmedia.media.setup;
 
 
-import info.magnolia.cms.core.Content;
-import info.magnolia.cms.core.HierarchyManager;
 import info.magnolia.module.InstallContext;
 import info.magnolia.module.delta.AbstractRepositoryTask;
 import info.magnolia.module.delta.TaskExecutionException;
@@ -31,7 +29,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import javax.jcr.Node;
 import javax.jcr.RepositoryException;
+import javax.jcr.Session;
 
 import org.apache.commons.lang.StringUtils;
 
@@ -71,12 +71,12 @@ public class RemoveExtensionFromType extends AbstractRepositoryTask
     protected void doExecute(InstallContext ctx) throws RepositoryException, TaskExecutionException
     {
 
-        final HierarchyManager hm = ctx.getHierarchyManager(RepositoryConstants.CONFIG);
+        Session session = ctx.getJCRSession(RepositoryConstants.CONFIG);
         String nodePath = "/modules/media/mediatypes/" + this.mediatype;
 
         try
         {
-            final Content mediatypenode = hm.getContent(nodePath);
+            Node mediatypenode = session.getNode(nodePath);
             String extensions = mediatypenode.getNodeData("extensions").getString();
             if (StringUtils.contains(extensions, this.extension))
             {
@@ -92,7 +92,7 @@ public class RemoveExtensionFromType extends AbstractRepositoryTask
 
         try
         {
-            final Content mediatypenode = hm.getContent(control);
+            Node mediatypenode = session.getNode(control);
             String extensions = mediatypenode.getNodeData("extensions").getString();
             if (StringUtils.contains(extensions, this.extension))
             {

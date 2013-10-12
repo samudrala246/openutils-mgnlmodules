@@ -19,16 +19,14 @@
 
 package net.sourceforge.openutils.mgnlmedia.media.setup;
 
-
-import info.magnolia.cms.core.Content;
-import info.magnolia.cms.core.ItemType;
-import info.magnolia.cms.core.NodeData;
+import info.magnolia.cms.core.MgnlNodeType;
+import info.magnolia.jcr.util.NodeUtil;
 import info.magnolia.module.InstallContext;
 import info.magnolia.module.delta.AbstractRepositoryTask;
 import info.magnolia.module.delta.TaskExecutionException;
 
-import java.util.Collection;
-
+import javax.jcr.Node;
+import javax.jcr.Property;
 import javax.jcr.RepositoryException;
 
 import org.slf4j.Logger;
@@ -62,22 +60,25 @@ public class MoveHandlerNodedataToNode extends AbstractRepositoryTask
     @Override
     protected void doExecute(InstallContext installContext) throws RepositoryException, TaskExecutionException
     {
-        Content types = installContext.getConfigHierarchyManager().getContent("/modules/media/mediatypes");
-        Collection<Content> mediatypes = types.getChildren(ItemType.CONTENTNODE);
+        Node types = installContext.getConfigJCRSession().getNode("/modules/media/mediatypes");
+
+        Iterable<Node> mediatypes = NodeUtil.getNodes(types, MgnlNodeType.NT_CONTENTNODE);
         String handlerPropertyName = "handler";
 
-        for (Content mediatype : mediatypes)
+        for (Node mediatype : mediatypes)
         {
-            if (mediatype.hasNodeData(handlerPropertyName))
+            if (mediatype.hasProperty(handlerPropertyName))
             {
                 log.info("Legacy configuration found for mediatype {}", mediatype.getName()
                     + ", updating configuration");
-                NodeData handlerNd = mediatype.getNodeData(handlerPropertyName);
+
+                Property handlerNd = mediatype.getProperty(handlerPropertyName);
                 String previousHandler = handlerNd.getString();
-                handlerNd.delete();
-                if (!mediatype.hasContent(handlerPropertyName))
+                handlerNd.remove();
+
+                if (!mediatype.hasNode(handlerPropertyName))
                 {
-                    mediatype.createContent(handlerPropertyName, ItemType.CONTENTNODE).createNodeData(
+                    mediatype.addNode(handlerPropertyName, MgnlNodeType.NT_CONTENTNODE).setProperty(
                         "class",
                         previousHandler);
                 }

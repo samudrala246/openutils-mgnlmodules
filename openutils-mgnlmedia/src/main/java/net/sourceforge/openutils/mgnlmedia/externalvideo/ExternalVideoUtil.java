@@ -61,7 +61,7 @@ public class ExternalVideoUtil
                     if (media != null)
                     {
                         PropertyUtil.setProperty(media, property, value);
-                        media.save();
+                        media.getSession().save();
                         return true;
                     }
                     return false;
@@ -87,7 +87,7 @@ public class ExternalVideoUtil
                     if (media != null && media.hasProperty(property))
                     {
                         media.getProperty(property).remove();
-                        media.save();
+                        media.getSession().save();
                         return true;
                     }
                     return false;
@@ -243,7 +243,7 @@ public class ExternalVideoUtil
                         MediaWithPreviewImageTypeHandler.PREVIEW_NODEDATA_NAME,
                         "preview",
                         null);
-                    media.save();
+                    media.getSession().save();
                     return true;
                 }
                 catch (RepositoryException e)

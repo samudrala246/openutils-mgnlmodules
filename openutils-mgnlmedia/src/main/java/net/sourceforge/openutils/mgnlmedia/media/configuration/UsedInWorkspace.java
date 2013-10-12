@@ -20,6 +20,7 @@
 package net.sourceforge.openutils.mgnlmedia.media.configuration;
 
 import info.magnolia.cms.core.ItemType;
+import info.magnolia.cms.core.MgnlNodeType;
 import info.magnolia.repository.RepositoryConstants;
 
 
@@ -34,7 +35,7 @@ public class UsedInWorkspace
 
     private String workspaceName;
 
-    private String nodeType = ItemType.CONTENT.getSystemName();
+    private String nodeType = MgnlNodeType.NT_PAGE;
 
     private String basePath = "/";
 

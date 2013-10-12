@@ -19,7 +19,9 @@
 
 package net.sourceforge.openutils.mgnltagcloud.util;
 
-import info.magnolia.context.MgnlContext;
+import info.magnolia.context.SystemContext;
+import info.magnolia.jcr.RuntimeRepositoryException;
+import info.magnolia.objectfactory.Components;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -96,7 +98,14 @@ public class JackrabbitUtil
      */
     public Session getSession(String repository)
     {
-        return MgnlContext.getSystemContext().getHierarchyManager(repository).getWorkspace().getSession();
+        try
+        {
+            return Components.getComponent(SystemContext.class).getJCRSession(repository);
+        }
+        catch (RepositoryException e)
+        {
+            throw new RuntimeRepositoryException(e);
+        }
     }
 
     /**

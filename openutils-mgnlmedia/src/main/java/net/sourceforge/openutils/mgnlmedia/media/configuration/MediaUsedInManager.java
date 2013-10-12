@@ -19,13 +19,14 @@
 
 package net.sourceforge.openutils.mgnlmedia.media.configuration;
 
-import info.magnolia.cms.beans.config.ObservedManager;
 import info.magnolia.cms.core.Content;
 import info.magnolia.cms.core.ItemType;
+import info.magnolia.cms.core.MgnlNodeType;
 import info.magnolia.content2bean.Content2BeanException;
 import info.magnolia.content2bean.Content2BeanUtil;
 import info.magnolia.objectfactory.Components;
 import info.magnolia.repository.RepositoryConstants;
+import it.openutils.mgnlutils.api.ObservedManagerAdapter;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -57,12 +58,12 @@ import org.slf4j.LoggerFactory;
  * @version $Id$
  */
 @Singleton
-public class MediaUsedInManager extends ObservedManager
+public class MediaUsedInManager extends ObservedManagerAdapter
 {
 
     public static MediaUsedInManager getInstance()
     {
-        return Components.getSingleton(MediaUsedInManager.class);
+        return Components.getComponents(MediaUsedInManager.class);
     }
 
     private static Logger log = LoggerFactory.getLogger(MediaUsedInManager.class);
@@ -82,9 +83,9 @@ public class MediaUsedInManager extends ObservedManager
      * {@inheritDoc}
      */
     @Override
-    protected void onRegister(Content node)
+    protected void onRegister(Node node)
     {
-        Collection<Content> uiwNodes = node.getChildren(ItemType.CONTENTNODE);
+        Collection<Content> uiwNodes = node.getChildren(MgnlNodeType.NT_CONTENTNODE);
         for (Content uiwNode : uiwNodes)
         {
             try
@@ -96,7 +97,7 @@ public class MediaUsedInManager extends ObservedManager
                 }
                 if (StringUtils.isEmpty(uiw.getNodeType()))
                 {
-                    uiw.setNodeType(ItemType.CONTENT.getSystemName());
+                    uiw.setNodeType(MgnlNodeType.NT_CONTENT);
                 }
                 usedInWorkspaceMap.put(uiw.getWorkspaceName(), uiw);
             }

@@ -19,17 +19,18 @@
 
 package net.sourceforge.openutils.mgnlmedia.grid;
 
-
 import info.magnolia.cms.core.Content;
 import info.magnolia.cms.i18n.Messages;
 import info.magnolia.cms.security.AccessDeniedException;
 import info.magnolia.cms.util.ContentUtil;
 import info.magnolia.cms.util.NodeDataUtil;
 import info.magnolia.context.MgnlContext;
+import info.magnolia.jcr.util.NodeUtil;
 
 import java.io.StringWriter;
 import java.util.Map;
 
+import javax.jcr.Node;
 import javax.jcr.RepositoryException;
 
 import net.sourceforge.openutils.mgnlcontrols.configuration.AbstractGridColumnType;
@@ -106,10 +107,16 @@ public class MediaGridColumnType extends AbstractGridColumnType
             {
                 if (StringUtils.startsWith(column[index], "/"))
                 {
-                    Content node = ContentUtil.getContentByUUID(MediaModule.REPO, column[index]);
-                    if (node != null)
+                    Node node;
+                    try
                     {
-                        column[index] = node.getUUID();
+                        node = NodeUtil.getNodeByIdentifier(MediaModule.REPO, column[index]);
+
+                        column[index] = NodeUtil.getNodeIdentifierIfPossible(node);
+                    }
+                    catch (RepositoryException e)
+                    {
+                        // ignore, can't convert
                     }
                 }
             }
@@ -130,10 +137,16 @@ public class MediaGridColumnType extends AbstractGridColumnType
             {
                 if (StringUtils.startsWith(column[index], "/"))
                 {
-                    Content node = ContentUtil.getContentByUUID(MediaModule.REPO, column[index]);
-                    if (node != null)
+                    Node node;
+                    try
                     {
-                        column[index] = node.getUUID();
+                        node = NodeUtil.getNodeByIdentifier(MediaModule.REPO, column[index]);
+
+                        column[index] = NodeUtil.getNodeIdentifierIfPossible(node);
+                    }
+                    catch (RepositoryException e)
+                    {
+                        // ignore, can't convert
                     }
                 }
             }

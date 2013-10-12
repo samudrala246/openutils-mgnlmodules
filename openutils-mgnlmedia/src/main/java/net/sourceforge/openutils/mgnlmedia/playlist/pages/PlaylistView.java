@@ -329,7 +329,7 @@ public class PlaylistView extends MessagesTemplatedMVCHandler
         {
             try
             {
-                Iterable<Node> nodes = NodeUtil.getNodes(folder, MediaConfigurationManager.MEDIA.getSystemName());
+                Iterable<Node> nodes = NodeUtil.getNodes(folder, MediaConfigurationManager.NT_MEDIA);
 
                 mediaBeans = new ArrayList<MediaBean>();
                 for (Node node : nodes)

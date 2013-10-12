@@ -23,13 +23,13 @@ import info.magnolia.cms.beans.runtime.Document;
 import info.magnolia.cms.beans.runtime.FileProperties;
 import info.magnolia.cms.beans.runtime.MultipartForm;
 import info.magnolia.cms.core.NodeData;
-import info.magnolia.cms.i18n.I18nContentSupportFactory;
-import info.magnolia.cms.security.AccessDeniedException;
-import info.magnolia.cms.util.ContentUtil;
+import info.magnolia.cms.i18n.I18nContentSupport;
+import info.magnolia.cms.security.AccessDeniedException; 
 import info.magnolia.jcr.util.MetaDataUtil;
 import info.magnolia.jcr.util.NodeUtil;
 import info.magnolia.jcr.util.PropertyUtil;
 import info.magnolia.module.admininterface.SaveHandlerImpl;
+import info.magnolia.objectfactory.Components;
 
 import java.io.File;
 import java.io.UnsupportedEncodingException;
@@ -140,12 +140,13 @@ public abstract class BaseTypeHandler implements MediaTypeHandler
     /**
      * {@inheritDoc}
      */
+    @SuppressWarnings("deprecation")
     public void saveFromZipFile(Node media, File f, String cleanFileName, String extension)
         throws AccessDeniedException, RepositoryException
     {
         Document doc = new Document(f, type + extension);
         doc.setExtention(extension);
-        SaveHandlerImpl.saveDocument(ContentUtil.asContent(media), doc, ORGINAL_NODEDATA_NAME, cleanFileName, null);
+        SaveHandlerImpl.saveDocument(info.magnolia.cms.util.ContentUtil.asContent(media), doc, ORGINAL_NODEDATA_NAME, cleanFileName, null);
         this.onPostSave(media);
     }
 
@@ -164,25 +165,25 @@ public abstract class BaseTypeHandler implements MediaTypeHandler
             if (!StringUtils.equals(name, PropertyUtil.getString(media, METADATA_NAME)))
             {
                 media.setProperty(METADATA_NAME, name);
-                media.save();
+                media.getSession().save();
             }
 
             if (media.hasNode("resolutions"))
             {
-                Collection<NodeData> nodedatas = ContentUtil
+                Collection<NodeData> nodedatas = info.magnolia.cms.util.ContentUtil
                     .asContent(media.getNode("resolutions"))
                     .getNodeDataCollection();
                 for (NodeData nd : nodedatas)
                 {
                     nd.delete();
                 }
-                media.save();
+                media.getSession().save();
             }
 
             if (MediaEl.module().isSingleinstance())
             {
                 MetaDataUtil.getMetaData(media).setActivated();
-                media.save();
+                media.getSession().save();
             }
         }
         catch (RepositoryException ex)
@@ -297,7 +298,7 @@ public abstract class BaseTypeHandler implements MediaTypeHandler
     {
         try
         {
-            return I18nContentSupportFactory.getI18nSupport().getProperty(media, "title").getString();
+            return Components.getComponent(I18nContentSupport.class).getProperty(media, "title").getString();
         }
         catch (ValueFormatException e)
         {
@@ -316,7 +317,7 @@ public abstract class BaseTypeHandler implements MediaTypeHandler
     {
         try
         {
-            return I18nContentSupportFactory.getI18nSupport().getProperty(media, "tags").getString();
+            return Components.getComponent(I18nContentSupport.class).getProperty(media, "tags").getString();
         }
         catch (ValueFormatException e)
         {
@@ -335,7 +336,7 @@ public abstract class BaseTypeHandler implements MediaTypeHandler
     {
         try
         {
-            return I18nContentSupportFactory.getI18nSupport().getProperty(media, "description").getString();
+            return Components.getComponent(I18nContentSupport.class).getProperty(media, "description").getString();
         }
         catch (ValueFormatException e)
         {
@@ -354,7 +355,7 @@ public abstract class BaseTypeHandler implements MediaTypeHandler
     {
         try
         {
-            return I18nContentSupportFactory.getI18nSupport().getProperty(media, "abstract").getString();
+            return Components.getComponent(I18nContentSupport.class).getProperty(media, "abstract").getString();
         }
         catch (ValueFormatException e)
         {
@@ -381,7 +382,7 @@ public abstract class BaseTypeHandler implements MediaTypeHandler
             if (NodeUtil.isNodeType(originalFileNodeData, NodeType.NT_RESOURCE))
             {
 
-                FileProperties fp = new FileProperties(ContentUtil.asContent(media), ORGINAL_NODEDATA_NAME);
+                FileProperties fp = new FileProperties(info.magnolia.cms.util.ContentUtil.asContent(media), ORGINAL_NODEDATA_NAME);
 
                 String extension = fp.getProperty(FileProperties.PROPERTY_EXTENSION);
                 info.put(METADATA_EXTENSION, extension);
@@ -411,7 +412,7 @@ public abstract class BaseTypeHandler implements MediaTypeHandler
                 }
             }
 
-            Collection<NodeData> propertyList = ContentUtil.asContent(media).getNodeDataCollection("media_*");
+            Collection<NodeData> propertyList = info.magnolia.cms.util.ContentUtil.asContent(media).getNodeDataCollection("media_*");
             for (NodeData property : propertyList)
             {
                 addToInfo(media, info, property.getName());

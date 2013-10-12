@@ -160,7 +160,7 @@ public class DocumentTypeHandler extends MediaWithPreviewImageTypeHandler
 
                 copyPreviewImageToRepository(media, file, filename);
 
-                media.save();
+                media.getSession().save();
 
                 file.delete();
             }

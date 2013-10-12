@@ -37,6 +37,7 @@ import net.sourceforge.openutils.mgnlmedia.media.configuration.MediaConfiguratio
  * @author molaschi
  * @version Id:
  */
+@SuppressWarnings("deprecation")
 public class DialogFileVideo extends DialogFile
 {
 

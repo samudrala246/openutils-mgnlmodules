@@ -39,6 +39,7 @@ import org.apache.commons.lang.StringUtils;
  * @author molaschi
  * @version Id:
  */
+@SuppressWarnings("deprecation")
 public class DialogFileAudio extends DialogFile
 {
 

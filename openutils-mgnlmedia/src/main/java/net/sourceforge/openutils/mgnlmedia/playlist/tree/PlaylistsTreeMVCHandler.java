@@ -19,7 +19,6 @@
 
 package net.sourceforge.openutils.mgnlmedia.playlist.tree;
 
-
 import info.magnolia.cms.core.Content;
 import info.magnolia.cms.exchange.ExchangeException;
 import info.magnolia.module.admininterface.AdminTreeMVCHandler;
@@ -38,6 +37,7 @@ import org.slf4j.LoggerFactory;
 /**
  * @author dschivo
  */
+@SuppressWarnings("deprecation")
 public class PlaylistsTreeMVCHandler extends AdminTreeMVCHandler
 {
 

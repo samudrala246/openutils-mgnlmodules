@@ -26,6 +26,7 @@ import info.magnolia.cms.gui.dialog.DialogStatic;
  * @author fgiust
  * @version $Id$
  */
+@SuppressWarnings("deprecation")
 public class DisplayHandle extends DialogStatic
 {
 

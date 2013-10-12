@@ -24,9 +24,11 @@ import info.magnolia.cms.core.ItemType;
 import info.magnolia.cms.core.MgnlNodeType;
 import info.magnolia.context.Context;
 import info.magnolia.context.MgnlContext;
+import info.magnolia.context.SystemContext;
 import info.magnolia.context.MgnlContext.SystemContextOperation;
 import info.magnolia.jcr.util.MetaDataUtil;
 import info.magnolia.jcr.util.PropertyUtil;
+import info.magnolia.objectfactory.Components;
 import it.openutils.mgnlutils.api.NodeUtilsExt;
 
 import java.awt.AlphaComposite;
@@ -532,9 +534,9 @@ public final class ImageUtils
         Node resolutions = getResolutionsNode(saveTo);
         if (resolutions == null)
         {
-            resolutions = saveTo.addNode("resolutions", MediaConfigurationManager.RESOLUTIONS.getSystemName());
+            resolutions = saveTo.addNode("resolutions", MediaConfigurationManager.NT_RESOLUTIONS);
             MetaDataUtil.getMetaData(saveTo).setModificationDate();
-            saveTo.save();
+            saveTo.getSession().save();
         }
 
         String resolution = name;
@@ -631,11 +633,11 @@ public final class ImageUtils
 
         if (existing)
         {
-            nd.save();
+            nd.getSession().save();
         }
         else
         {
-            resolutionsFinal.save();
+            resolutionsFinal.getSession().save();
         }
         return nd;
     }
@@ -1029,7 +1031,7 @@ public final class ImageUtils
                             nd.setProperty(
                                 "resolutionNotYetCreated",
                                 StringUtils.removeStart(resolutioNodeName, "res-"));
-                            nd.getParent().save();
+                            nd.getParent().getSession().save();
                         }
                         hm.save();
                         log.info(
@@ -1063,7 +1065,7 @@ public final class ImageUtils
                 }
 
                 media.setProperty("bad_image_marker", media.getProperty("bad_image_marker").getLong() + 1);
-                media.save();
+                media.getSession().save();
             }
             catch (RepositoryException e1)
             {
@@ -1417,7 +1419,7 @@ public final class ImageUtils
         final Context originalCtx = MgnlContext.hasInstance() ? MgnlContext.getInstance() : null;
         try
         {
-            MgnlContext.setInstance(MgnlContext.getSystemContext());
+            MgnlContext.setInstance(Components.getComponent(SystemContext.class));
             op.exec();
         }
         finally

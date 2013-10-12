@@ -26,6 +26,7 @@ import info.magnolia.cms.gui.dialog.DialogStatic;
  * @author cstrappazzon
  * @version $Id$
  */
+@SuppressWarnings("deprecation")
 public class DisplayUUID extends DialogStatic
 {
 

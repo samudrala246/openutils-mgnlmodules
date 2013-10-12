@@ -53,6 +53,7 @@ import org.slf4j.LoggerFactory;
  * @author cstrappazzon
  * @version $Id$
  */
+@SuppressWarnings("deprecation")
 public class TagCloudDialog extends ConfigurableFreemarkerDialog
 {
 

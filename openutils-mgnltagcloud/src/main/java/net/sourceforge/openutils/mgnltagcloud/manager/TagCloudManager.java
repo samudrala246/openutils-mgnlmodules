@@ -19,21 +19,24 @@
 
 package net.sourceforge.openutils.mgnltagcloud.manager;
 
-import info.magnolia.cms.beans.config.ObservedManager;
-import info.magnolia.cms.core.Content;
-import info.magnolia.cms.util.ContentUtil;
 import info.magnolia.cms.util.ObservationUtil;
 import info.magnolia.content2bean.Content2BeanException;
 import info.magnolia.content2bean.Content2BeanUtil;
+import info.magnolia.jcr.RuntimeRepositoryException;
+import info.magnolia.jcr.util.NodeUtil;
+import info.magnolia.objectfactory.Components;
+import it.openutils.mgnlutils.api.ObservedManagerAdapter;
 
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
+import javax.jcr.Node;
 import javax.jcr.RepositoryException;
 import javax.jcr.Session;
 import javax.jcr.observation.EventListener;
@@ -48,6 +51,7 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.jackrabbit.core.query.lucene.NamespaceMappings;
 import org.apache.jackrabbit.core.query.lucene.SearchIndex;
 import org.apache.lucene.index.IndexReader;
+import org.apache.lucene.search.MatchAllDocsQuery;
 import org.apache.lucene.search.Query;
 
 import com.browseengine.bobo.api.BoboIndexReader;
@@ -69,7 +73,7 @@ import com.browseengine.bobo.facets.impl.MultiValueFacetHandler;
  * @version $Id$
  */
 @Singleton
-public class TagCloudManager extends ObservedManager
+public class TagCloudManager extends ObservedManagerAdapter
 {
 
     /**
@@ -103,19 +107,32 @@ public class TagCloudManager extends ObservedManager
      * {@inheritDoc}
      */
     @Override
-    protected void onRegister(Content node)
+    protected void onRegister(Node node)
     {
-        List<Content> allChildren = ContentUtil.collectAllChildren(node);
-        for (Content tagCloudNode : allChildren)
+
+        Iterator<Node> allChildren;
+        try
         {
+            allChildren = NodeUtil.collectAllChildren(node, NodeUtil.EXCLUDE_META_DATA_FILTER).iterator();
+        }
+        catch (RepositoryException e)
+        {
+            throw new RuntimeRepositoryException(e);
+        }
+
+        while (allChildren.hasNext())
+        {
+            Node tagCloudNode = allChildren.next();
             try
             {
-                TagCloud tagCloud = (TagCloud) Content2BeanUtil.toBean(tagCloudNode, TagCloud.class);
+                TagCloud tagCloud = (TagCloud) Content2BeanUtil.toBean(
+                    info.magnolia.cms.util.ContentUtil.asContent(tagCloudNode),
+                    TagCloud.class);
                 if (!tagCloud.isEnabled())
                 {
                     continue;
                 }
-                tagClouds.put(tagCloudNode.getName(), tagCloud);
+                tagClouds.put(NodeUtil.getName(tagCloudNode), tagCloud);
                 calculateTagCloud(tagCloud);
                 if (tagCloud.isCacheAndObserve() && !repositoryListeners.containsKey(tagCloud.getRepository()))
                 {
@@ -126,7 +143,7 @@ public class TagCloudManager extends ObservedManager
             }
             catch (Content2BeanException e)
             {
-                log.warn("Error converting node {} to TagCloud class", tagCloudNode.getHandle(), e);
+                log.warn("Error converting node " + NodeUtil.getPathIfPossible(tagCloudNode) + " to TagCloud class", e);
             }
         }
     }
@@ -188,7 +205,7 @@ public class TagCloudManager extends ObservedManager
             BoboIndexReader boboReader = HierarchyBoboIndexReader.getInstance(ir, handlerList);
 
             // get query
-            Query q = boboReader.getFastMatchAllDocsQuery();
+            Query q = new MatchAllDocsQuery();
             if (StringUtils.isNotBlank(tagCloud.getPath()) && !"/".equals(tagCloud.getPath()))
             {
                 q = jackrabbitUtil.getQuery(tagCloud.getPath(), session, si);
@@ -224,7 +241,7 @@ public class TagCloudManager extends ObservedManager
                 tagCloud.setTags(new HashMap<String, Integer>());
                 for (BrowseFacet bf : tagsVals)
                 {
-                    tagCloud.getTags().put(bf.getValue(), bf.getHitCount());
+                    tagCloud.getTags().put(bf.getValue(), bf.getFacetValueHitCount());
                 }
             }
             finally

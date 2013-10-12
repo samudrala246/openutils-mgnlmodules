@@ -102,7 +102,7 @@ public class PzcServlet extends HttpServlet
                                 .append("|")
                                 .append(y)
                                 .toString());
-                            systemNode.save();
+                            systemNode.getSession().save();
                         }
                         catch (RepositoryException ex)
                         {

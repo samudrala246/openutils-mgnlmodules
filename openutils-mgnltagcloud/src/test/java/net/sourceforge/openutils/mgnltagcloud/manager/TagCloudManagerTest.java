@@ -22,13 +22,11 @@ package net.sourceforge.openutils.mgnltagcloud.manager;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotSame;
 import static org.junit.Assert.fail;
-import info.magnolia.cms.core.Content;
-import info.magnolia.cms.core.HierarchyManager;
-import info.magnolia.cms.core.ItemType;
+import info.magnolia.cms.core.MgnlNodeType;
 import info.magnolia.cms.core.Path;
 import info.magnolia.cms.util.ClasspathResourcesUtil;
-import info.magnolia.cms.util.ContentUtil;
 import info.magnolia.context.MgnlContext;
+import info.magnolia.jcr.util.NodeUtil;
 import info.magnolia.objectfactory.Components;
 import info.magnolia.repository.RepositoryConstants;
 import info.magnolia.test.RepositoryTestCase;
@@ -36,7 +34,9 @@ import info.magnolia.test.RepositoryTestCase;
 import java.util.Map;
 import java.util.Set;
 
+import javax.jcr.Node;
 import javax.jcr.RepositoryException;
+import javax.jcr.Session;
 import javax.jcr.Value;
 
 import net.sourceforge.openutils.mgnltagcloud.el.TagCloudElFunctions;
@@ -79,7 +79,7 @@ public class TagCloudManagerTest extends RepositoryTestCase
     /**
      * Set Hierarchy manager
      */
-    HierarchyManager hm;
+    Session session;
 
     /**
      * Nodes number
@@ -176,9 +176,9 @@ public class TagCloudManagerTest extends RepositoryTestCase
 
         try
         {
-            Content content = hm.getContent("/site/path1/content0");
-            content.getNodeData("tags").setValue(new Value[]{ValueFactoryImpl.getInstance().createValue("prova") });
-            hm.save();
+            Node content = session.getNode("/site/path1/content0");
+            content.setProperty("tags", new Value[]{ValueFactoryImpl.getInstance().createValue("prova") });
+            session.save();
         }
         catch (RepositoryException e)
         {
@@ -223,57 +223,59 @@ public class TagCloudManagerTest extends RepositoryTestCase
     {
         super.setUp();
 
-        hm = MgnlContext.getInstance().getHierarchyManager(RepositoryConstants.WEBSITE);
+        session = MgnlContext.getInstance().getJCRSession(RepositoryConstants.WEBSITE);
 
         // Create content structure
-        Content contentRoot = ContentUtil.getOrCreateContent(
-            hm.getContent("/"),
+        Node contentRoot = NodeUtil.createPath(
+            session.getRootNode(),
             Path.getValidatedLabel("site"),
-            ItemType.CONTENT);
+            MgnlNodeType.NT_CONTENT);
 
-        contentRoot.createNodeData("tags", new Value[]{ValueFactoryImpl.getInstance().createValue("tag32") });
+        contentRoot.setProperty("tags", new Value[]{ValueFactoryImpl.getInstance().createValue("tag32") });
         for (String path : pathList)
         {
-            ContentUtil.getOrCreateContent(contentRoot, path.replace("/site/", ""), ItemType.CONTENT);
+            NodeUtil.createPath(contentRoot, path.replace("/site/", ""), MgnlNodeType.NT_PAGE);
         }
-        hm.save();
+        session.save();
 
-        Content content = null;
+        Node content = null;
         for (int j = 0; j < pathList.length; j++)
         {
             for (int i = 0; i < nodesNumber; i++)
             {
-                content = ContentUtil.getOrCreateContent(
-                    hm.getContent(pathList[j]),
+                content = NodeUtil.createPath(
+                    session.getNode(pathList[j]),
                     Path.getValidatedLabel("content" + i),
-                    ItemType.CONTENT);
-                content.createNodeData("tags", (Value[]) ArrayUtils.subarray(tagList, 0, j + 1));
+                    MgnlNodeType.NT_PAGE);
+                content.setProperty("tags", (Value[]) ArrayUtils.subarray(tagList, 0, j + 1));
             }
             log.debug("Create path {}, tags: {}", pathList[j], ArrayUtils.subarray(tagString, 0, j + 1));
         }
-        hm.save();
+        session.save();
 
-        HierarchyManager hmConfig = MgnlContext.getInstance().getHierarchyManager(RepositoryConstants.CONFIG);
-        Content contentTagcloud = ContentUtil.getOrCreateContent(
-            hm.getContent("/"),
+        Session hmConfig = MgnlContext.getInstance().getJCRSession(RepositoryConstants.CONFIG);
+        Node contentTagcloud = NodeUtil.createPath(
+            session.getNode("/"),
             Path.getValidatedLabel("clouds"),
-            ItemType.CONTENT);
-        Content contentCloud = ContentUtil.getOrCreateContent(
+            MgnlNodeType.NT_CONTENT);
+
+        Node contentCloud = NodeUtil.createPath(
             contentTagcloud,
             Path.getValidatedLabel("cloud1"),
-            ItemType.CONTENTNODE);
-        contentCloud.createNodeData("repository", ValueFactoryImpl.getInstance().createValue("website"));
-        contentCloud.createNodeData("path", ValueFactoryImpl.getInstance().createValue("/site/path1"));
-        contentCloud.createNodeData("propertyName", ValueFactoryImpl.getInstance().createValue("tags"));
-        contentCloud.createNodeData("enabled", ValueFactoryImpl.getInstance().createValue(true));
-        contentCloud.createNodeData("count", ValueFactoryImpl.getInstance().createValue(50));
+            MgnlNodeType.NT_CONTENTNODE);
+
+        contentCloud.setProperty("repository", ValueFactoryImpl.getInstance().createValue("website"));
+        contentCloud.setProperty("path", ValueFactoryImpl.getInstance().createValue("/site/path1"));
+        contentCloud.setProperty("propertyName", ValueFactoryImpl.getInstance().createValue("tags"));
+        contentCloud.setProperty("enabled", ValueFactoryImpl.getInstance().createValue(true));
+        contentCloud.setProperty("count", ValueFactoryImpl.getInstance().createValue(50));
 
         hmConfig.save();
 
         TagCloudManager manager = Components.getComponent(TagCloudManager.class);
         manager.jackrabbitUtil = new JackrabbitUtil();
 
-        manager.onRegister(contentTagcloud);
+        manager.onRegister(contentCloud);
     }
 
     @Override

@@ -39,6 +39,7 @@ import net.sourceforge.openutils.mgnlmedia.media.configuration.MediaConfiguratio
  * @author molaschi
  * @version $Id$
  */
+@SuppressWarnings("deprecation")
 public class JcrBrowserWithNodeTypeTreeConfiguration extends JcrBrowserTreeConfiguration
 {
 
@@ -54,8 +55,8 @@ public class JcrBrowserWithNodeTypeTreeConfiguration extends JcrBrowserTreeConfi
         tree.getItemTypes().clear();
 
         tree.addItemType(ItemType.CONTENT);
-        tree.addItemType(MediaConfigurationManager.MEDIA);
-        tree.addItemType(MediaConfigurationManager.RESOLUTIONS);
+        tree.addItemType(MediaConfigurationManager.NT_MEDIA);
+        tree.addItemType(MediaConfigurationManager.NT_RESOLUTIONS);
         tree.addItemType(Tree.ITEM_TYPE_NODEDATA);
 
         TreeColumn tc = TreeColumn.createColumn(tree, "Node type", new TreeColumnHtmlRenderer()

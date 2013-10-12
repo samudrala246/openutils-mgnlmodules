@@ -25,6 +25,7 @@ import info.magnolia.cms.security.Permission;
 import info.magnolia.jcr.util.MetaDataUtil;
 import info.magnolia.jcr.util.NodeUtil;
 import info.magnolia.jcr.util.PropertyUtil;
+import info.magnolia.objectfactory.Components;
 import info.magnolia.repository.RepositoryConstants;
 
 import java.util.List;
@@ -108,7 +109,7 @@ public class MediaBeanBuilder implements Function<Node, MediaBean>
                 String repository = entry.getKey();
                 for (String handle : entry.getValue())
                 {
-                    String uri = URI2RepositoryManager.getInstance().getURI(repository, handle);
+                    String uri = Components.getComponent(URI2RepositoryManager.class).getURI(repository, handle);
                     mb.getUsedInUris().add(uri);
                 }
             }

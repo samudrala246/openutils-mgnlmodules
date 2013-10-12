@@ -22,6 +22,7 @@ package net.sourceforge.openutils.mgnlsimplecache.voters;
 import info.magnolia.cms.beans.config.ServerConfiguration;
 import info.magnolia.cms.security.UserManager;
 import info.magnolia.context.MgnlContext;
+import info.magnolia.objectfactory.Components;
 import info.magnolia.voting.voters.AbstractBoolVoter;
 
 import javax.servlet.http.HttpServletRequest;
@@ -193,7 +194,7 @@ public class AllInOneCacheVoter extends AbstractBoolVoter
 
         if (!allowAdmin)
         {
-            if (ServerConfiguration.getInstance().isAdmin())
+            if (Components.getComponent(ServerConfiguration.class).isAdmin())
             {
                 log.debug(logmessage, "on admin server");
                 return DONTCACHE;

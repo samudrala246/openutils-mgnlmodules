@@ -40,7 +40,7 @@ public class PlaylistsJcrBrowserTreeConfiguration extends JcrBrowserTreeConfigur
     public void prepareTree(Tree tree, boolean browseMode, HttpServletRequest request)
     {
         super.prepareTree(tree, browseMode, request);
-        tree.addItemType(PlaylistConstants.PLAYLIST);
-        tree.addItemType(PlaylistConstants.PLAYLIST_ENTRY);
+        tree.addItemType(PlaylistConstants.NT_PLAYLIST);
+        tree.addItemType(PlaylistConstants.NT_PLAYLIST_ENTRY);
     }
 }

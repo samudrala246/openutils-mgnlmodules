@@ -19,10 +19,11 @@
 
 package it.openutils.mgnlutils.templating;
 
-import info.magnolia.cms.core.Content;
-import info.magnolia.cms.core.ItemType;
-import info.magnolia.cms.util.ContentUtil;
+import info.magnolia.cms.core.MetaData;
+import info.magnolia.cms.core.MgnlNodeType;
 import info.magnolia.context.MgnlContext;
+import info.magnolia.jcr.util.MetaDataUtil;
+import info.magnolia.jcr.util.NodeUtil;
 import info.magnolia.rendering.model.RenderingModel;
 import info.magnolia.rendering.model.RenderingModelImpl;
 
@@ -54,12 +55,14 @@ public class AutoGenerateTemplateModel extends RenderingModelImpl<ExtendedTempla
         super(content, definition, parent);
     }
 
+    @Override
     public String execute()
     {
         final ExtendedTemplate templateDef = this.getDefinition();
         MgnlContext.doInSystemContext(new MgnlContext.VoidOp()
         {
 
+            @Override
             public void doExec()
             {
                 createMainArea(templateDef);
@@ -84,14 +87,15 @@ public class AutoGenerateTemplateModel extends RenderingModelImpl<ExtendedTempla
             String[] parDef = StringUtils.split(autogeneratepar, "=");
             if (parDef != null && parDef.length == 2)
             {
-                Content paragraph;
+                Node paragraph;
                 try
                 {
-                    paragraph = ContentUtil.createPath(ContentUtil.asContent(content), parDef[0], ItemType.CONTENTNODE, true);
-                    if (StringUtils.isEmpty(paragraph.getTemplate()))
+                    paragraph = NodeUtil.createPath(content, parDef[0], MgnlNodeType.NT_COMPONENT, true);
+                    MetaData metaData = MetaDataUtil.getMetaData(paragraph);
+                    if (StringUtils.isEmpty(metaData.getTemplate()))
                     {
-                        paragraph.getMetaData().setTemplate(parDef[1]);
-                        paragraph.save();
+                        metaData.setTemplate(parDef[1]);
+                        paragraph.getSession().save();
                     }
                 }
 
