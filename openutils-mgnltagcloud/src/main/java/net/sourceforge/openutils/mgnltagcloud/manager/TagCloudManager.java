@@ -21,10 +21,9 @@ package net.sourceforge.openutils.mgnltagcloud.manager;
 
 import info.magnolia.cms.util.ObservationUtil;
 import info.magnolia.content2bean.Content2BeanException;
-import info.magnolia.content2bean.Content2BeanUtil;
 import info.magnolia.jcr.RuntimeRepositoryException;
 import info.magnolia.jcr.util.NodeUtil;
-import info.magnolia.objectfactory.Components;
+import it.openutils.mgnlutils.api.NodeUtilsExt;
 import it.openutils.mgnlutils.api.ObservedManagerAdapter;
 
 import java.io.IOException;
@@ -125,9 +124,7 @@ public class TagCloudManager extends ObservedManagerAdapter
             Node tagCloudNode = allChildren.next();
             try
             {
-                TagCloud tagCloud = (TagCloud) Content2BeanUtil.toBean(
-                    info.magnolia.cms.util.ContentUtil.asContent(tagCloudNode),
-                    TagCloud.class);
+                TagCloud tagCloud = (TagCloud) NodeUtilsExt.toBean(tagCloudNode, TagCloud.class);
                 if (!tagCloud.isEnabled())
                 {
                     continue;
