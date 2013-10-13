@@ -19,7 +19,6 @@
 
 package net.sourceforge.openutils.mgnlmedia.media.configuration;
 
-import info.magnolia.cms.core.ItemType;
 import info.magnolia.cms.core.MgnlNodeType;
 import info.magnolia.repository.RepositoryConstants;
 

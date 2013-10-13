@@ -19,7 +19,6 @@
 
 package net.sourceforge.openutils.mgnlmedia.dam;
 
-
 import info.magnolia.cms.core.Content;
 import info.magnolia.cms.core.NodeData;
 import info.magnolia.module.templatingkit.dam.AssetNotFoundException;
@@ -33,12 +32,15 @@ import javax.jcr.RepositoryException;
  * Dam-support for the SimpleMedia module.
  * @author Ernst Bunders
  */
+@SuppressWarnings("deprecation")
 public class SimpleMediaAsset extends InternalAsset
 {
 
-    public SimpleMediaAsset(SimpleMediaContentHandler handler, Content metaDataNode, NodeData binaryNodeData, TemplatingFunctions templatingFunctions)
-        throws AssetNotFoundException,
-        RepositoryException
+    public SimpleMediaAsset(
+        SimpleMediaContentHandler handler,
+        Content metaDataNode,
+        NodeData binaryNodeData,
+        TemplatingFunctions templatingFunctions) throws AssetNotFoundException, RepositoryException
     {
         super(handler, metaDataNode, "", binaryNodeData, templatingFunctions);
     }
@@ -52,7 +54,7 @@ public class SimpleMediaAsset extends InternalAsset
     @Override
     public String getCaption()
     {
-        return getMetaDataValue("title", super.getTitle());
+        return getMetaDataValue("title", super.getTitle(), true);
     }
 
 }

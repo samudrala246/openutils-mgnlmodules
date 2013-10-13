@@ -22,9 +22,8 @@ package net.sourceforge.openutils.mgnlmedia.media.types.impl;
 import info.magnolia.cms.beans.runtime.Document;
 import info.magnolia.cms.beans.runtime.FileProperties;
 import info.magnolia.cms.beans.runtime.MultipartForm;
-import info.magnolia.cms.core.NodeData;
 import info.magnolia.cms.i18n.I18nContentSupport;
-import info.magnolia.cms.security.AccessDeniedException; 
+import info.magnolia.cms.security.AccessDeniedException;
 import info.magnolia.jcr.util.MetaDataUtil;
 import info.magnolia.jcr.util.NodeUtil;
 import info.magnolia.jcr.util.PropertyUtil;
@@ -34,13 +33,13 @@ import info.magnolia.objectfactory.Components;
 import java.io.File;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
-import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
 import javax.jcr.Node;
 import javax.jcr.PathNotFoundException;
 import javax.jcr.Property;
+import javax.jcr.PropertyIterator;
 import javax.jcr.PropertyType;
 import javax.jcr.RepositoryException;
 import javax.jcr.ValueFormatException;
@@ -146,7 +145,12 @@ public abstract class BaseTypeHandler implements MediaTypeHandler
     {
         Document doc = new Document(f, type + extension);
         doc.setExtention(extension);
-        SaveHandlerImpl.saveDocument(info.magnolia.cms.util.ContentUtil.asContent(media), doc, ORGINAL_NODEDATA_NAME, cleanFileName, null);
+        SaveHandlerImpl.saveDocument(
+            info.magnolia.cms.util.ContentUtil.asContent(media),
+            doc,
+            ORGINAL_NODEDATA_NAME,
+            cleanFileName,
+            null);
         this.onPostSave(media);
     }
 
@@ -170,12 +174,12 @@ public abstract class BaseTypeHandler implements MediaTypeHandler
 
             if (media.hasNode("resolutions"))
             {
-                Collection<NodeData> nodedatas = info.magnolia.cms.util.ContentUtil
-                    .asContent(media.getNode("resolutions"))
-                    .getNodeDataCollection();
-                for (NodeData nd : nodedatas)
+                Node resolutions = media.getNode("resolutions");
+                Iterable<Node> tobedeleted = NodeUtil.getNodes(resolutions, NodeUtil.EXCLUDE_META_DATA_FILTER);
+
+                for (Node nd : tobedeleted)
                 {
-                    nd.delete();
+                    nd.remove();
                 }
                 media.getSession().save();
             }
@@ -382,16 +386,16 @@ public abstract class BaseTypeHandler implements MediaTypeHandler
             if (NodeUtil.isNodeType(originalFileNodeData, NodeType.NT_RESOURCE))
             {
 
-                FileProperties fp = new FileProperties(info.magnolia.cms.util.ContentUtil.asContent(media), ORGINAL_NODEDATA_NAME);
+                
 
-                String extension = fp.getProperty(FileProperties.PROPERTY_EXTENSION);
+                String extension = PropertyUtil.getString(originalFileNodeData,   FileProperties.PROPERTY_EXTENSION);
                 info.put(METADATA_EXTENSION, extension);
 
                 String size = StringUtils.EMPTY;
 
                 try
                 {
-                    size = fp.getProperty(FileProperties.PROPERTY_SIZE);
+                    size = PropertyUtil.getString(originalFileNodeData, FileProperties.PROPERTY_SIZE);
                 }
                 catch (NumberFormatException nfe)
                 {
@@ -399,22 +403,26 @@ public abstract class BaseTypeHandler implements MediaTypeHandler
                 }
                 info.put(METADATA_SIZE, size);
 
-                int width = NumberUtils.toInt(fp.getProperty(FileProperties.PROPERTY_WIDTH));
+                
+                int width = NumberUtils.toInt(PropertyUtil.getString(originalFileNodeData, FileProperties.PROPERTY_WIDTH));
                 if (width > 0)
                 {
                     info.put(METADATA_WIDTH, Integer.toString(width));
                 }
 
-                int height = NumberUtils.toInt(fp.getProperty(FileProperties.PROPERTY_HEIGHT));
+                int height = NumberUtils.toInt(PropertyUtil.getString(originalFileNodeData, FileProperties.PROPERTY_HEIGHT));
                 if (height > 0)
                 {
                     info.put(METADATA_HEIGHT, Integer.toString(height));
                 }
             }
 
-            Collection<NodeData> propertyList = info.magnolia.cms.util.ContentUtil.asContent(media).getNodeDataCollection("media_*");
-            for (NodeData property : propertyList)
+            PropertyIterator properties = media.getProperties("media_*");
+
+            while (properties.hasNext())
             {
+                Property property = properties.nextProperty();
+
                 addToInfo(media, info, property.getName());
             }
         }

@@ -19,7 +19,6 @@
 
 package net.sourceforge.openutils.mgnlmedia.media.tree;
 
-import info.magnolia.cms.core.Content;
 import info.magnolia.cms.core.MgnlNodeType;
 import info.magnolia.cms.gui.control.Tree;
 import info.magnolia.cms.gui.control.TreeColumn;
@@ -58,7 +57,8 @@ public class MediaBrowserConfiguration extends JcrBrowserTreeConfiguration
             /**
              * {@inheritDoc}
              */
-            public String renderHtml(TreeColumn treeColumn, Content content)
+            @SuppressWarnings("deprecation")
+            public String renderHtml(TreeColumn treeColumn, info.magnolia.cms.core.Content content)
             {
                 return content.getNodeData("type").getString();
             }

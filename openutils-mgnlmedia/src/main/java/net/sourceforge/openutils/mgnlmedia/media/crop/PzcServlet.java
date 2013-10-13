@@ -18,10 +18,7 @@
  */
 
 package net.sourceforge.openutils.mgnlmedia.media.crop;
-
-import info.magnolia.cms.core.HierarchyManager;
-import info.magnolia.cms.core.NodeData;
-import info.magnolia.cms.util.NodeDataUtil;
+ 
 import info.magnolia.context.MgnlContext;
 import info.magnolia.repository.RepositoryConstants;
 

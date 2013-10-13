@@ -20,31 +20,25 @@
 package net.sourceforge.openutils.mgnlmedia.media.tags.el;
 
 import info.magnolia.cms.beans.runtime.FileProperties;
-import info.magnolia.cms.core.Content;
-import info.magnolia.cms.core.DefaultContent;
-import info.magnolia.cms.core.NodeData;
-import info.magnolia.cms.i18n.I18nContentWrapper;
-import info.magnolia.cms.util.ContentUtil;
-import info.magnolia.cms.util.NodeMapWrapper;
 import info.magnolia.context.MgnlContext;
-import info.magnolia.jcr.util.NodeUtil;
+import info.magnolia.jcr.RuntimeRepositoryException;
 import info.magnolia.jcr.util.PropertyUtil;
 import info.magnolia.module.ModuleRegistry;
 import info.magnolia.objectfactory.Components;
+import it.openutils.mgnlutils.api.NodeUtilsExt;
 
 import java.awt.Point;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
 import javax.jcr.Node;
+import javax.jcr.NodeIterator;
 import javax.jcr.PropertyType;
 import javax.jcr.RepositoryException;
 import javax.jcr.Value;
-import javax.jcr.nodetype.NodeType;
 import javax.jcr.query.InvalidQueryException;
 import javax.servlet.http.HttpServletRequest;
 
@@ -114,32 +108,7 @@ public final class MediaEl
 
         Node node = it.openutils.mgnlutils.el.MgnlUtilsElFunctions.node(obj, MediaModule.REPO);
 
-        if (node != null)
-        {
-            // return Components.getComponent(NodeWrapperFactory.class).wrapNode(node);
-            // GRAVE: Servlet.service() for servlet default threw exception
-            // info.magnolia.objectfactory.NoSuchComponentException: No component configuration for type
-            // [info.magnolia.jcr.wrapper.NodeWrapperFactory] found. Please add a configuration to your module
-            // descriptor.
-            Content currentpage = null;
-
-            if (MgnlContext.isWebContext())
-            {
-                currentpage = MgnlContext.getAggregationState().getMainContent();
-            }
-
-            if (currentpage == null)
-            {
-                currentpage = ContentUtil.asContent(node);
-            }
-
-            Content content = new NodeMapWrapper(
-                new I18nContentWrapper(ContentUtil.asContent(node)),
-                currentpage.getHandle());
-            return content.getJCRNode();
-        }
-
-        return null;
+        return NodeUtilsExt.wrap(node);
     }
 
     /**
@@ -221,23 +190,32 @@ public final class MediaEl
 
         List<String> res = new ArrayList<String>();
 
-        Content resolutions = ContentUtil.asContent(getResolutionsNode(media));
+        Node resolutions = getResolutionsNode(media);
 
-        Collection<NodeData> nodeDataCollection = resolutions.getNodeDataCollection();
-
-        for (NodeData item : nodeDataCollection)
+        NodeIterator nodeDataCollection;
+        try
         {
-            if (item.getName().startsWith("res-"))
+            nodeDataCollection = resolutions.getNodes();
+
+            while (nodeDataCollection.hasNext())
             {
-                if (item.getAttribute(ImageUtils.RESOLUTION_PROPERTY) != null)
+                Node item = nodeDataCollection.nextNode();
+                if (item.getName().startsWith("res-"))
                 {
-                    res.add(item.getAttribute(ImageUtils.RESOLUTION_PROPERTY));
-                }
-                else
-                {
-                    res.add(StringUtils.substringAfter(item.getName(), "-"));
+                    if (item.getProperty(ImageUtils.RESOLUTION_PROPERTY) != null)
+                    {
+                        res.add(PropertyUtil.getString(item, ImageUtils.RESOLUTION_PROPERTY));
+                    }
+                    else
+                    {
+                        res.add(StringUtils.substringAfter(item.getName(), "-"));
+                    }
                 }
             }
+        }
+        catch (RepositoryException e)
+        {
+            throw new RuntimeRepositoryException(e);
         }
 
         return res.toArray(new String[res.size()]);
@@ -262,14 +240,13 @@ public final class MediaEl
 
         try
         {
-            // MEDIA-90 may be simply a url [LB] TEST ME AGAIN
-            if (NodeUtil.isNodeType(media.getNode(BaseTypeHandler.ORGINAL_NODEDATA_NAME), NodeType.NT_RESOURCE))
+            // MEDIA-90 may be simply a url
+            if (media.hasNode(BaseTypeHandler.ORGINAL_NODEDATA_NAME))
             {
-                FileProperties prop = new FileProperties(
-                    ContentUtil.asContent(media),
-                    BaseTypeHandler.ORGINAL_NODEDATA_NAME);
-                Integer width = NumberUtils.toInt(prop.getProperty(FileProperties.PROPERTY_WIDTH));
-                Integer height = NumberUtils.toInt(prop.getProperty(FileProperties.PROPERTY_HEIGHT));
+                Node prop = media.getNode(BaseTypeHandler.ORGINAL_NODEDATA_NAME);
+
+                Integer width = NumberUtils.toInt(PropertyUtil.getString(prop, FileProperties.PROPERTY_WIDTH));
+                Integer height = NumberUtils.toInt(PropertyUtil.getString(prop, FileProperties.PROPERTY_HEIGHT));
                 Point size = ImageUtils.parseForSize(resolution);
                 if (width == size.x && height == size.y)
                 {
@@ -286,8 +263,7 @@ public final class MediaEl
             String resString = "res-" + ImageUtils.getResolutionPath(resolution);
             if (resolutions != null && resolutions.hasNode(resString))
             {
-                String resPath = new FileProperties(ContentUtil.asContent(resolutions), resString)
-                    .getProperty(FileProperties.PATH);
+                String resPath = PropertyUtil.getString(resolutions.getNode(resString), FileProperties.PATH);
 
                 return appendBaseUrl(mcm.getURIMappingPrefix() + resPath);
 

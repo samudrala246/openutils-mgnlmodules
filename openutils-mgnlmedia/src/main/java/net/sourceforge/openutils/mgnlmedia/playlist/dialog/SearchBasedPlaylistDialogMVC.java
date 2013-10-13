@@ -19,8 +19,8 @@
 
 package net.sourceforge.openutils.mgnlmedia.playlist.dialog;
 
-
 import info.magnolia.cms.core.Content;
+import info.magnolia.cms.core.ItemType;
 import info.magnolia.cms.gui.dialog.Dialog;
 import info.magnolia.cms.gui.misc.Sources;
 import info.magnolia.module.admininterface.SaveHandler;
@@ -45,6 +45,7 @@ import org.slf4j.LoggerFactory;
  * @author ADMIN
  * @version $Id: $
  */
+@SuppressWarnings("deprecation")
 public class SearchBasedPlaylistDialogMVC extends ConfiguredDialog
 {
 
@@ -75,7 +76,7 @@ public class SearchBasedPlaylistDialogMVC extends ConfiguredDialog
         dialog.init(request, response, storageNode, configNode);
         return dialog;
     }
-    
+
     /**
      * {@inheritDoc}
      */
@@ -91,7 +92,7 @@ public class SearchBasedPlaylistDialogMVC extends ConfiguredDialog
         {
             saveHandler.setNodeName(form.getParameter("playlistName"));
         }
-        saveHandler.setCreationItemType(PlaylistConstants.NT_PLAYLIST);
+        saveHandler.setCreationItemType(new ItemType(PlaylistConstants.NT_PLAYLIST));
     }
 
     /**

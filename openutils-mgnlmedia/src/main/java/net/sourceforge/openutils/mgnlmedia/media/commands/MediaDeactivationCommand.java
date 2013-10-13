@@ -43,7 +43,7 @@ public class MediaDeactivationCommand extends BaseRepositoryCommand
     {
         if (!MediaEl.module().isSingleinstance())
         {
-            Command cmd = Components.getSingleton(CommandsManager.class).getCommand(
+            Command cmd = Components.getComponent(CommandsManager.class).getCommand(
                 CommandsManager.DEFAULT_CATALOG,
                 "deactivate");
             return cmd.execute(context);

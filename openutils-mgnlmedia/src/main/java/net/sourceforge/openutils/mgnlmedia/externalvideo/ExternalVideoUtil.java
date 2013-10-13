@@ -1,9 +1,6 @@
 package net.sourceforge.openutils.mgnlmedia.externalvideo;
 
 import info.magnolia.cms.beans.runtime.Document;
-import info.magnolia.cms.core.Content;
-import info.magnolia.cms.util.ContentUtil;
-import info.magnolia.cms.util.NodeDataUtil;
 import info.magnolia.context.MgnlContext;
 import info.magnolia.jcr.util.NodeUtil;
 import info.magnolia.jcr.util.PropertyUtil;
@@ -110,9 +107,9 @@ public class ExternalVideoUtil
         return StringUtils.join(new String[]{ND_ERROR, suffix != null ? "-" : null, suffix });
     }
 
-    public static String getStatus(final Content mediaNode, String statusSuffix)
+    public static String getStatus(final Node mediaNode, String statusSuffix)
     {
-        return NodeDataUtil.getString(mediaNode, getStatusProperty(statusSuffix));
+        return PropertyUtil.getString(mediaNode, getStatusProperty(statusSuffix));
     }
 
     public static boolean setStatus(final String mediaUUID, final String statusSuffix, final String status)
@@ -124,19 +121,16 @@ public class ExternalVideoUtil
 
                 public Boolean exec() throws RepositoryException
                 {
-                    Content media = ContentUtil.getContentByUUID(MediaModule.REPO, mediaUUID);
+                    Node media = NodeUtil.getNodeByIdentifier(MediaModule.REPO, mediaUUID);
                     if (media != null)
                     {
                         String statusProperty = getStatusProperty(statusSuffix);
-                        if (!media.hasNodeData(statusProperty)
-                            || !StringUtils.equals(NodeDataUtil.getString(media, statusProperty), status))
+                        if (!media.hasProperty(statusProperty)
+                            || !StringUtils.equals(PropertyUtil.getString(media, statusProperty), status))
                         {
-                            NodeDataUtil.getOrCreateAndSet(media, statusProperty, status);
-                            NodeDataUtil.getOrCreateAndSet(
-                                media,
-                                statusProperty + "LastModified",
-                                Calendar.getInstance());
-                            media.save();
+                            media.setProperty(statusProperty, status);
+                            media.setProperty(statusProperty + "LastModified", Calendar.getInstance());
+                            media.getSession().save();
                         }
                         return true;
                     }
@@ -150,10 +144,10 @@ public class ExternalVideoUtil
         }
     }
 
-    public static boolean hasStatus(final Content mediaNode, final String statusSuffix, final String status)
+    public static boolean hasStatus(final Node mediaNode, final String statusSuffix, final String status)
     {
         String statusProperty = getStatusProperty(statusSuffix);
-        return StringUtils.equals(NodeDataUtil.getString(mediaNode, statusProperty), status);
+        return StringUtils.equals(PropertyUtil.getString(mediaNode, statusProperty), status);
     }
 
     public static boolean hasStatus(final String mediaUUID, final String statusSuffix, final String status)
@@ -165,7 +159,7 @@ public class ExternalVideoUtil
 
                 public Boolean exec() throws RepositoryException
                 {
-                    Content media = ContentUtil.getContentByUUID(MediaModule.REPO, mediaUUID);
+                    Node media = NodeUtil.getNodeByIdentifier(MediaModule.REPO, mediaUUID);
                     return media != null && hasStatus(media, statusSuffix, status);
                 }
             });
@@ -190,15 +184,12 @@ public class ExternalVideoUtil
 
                 public Boolean exec() throws RepositoryException
                 {
-                    Content media = ContentUtil.getContentByUUID(MediaModule.REPO, mediaUUID);
+                    Node media = NodeUtil.getNodeByIdentifier(MediaModule.REPO, mediaUUID);
                     if (media != null)
                     {
-                        NodeDataUtil.getOrCreateAndSet(media, getErrorProperty(suffix), true);
-                        NodeDataUtil.getOrCreateAndSet(
-                            media,
-                            getErrorProperty(suffix) + "-" + ND_ERROR_MESSAGE,
-                            message);
-                        media.save();
+                        media.setProperty(getErrorProperty(suffix), true);
+                        media.setProperty(getErrorProperty(suffix) + "-" + ND_ERROR_MESSAGE, message);
+                        media.getSession().save();
                         return true;
                     }
                     return false;
@@ -211,6 +202,7 @@ public class ExternalVideoUtil
         }
     }
 
+    @SuppressWarnings("deprecation")
     public static boolean copyPreviewImageToRepository(Node media, final String previewUrl) throws IOException
     {
         if (StringUtils.isNotBlank(previewUrl))
@@ -238,7 +230,7 @@ public class ExternalVideoUtil
                 try
                 {
                     SaveHandlerImpl.saveDocument(
-                        ContentUtil.asContent(media),
+                        info.magnolia.cms.util.ContentUtil.asContent(media),
                         doc,
                         MediaWithPreviewImageTypeHandler.PREVIEW_NODEDATA_NAME,
                         "preview",

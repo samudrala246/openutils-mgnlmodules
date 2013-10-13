@@ -19,9 +19,6 @@
 
 package net.sourceforge.openutils.mgnlmedia.media.pages;
 
-import info.magnolia.cms.core.Content;
-import info.magnolia.cms.core.HierarchyManager;
-import info.magnolia.cms.core.ItemType;
 import info.magnolia.cms.core.MgnlNodeType;
 import info.magnolia.cms.core.Path;
 import info.magnolia.cms.exchange.ActivationManagerFactory;
@@ -51,6 +48,7 @@ import java.util.Map;
 
 import javax.jcr.Node;
 import javax.jcr.RepositoryException;
+import javax.jcr.Session;
 import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -306,12 +304,14 @@ public class MediaFolderViewPage extends MessagesTemplatedMVCHandler
      */
     public String delete()
     {
-        HierarchyManager hm = MgnlContext.getInstance().getHierarchyManager(MediaModule.REPO);
-
         try
         {
-            hm.delete(this.node);
-            hm.save();
+            Session session = MgnlContext.getInstance().getJCRSession(MediaModule.REPO);
+            if (session.itemExists(this.node))
+            {
+                session.removeItem(this.node);
+                session.save();
+            }
         }
         catch (RepositoryException ex)
         {
@@ -383,15 +383,15 @@ public class MediaFolderViewPage extends MessagesTemplatedMVCHandler
     public Node copyMoveNode(String source, String destination, boolean move) throws ExchangeException,
         RepositoryException
     {
-        HierarchyManager hm = MgnlContext.getHierarchyManager(MediaModule.REPO);
+        Session session = MgnlContext.getJCRSession(MediaModule.REPO);
 
         String goTo = destination;
 
-        if (hm.isExist(destination))
+        if (session.itemExists(destination))
         {
             String parentPath = StringUtils.substringBeforeLast(destination, "/"); //$NON-NLS-1$
             String label = StringUtils.substringAfterLast(destination, "/"); //$NON-NLS-1$
-            label = Path.getUniqueLabel(hm, parentPath, label);
+            label = Path.getUniqueLabel(session, parentPath, label);
             goTo = parentPath + "/" + label; //$NON-NLS-1$
         }
         if (move)
@@ -405,7 +405,7 @@ public class MediaFolderViewPage extends MessagesTemplatedMVCHandler
             // this.deactivateNode(source);
             try
             {
-                hm.moveTo(source, goTo);
+                session.move(source, goTo);
             }
             catch (Exception e)
             {
@@ -416,13 +416,13 @@ public class MediaFolderViewPage extends MessagesTemplatedMVCHandler
         else
         {
             // copy
-            hm.copyTo(source, goTo);
+            session.getWorkspace().copy(source, goTo);
         }
-        Content newContent = hm.getContent(destination);
+        Node newContent = session.getNode(destination);
         try
         {
-            MetaDataUtil.updateMetaData(newContent.getJCRNode());
-            MetaDataUtil.getMetaData(newContent.getJCRNode()).setUnActivated();
+            MetaDataUtil.updateMetaData(newContent);
+            MetaDataUtil.getMetaData(newContent).setUnActivated();
         }
         catch (Exception e)
         {
@@ -431,8 +431,8 @@ public class MediaFolderViewPage extends MessagesTemplatedMVCHandler
                 log.debug("Exception caught: " + e.getMessage(), e); //$NON-NLS-1$
             }
         }
-        newContent.save();
-        return newContent.getJCRNode();
+        session.save();
+        return newContent;
     }
 
     /**

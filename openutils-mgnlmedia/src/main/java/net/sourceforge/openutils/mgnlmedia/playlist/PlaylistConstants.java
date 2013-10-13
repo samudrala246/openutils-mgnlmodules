@@ -19,7 +19,6 @@
 
 package net.sourceforge.openutils.mgnlmedia.playlist;
 
-import info.magnolia.cms.core.ItemType;
 import info.magnolia.cms.core.MgnlNodeType;
 
 

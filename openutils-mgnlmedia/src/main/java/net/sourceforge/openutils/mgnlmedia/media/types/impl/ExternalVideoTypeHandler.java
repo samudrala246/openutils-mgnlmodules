@@ -21,7 +21,6 @@ package net.sourceforge.openutils.mgnlmedia.media.types.impl;
 
 import info.magnolia.cms.beans.runtime.Document;
 import info.magnolia.cms.beans.runtime.MultipartForm;
-import info.magnolia.cms.util.ContentUtil;
 import info.magnolia.jcr.util.PropertyUtil;
 import info.magnolia.module.admininterface.SaveHandlerImpl;
 
@@ -349,6 +348,7 @@ public class ExternalVideoTypeHandler extends BaseVideoTypeHandler
      * @param media
      * @param previewUrl
      */
+    @SuppressWarnings("deprecation")
     private void copyPreviewImageToRepository(Node media, String previewUrl)
     {
         InputStream is = null;
@@ -376,7 +376,7 @@ public class ExternalVideoTypeHandler extends BaseVideoTypeHandler
                 try
                 {
                     SaveHandlerImpl.saveDocument(
-                        ContentUtil.asContent(media),
+                        info.magnolia.cms.util.ContentUtil.asContent(media),
                         doc,
                         PREVIEW_NODEDATA_NAME,
                         "preview",

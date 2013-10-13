@@ -19,26 +19,16 @@
 
 package net.sourceforge.openutils.mgnlmedia.media.configuration;
 
-import info.magnolia.cms.beans.config.ObservedManager;
 import info.magnolia.cms.beans.config.URI2RepositoryManager;
 import info.magnolia.cms.beans.config.URI2RepositoryMapping;
-import info.magnolia.cms.core.Content;
-import info.magnolia.cms.core.ItemType;
 import info.magnolia.cms.core.MgnlNodeType;
-import info.magnolia.cms.core.search.Query;
-import info.magnolia.cms.core.search.QueryManager;
-import info.magnolia.cms.core.search.QueryResult;
-import info.magnolia.cms.util.ContentUtil;
-import info.magnolia.cms.util.FactoryUtil;
-import info.magnolia.cms.util.NodeDataUtil;
-import info.magnolia.content2bean.Content2BeanUtil;
-import info.magnolia.context.MgnlContext;
 import info.magnolia.jcr.util.NodeUtil;
 import info.magnolia.jcr.util.PropertyUtil;
 import info.magnolia.objectfactory.Components;
 import info.magnolia.repository.RepositoryConstants;
+import it.openutils.mgnlutils.api.NodeUtilsExt;
+import it.openutils.mgnlutils.api.ObservedManagerAdapter;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
@@ -53,7 +43,6 @@ import javax.jcr.query.InvalidQueryException;
 import net.sourceforge.openutils.mgnlmedia.media.lifecycle.MediaModule;
 
 import org.apache.commons.lang.StringUtils;
-import org.apache.jackrabbit.util.ISO9075;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -72,7 +61,7 @@ import org.slf4j.LoggerFactory;
  * @author molaschi
  */
 @Singleton
-public class MediaConfigurationManager extends ObservedManager
+public class MediaConfigurationManager extends ObservedManagerAdapter
 {
 
     private static final String MGNL_MEDIA_TYPE = "mgnl:media";
@@ -112,10 +101,8 @@ public class MediaConfigurationManager extends ObservedManager
      */
     @Override
     @SuppressWarnings("unchecked")
-    protected void onRegister(Content content)
+    protected void onRegister(Node node)
     {
-
-        Node node = content.getJCRNode();
 
         try
         {
@@ -131,9 +118,8 @@ public class MediaConfigurationManager extends ObservedManager
 
                 try
                 {
-                    Content typeContent = ContentUtil.asContent(typeNode);
-                    MediaTypeConfiguration conf = (MediaTypeConfiguration) Content2BeanUtil.toBean(
-                        typeContent,
+                    MediaTypeConfiguration conf = (MediaTypeConfiguration) NodeUtilsExt.toBean(
+                        typeNode,
                         true,
                         MediaTypeConfiguration.class);
 
@@ -167,7 +153,7 @@ public class MediaConfigurationManager extends ObservedManager
      */
     public static MediaConfigurationManager getInstance()
     {
-        return (MediaConfigurationManager) FactoryUtil.getSingleton(MediaConfigurationManager.class);
+        return Components.getComponent(MediaConfigurationManager.class);
     }
 
     /**
@@ -223,72 +209,52 @@ public class MediaConfigurationManager extends ObservedManager
         return MediaUsedInManager.getInstance().getUsedInWorkspacePaths(uuid, RepositoryConstants.WEBSITE);
     }
 
-    /**
-     * Search media
-     * @param text text to search
-     * @param type if specified restricts the search to the type
-     * @return found medias
-     * @throws RepositoryException exception working on repository
-     * @deprecated use SearchMediaQueryConfiguration.search(...)
-     */
-    @Deprecated
-    public Collection<Content> search(String text, final String type) throws RepositoryException
-    {
-        return find(null, type, text, true);
-    }
-
-    /**
-     * @param path
-     * @param type
-     * @param search
-     * @param recursive
-     * @return
-     * @throws RepositoryException
-     * @deprecated use the find method overload based on Magnolia Criteria API
-     */
-    @Deprecated
-    public Collection<Content> find(String path, String type, String search, boolean recursive)
-        throws RepositoryException
-    {
-        QueryManager qm = MgnlContext.getQueryManager(MediaModule.REPO);
-        StringBuffer sbQuery = new StringBuffer("/jcr:root/");
-        path = StringUtils.removeEnd(StringUtils.removeStart(StringUtils.trimToEmpty(path), "/"), "/");
-        if (StringUtils.isNotEmpty(path))
-        {
-            sbQuery.append(ISO9075.encodePath(path)).append('/');
-        }
-        if (recursive)
-        {
-            sbQuery.append('/');
-        }
-        sbQuery.append("element(*," + MediaConfigurationManager.NT_MEDIA + ")");
-        List<String> clauses = new ArrayList<String>();
-        if (StringUtils.isNotBlank(search))
-        {
-            clauses.add("jcr:contains(.,'" + StringUtils.replace(search, "'", "''") + "')");
-        }
-        if (StringUtils.isNotBlank(type))
-        {
-            clauses.add("@type='" + type + "'");
-        }
-        if (!clauses.isEmpty())
-        {
-            sbQuery.append('[').append(StringUtils.join(clauses, " and ")).append(']');
-        }
-        if (StringUtils.isNotBlank(search))
-        {
-            sbQuery.append(" order by @jcr:score descending");
-        }
-        Query q = qm.createQuery(new String(sbQuery), Query.XPATH);
-        QueryResult qr = q.execute();
-        return qr.getContent(MediaConfigurationManager.MGNL_MEDIA_TYPE);
-    }
-
-    @Deprecated
-    public MediaTypeConfiguration getMediaTypeConfigurationFromMedia(Content media)
-    {
-        return getMediaTypeConfigurationFromMedia(media.getJCRNode());
-    }
+    // /**
+    // * @param path
+    // * @param type
+    // * @param search
+    // * @param recursive
+    // * @return
+    // * @throws RepositoryException
+    // * @deprecated use the find method overload based on Magnolia Criteria API
+    // */
+    // @Deprecated
+    // public Collection<Content> find(String path, String type, String search, boolean recursive)
+    // throws RepositoryException
+    // {
+    // QueryManager qm = MgnlContext.getQueryManager(MediaModule.REPO);
+    // StringBuffer sbQuery = new StringBuffer("/jcr:root/");
+    // path = StringUtils.removeEnd(StringUtils.removeStart(StringUtils.trimToEmpty(path), "/"), "/");
+    // if (StringUtils.isNotEmpty(path))
+    // {
+    // sbQuery.append(ISO9075.encodePath(path)).append('/');
+    // }
+    // if (recursive)
+    // {
+    // sbQuery.append('/');
+    // }
+    // sbQuery.append("element(*," + MediaConfigurationManager.NT_MEDIA + ")");
+    // List<String> clauses = new ArrayList<String>();
+    // if (StringUtils.isNotBlank(search))
+    // {
+    // clauses.add("jcr:contains(.,'" + StringUtils.replace(search, "'", "''") + "')");
+    // }
+    // if (StringUtils.isNotBlank(type))
+    // {
+    // clauses.add("@type='" + type + "'");
+    // }
+    // if (!clauses.isEmpty())
+    // {
+    // sbQuery.append('[').append(StringUtils.join(clauses, " and ")).append(']');
+    // }
+    // if (StringUtils.isNotBlank(search))
+    // {
+    // sbQuery.append(" order by @jcr:score descending");
+    // }
+    // Query q = qm.createQuery(new String(sbQuery), Query.XPATH);
+    // QueryResult qr = q.execute();
+    // return qr.getContent(MediaConfigurationManager.MGNL_MEDIA_TYPE);
+    // }
 
     /**
      * Get the type configuration for a media

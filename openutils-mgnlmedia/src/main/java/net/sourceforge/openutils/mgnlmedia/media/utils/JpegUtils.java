@@ -235,7 +235,7 @@ public class JpegUtils
                         Method decodeAsBufferedImageMethod = jpegDecoder.getClass().getMethod(
                             "decodeAsBufferedImage",
                             new Class[0]);
-                        BufferedImage result = (BufferedImage) decodeAsBufferedImageMethod.invoke(jpegDecoder, null);
+                        BufferedImage result = (BufferedImage) decodeAsBufferedImageMethod.invoke(jpegDecoder);
 
                         return result;
                     }

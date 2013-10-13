@@ -20,6 +20,7 @@
 package net.sourceforge.openutils.mgnlmedia.playlist.dialog;
 
 import info.magnolia.cms.core.Content;
+import info.magnolia.cms.core.ItemType;
 import info.magnolia.cms.core.Path;
 import info.magnolia.cms.util.ContentUtil;
 import info.magnolia.context.MgnlContext;
@@ -72,7 +73,7 @@ public class PlaylistEntryDialogMVC extends ConfiguredDialog
     protected void configureSaveHandler(SaveHandler saveHandler)
     {
         super.configureSaveHandler(saveHandler);
-        saveHandler.setCreationItemType(PlaylistConstants.NT_PLAYLIST_ENTRY);
+        saveHandler.setCreationItemType(new ItemType(PlaylistConstants.NT_PLAYLIST_ENTRY));
     }
 
     /**

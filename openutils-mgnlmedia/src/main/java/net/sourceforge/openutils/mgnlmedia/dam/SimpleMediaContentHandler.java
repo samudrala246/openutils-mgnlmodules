@@ -19,7 +19,6 @@
 
 package net.sourceforge.openutils.mgnlmedia.dam;
 
-
 import info.magnolia.cms.core.Content;
 import info.magnolia.cms.core.HierarchyManager;
 import info.magnolia.cms.core.NodeData;
@@ -42,6 +41,7 @@ import net.sourceforge.openutils.mgnlmedia.media.types.impl.BaseTypeHandler;
  * Dam-support for the SimpleMedia module.
  * @author Ernst Bunders
  */
+@SuppressWarnings("deprecation")
 public class SimpleMediaContentHandler extends DMSDAMHandler
 {
 

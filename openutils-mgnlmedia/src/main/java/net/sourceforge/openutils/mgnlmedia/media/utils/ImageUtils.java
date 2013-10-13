@@ -20,16 +20,13 @@
 package net.sourceforge.openutils.mgnlmedia.media.utils;
 
 import info.magnolia.cms.beans.runtime.FileProperties;
-import info.magnolia.cms.core.ItemType;
 import info.magnolia.cms.core.MgnlNodeType;
 import info.magnolia.context.Context;
 import info.magnolia.context.MgnlContext;
 import info.magnolia.context.SystemContext;
-import info.magnolia.context.MgnlContext.SystemContextOperation;
 import info.magnolia.jcr.util.MetaDataUtil;
 import info.magnolia.jcr.util.PropertyUtil;
 import info.magnolia.objectfactory.Components;
-import it.openutils.mgnlutils.api.NodeUtilsExt;
 
 import java.awt.AlphaComposite;
 import java.awt.Color;
@@ -62,13 +59,10 @@ import javax.imageio.ImageWriteParam;
 import javax.imageio.ImageWriter;
 import javax.imageio.plugins.jpeg.JPEGImageWriteParam;
 import javax.imageio.stream.ImageOutputStream;
-import javax.jcr.Binary;
 import javax.jcr.Node;
 import javax.jcr.Property;
-import javax.jcr.PropertyType;
 import javax.jcr.RepositoryException;
 import javax.jcr.Session;
-import javax.jcr.Value;
 
 import net.sourceforge.openutils.mgnlmedia.media.configuration.ImageProcessorsManager;
 import net.sourceforge.openutils.mgnlmedia.media.configuration.MediaConfigurationManager;
@@ -82,7 +76,6 @@ import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.ClassUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.math.NumberUtils;
-import org.apache.jackrabbit.util.Locked;
 import org.apache.jackrabbit.value.BinaryValue;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -583,7 +576,7 @@ public final class ImageUtils
                 {
                     try
                     {
-// getProperty(MgnlNodeType.JCR_DATA).getValue().getBinary().getStream();
+                        // getProperty(MgnlNodeType.JCR_DATA).getValue().getBinary().getStream();
                         nd.setProperty(MgnlNodeType.JCR_DATA, new BinaryValue(stream));
                     }
                     catch (RepositoryException e)
@@ -910,13 +903,14 @@ public final class ImageUtils
 
         try
         {
-            ImageUtils.doInSystemContext(new MgnlContext.SystemContextOperation()
+            ImageUtils.doInSystemContext(new MgnlContext.VoidOp()
             {
 
                 /**
                  * {@inheritDoc}
                  */
-                public void exec()
+                @Override
+                public void doExec()
                 {
                     long timestart = System.currentTimeMillis();
                     Node node;
@@ -1414,13 +1408,20 @@ public final class ImageUtils
         return size;
     }
 
-    private static void doInSystemContext(SystemContextOperation op)
+    private static void doInSystemContext(info.magnolia.context.MgnlContext.Op op)
     {
         final Context originalCtx = MgnlContext.hasInstance() ? MgnlContext.getInstance() : null;
         try
         {
             MgnlContext.setInstance(Components.getComponent(SystemContext.class));
-            op.exec();
+            try
+            {
+                op.exec();
+            }
+            catch (Throwable e)
+            {
+                throw new RuntimeException(e);
+            }
         }
         finally
         {

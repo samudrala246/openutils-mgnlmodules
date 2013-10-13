@@ -19,12 +19,10 @@
 
 package net.sourceforge.openutils.mgnlmedia.media.setup;
 
-import info.magnolia.cms.core.ItemType;
 import info.magnolia.cms.core.MgnlNodeType;
 import info.magnolia.cms.exchange.ActivationManager;
 import info.magnolia.cms.exchange.ActivationManagerFactory;
 import info.magnolia.cms.exchange.Subscriber;
-import info.magnolia.cms.util.ContentUtil;
 import info.magnolia.context.MgnlContext;
 import info.magnolia.jcr.util.PropertyUtil;
 import info.magnolia.module.InstallContext;
@@ -94,8 +92,7 @@ public class ConditionallySubscribeMediaRepositoriesTask extends AbstractTask
     }
 
     /**
-     * Register the repository to get used for activation TODO - use an API for this? But same remark as above, the
-     * component might not be ready yet.
+     * Register the repository to get used for activation.
      */
     private void subscribeRepository(String repository) throws TaskExecutionException
     {
@@ -108,13 +105,12 @@ public class ConditionallySubscribeMediaRepositoriesTask extends AbstractTask
                 try
                 {
                     Node subscriptionsNode = MgnlContext.getJCRSession(RepositoryConstants.CONFIG).getNode(
-                        sManager.getConfigPath() + "/" + subscriber.getName() + "/subscriptions");
+                        "/server/activation/subscribers/" + subscriber.getName() + "/subscriptions");
 
                     Node newSubscription = subscriptionsNode.addNode(repository, MgnlNodeType.NT_CONTENTNODE);
                     newSubscription.setProperty("toURI", "/");
                     newSubscription.setProperty("repository", repository);
                     newSubscription.setProperty("fromURI", "/");
-                    // subscriptionsNode.save();
                 }
                 catch (RepositoryException re)
                 {

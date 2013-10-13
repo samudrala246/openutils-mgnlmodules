@@ -61,7 +61,7 @@ public class MediaURI2RepositoryMapping extends URI2RepositoryMapping
         String uri;
         try
         {
-            uri = MediaEl.url(MgnlContext.getHierarchyManager(getRepository()).getContent(urisimple));
+            uri = MediaEl.url(MgnlContext.getJCRSession(getRepository()).getNode(urisimple));
         }
         catch (RepositoryException e)
         {

@@ -21,11 +21,11 @@ package net.sourceforge.openutils.mgnlmedia.media.utils;
 
 import info.magnolia.cms.core.Path;
 import info.magnolia.cms.security.AccessDeniedException;
-import info.magnolia.cms.util.ContentUtil;
 import info.magnolia.context.MgnlContext;
 import info.magnolia.context.SystemContext;
 import info.magnolia.jcr.util.MetaDataUtil;
 import info.magnolia.objectfactory.Components;
+import it.openutils.mgnlutils.api.NodeUtilsExt;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -122,7 +122,7 @@ public class MediaLoadUtils
 
             mtc.getHandler().saveFromZipFile(media, f, cleanFilename, extension);
 
-            Components.getComponent(SystemContext.class).getHierarchyManager(MediaModule.REPO).save();
+            Components.getComponent(SystemContext.class).getJCRSession(MediaModule.REPO).save();
             FileUtils.deleteQuietly(f);
 
             return media;
@@ -161,7 +161,7 @@ public class MediaLoadUtils
 
         // [LB] FIXME TESTME
         Node media = parentNode.addNode(
-            Path.getUniqueLabel(ContentUtil.asContent(parentNode), mediaName),
+            NodeUtilsExt.getUniqueLabel(parentNode, mediaName),
             MediaConfigurationManager.NT_MEDIA);
 
         if (!media.hasProperty("creator"))

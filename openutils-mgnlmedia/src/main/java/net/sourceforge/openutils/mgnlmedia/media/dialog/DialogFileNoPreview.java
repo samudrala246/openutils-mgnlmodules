@@ -50,6 +50,7 @@ public class DialogFileNoPreview extends DialogFile
 
     private Messages messages;
 
+    @Override
     public void initImageExtensions()
     {
         // no images, so no preview will be generated

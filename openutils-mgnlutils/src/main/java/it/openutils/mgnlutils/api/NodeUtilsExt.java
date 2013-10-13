@@ -19,6 +19,10 @@
 
 package it.openutils.mgnlutils.api;
 
+import info.magnolia.cms.core.Path;
+import info.magnolia.cms.util.ContentUtil;
+import info.magnolia.content2bean.Content2BeanException;
+import info.magnolia.content2bean.Content2BeanUtil;
 import info.magnolia.context.MgnlContext;
 import info.magnolia.jcr.RuntimeRepositoryException;
 import info.magnolia.jcr.util.NodeUtil;
@@ -27,7 +31,6 @@ import info.magnolia.jcr.util.PropertyUtil;
 import java.util.regex.Pattern;
 
 import javax.jcr.ItemNotFoundException;
-import javax.jcr.LoginException;
 import javax.jcr.Node;
 import javax.jcr.RepositoryException;
 import javax.jcr.Session;
@@ -176,5 +179,35 @@ public class NodeUtilsExt
         }
 
         return UUID_PATTERN.matcher(string).find();
+    }
+
+    public static Object toBean(Node node) throws Content2BeanException
+    {
+        return toBean(node, null);
+    }
+
+    public static Object toBean(Node node, Class outclass) throws Content2BeanException
+    {
+        return toBean(node, false, outclass);
+    }
+
+    public static Object toBean(Node node, boolean recursive, Class outclass) throws Content2BeanException
+    {
+        return Content2BeanUtil.toBean(ContentUtil.asContent(node), recursive, outclass);
+    }
+
+    public static String getUniqueLabel(Node parent, String label)
+    {
+        return Path.getUniqueLabel(ContentUtil.asContent(parent), label);
+    }
+
+    public static Node wrap(Node node)
+    {
+        if (node == null)
+        {
+            return null;
+        }
+        // TODO introduce configured wrapping
+        return node;
     }
 }

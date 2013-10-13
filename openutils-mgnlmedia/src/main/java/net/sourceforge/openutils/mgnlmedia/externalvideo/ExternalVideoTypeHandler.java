@@ -107,7 +107,7 @@ public class ExternalVideoTypeHandler extends BaseVideoTypeHandler
         throws AccessDeniedException, RepositoryException
     {
         media.setProperty("provider", "weebo");
-        ExternalVideoUtil.setStatus(media.getUUID(), AsyncUploadExternalVideoProvider.STATUS_TO_UPLOAD);
+        ExternalVideoUtil.setStatus(media.getIdentifier(), AsyncUploadExternalVideoProvider.STATUS_TO_UPLOAD);
         super.saveFromZipFile(media, f, cleanFileName, extension);
     }
 
@@ -166,6 +166,7 @@ public class ExternalVideoTypeHandler extends BaseVideoTypeHandler
     /**
      * {@inheritDoc}
      */
+    @Override
     public String getFilename(Node media)
     {
         ExternalVideoProvider provider = getVideoProvider(media);

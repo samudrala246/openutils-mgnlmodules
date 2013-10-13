@@ -19,9 +19,9 @@
 
 package net.sourceforge.openutils.mgnlmedia.media.dialog;
 
-
 import info.magnolia.cms.core.Content;
 import info.magnolia.cms.core.HierarchyManager;
+import info.magnolia.cms.core.ItemType;
 import info.magnolia.cms.core.Path;
 import info.magnolia.cms.gui.dialog.Dialog;
 import info.magnolia.cms.gui.misc.Sources;
@@ -135,7 +135,7 @@ public class LayerDialogMVC extends ConfiguredDialog
     {
         super.configureSaveHandler(saveHandler);
 
-        saveHandler.setCreationItemType(MediaConfigurationManager.NT_MEDIA);
+        saveHandler.setCreationItemType(new ItemType(MediaConfigurationManager.NT_MEDIA));
     }
 
     /**

@@ -226,7 +226,7 @@ public class MediaAdvancedSearchPage extends MediaFolderViewPage
             {
                 try
                 {
-                    return MgnlContext.getJCRSession(MediaModule.REPO).getNodeByIdentifier(from.getUUID());
+                    return MgnlContext.getJCRSession(MediaModule.REPO).getNodeByIdentifier(from.getIdentifier());
                 }
                 catch (RepositoryException e)
                 {

@@ -43,6 +43,8 @@ import org.apache.commons.lang.StringUtils;
  * @author dschivo
  * @version $Id$
  */
+@SuppressWarnings("deprecation")
+// not to be upgraded, to be rewritten for m5
 public class MediaGridColumnType extends AbstractGridColumnType
 {
 

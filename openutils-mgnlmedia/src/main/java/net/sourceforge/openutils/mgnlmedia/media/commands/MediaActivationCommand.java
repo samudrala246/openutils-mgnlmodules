@@ -19,15 +19,16 @@
 
 package net.sourceforge.openutils.mgnlmedia.media.commands;
 
-
 import info.magnolia.cms.core.Content;
-import info.magnolia.cms.core.ItemType;
 import info.magnolia.cms.core.MgnlNodeType;
 import info.magnolia.cms.exchange.ExchangeException;
 import info.magnolia.cms.i18n.MessagesManager;
 import info.magnolia.cms.util.AlertUtil;
+import info.magnolia.cms.util.ContentUtil;
 import info.magnolia.cms.util.Rule;
 import info.magnolia.context.Context;
+import info.magnolia.jcr.util.MetaDataUtil;
+import info.magnolia.jcr.util.NodeUtil;
 import info.magnolia.module.admininterface.commands.ActivationCommand;
 
 import java.util.ArrayList;
@@ -35,6 +36,7 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
+import javax.jcr.Node;
 import javax.jcr.RepositoryException;
 
 import net.sourceforge.openutils.mgnlmedia.media.configuration.MediaConfigurationManager;
@@ -49,6 +51,8 @@ import org.slf4j.LoggerFactory;
  * @author molaschi
  * @version $Id$
  */
+@SuppressWarnings("deprecation")
+// activation APIs need a cleanup in Magnolia, everrything is still based on Content
 public class MediaActivationCommand extends ActivationCommand
 {
 
@@ -122,7 +126,7 @@ public class MediaActivationCommand extends ActivationCommand
         ExchangeException
     {
 
-        activateSingleNode(parentPath, node);
+        activateSingleNode(parentPath, node.getJCRNode());
 
         Iterator<Content> children = node.getChildren(new Content.ContentFilter()
         {
@@ -155,36 +159,40 @@ public class MediaActivationCommand extends ActivationCommand
      * @throws RepositoryException
      * @throws ExchangeException
      */
-    protected void activateSingleNode(String parentPath, Content node) throws RepositoryException, ExchangeException
+    protected void activateSingleNode(String parentPath, Node node) throws RepositoryException, ExchangeException
     {
-        if (MediaConfigurationManager.NT_MEDIA.equals(node.getItemType()) && node.getMetaData().getIsActivated())
+        if (MediaConfigurationManager.NT_MEDIA.equals(node.getPrimaryNodeType().getName())
+            && MetaDataUtil.getMetaData(node).getIsActivated())
         {
             // already activated media, should deactivate in order to remove stale resolutions
             log
                 .warn(
                     "Activating already active media {}, will deactivate existing node in order to remove stale resolutions",
-                    node.getHandle());
+                    NodeUtil.getPathIfPossible(node));
 
-            getSyndicator().deactivate(node);
+            getSyndicator().deactivate(info.magnolia.cms.util.ContentUtil.asContent(node));
         }
 
         checkFolderActivation(node);
 
-        getSyndicator().activate(parentPath, node, getOrderingInfo(node));
+        getSyndicator().activate(
+            parentPath,
+            info.magnolia.cms.util.ContentUtil.asContent(node),
+            getOrderingInfo(info.magnolia.cms.util.ContentUtil.asContent(node)));
     }
 
     /**
      * @param node
      * @throws ExchangeException
      */
-    private void checkFolderActivation(Content node) throws ExchangeException
+    private void checkFolderActivation(Node node) throws ExchangeException
     {
         try
         {
-            List<Content> foldersInPath = new ArrayList<Content>(3);
+            List<Node> foldersInPath = new ArrayList<Node>();
 
-            Content parent = node.getParent();
-            while (parent.getLevel() != 0 && !parent.getMetaData().getIsActivated())
+            Node parent = node.getParent();
+            while (parent.getDepth() != 0 && !MetaDataUtil.getMetaData(parent).getIsActivated())
             {
                 foldersInPath.add(parent);
                 parent = parent.getParent();
@@ -193,12 +201,15 @@ public class MediaActivationCommand extends ActivationCommand
             if (!foldersInPath.isEmpty())
             {
                 Collections.reverse(foldersInPath);
-                for (Content folder : foldersInPath)
+                for (Node folder : foldersInPath)
                 {
-                    log.info("Activating parent folder {}", folder.getHandle());
+                    log.info("Activating parent folder {}", NodeUtil.getPathIfPossible(folder));
                     // folder only, no content
                     setRule(new Rule(new String[]{MgnlNodeType.NT_METADATA, MgnlNodeType.NT_RESOURCE }));
-                    getSyndicator().activate(folder.getParent().getHandle(), folder, getOrderingInfo(folder));
+                    getSyndicator().activate(
+                        NodeUtil.getPathIfPossible(folder.getParent()),
+                        ContentUtil.asContent(folder),
+                        getOrderingInfo(ContentUtil.asContent(folder)));
                 }
 
             }

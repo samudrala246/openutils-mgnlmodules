@@ -19,17 +19,16 @@
 
 package net.sourceforge.openutils.mgnlmedia.media.configuration;
 
-import info.magnolia.cms.core.Content;
-import info.magnolia.cms.core.ItemType;
 import info.magnolia.cms.core.MgnlNodeType;
 import info.magnolia.content2bean.Content2BeanException;
-import info.magnolia.content2bean.Content2BeanUtil;
+import info.magnolia.jcr.RuntimeRepositoryException;
+import info.magnolia.jcr.util.NodeUtil;
 import info.magnolia.objectfactory.Components;
 import info.magnolia.repository.RepositoryConstants;
+import it.openutils.mgnlutils.api.NodeUtilsExt;
 import it.openutils.mgnlutils.api.ObservedManagerAdapter;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -63,7 +62,7 @@ public class MediaUsedInManager extends ObservedManagerAdapter
 
     public static MediaUsedInManager getInstance()
     {
-        return Components.getComponents(MediaUsedInManager.class);
+        return Components.getComponent(MediaUsedInManager.class);
     }
 
     private static Logger log = LoggerFactory.getLogger(MediaUsedInManager.class);
@@ -85,15 +84,25 @@ public class MediaUsedInManager extends ObservedManagerAdapter
     @Override
     protected void onRegister(Node node)
     {
-        Collection<Content> uiwNodes = node.getChildren(MgnlNodeType.NT_CONTENTNODE);
-        for (Content uiwNode : uiwNodes)
+
+        Iterable<Node> uiwNodes;
+        try
+        {
+            uiwNodes = NodeUtil.getNodes(node, MgnlNodeType.NT_CONTENTNODE);
+        }
+        catch (RepositoryException e)
+        {
+            throw new RuntimeRepositoryException(e);
+        }
+
+        for (Node uiwNode : uiwNodes)
         {
             try
             {
-                UsedInWorkspace uiw = (UsedInWorkspace) Content2BeanUtil.toBean(uiwNode, UsedInWorkspace.class);
+                UsedInWorkspace uiw = (UsedInWorkspace) NodeUtilsExt.toBean(uiwNode, UsedInWorkspace.class);
                 if (StringUtils.isEmpty(uiw.getWorkspaceName()))
                 {
-                    uiw.setWorkspaceName(uiwNode.getName());
+                    uiw.setWorkspaceName(NodeUtil.getName(uiwNode));
                 }
                 if (StringUtils.isEmpty(uiw.getNodeType()))
                 {
@@ -103,7 +112,7 @@ public class MediaUsedInManager extends ObservedManagerAdapter
             }
             catch (Content2BeanException e)
             {
-                log.error("Error getting media used-in for {}", uiwNode.getHandle(), e);
+                log.error("Error getting media used-in for {}", NodeUtil.getPathIfPossible(uiwNode), e);
             }
         }
     }

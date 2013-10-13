@@ -19,7 +19,7 @@
 
 package net.sourceforge.openutils.mgnlmedia.media.setup;
 
-
+import info.magnolia.jcr.util.PropertyUtil;
 import info.magnolia.module.InstallContext;
 import info.magnolia.module.delta.AbstractRepositoryTask;
 import info.magnolia.module.delta.TaskExecutionException;
@@ -77,12 +77,12 @@ public class RemoveExtensionFromType extends AbstractRepositoryTask
         try
         {
             Node mediatypenode = session.getNode(nodePath);
-            String extensions = mediatypenode.getNodeData("extensions").getString();
+            String extensions = PropertyUtil.getString(mediatypenode, "extensions");
             if (StringUtils.contains(extensions, this.extension))
             {
                 List<String> exts = new ArrayList<String>(Arrays.asList(StringUtils.split(extensions, ",")));
                 exts.remove(this.extension);
-                mediatypenode.setNodeData("extensions", StringUtils.join(exts, ","));
+                mediatypenode.setProperty("extensions", StringUtils.join(exts, ","));
             }
         }
         catch (RepositoryException e)
@@ -93,12 +93,12 @@ public class RemoveExtensionFromType extends AbstractRepositoryTask
         try
         {
             Node mediatypenode = session.getNode(control);
-            String extensions = mediatypenode.getNodeData("extensions").getString();
+            String extensions = PropertyUtil.getString(mediatypenode, "extensions");
             if (StringUtils.contains(extensions, this.extension))
             {
                 List<String> exts = new ArrayList<String>(Arrays.asList(StringUtils.split(extensions, ",")));
                 exts.remove(this.extension);
-                mediatypenode.setNodeData("extensions", StringUtils.join(exts, ","));
+                mediatypenode.setProperty("extensions", StringUtils.join(exts, ","));
             }
         }
         catch (RepositoryException e)

@@ -22,7 +22,6 @@ package net.sourceforge.openutils.mgnlmedia.media.types.impl;
 import info.magnolia.cms.beans.runtime.Document;
 import info.magnolia.cms.beans.runtime.FileProperties;
 import info.magnolia.cms.core.MgnlNodeType;
-import info.magnolia.cms.util.ContentUtil;
 import info.magnolia.jcr.util.NodeUtil;
 import info.magnolia.jcr.util.PropertyUtil;
 import info.magnolia.module.admininterface.SaveHandlerImpl;
@@ -208,6 +207,7 @@ public class DocumentTypeHandler extends MediaWithPreviewImageTypeHandler
      * @param file File to be copied
      * @param filename filename
      */
+    @SuppressWarnings("deprecation")
     protected void copyPreviewImageToRepository(Node media, File file, String filename)
     {
 
@@ -215,7 +215,7 @@ public class DocumentTypeHandler extends MediaWithPreviewImageTypeHandler
         try
         {
             SaveHandlerImpl.saveDocument(
-                ContentUtil.asContent(media),
+                info.magnolia.cms.util.ContentUtil.asContent(media),
                 doc,
                 DocumentTypeHandler.PREVIEW_NODEDATA_NAME,
                 filename,

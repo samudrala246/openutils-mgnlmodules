@@ -25,7 +25,6 @@ import freemarker.template.TemplateMethodModel;
 import freemarker.template.TemplateModelException;
 import info.magnolia.cms.i18n.Messages;
 import info.magnolia.cms.i18n.MessagesUtil;
-import info.magnolia.cms.util.RequestFormUtil;
 import info.magnolia.module.admininterface.TemplatedMVCHandler;
 
 import java.util.ArrayList;
@@ -102,16 +101,16 @@ public class MessagesTemplatedMVCHandler extends TemplatedMVCHandler
      * Override the standard method in order to use request.getParameterMap instead of
      * requestFormUtils.getParamenterMap() since the latter doesn't work with virtual URI
      */
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings({"unchecked", "deprecation" })
     @Override
     protected void populateFromRequest(Object bean)
     {
-        RequestFormUtil requestFormUtil = new RequestFormUtil(this.getRequest());
         Map<String, Object> parameters = new HashMap<String, Object>();
 
         // FIX: use request.getParameterMap instead of requestFormUtils.getParamenterMap()
         parameters.putAll(request.getParameterMap());
-        parameters.putAll(requestFormUtil.getDocuments()); // handle uploaded files too
+        // handle uploaded files too
+        parameters.putAll(new info.magnolia.cms.util.RequestFormUtil(this.getRequest()).getDocuments());
 
         try
         {

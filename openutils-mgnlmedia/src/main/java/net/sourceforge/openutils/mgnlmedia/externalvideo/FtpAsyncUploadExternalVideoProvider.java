@@ -1,19 +1,15 @@
 package net.sourceforge.openutils.mgnlmedia.externalvideo;
 
 import info.magnolia.cms.beans.runtime.FileProperties;
-import info.magnolia.cms.core.Content;
-import info.magnolia.cms.core.NodeData;
-import info.magnolia.context.MgnlContext;
 import info.magnolia.context.SystemContext;
 import info.magnolia.objectfactory.Components;
 
 import java.io.IOException;
 
+import javax.jcr.Node;
 import javax.jcr.RepositoryException;
 
 import net.sourceforge.openutils.mgnlmedia.media.lifecycle.MediaModule;
-
-import org.apache.commons.lang.math.NumberUtils;
 
 
 /**
@@ -31,17 +27,24 @@ public abstract class FtpAsyncUploadExternalVideoProvider extends AsyncUploadExt
     @Override
     public void uploadVideo(final String mediaUUID) throws IOException, RepositoryException
     {
-        Content media = Components
+        Node media = Components
             .getComponent(SystemContext.class)
-            .getHierarchyManager(MediaModule.REPO)
-            .getContentByUUID(mediaUUID);
-        NodeData file = media.getNodeData(BaseVideoTypeHandler.ORGINAL_NODEDATA_NAME);
-        long size = NumberUtils.toLong(file.getAttribute(FileProperties.PROPERTY_SIZE), -1);
+            .getJCRSession(MediaModule.REPO)
+            .getNodeByIdentifier(mediaUUID);
+        Node file = media.getNode(BaseVideoTypeHandler.ORGINAL_NODEDATA_NAME);
+
+        long size = -1;
+        if (file.hasProperty(FileProperties.PROPERTY_SIZE))
+        {
+            size = file.getProperty(FileProperties.PROPERTY_SIZE).getLong();
+        }
+
+        // TODO check binary nodedata handling
         FtpUtil.upload(
             account,
-            media.getNodeData(BaseVideoTypeHandler.ORGINAL_NODEDATA_NAME).getStream(),
+            file.getProperty("jcr:data").getValue().getBinary().getStream(),
             size,
-            this.getUploadFileName(media.getJCRNode()),
+            this.getUploadFileName(media),
             new FtpUtil.UploadProgress()
             {
 
