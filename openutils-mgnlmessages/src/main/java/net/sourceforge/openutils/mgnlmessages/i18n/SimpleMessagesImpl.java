@@ -22,6 +22,7 @@ package net.sourceforge.openutils.mgnlmessages.i18n;
 import info.magnolia.cms.i18n.AbstractMessagesImpl;
 import info.magnolia.cms.i18n.MessagesManager;
 import info.magnolia.cms.util.ClasspathResourcesUtil;
+import info.magnolia.objectfactory.Components;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -103,7 +104,7 @@ public class SimpleMessagesImpl extends AbstractMessagesImpl
                     stream = ClasspathResourcesUtil.getStream("/"
                         + StringUtils.replace(basename, ".", "/")
                         + "_"
-                        + MessagesManager.getInstance().getDefaultLocale().getLanguage()
+                        + Components.getComponent(MessagesManager.class).getDefaultLocale().getLanguage()
                         + ".properties", false);
                 }
                 if (stream == null)

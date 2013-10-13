@@ -19,26 +19,26 @@
 
 package net.sourceforge.openutils.mgnlmessages.configuration;
 
-import info.magnolia.cms.beans.config.ObservedManager;
-import info.magnolia.cms.core.Content;
-import info.magnolia.cms.core.HierarchyManager;
-import info.magnolia.cms.core.ItemType;
-import info.magnolia.cms.core.NodeData;
-import info.magnolia.cms.util.ContentUtil;
-import info.magnolia.cms.util.FactoryUtil;
-import info.magnolia.cms.util.NodeDataUtil;
-import info.magnolia.context.MgnlContext;
+import info.magnolia.cms.core.MgnlNodeType;
+import info.magnolia.context.SystemContext;
+import info.magnolia.jcr.RuntimeRepositoryException;
+import info.magnolia.jcr.util.NodeUtil;
+import info.magnolia.jcr.util.PropertyUtil;
+import info.magnolia.objectfactory.Components;
 import info.magnolia.repository.RepositoryConstants;
+import it.openutils.mgnlutils.api.NodeUtilsExt;
+import it.openutils.mgnlutils.api.ObservedManagerAdapter;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 
 import javax.inject.Singleton;
+import javax.jcr.Node;
 import javax.jcr.RepositoryException;
+import javax.jcr.Session;
 
 import net.sourceforge.openutils.mgnlmessages.lifecycle.MessagesModuleLifecycle;
 
@@ -49,13 +49,13 @@ import org.apache.commons.lang.StringUtils;
  * @author molaschi
  */
 @Singleton
-public class MessagesConfigurationManager extends ObservedManager
+public class MessagesConfigurationManager extends ObservedManagerAdapter
 {
 
     /**
      * Folder type
      */
-    public static final ItemType FOLDER = ItemType.CONTENT;
+    public static final String FOLDER = MgnlNodeType.NT_CONTENT;
 
     private List<Locale> locales = new ArrayList<Locale>();
 
@@ -75,66 +75,75 @@ public class MessagesConfigurationManager extends ObservedManager
      */
     @Override
     @SuppressWarnings("unchecked")
-    protected void onRegister(Content node)
+    protected void onRegister(Node node)
     {
-        if (node.getNodeDataCollection() != null)
+        try
         {
-            locales.clear();
-
-            for (Iterator iter = ContentUtil.getAllChildren(node).iterator(); iter.hasNext();)
+            if (node.hasProperties())
             {
-                Content langNode = (Content) iter.next();
-                locales.add(new Locale(NodeDataUtil.getString(langNode, "language"), NodeDataUtil.getString(
-                    langNode,
-                    "country")));
-            }
+                locales.clear();
 
-            Collections.sort(locales, new Comparator<Locale>()
-            {
-
-                /**
-                 * {@inheritDoc}
-                 */
-                public int compare(Locale o1, Locale o2)
+                Iterable<Node> nodes = NodeUtil.getNodes(node, NodeUtil.EXCLUDE_META_DATA_FILTER);
+                for (Node langNode : nodes)
                 {
-                    if (o1.getLanguage().equals(o2.getLanguage()))
-                    {
-                        return o1.getCountry().compareTo(o2.getCountry());
-                    }
-
-                    return o1.getLanguage().compareTo(o2.getLanguage());
+                    locales.add(new Locale(PropertyUtil.getString(langNode, "language"), PropertyUtil.getString(
+                        langNode,
+                        "country")));
                 }
 
-            });
-        }
-    }
+                Collections.sort(locales, new Comparator<Locale>()
+                {
 
-    public static MessagesConfigurationManager getInstance()
-    {
-        return (MessagesConfigurationManager) FactoryUtil.getSingleton(MessagesConfigurationManager.class);
+                    /**
+                     * {@inheritDoc}
+                     */
+                    public int compare(Locale o1, Locale o2)
+                    {
+                        if (o1.getLanguage().equals(o2.getLanguage()))
+                        {
+                            return o1.getCountry().compareTo(o2.getCountry());
+                        }
+
+                        return o1.getLanguage().compareTo(o2.getLanguage());
+                    }
+
+                });
+            }
+        }
+        catch (RepositoryException e)
+        {
+            throw new RuntimeRepositoryException(e);
+        }
     }
 
     public static List<Locale> getAvaiableLocales()
     {
-        return getInstance().getLocales();
+        return Components.getComponent(MessagesConfigurationManager.class).getLocales();
     }
 
     @SuppressWarnings("unchecked")
     public static List<String> getBaseNames()
     {
-        HierarchyManager mgr = MgnlContext.getSystemContext().getHierarchyManager(RepositoryConstants.CONFIG);
+        Session session;
         try
         {
-            Content basenamesNode = mgr.getContent("/modules/messages/basenames");
-            if (basenamesNode == null || !basenamesNode.hasChildren(ItemType.CONTENTNODE.getSystemName()))
-            {
-                return new ArrayList<String>();
-            }
+            session = Components.getComponent(SystemContext.class).getJCRSession(RepositoryConstants.CONFIG);
+        }
+        catch (RepositoryException e)
+        {
+            throw new RuntimeRepositoryException(e);
+        }
+        try
+        {
+            Node basenamesNode = session.getNode("/modules/messages/basenames");
+
+            Iterable<Node> nodes = NodeUtil.getNodes(basenamesNode, NodeUtil.EXCLUDE_META_DATA_FILTER);
+
             List<String> basenames = new ArrayList<String>();
-            for (Iterator it = basenamesNode.getChildren(ItemType.CONTENTNODE.getSystemName()).iterator(); it.hasNext();)
+
+            for (Node bn : nodes)
             {
-                Content bn = (Content) it.next();
-                basenames.add(NodeDataUtil.getString(bn, "basename"));
+                basenames.add(PropertyUtil.getString(bn, "basename"));
             }
             return basenames;
         }
@@ -146,47 +155,33 @@ public class MessagesConfigurationManager extends ObservedManager
 
     public static void saveKeyValue(String key, String value, String locale) throws RepositoryException
     {
-        HierarchyManager mgr = MgnlContext.getSystemContext().getHierarchyManager(MessagesModuleLifecycle.REPO);
+        Session session;
+        try
+        {
+            session = Components.getComponent(SystemContext.class).getJCRSession(MessagesModuleLifecycle.REPO);
+        }
+        catch (RepositoryException e)
+        {
+            throw new RuntimeRepositoryException(e);
+        }
+
         String path = "/" + StringUtils.replace(key, ".", "/");
-        Content content = getOrCreateFullPath(mgr, path);
+
+        Node content = NodeUtil.createPath(session.getRootNode(), path, MgnlNodeType.NT_CONTENTNODE);
 
         if (!StringUtils.isEmpty(locale))
         {
-            NodeData nd = NodeDataUtil.getOrCreate(content, locale);
             if (!StringUtils.isEmpty(value))
             {
-                nd.setValue(value);
+                content.setProperty(locale, value);
             }
             else
             {
-                nd.delete();
+                NodeUtilsExt.deletePropertyIfExist(content, locale);
             }
         }
 
-        mgr.save();
-    }
-
-    private static Content getOrCreateFullPath(HierarchyManager mgr, String path) throws RepositoryException
-    {
-        try
-        {
-            return mgr.getContent(path);
-        }
-        catch (RepositoryException ex)
-        {
-            String parent = StringUtils.substringBeforeLast(path, "/");
-            String label = StringUtils.substringAfterLast(path, "/");
-            if (!StringUtils.isEmpty(parent))
-            {
-                getOrCreateFullPath(mgr, parent);
-            }
-            else
-            {
-                parent = "/";
-            }
-
-            return mgr.createContent(parent, label, ItemType.CONTENTNODE.getSystemName());
-        }
+        session.save();
     }
 
     /**

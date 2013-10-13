@@ -20,7 +20,6 @@
 package it.openutils.mgnlutils.api;
 
 import info.magnolia.cms.core.Path;
-import info.magnolia.cms.util.ContentUtil;
 import info.magnolia.content2bean.Content2BeanException;
 import info.magnolia.content2bean.Content2BeanUtil;
 import info.magnolia.context.MgnlContext;
@@ -191,14 +190,16 @@ public class NodeUtilsExt
         return toBean(node, false, outclass);
     }
 
+    @SuppressWarnings("deprecation")
     public static Object toBean(Node node, boolean recursive, Class outclass) throws Content2BeanException
     {
-        return Content2BeanUtil.toBean(ContentUtil.asContent(node), recursive, outclass);
+        return Content2BeanUtil.toBean(info.magnolia.cms.util.ContentUtil.asContent(node), recursive, outclass);
     }
 
+    @SuppressWarnings("deprecation")
     public static String getUniqueLabel(Node parent, String label)
     {
-        return Path.getUniqueLabel(ContentUtil.asContent(parent), label);
+        return Path.getUniqueLabel(info.magnolia.cms.util.ContentUtil.asContent(parent), label);
     }
 
     public static Node wrap(Node node)

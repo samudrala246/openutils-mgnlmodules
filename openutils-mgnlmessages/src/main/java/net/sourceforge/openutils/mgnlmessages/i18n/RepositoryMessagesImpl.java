@@ -19,12 +19,11 @@
 
 package net.sourceforge.openutils.mgnlmessages.i18n;
 
-import info.magnolia.cms.core.Content;
-import info.magnolia.cms.core.HierarchyManager;
 import info.magnolia.cms.i18n.AbstractMessagesImpl;
-import info.magnolia.cms.util.NodeDataUtil;
 import info.magnolia.cms.util.ObservationUtil;
-import info.magnolia.context.MgnlContext;
+import info.magnolia.context.SystemContext;
+import info.magnolia.jcr.util.PropertyUtil;
+import info.magnolia.objectfactory.Components;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -32,9 +31,11 @@ import java.util.List;
 import java.util.Locale;
 import java.util.MissingResourceException;
 
+import javax.jcr.Node;
 import javax.jcr.Property;
 import javax.jcr.PropertyIterator;
 import javax.jcr.RepositoryException;
+import javax.jcr.Session;
 import javax.jcr.observation.EventIterator;
 import javax.jcr.observation.EventListener;
 
@@ -89,22 +90,22 @@ public class RepositoryMessagesImpl extends AbstractMessagesImpl
         try
         {
             String handle = StringUtils.replace(key, ".", "/");
-            HierarchyManager hm = MgnlContext.getSystemContext().getHierarchyManager(
+            Session hm = Components.getComponent(SystemContext.class).getJCRSession(
                 MessagesConfigurationManager.MESSAGES_REPO);
-            Content c = hm.getContent(handle);
+            Node c = hm.getNode(handle);
             String locale1 = this.locale.getLanguage() + "_" + this.locale.getCountry();
             String locale2 = this.locale.getLanguage();
-            if (c == null || (!c.hasNodeData(locale1) && !c.hasNodeData(locale2)))
+            if (c == null || (!c.hasProperty(locale1) && !c.hasProperty(locale2)))
             {
                 return "???" + key + "???";
             }
-            if (c.hasNodeData(locale1))
+            if (c.hasProperty(locale1))
             {
-                return NodeDataUtil.getString(c, locale1);
+                return PropertyUtil.getString(c, locale1);
             }
             else
             {
-                return NodeDataUtil.getString(c, locale2);
+                return PropertyUtil.getString(c, locale2);
             }
         }
         catch (MissingResourceException e)

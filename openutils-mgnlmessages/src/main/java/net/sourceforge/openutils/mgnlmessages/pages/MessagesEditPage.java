@@ -19,13 +19,14 @@
 
 package net.sourceforge.openutils.mgnlmessages.pages;
 
-import info.magnolia.cms.core.Content;
-import info.magnolia.cms.core.HierarchyManager;
-import info.magnolia.cms.core.ItemType;
+import info.magnolia.cms.core.MetaData;
 import info.magnolia.cms.core.Path;
 import info.magnolia.cms.i18n.Messages;
 import info.magnolia.context.MgnlContext;
+import info.magnolia.context.SystemContext;
+import info.magnolia.jcr.util.MetaDataUtil;
 import info.magnolia.module.admininterface.TemplatedMVCHandler;
+import info.magnolia.objectfactory.Components;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -36,8 +37,10 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 
+import javax.jcr.Node;
 import javax.jcr.PathNotFoundException;
 import javax.jcr.RepositoryException;
+import javax.jcr.Session;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -48,6 +51,8 @@ import net.sourceforge.openutils.mgnlmessages.lifecycle.MessagesModuleLifecycle;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import com.sun.xml.internal.ws.util.MetadataUtil;
 
 
 /**
@@ -185,16 +190,16 @@ public class MessagesEditPage extends TemplatedMVCHandler
     {
         try
         {
-            HierarchyManager mgr = MgnlContext.getSystemContext().getHierarchyManager(MessagesModuleLifecycle.REPO);
-            String path = "/" + StringUtils.replace(key, ".", "/");
-            mgr.delete(path);
+            Session session = Components.getComponent(SystemContext.class).getJCRSession(MessagesModuleLifecycle.REPO);
 
-            mgr.save();
+            String path = "/" + StringUtils.replace(key, ".", "/");
+            session.removeItem(path);
+            session.save();
 
             String parent = StringUtils.substringBeforeLast(path, "/");
             if (!StringUtils.isEmpty(parent))
             {
-                if (!mgr.getContent(parent).hasChildren(ItemType.CONTENTNODE.getSystemName()))
+                if (!session.getNode(parent).hasNodes())
                 {
                     key = StringUtils.replace(parent.substring(1), "/", ".");
                     removekey();
@@ -283,15 +288,15 @@ public class MessagesEditPage extends TemplatedMVCHandler
      */
     protected void moveNode(String source, String destination) throws RepositoryException
     {
-        HierarchyManager hm = MgnlContext.getSystemContext().getHierarchyManager(MessagesModuleLifecycle.REPO);
+        Session session = Components.getComponent(SystemContext.class).getJCRSession(MessagesModuleLifecycle.REPO);
 
         String goTo = destination;
 
-        if (hm.isExist(destination))
+        if (session.itemExists(destination))
         {
             String parentPath = StringUtils.substringBeforeLast(destination, "/"); //$NON-NLS-1$
             String label = StringUtils.substringAfterLast(destination, "/"); //$NON-NLS-1$
-            label = Path.getUniqueLabel(hm, parentPath, label);
+            label = Path.getUniqueLabel(session, parentPath, label);
             goTo = parentPath + "/" + label; //$NON-NLS-1$
         }
         if (destination.indexOf(source + "/") == 0)
@@ -302,18 +307,18 @@ public class MessagesEditPage extends TemplatedMVCHandler
 
         try
         {
-            hm.moveTo(source, goTo);
+            session.move(source, goTo);
         }
         catch (Exception e)
         {
             return;
         }
 
-        Content newContent = hm.getContent(destination);
+        Node newContent = session.getNode(destination);
         try
         {
-            newContent.updateMetaData();
-            newContent.getMetaData().setUnActivated();
+            MetaDataUtil.updateMetaData(newContent);
+            MetaDataUtil.getMetaData(newContent).setUnActivated();
         }
         catch (RepositoryException e)
         {
@@ -322,7 +327,7 @@ public class MessagesEditPage extends TemplatedMVCHandler
                 log.debug("Exception caught: " + e.getMessage(), e); //$NON-NLS-1$
             }
         }
-        hm.save();
+        session.save();
     }
 
     /**

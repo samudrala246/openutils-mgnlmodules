@@ -49,7 +49,7 @@ public class RepositoryMessagesImplTest extends TestNgRepositoryTestcase
     public void setUp() throws Exception
     {
         super.setUp();
-        MgnlContext.getHierarchyManager(MessagesConfigurationManager.MESSAGES_REPO).save();
+        MgnlContext.getJCRSession(MessagesConfigurationManager.MESSAGES_REPO).save();
     }
 
     /**

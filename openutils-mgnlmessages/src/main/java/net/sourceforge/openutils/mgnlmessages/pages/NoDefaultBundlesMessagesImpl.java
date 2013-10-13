@@ -19,11 +19,10 @@
 
 package net.sourceforge.openutils.mgnlmessages.pages;
 
-import info.magnolia.cms.core.Content;
-import info.magnolia.cms.core.HierarchyManager;
 import info.magnolia.cms.util.ClasspathResourcesUtil;
-import info.magnolia.cms.util.NodeDataUtil;
-import info.magnolia.context.MgnlContext;
+import info.magnolia.context.SystemContext;
+import info.magnolia.jcr.util.PropertyUtil;
+import info.magnolia.objectfactory.Components;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -32,7 +31,9 @@ import java.util.MissingResourceException;
 import java.util.PropertyResourceBundle;
 import java.util.ResourceBundle;
 
+import javax.jcr.Node;
 import javax.jcr.RepositoryException;
+import javax.jcr.Session;
 
 import net.sourceforge.openutils.mgnlmessages.configuration.MessagesConfigurationManager;
 import net.sourceforge.openutils.mgnlmessages.i18n.EmptyResourceBundle;
@@ -100,15 +101,16 @@ public class NoDefaultBundlesMessagesImpl extends info.magnolia.cms.i18n.Default
         try
         {
             String handle = StringUtils.replace(key, ".", "/");
-            HierarchyManager hm = MgnlContext.getSystemContext().getHierarchyManager(
+            Session hm = Components.getComponent(SystemContext.class).getJCRSession(
                 MessagesConfigurationManager.MESSAGES_REPO);
-            Content c = hm.getContent(handle);
+
+            Node c = hm.getNode(handle);
             String locale1 = this.locale.getLanguage()
                 + (StringUtils.isEmpty(this.locale.getCountry()) ? "" : "_" + this.locale.getCountry());
 
-            if (c != null && c.hasNodeData(locale1))
+            if (c != null && c.hasProperty(locale1))
             {
-                return NodeDataUtil.getString(c, locale1);
+                return PropertyUtil.getString(c, locale1);
             }
 
         }
@@ -168,9 +170,7 @@ public class NoDefaultBundlesMessagesImpl extends info.magnolia.cms.i18n.Default
         return bundle;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    @Override
     public boolean equals(Object object)
     {
         if (!(object instanceof NoDefaultBundlesMessagesImpl))
@@ -181,9 +181,7 @@ public class NoDefaultBundlesMessagesImpl extends info.magnolia.cms.i18n.Default
         return new EqualsBuilder().append(this.basename, rhs.basename).append(this.locale, rhs.locale).isEquals();
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    @Override
     public int hashCode()
     {
         return new HashCodeBuilder(-399088031, -1971683455).append(basename).append(locale).toHashCode();

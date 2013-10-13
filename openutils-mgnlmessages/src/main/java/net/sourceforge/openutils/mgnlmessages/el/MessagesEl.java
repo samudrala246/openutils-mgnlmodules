@@ -20,12 +20,18 @@
 package net.sourceforge.openutils.mgnlmessages.el;
 
 import info.magnolia.cms.beans.config.ServerConfiguration;
-import info.magnolia.cms.i18n.I18nContentSupportFactory;
+import info.magnolia.cms.i18n.I18nContentSupport;
 import info.magnolia.cms.i18n.MessagesManager;
 import info.magnolia.cms.security.Permission;
+import info.magnolia.cms.security.PermissionUtil;
 import info.magnolia.context.MgnlContext;
+import info.magnolia.jcr.RuntimeRepositoryException;
+import info.magnolia.objectfactory.Components;
+import it.openutils.mgnlutils.el.MgnlUtilsDeprecatedAdapters;
 
 import java.text.MessageFormat;
+
+import javax.jcr.RepositoryException;
 
 import net.sourceforge.openutils.elfunctions.ElStringUtils;
 
@@ -47,20 +53,19 @@ public class MessagesEl
     {
         if (defaultLocale)
         {
-            return MessagesManager.getMessages(I18nContentSupportFactory.getI18nSupport().getFallbackLocale()).get(
-                key,
-                arguments);
+            return MessagesManager
+                .getMessages(Components.getComponent(I18nContentSupport.class).getFallbackLocale())
+                .get(key, arguments);
         }
         else
         {
-            String value = MessagesManager.getMessages(I18nContentSupportFactory.getI18nSupport().getLocale()).get(
-                key,
-                arguments);
+            String value = MessagesManager
+                .getMessages(Components.getComponent(I18nContentSupport.class).getLocale())
+                .get(key, arguments);
             if (fallback && (StringUtils.isBlank(value) || StringUtils.startsWith(value, "???")))
             {
-                return MessagesManager.getMessages(I18nContentSupportFactory.getI18nSupport().getFallbackLocale()).get(
-                    key,
-                    arguments);
+                return MessagesManager.getMessages(
+                    Components.getComponent(I18nContentSupport.class).getFallbackLocale()).get(key, arguments);
             }
             return value;
         }
@@ -70,26 +75,38 @@ public class MessagesEl
 
     public static String messageSimple(String key, Object[] arguments)
     {
-        if (MgnlContext.getAggregationState().getMainContent() != null
-            && (ServerConfiguration.getInstance().isAdmin() && !MgnlContext.getAggregationState().isPreviewMode())
-            && MgnlContext.getAggregationState().getMainContent().isGranted(Permission.WRITE)) // equivalent of
-                                                                                               // CmsFunctions.canEdit()
+        try
         {
-            String keyCssClass = StringUtils.replace(key, ".", "_");
+            if (MgnlContext.getAggregationState().getMainContent() != null
+                && (Components.getComponent(ServerConfiguration.class).isAdmin() && !MgnlContext
+                    .getAggregationState()
+                    .isPreviewMode())
+                && PermissionUtil.isGranted(MgnlUtilsDeprecatedAdapters.getMainContent(), Permission.WRITE))
+            {
 
-            String tag = MessageFormat.format(MSGS_TPL, keyCssClass, key, I18nContentSupportFactory
-                .getI18nSupport()
-                .getLocale(), I18nContentSupportFactory.getI18nSupport().getFallbackLocale(),
-            // evito di sostituire i placeholder quando sono in
-            // edit-mode
-            // StringEscapeUtils.escapeHtml(message(key, false, true,
-            // arguments)),
-                StringEscapeUtils.escapeHtml(message(key, false, true)),
-                // evito di sostituire i placeholder quando sono in
-                // edit-mode
-                // message(key, false, false, arguments));
-                message(key, false, false));
-            return tag;
+                String keyCssClass = StringUtils.replace(key, ".", "_");
+
+                String tag = MessageFormat.format(
+                    MSGS_TPL,
+                    keyCssClass,
+                    key,
+                    Components.getComponent(I18nContentSupport.class).getLocale(),
+                    Components.getComponent(I18nContentSupport.class).getFallbackLocale(),
+                    // evito di sostituire i placeholder quando sono in
+                    // edit-mode
+                    // StringEscapeUtils.escapeHtml(message(key, false, true,
+                    // arguments)),
+                    StringEscapeUtils.escapeHtml(message(key, false, true)),
+                    // evito di sostituire i placeholder quando sono in
+                    // edit-mode
+                    // message(key, false, false, arguments));
+                    message(key, false, false));
+                return tag;
+            }
+        }
+        catch (RepositoryException e)
+        {
+            throw new RuntimeRepositoryException(e);
         }
         return message(key, true, false, arguments);
     }
