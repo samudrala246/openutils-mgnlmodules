@@ -19,10 +19,10 @@
     <sv:value>admin</sv:value>
   </sv:property>
   <sv:property sv:name="renderType" sv:type="String">
-    <sv:value>jsp</sv:value>
+    <sv:value>freemarker</sv:value>
   </sv:property>
   <sv:property sv:name="templateScript" sv:type="String">
-    <sv:value>/templates/samples-controls/paragraph-buttonSet.jsp</sv:value>
+    <sv:value>/samples-controls/paragraph-buttonSet.ftl</sv:value>
   </sv:property>
   <sv:property sv:name="title" sv:type="String">
     <sv:value>Button set sample</sv:value>
@@ -44,7 +44,7 @@
       <sv:value>2008-09-25T12:45:26.721+02:00</sv:value>
     </sv:property>
     <sv:property sv:name="mgnl:lastmodified" sv:type="Date">
-      <sv:value>2013-07-05T15:58:37.273+02:00</sv:value>
+      <sv:value>2013-10-13T18:18:32.170+02:00</sv:value>
     </sv:property>
   </sv:node>
 </sv:node>

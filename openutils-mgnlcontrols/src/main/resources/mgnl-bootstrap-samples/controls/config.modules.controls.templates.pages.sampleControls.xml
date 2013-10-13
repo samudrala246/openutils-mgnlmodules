@@ -13,10 +13,10 @@
     <sv:value>admin</sv:value>
   </sv:property>
   <sv:property sv:name="renderType" sv:type="String">
-    <sv:value>jsp</sv:value>
+    <sv:value>freemarker</sv:value>
   </sv:property>
   <sv:property sv:name="templateScript" sv:type="String">
-    <sv:value>/templates/samples-controls/template.jsp</sv:value>
+    <sv:value>/samples-controls/template-controls.ftl</sv:value>
   </sv:property>
   <sv:property sv:name="title" sv:type="String">
     <sv:value>Controls sample template</sv:value>
@@ -41,7 +41,7 @@
       <sv:value>2008-09-23T16:56:46.344+02:00</sv:value>
     </sv:property>
     <sv:property sv:name="mgnl:lastmodified" sv:type="Date">
-      <sv:value>2013-06-14T11:07:52.810+02:00</sv:value>
+      <sv:value>2013-10-13T18:14:30.307+02:00</sv:value>
     </sv:property>
   </sv:node>
   <sv:node sv:name="areas">
@@ -90,12 +90,6 @@
       <sv:property sv:name="jcr:createdBy" sv:type="String">
         <sv:value>admin</sv:value>
       </sv:property>
-      <sv:property sv:name="templateScript" sv:type="String">
-        <sv:value>/templates/samples-controls/area.jsp</sv:value>
-      </sv:property>
-      <sv:property sv:name="type" sv:type="String">
-        <sv:value>list</sv:value>
-      </sv:property>
       <sv:node sv:name="MetaData">
         <sv:property sv:name="jcr:primaryType" sv:type="Name">
           <sv:value>mgnl:metaData</sv:value>
@@ -113,7 +107,7 @@
           <sv:value>2012-03-21T07:30:36.643+01:00</sv:value>
         </sv:property>
         <sv:property sv:name="mgnl:lastmodified" sv:type="Date">
-          <sv:value>2013-06-14T14:22:47.964+02:00</sv:value>
+          <sv:value>2013-10-13T18:15:58.349+02:00</sv:value>
         </sv:property>
       </sv:node>
       <sv:node sv:name="availableComponents">

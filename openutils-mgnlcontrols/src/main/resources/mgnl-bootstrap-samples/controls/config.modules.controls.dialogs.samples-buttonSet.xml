@@ -151,8 +151,14 @@
       <sv:property sv:name="label" sv:type="String">
         <sv:value>Bar</sv:value>
       </sv:property>
+      <sv:property sv:name="multiple" sv:type="String">
+        <sv:value>true</sv:value>
+      </sv:property>
       <sv:property sv:name="optionsProvider" sv:type="String">
         <sv:value>net.sourceforge.openutils.mgnlcontrols.samples.SampleButtonSetOptionsProvider</sv:value>
+      </sv:property>
+      <sv:property sv:name="saveHandler" sv:type="String">
+        <sv:value>info.magnolia.module.admininterface.MultiValueSaveHandler</sv:value>
       </sv:property>
       <sv:node sv:name="MetaData">
         <sv:property sv:name="jcr:primaryType" sv:type="Name">
@@ -171,7 +177,7 @@
           <sv:value>2013-06-14T15:54:03.927+02:00</sv:value>
         </sv:property>
         <sv:property sv:name="mgnl:lastmodified" sv:type="Date">
-          <sv:value>2013-07-05T15:56:11.917+02:00</sv:value>
+          <sv:value>2013-10-13T20:43:46.798+02:00</sv:value>
         </sv:property>
       </sv:node>
     </sv:node>
