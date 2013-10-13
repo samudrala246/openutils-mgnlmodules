@@ -84,7 +84,7 @@ public abstract class MediaWithPreviewImageTypeHandler extends BaseTypeHandler
         {
             try
             {
-                return media.hasProperty(PREVIEW_NODEDATA_NAME);
+                return media.hasNode(PREVIEW_NODEDATA_NAME);
             }
             catch (RepositoryException e)
             {

@@ -84,45 +84,33 @@ public class DocumentTypeHandler extends MediaWithPreviewImageTypeHandler
     {
 
         Node data = getOriginalFileNodeData(media);
-        try
+
+        if (StringUtils.equalsIgnoreCase(PropertyUtil.getString(data, FileProperties.EXTENSION), "pdf"))
         {
-            if (NodeUtil.isNodeType(data, NodeType.NT_RESOURCE))
+
+            try
             {
+                String filename = PropertyUtil.getString(data, FileProperties.PROPERTY_FILENAME) + ".png";
 
-                if (StringUtils.equalsIgnoreCase(PropertyUtil.getString(data, FileProperties.EXTENSION), "pdf"))
+                InputStream stream = data.getProperty(MgnlNodeType.JCR_DATA).getValue().getBinary().getStream();
+                try
                 {
-
-                    try
-                    {
-                        String filename = PropertyUtil.getString(data, FileProperties.PROPERTY_FILENAME) + ".png";
-
-                        InputStream stream = getOriginalFileNodeData(data)
-                            .getProperty(MgnlNodeType.JCR_DATA)
-                            .getValue()
-                            .getBinary()
-                            .getStream();
-                        try
-                        {
-                            createPdfPreview(media, stream, filename);
-                        }
-                        finally
-                        {
-                            IOUtils.closeQuietly(stream);
-                        }
-                    }
-                    catch (Throwable e)
-                    {
-                        log.warn(
-                            "Unable to generate a preview for {} due to a {}: {}",
-                            new Object[]{NodeUtil.getPathIfPossible(media), e.getClass().getName(), e.getMessage() });
-                    }
+                    createPdfPreview(media, stream, filename);
                 }
-
+                finally
+                {
+                    IOUtils.closeQuietly(stream);
+                }
             }
-        }
-        catch (RepositoryException e)
-        {
-            // do nothing
+            catch (Throwable e)
+            {
+                log.warn("Unable to generate a preview for "
+                    + NodeUtil.getPathIfPossible(media)
+                    + " due to a "
+                    + e.getClass().getName()
+                    + ": "
+                    + e.getMessage());
+            }
         }
 
         return super.onPostSave(media);

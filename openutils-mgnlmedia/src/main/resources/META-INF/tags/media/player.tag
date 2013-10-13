@@ -41,7 +41,6 @@
   <c:set var="baseUrl" scope="request">
     <jsp:text>${pageContext.request.scheme}://${pageContext.request.serverName}</jsp:text>
     <c:if test="${(pageContext.request.scheme eq 'http' and pageContext.request.serverPort != 80)}">:${pageContext.request.serverPort}</c:if>
-    <jsp:text>${pageContext.request.contextPath}</jsp:text>
   </c:set>
   <c:if test="${empty width or width eq 0 }">
     <c:set var="width" value="${media:width(mediaNode)}" />
@@ -68,10 +67,10 @@
     <c:choose>
       <c:when test="${previewwidth gt 0 and previewheight gt 0}">
         <c:set var="previewres" value="${previewwidth}x${previewheight}" />
-        <c:set var="preview" value="${pageContext.request.contextPath}${media:urlres(mediaNode, previewres)}" />
+        <c:set var="preview" value="${media:urlres(mediaNode, previewres)}" />
       </c:when>
       <c:otherwise>
-        <c:set var="preview" value="${pageContext.request.contextPath}${media:thumbnail(mediaNode)}" />
+        <c:set var="preview" value="${media:thumbnail(mediaNode)}" />
       </c:otherwise>
     </c:choose>
   </c:if>

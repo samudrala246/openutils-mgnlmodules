@@ -118,7 +118,7 @@ pzc: apply zoom and crop to image as specified by the pzc parameter (value must 
             <c:if test="${empty alt}">
               <c:set var="alt" value="${mediaNode.title}" />
             </c:if>
-            <![CDATA[<img src="${pageContext.request.contextPath}${url}" alt="${alt}" title="${alt}"]]>
+            <![CDATA[<img src="${url}" alt="${alt}" title="${alt}"]]>
             <c:if test="${not empty id}">
               <![CDATA[ id="${id}"]]>
             </c:if>
@@ -199,11 +199,11 @@ pzc: apply zoom and crop to image as specified by the pzc parameter (value must 
           </c:choose>
           
           <c:if test="${!empty preview}">
-             <c:set var="preview" value="${pageContext.request.contextPath}${preview}" />
+             <c:set var="preview" value="${preview}" />
           </c:if>
     
           <media:swfobject 
-            player="${pageContext.request.contextPath}${media:url(mediaNode)}"
+            player="${media:url(mediaNode)}"
             width="${width gt 0 ? width : ''}"
             height="${height gt 0? height : ''}" 
             image="${preview}"
@@ -219,7 +219,7 @@ pzc: apply zoom and crop to image as specified by the pzc parameter (value must 
       <![CDATA[<!-- missing media: ${item} -->]]>
     </c:when>
     <c:when test="${fn:startsWith(item, '/')}">
-      <![CDATA[<img src="${pageContext.request.contextPath}${item}" alt="" width="${width gt 0 ? width : ''}" height="${height gt 0? height : ''}" />]]>
+      <![CDATA[<img src="${item}" alt="" width="${width gt 0 ? width : ''}" height="${height gt 0? height : ''}" />]]>
     </c:when>
     <c:otherwise>
       <![CDATA[<!-- missing media: ${item} -->]]>

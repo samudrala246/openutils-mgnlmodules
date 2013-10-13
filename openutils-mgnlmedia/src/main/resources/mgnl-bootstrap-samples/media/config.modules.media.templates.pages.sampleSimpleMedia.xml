@@ -13,10 +13,10 @@
     <sv:value>admin</sv:value>
   </sv:property>
   <sv:property sv:name="renderType" sv:type="String">
-    <sv:value>jsp</sv:value>
+    <sv:value>freemarker</sv:value>
   </sv:property>
   <sv:property sv:name="templateScript" sv:type="String">
-    <sv:value>/templates/samples-media/template.jsp</sv:value>
+    <sv:value>/samples-media/template.ftl</sv:value>
   </sv:property>
   <sv:property sv:name="title" sv:type="String">
     <sv:value>SimpleMedia sample template</sv:value>
@@ -41,7 +41,7 @@
       <sv:value>2008-09-23T16:56:46.344+02:00</sv:value>
     </sv:property>
     <sv:property sv:name="mgnl:lastmodified" sv:type="Date">
-      <sv:value>2012-04-10T10:03:46.018+02:00</sv:value>
+      <sv:value>2013-10-13T21:16:25.602+02:00</sv:value>
     </sv:property>
   </sv:node>
   <sv:node sv:name="areas">
@@ -89,9 +89,6 @@
       </sv:property>
       <sv:property sv:name="jcr:createdBy" sv:type="String">
         <sv:value>admin</sv:value>
-      </sv:property>
-      <sv:property sv:name="templateScript" sv:type="String">
-        <sv:value>/templates/samples-media/area.jsp</sv:value>
       </sv:property>
       <sv:property sv:name="type" sv:type="String">
         <sv:value>list</sv:value>

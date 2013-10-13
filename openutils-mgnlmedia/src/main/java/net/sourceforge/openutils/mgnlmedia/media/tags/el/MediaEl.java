@@ -248,9 +248,28 @@ public final class MediaEl
                 Integer width = NumberUtils.toInt(PropertyUtil.getString(prop, FileProperties.PROPERTY_WIDTH));
                 Integer height = NumberUtils.toInt(PropertyUtil.getString(prop, FileProperties.PROPERTY_HEIGHT));
                 Point size = ImageUtils.parseForSize(resolution);
+
+                boolean isSameSizeAsOriginal = false;
                 if (width == size.x && height == size.y)
                 {
-                    return appendBaseUrl(mcm.getURIMappingPrefix() + prop.getProperty(FileProperties.PATH));
+                    isSameSizeAsOriginal = true;
+                }
+
+                if (!isSameSizeAsOriginal)
+                {
+                    char controlchar = StringUtils.lowerCase(resolution).charAt(0);
+                    if (controlchar == 'l')
+                    {
+                        if ((width == size.x && height < size.y) || (width < size.x && height == size.y))
+                        {
+                            isSameSizeAsOriginal = true;
+                        }
+                    }
+                }
+
+                if (isSameSizeAsOriginal)
+                {
+                    return appendBaseUrl(mcm.getURIMappingPrefix() + NodeUtilsExt.getBinaryPath(prop));
                 }
             }
 
@@ -263,7 +282,7 @@ public final class MediaEl
             String resString = "res-" + ImageUtils.getResolutionPath(resolution);
             if (resolutions != null && resolutions.hasNode(resString))
             {
-                String resPath = PropertyUtil.getString(resolutions.getNode(resString), FileProperties.PATH);
+                String resPath = NodeUtilsExt.getBinaryPath(resolutions.getNode(resString));
 
                 return appendBaseUrl(mcm.getURIMappingPrefix() + resPath);
 
@@ -580,10 +599,19 @@ public final class MediaEl
 
     private static String appendBaseUrl(String url)
     {
-        String baseurl = module().getBaseurl();
-        if (baseurl != null && StringUtils.isNotEmpty(url) && !StringUtils.contains(url, "://"))
+
+        if (StringUtils.isNotEmpty(url) && !StringUtils.contains(url, "://"))
         {
-            return baseurl + url;
+            if (MgnlContext.isWebContext())
+            {
+                url = StringUtils.defaultString(MgnlContext.getWebContext().getContextPath()) + url;
+            }
+
+            String baseurl = module().getBaseurl();
+            if (baseurl != null)
+            {
+                return baseurl + url;
+            }
         }
         return url;
     }

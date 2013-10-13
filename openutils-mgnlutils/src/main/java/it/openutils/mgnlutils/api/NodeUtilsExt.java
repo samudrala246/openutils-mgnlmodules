@@ -211,4 +211,13 @@ public class NodeUtilsExt
         // TODO introduce configured wrapping
         return node;
     }
+
+    public static String getBinaryPath(Node node)
+    {
+        if (node == null)
+        {
+            return null;
+        }
+        return NodeUtil.getPathIfPossible(node) + "/" + PropertyUtil.getString(node, "fileName");
+    }
 }
