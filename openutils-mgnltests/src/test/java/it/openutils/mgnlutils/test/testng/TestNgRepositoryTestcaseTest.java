@@ -19,17 +19,19 @@
 
 package it.openutils.mgnlutils.test.testng;
 
-import info.magnolia.cms.core.Content;
-import info.magnolia.cms.core.HierarchyManager;
 import info.magnolia.context.MgnlContext;
+import info.magnolia.jcr.util.NodeUtil;
 import info.magnolia.module.ModuleRegistry;
+import info.magnolia.objectfactory.Components;
 import info.magnolia.repository.RepositoryConstants;
 import it.openutils.mgnlutils.test.ModuleConfiguration;
 import it.openutils.mgnlutils.test.RepositoryTestConfiguration;
 import it.openutils.mgnlutils.test.TestModule;
 import it.openutils.mgnlutils.test.TestNgRepositoryTestcase;
 
+import javax.jcr.Node;
 import javax.jcr.RepositoryException;
+import javax.jcr.Session;
 
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -45,26 +47,26 @@ public class TestNgRepositoryTestcaseTest extends TestNgRepositoryTestcase
     @Test
     public void repositoryTestConfigurationTest() throws RepositoryException
     {
-        HierarchyManager hm = MgnlContext.getHierarchyManager(RepositoryConstants.WEBSITE);
-        Assert.assertNotNull(hm);
+        Session session = MgnlContext.getJCRSession(RepositoryConstants.WEBSITE);
+        Assert.assertNotNull(session);
 
-        Content pets = hm.getContent("/pets");
+        Node pets = session.getNode("/pets");
         Assert.assertNotNull(pets);
 
-        Content letters = hm.getContent("/letters");
+        Node letters = session.getNode("/letters");
         Assert.assertNotNull(letters);
 
-        Assert.assertEquals(letters.getChildren().size(), 26);
+        Assert.assertEquals(NodeUtil.getCollectionFromNodeIterator(letters.getNodes()).size(), 26);
     }
 
     @Test
     public void moduleConfigAndStartTest()
     {
-        ModuleRegistry mr = ModuleRegistry.Factory.getInstance();
+        ModuleRegistry mr = Components.getComponent(ModuleRegistry.class);
 
         Assert.assertTrue(mr.getModuleNames().contains("testmodule"));
 
-        TestModule tm = (TestModule) ModuleRegistry.Factory.getInstance().getModuleInstance("testmodule");
+        TestModule tm = (TestModule) mr.getModuleInstance("testmodule");
         Assert.assertNotNull(tm);
         Assert.assertTrue(tm.isStarted());
 

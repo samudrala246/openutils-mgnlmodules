@@ -18,10 +18,7 @@
  */
 
 package it.openutils.mgnlutils.test;
-
-import info.magnolia.cms.beans.config.ContentRepository;
-import info.magnolia.cms.beans.config.PropertiesInitializer;
-import info.magnolia.cms.core.Content;
+ 
 import info.magnolia.cms.core.Path;
 import info.magnolia.cms.core.SystemProperty;
 import info.magnolia.cms.util.ClasspathResourcesUtil;
@@ -50,7 +47,6 @@ import info.magnolia.module.model.ModuleDefinition;
 import info.magnolia.module.model.reader.BetwixtModuleDefinitionReader;
 import info.magnolia.module.model.reader.DependencyCheckerImpl;
 import info.magnolia.objectfactory.Components;
-import info.magnolia.objectfactory.DefaultComponentProvider;
 import info.magnolia.objectfactory.configuration.ComponentConfiguration;
 import info.magnolia.objectfactory.configuration.ComponentProviderConfiguration;
 import info.magnolia.objectfactory.configuration.ComponentProviderConfigurationBuilder;
@@ -78,6 +74,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.jcr.ImportUUIDBehavior;
+import javax.jcr.Node;
 import javax.jcr.RepositoryException;
 
 import org.apache.commons.io.FileUtils;
@@ -110,7 +107,7 @@ public abstract class AbstractRepositoryTestcase
     public void setUp() throws Exception
     {
         // ignore mapping warnings
-        org.apache.log4j.Logger.getLogger(ContentRepository.class).setLevel(Level.ERROR);
+        org.apache.log4j.Logger.getLogger(RepositoryManager.class).setLevel(Level.ERROR);
 
         if (!this.getClass().isAnnotationPresent(RepositoryTestConfiguration.class))
         {
@@ -172,7 +169,8 @@ public abstract class AbstractRepositoryTestcase
         // if module is set it is stopped on tearDown
         for (ModuleConfiguration module : repositoryTestConfiguration.startModules())
         {
-            ((ModuleLifecycle) ModuleRegistry.Factory.getInstance().getModuleInstance(module.name())).stop(null);
+            ((ModuleLifecycle) Components.getComponent(ModuleRegistry.class).getModuleInstance(module.name()))
+                .stop(null);
         }
 
         if (repositoryTestConfiguration.autostart())
@@ -185,33 +183,36 @@ public abstract class AbstractRepositoryTestcase
                 logger.setLevel(Level.WARN);
             }
             MgnlContext.release();
-            MgnlContext.getSystemContext().release();
-            ContentRepository.shutdown();
+            Components.getComponent(SystemContext.class).release();
+
+            Components.getComponent(RepositoryManager.class).shutdown();
             if (true)
             {
                 cleanUp();
             }
             logger.setLevel(originalLogLevel);
         }
-        SystemProperty.getProperties().clear();
 
-        // ComponentsTestUtil.clear();
-        SystemProperty.getProperties().clear();
+        ComponentsTestUtil.clear();
         MgnlContext.setInstance(null);
     }
 
     // info.magnolia.test.MgnlTestCase.initDefaultImplementations()
-    private void initDefaultImplementations() throws IOException, ModuleManagementException {
+    private void initDefaultImplementations() throws IOException, ModuleManagementException
+    {
         final List<ModuleDefinition> modules = getModuleDefinitionsForTests();
         final ModuleRegistry mr = new ModuleRegistryImpl();
-        ModuleManagerImpl mm = new ModuleManagerImpl(null, new FixedModuleDefinitionReader(modules), mr, new DependencyCheckerImpl());
+        ModuleManagerImpl mm = new ModuleManagerImpl(
+            null,
+            new FixedModuleDefinitionReader(modules),
+            mr,
+            new DependencyCheckerImpl());
         mm.loadDefinitions();
 
         final TestMagnoliaConfigurationProperties configurationProperties = new TestMagnoliaConfigurationProperties(
-                new ModulePropertiesSource(mr),
-                new ClasspathPropertySource("/test-magnolia.properties"),
-                new InitPathsPropertySource(new TestMagnoliaInitPaths())
-        );
+            new ModulePropertiesSource(mr),
+            new ClasspathPropertySource("/test-magnolia.properties"),
+            new InitPathsPropertySource(new TestMagnoliaInitPaths()));
         SystemProperty.setMagnoliaConfigurationProperties(configurationProperties);
 
         ComponentsTestUtil.setInstance(ModuleManager.class, mm);
@@ -221,34 +222,50 @@ public abstract class AbstractRepositoryTestcase
         ComponentsTestUtil.setImplementation(RepositoryManager.class, DefaultRepositoryManager.class);
 
         ComponentProviderConfigurationBuilder configurationBuilder = new ComponentProviderConfigurationBuilder();
-        ComponentProviderConfiguration configuration = configurationBuilder.getComponentsFromModules("system", mr.getModuleDefinitions());
+        ComponentProviderConfiguration configuration = configurationBuilder.getComponentsFromModules(
+            "system",
+            mr.getModuleDefinitions());
         configuration.combine(configurationBuilder.getComponentsFromModules("main", mr.getModuleDefinitions()));
 
-        // Content2BeanProcessorImpl uses dependency injection and since we don't have that with MockComponentProvider we
+        // Content2BeanProcessorImpl uses dependency injection and since we don't have that with MockComponentProvider
+        // we
         // need to manually create this object and replace the component configuration read from core.xml
         final TypeMappingImpl typeMapping = new TypeMappingImpl();
         configuration.registerInstance(TypeMapping.class, typeMapping);
         configuration.registerInstance(Content2BeanProcessor.class, new Content2BeanProcessorImpl(typeMapping));
 
-        for (Map.Entry<Class, ComponentConfiguration> entry : configuration.getComponents().entrySet()) {
+        for (Map.Entry<Class, ComponentConfiguration> entry : configuration.getComponents().entrySet())
+        {
             ComponentConfiguration value = entry.getValue();
-            if (value instanceof ImplementationConfiguration) {
+            if (value instanceof ImplementationConfiguration)
+            {
                 ImplementationConfiguration config = (ImplementationConfiguration) value;
                 ComponentsTestUtil.setImplementation(config.getType(), config.getImplementation());
-            } else if (value instanceof InstanceConfiguration) {
+            }
+            else if (value instanceof InstanceConfiguration)
+            {
                 InstanceConfiguration config = (InstanceConfiguration) value;
                 ComponentsTestUtil.setInstance(config.getType(), config.getInstance());
-            } else if (value instanceof ProviderConfiguration) {
+            }
+            else if (value instanceof ProviderConfiguration)
+            {
                 ProviderConfiguration config = (ProviderConfiguration) value;
                 ComponentsTestUtil.setImplementation(config.getType(), config.getProviderClass());
-            } else if (value instanceof ConfiguredComponentConfiguration) {
+            }
+            else if (value instanceof ConfiguredComponentConfiguration)
+            {
                 ConfiguredComponentConfiguration config = (ConfiguredComponentConfiguration) value;
-                ComponentsTestUtil.setConfigured(config.getType(), config.getWorkspace(), config.getPath(), config.isObserved());
+                ComponentsTestUtil.setConfigured(
+                    config.getType(),
+                    config.getWorkspace(),
+                    config.getPath(),
+                    config.isObserved());
             }
         }
 
-        for (Map.Entry<Class<?>, Class<?>> entry : configuration.getTypeMapping().entrySet()) {
-            ComponentsTestUtil.setImplementation((Class)entry.getKey(), (Class)entry.getValue());
+        for (Map.Entry<Class< ? >, Class< ? >> entry : configuration.getTypeMapping().entrySet())
+        {
+            ComponentsTestUtil.setImplementation((Class) entry.getKey(), (Class) entry.getValue());
         }
     }
 
@@ -256,8 +273,10 @@ public abstract class AbstractRepositoryTestcase
     /**
      * Override this method to provide the appropriate list of modules your tests need.
      */
-    protected List<ModuleDefinition> getModuleDefinitionsForTests() throws ModuleManagementException {
-        final ModuleDefinition core = new BetwixtModuleDefinitionReader().readFromResource("/META-INF/magnolia/core.xml");
+    protected List<ModuleDefinition> getModuleDefinitionsForTests() throws ModuleManagementException
+    {
+        final ModuleDefinition core = new BetwixtModuleDefinitionReader()
+            .readFromResource("/META-INF/magnolia/core.xml");
         return Collections.singletonList(core);
     }
 
@@ -294,7 +313,7 @@ public abstract class AbstractRepositoryTestcase
 
     protected void modifyContextesToUseRealRepository()
     {
-        SystemContext systemContext = MgnlContext.getSystemContext();
+        SystemContext systemContext = Components.getComponent(SystemContext.class);
         RepositoryManager repositoryManager = Components.getComponent(RepositoryManager.class);
         SystemRepositoryStrategy repositoryStrategy = new SystemRepositoryStrategy(repositoryManager);
 
@@ -311,9 +330,6 @@ public abstract class AbstractRepositoryTestcase
         {
             logger.setLevel(Level.WARN);
         }
-
-        ContentRepository.REPOSITORY_USER = SystemProperty.getProperty("magnolia.connection.jcr.userId");
-        ContentRepository.REPOSITORY_PSWD = SystemProperty.getProperty("magnolia.connection.jcr.password");
 
         InputStream repositoryConfigFileStream = ClasspathResourcesUtil
             .getResource(repositoryConfigFileName)
@@ -333,7 +349,7 @@ public abstract class AbstractRepositoryTestcase
 
         IOUtils.closeQuietly(jackrabbitRepositoryConfigFileStream);
 
-        ContentRepository.init();
+        Components.getComponent(RepositoryManager.class).init();
 
         modifyContextesToUseRealRepository();
 
@@ -353,7 +369,8 @@ public abstract class AbstractRepositoryTestcase
 
     private void cleanUp() throws IOException
     {
-        FileUtils.deleteDirectory(new File(SystemProperty.getProperty("magnolia.repositories.home")));
+        FileUtils.deleteDirectory(new File(Components.getComponent(MagnoliaConfigurationProperties.class).getProperty(
+            "magnolia.repositories.home")));
     }
 
     /**
@@ -393,15 +410,19 @@ public abstract class AbstractRepositoryTestcase
      * @param moduleClass ModuleClass
      * @throws Content2BeanException if the module configuration can't be successfully parsed.
      * @return module instance
+     * @throws RepositoryException
      */
     protected ModuleLifecycle startModule(String modulename, Class< ? extends ModuleLifecycle> moduleClass)
-        throws Content2BeanException
+        throws Content2BeanException, RepositoryException
     {
         // register and start module
-        Content content = ContentUtil.getContent("config", "/modules/" + modulename + "/config");
-        ModuleLifecycle module = (ModuleLifecycle) Content2BeanUtil.toBean(content, true, moduleClass);
+        Node node = MgnlContext.getJCRSession("config").getNode("/modules/" + modulename + "/config");
+        ModuleLifecycle module = (ModuleLifecycle) Content2BeanUtil.toBean(
+            ContentUtil.asContent(node),
+            true,
+            moduleClass);
         module.start(null);
-        ModuleRegistry.Factory.getInstance().registerModuleInstance(modulename, module);
+        Components.getComponent(ModuleRegistry.class).registerModuleInstance(modulename, module);
 
         return module;
     }
