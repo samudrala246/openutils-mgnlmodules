@@ -19,6 +19,7 @@
 
 package net.sourceforge.openutils.mgnltagcloud.module;
 
+import info.magnolia.cms.beans.config.ObservedManager;
 import info.magnolia.module.ModuleLifecycle;
 import info.magnolia.module.ModuleLifecycleContext;
 import info.magnolia.objectfactory.Components;
@@ -49,7 +50,7 @@ public class TagCloudModule implements ModuleLifecycle
 
         moduleLifecycleContext.registerModuleObservingComponent(
             "clouds",
-            Components.getComponent(TagCloudManager.class));
+            (ObservedManager) Components.getComponent(TagCloudManager.class));
     }
 
     /**

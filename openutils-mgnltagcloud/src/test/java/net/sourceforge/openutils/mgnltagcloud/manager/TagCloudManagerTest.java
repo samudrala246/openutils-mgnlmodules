@@ -272,7 +272,7 @@ public class TagCloudManagerTest extends RepositoryTestCase
 
         hmConfig.save();
 
-        TagCloudManager manager = Components.getComponent(TagCloudManager.class);
+        DefaultTagCloudManager manager = (DefaultTagCloudManager) Components.getComponent(TagCloudManager.class);
         manager.jackrabbitUtil = new JackrabbitUtil();
 
         manager.onRegister(contentCloud);

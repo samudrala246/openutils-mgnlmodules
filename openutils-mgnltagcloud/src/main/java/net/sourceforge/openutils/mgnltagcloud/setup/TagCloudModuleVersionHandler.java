@@ -23,11 +23,14 @@ import info.magnolia.init.MagnoliaConfigurationProperties;
 import info.magnolia.module.InstallContext;
 import info.magnolia.module.delta.Task;
 import info.magnolia.objectfactory.Components;
+import it.openutils.mgnltasks.CreateMissingPropertyTask;
 import it.openutils.mgnltasks.SamplesExtractionTask;
 import it.openutils.mgnltasks.SimpleModuleVersionHandler;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import net.sourceforge.openutils.mgnltagcloud.manager.DefaultTagCloudManager;
 
 
 /**
@@ -51,6 +54,12 @@ public class TagCloudModuleVersionHandler extends SimpleModuleVersionHandler
         {
             tasks.add(new SamplesExtractionTask());
         }
+
+        tasks.add(new CreateMissingPropertyTask(
+            "config",
+            "/modules/tagcloud/clouds",
+            "class",
+            DefaultTagCloudManager.class.getName()));
 
         return tasks;
     }

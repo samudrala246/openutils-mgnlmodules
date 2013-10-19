@@ -5,13 +5,19 @@
   <displayName>tagcloud</displayName>
   <description>Openutils - Magnolia Tagcloud Library</description>
   <class>net.sourceforge.openutils.mgnltagcloud.module.TagCloudModule</class>
-    <versionHandler>net.sourceforge.openutils.mgnltagcloud.setup.TagCloudModuleVersionHandler</versionHandler>
+  <versionHandler>net.sourceforge.openutils.mgnltagcloud.setup.TagCloudModuleVersionHandler</versionHandler>
   <version>${project.version}</version>
   <components>
     <id>main</id>
     <component>
       <type>net.sourceforge.openutils.mgnltagcloud.manager.TagCloudManager</type>
-      <implementation>net.sourceforge.openutils.mgnltagcloud.manager.TagCloudManager</implementation>
+      <implementation>net.sourceforge.openutils.mgnltagcloud.manager.DefaultTagCloudManager</implementation>
+    <!--
+      <workspace>config</workspace>
+      <path>/modules/tagcloud/clouds</path>
+      <observed>true</observed>
+      <scope>singleton</scope>
+    -->
     </component>
     <component>
       <type>net.sourceforge.openutils.mgnltagcloud.util.JackrabbitUtil</type>
