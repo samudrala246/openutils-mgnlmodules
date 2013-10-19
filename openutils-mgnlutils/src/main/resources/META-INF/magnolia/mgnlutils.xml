@@ -7,14 +7,25 @@
   <class>it.openutils.mgnlutils.setup.MgnlUtilsModule</class>
   <versionHandler>it.openutils.mgnlutils.setup.MgnlUtilsModuleVersionHandler</versionHandler>
   <version>${project.version}</version>
+  <components>
+    <id>main</id>
+    <component>
+      <type>info.magnolia.rendering.engine.RenderExceptionHandler</type>
+      <implementation>it.openutils.mgnlutils.util.ClassicRenderExceptionHandler</implementation>
+    </component>
+  </components>
   <dependencies>
     <dependency>
       <name>core</name>
-      <version>4.5/*</version>
+      <version>4.5.11/*</version>
     </dependency>
     <dependency>
       <name>criteria</name>
       <version>5.0.1/*</version>
+    </dependency>
+    <dependency>
+      <name>rendering</name>
+      <version>4.5.11/*</version>
     </dependency>
   </dependencies>
 </module>
