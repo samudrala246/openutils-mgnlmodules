@@ -19,7 +19,6 @@
 
 package net.sourceforge.openutils.mgnlmessages.pages;
 
-import info.magnolia.cms.core.MetaData;
 import info.magnolia.cms.core.Path;
 import info.magnolia.cms.i18n.Messages;
 import info.magnolia.context.MgnlContext;
@@ -51,8 +50,6 @@ import net.sourceforge.openutils.mgnlmessages.lifecycle.MessagesModuleLifecycle;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import com.sun.xml.internal.ws.util.MetadataUtil;
 
 
 /**
