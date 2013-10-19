@@ -1,26 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<sv:node sv:name="sample-courses" xmlns:sv="http://www.jcp.org/jcr/sv/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<sv:node sv:name="lms-sample" xmlns:sv="http://www.jcp.org/jcr/sv/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <sv:property sv:name="jcr:primaryType" sv:type="Name">
     <sv:value>mgnl:contentNode</sv:value>
   </sv:property>
-  <sv:property sv:name="jcr:mixinTypes" sv:type="Name">
+  <sv:property sv:name="jcr:mixinTypes" sv:type="Name" sv:multiple="true">
     <sv:value>mix:lockable</sv:value>
   </sv:property>
   <sv:property sv:name="jcr:uuid" sv:type="String">
-    <sv:value>97390203-e51a-4be1-9fc4-8e4de01fcee6</sv:value>
+    <sv:value>785f8f98-a7ce-406f-ab54-dfd2c21073e9</sv:value>
   </sv:property>
-  <sv:property sv:name="templatePath" sv:type="String">
-    <sv:value>/templates/samples-lms/courses.jsp</sv:value>
+  <sv:property sv:name="jcr:createdBy" sv:type="String">
+    <sv:value>admin</sv:value>
+  </sv:property>
+  <sv:property sv:name="renderType" sv:type="String">
+    <sv:value>jsp</sv:value>
+  </sv:property>
+  <sv:property sv:name="templateScript" sv:type="String">
+    <sv:value>/templates/samples-lms/index.jsp</sv:value>
   </sv:property>
   <sv:property sv:name="title" sv:type="String">
-    <sv:value>LMS Samples - Courses page</sv:value>
+    <sv:value>LMS sample: main page</sv:value>
   </sv:property>
-  <sv:property sv:name="type" sv:type="String">
-    <sv:value>jsp</sv:value>
+  <sv:property sv:name="visible" sv:type="String">
+    <sv:value>true</sv:value>
   </sv:property>
   <sv:node sv:name="MetaData">
     <sv:property sv:name="jcr:primaryType" sv:type="Name">
       <sv:value>mgnl:metaData</sv:value>
+    </sv:property>
+    <sv:property sv:name="jcr:createdBy" sv:type="String">
+      <sv:value>admin</sv:value>
     </sv:property>
     <sv:property sv:name="mgnl:activated" sv:type="Boolean">
       <sv:value>false</sv:value>
@@ -32,7 +41,7 @@
       <sv:value>2010-02-05T14:04:47.884+01:00</sv:value>
     </sv:property>
     <sv:property sv:name="mgnl:lastmodified" sv:type="Date">
-      <sv:value>2010-02-10T18:20:33.850+01:00</sv:value>
+      <sv:value>2013-10-19T15:04:06.353+02:00</sv:value>
     </sv:property>
   </sv:node>
 </sv:node>
