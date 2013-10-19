@@ -141,7 +141,7 @@ public class MediaFolderViewPage extends MessagesTemplatedMVCHandler
             types = new ArrayList<MediaTypeConfiguration>();
             for (String mt : mediaTypes)
             {
-                types.add(MediaConfigurationManager.getInstance().getTypes().get(mt));
+                types.add(Components.getComponent(MediaConfigurationManager.class).getTypes().get(mt));
             }
         }
         else
@@ -150,7 +150,7 @@ public class MediaFolderViewPage extends MessagesTemplatedMVCHandler
             // {
             // type = MediaConfigurationManager.getInstance().getTypes().keySet().iterator().next();
             // }
-            types = MediaConfigurationManager.getInstance().getTypes().values();
+            types = Components.getComponent(MediaConfigurationManager.class).getTypes().values();
         }
 
         // right side of navigation bar: sorting and background selectors
@@ -511,7 +511,7 @@ public class MediaFolderViewPage extends MessagesTemplatedMVCHandler
         {
             return null;
         }
-        MediaTypeConfiguration mtc = MediaConfigurationManager.getInstance().getMediaTypeConfigurationFromMedia(media);
+        MediaTypeConfiguration mtc = Components.getComponent(MediaConfigurationManager.class).getMediaTypeConfigurationFromMedia(media);
         String url = mtc.getHandler().getUrl(media);
 
         String filename = mtc.getHandler().getFullFilename(media);

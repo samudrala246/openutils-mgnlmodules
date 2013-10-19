@@ -26,6 +26,7 @@ import freemarker.template.TemplateModelException;
 import info.magnolia.cms.i18n.Messages;
 import info.magnolia.cms.i18n.MessagesUtil;
 import info.magnolia.module.admininterface.TemplatedMVCHandler;
+import info.magnolia.objectfactory.Components;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -80,7 +81,9 @@ public class MessagesTemplatedMVCHandler extends TemplatedMVCHandler
 
         if (mediaTypesExtendedMsgs == null)
         {
-            Map<String, MediaTypeConfiguration> types = MediaConfigurationManager.getInstance().getTypes();
+            Map<String, MediaTypeConfiguration> types = Components
+                .getComponent(MediaConfigurationManager.class)
+                .getTypes();
             List<String> basenames = new ArrayList<String>();
             basenames.add(getI18nBasename());
             for (MediaTypeConfiguration typeConfig : types.values())

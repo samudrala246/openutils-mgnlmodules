@@ -77,7 +77,7 @@ public class MediaLoadUtils
     {
         log.debug("loading external video {}/{} with url {}", new Object[]{parent, filename, videourl });
 
-        MediaTypeConfiguration mtc = MediaConfigurationManager.getInstance().getTypes().get("youtube");
+        MediaTypeConfiguration mtc = Components.getComponent(MediaConfigurationManager.class).getTypes().get("youtube");
 
         String cleanFilename = Path.getValidatedLabel(videourl);
 
@@ -108,7 +108,9 @@ public class MediaLoadUtils
 
         String extension = StringUtils.substringAfterLast(filename, ".");
         String cleanFilename = StringUtils.substringBeforeLast(filename, ".");
-        MediaTypeConfiguration mtc = MediaConfigurationManager.getMediaHandlerFromExtension(extension);
+        MediaTypeConfiguration mtc = Components
+            .getComponent(MediaConfigurationManager.class)
+            .getMediaHandlerFromExtension(extension);
 
         if (mtc != null)
         {

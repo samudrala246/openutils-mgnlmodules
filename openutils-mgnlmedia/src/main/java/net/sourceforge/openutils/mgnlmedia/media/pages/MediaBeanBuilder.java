@@ -34,6 +34,7 @@ import java.util.Map;
 import javax.jcr.Node;
 import javax.jcr.RepositoryException;
 
+import net.sourceforge.openutils.mgnlcriteria.jcr.query.AdvancedResult;
 import net.sourceforge.openutils.mgnlmedia.media.configuration.MediaConfigurationManager;
 import net.sourceforge.openutils.mgnlmedia.media.configuration.MediaTypeConfiguration;
 import net.sourceforge.openutils.mgnlmedia.media.configuration.MediaUsedInManager;
@@ -66,7 +67,7 @@ public class MediaBeanBuilder implements Function<Node, MediaBean>
     {
 
         String mediatype = PropertyUtil.getString(media, "type");
-        MediaTypeConfiguration mtc = MediaConfigurationManager.getInstance().getTypes().get(mediatype);
+        MediaTypeConfiguration mtc = Components.getComponent(MediaConfigurationManager.class).getTypes().get(mediatype);
         MediaBean mb = new MediaBean();
         try
         {
@@ -101,18 +102,12 @@ public class MediaBeanBuilder implements Function<Node, MediaBean>
                 && mb.isWritable()
                 && ActivationManagerFactory.getActivationManager().hasAnyActiveSubscriber());
 
-            Map<String, List<String>> workspacePaths = MediaUsedInManager.getInstance().getUsedInPaths(
+            Map<String, AdvancedResult> workspacePaths = Components.getComponent(MediaUsedInManager.class).getUsedIn(
                 media.getIdentifier());
-            mb.getUsedInWebPages().addAll(workspacePaths.get(RepositoryConstants.WEBSITE));
-            for (Map.Entry<String, List<String>> entry : workspacePaths.entrySet())
-            {
-                String repository = entry.getKey();
-                for (String handle : entry.getValue())
-                {
-                    String uri = Components.getComponent(URI2RepositoryManager.class).getURI(repository, handle);
-                    mb.getUsedInUris().add(uri);
-                }
-            }
+
+            mb.setUsedInWebPages(workspacePaths.get(RepositoryConstants.WEBSITE));
+            mb.setUsedInNodes(workspacePaths);
+
         }
         catch (RepositoryException ex)
         {

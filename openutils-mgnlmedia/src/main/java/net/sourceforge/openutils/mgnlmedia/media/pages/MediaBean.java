@@ -19,14 +19,15 @@
 
 package net.sourceforge.openutils.mgnlmedia.media.pages;
 
-
 import info.magnolia.cms.core.MetaData;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.jcr.Node;
+
+import net.sourceforge.openutils.mgnlcriteria.jcr.query.AdvancedResult;
 
 
 /**
@@ -63,9 +64,9 @@ public class MediaBean
 
     private String icon;
 
-    private List<String> usedInWebPages = new ArrayList<String>();
+    private AdvancedResult usedInWebPages = AdvancedResult.EMPTY_RESULT;
 
-    private List<String> usedInUris = new ArrayList<String>();
+    private Map<String, AdvancedResult> usedInNodes = new HashMap<String, AdvancedResult>();
 
     private boolean canPublish;
 
@@ -241,7 +242,7 @@ public class MediaBean
      * Returns the usedInWebPages.
      * @return the usedInWebPages
      */
-    public List<String> getUsedInWebPages()
+    public AdvancedResult getUsedInWebPages()
     {
         return usedInWebPages;
     }
@@ -250,7 +251,7 @@ public class MediaBean
      * Sets the usedInWebPages.
      * @param usedInWebPages the usedInWebPages to set
      */
-    public void setUsedInWebPages(List<String> usedInWebPages)
+    public void setUsedInWebPages(AdvancedResult usedInWebPages)
     {
         this.usedInWebPages = usedInWebPages;
     }
@@ -259,18 +260,18 @@ public class MediaBean
      * Returns the usedInUris.
      * @return the usedInUris
      */
-    public List<String> getUsedInUris()
+    public Map<String, AdvancedResult> getUsedInNodes()
     {
-        return usedInUris;
+        return usedInNodes;
     }
 
     /**
      * Sets the usedInUris.
      * @param usedInUris the usedInUris to set
      */
-    public void setUsedInUris(List<String> usedInUris)
+    public void setUsedInNodes(Map<String, AdvancedResult> usedInUris)
     {
-        this.usedInUris = usedInUris;
+        this.usedInNodes = usedInUris;
     }
 
     /**

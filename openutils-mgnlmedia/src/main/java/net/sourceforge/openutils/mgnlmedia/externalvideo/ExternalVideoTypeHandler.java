@@ -21,6 +21,7 @@ package net.sourceforge.openutils.mgnlmedia.externalvideo;
 
 import info.magnolia.cms.beans.runtime.MultipartForm;
 import info.magnolia.jcr.util.PropertyUtil;
+import info.magnolia.objectfactory.Components;
 
 import java.io.File;
 import java.util.HashMap;
@@ -45,8 +46,8 @@ public class ExternalVideoTypeHandler extends BaseVideoTypeHandler
 
     public static ExternalVideoProvider getExternalVideoProvider(Node media)
     {
-        MediaTypeHandler mth = MediaConfigurationManager
-            .getInstance()
+        MediaTypeHandler mth = Components
+            .getComponent(MediaConfigurationManager.class)
             .getMediaTypeConfigurationFromMedia(media)
             .getHandler();
         if (mth.getClass().isAssignableFrom(ExternalVideoTypeHandler.class))

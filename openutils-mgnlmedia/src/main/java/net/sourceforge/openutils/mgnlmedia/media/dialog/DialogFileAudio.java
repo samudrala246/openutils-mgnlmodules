@@ -24,6 +24,7 @@ import info.magnolia.cms.gui.control.File;
 import info.magnolia.cms.gui.dialog.DialogFile;
 import info.magnolia.cms.gui.misc.CssConstants;
 import info.magnolia.cms.gui.misc.Spacer;
+import info.magnolia.objectfactory.Components;
 
 import java.io.IOException;
 import java.io.Writer;
@@ -132,7 +133,7 @@ public class DialogFileAudio extends DialogFile
                 out.write("/.resources/media/players/player.swf\",\"ply\",\"320\",\"20\",\"9\",\"#FFFFFF\");");
                 out.write("\ns1.addParam(\"flashvars\",\"file=");
                 out.write(this.getRequest().getContextPath());
-                out.write(MediaConfigurationManager.getInstance().getURIMappingPrefix());
+                out.write(Components.getComponent(MediaConfigurationManager.class).getURIMappingPrefix());
                 out.write(getFileURI(control));
                 out.write("/");
                 out.write(control.getFileName());

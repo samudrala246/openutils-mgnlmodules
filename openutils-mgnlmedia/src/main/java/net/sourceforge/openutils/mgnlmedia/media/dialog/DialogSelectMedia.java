@@ -26,6 +26,7 @@ import info.magnolia.cms.i18n.Messages;
 import info.magnolia.cms.i18n.MessagesUtil;
 import info.magnolia.cms.util.NodeDataUtil;
 import info.magnolia.context.MgnlContext;
+import info.magnolia.objectfactory.Components;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -226,8 +227,9 @@ public class DialogSelectMedia extends ConfigurableFreemarkerDialog
 
         if (media != null)
         {
-            MediaTypeConfiguration mtc = MediaConfigurationManager.getInstance().getMediaTypeConfigurationFromMedia(
-                media);
+            MediaTypeConfiguration mtc = Components
+                .getComponent(MediaConfigurationManager.class)
+                .getMediaTypeConfigurationFromMedia(media);
             return this.getRequest().getContextPath() + mtc.getHandler().getThumbnailUrl(media);
         }
 
@@ -272,7 +274,7 @@ public class DialogSelectMedia extends ConfigurableFreemarkerDialog
 
         if (media != null)
         {
-            MediaTypeConfiguration mtc = MediaConfigurationManager.getInstance().getMediaTypeConfigurationFromMedia(
+            MediaTypeConfiguration mtc = Components.getComponent(MediaConfigurationManager.class).getMediaTypeConfigurationFromMedia(
                 media);
 
             String filename = mtc.getHandler().getFilename(media);

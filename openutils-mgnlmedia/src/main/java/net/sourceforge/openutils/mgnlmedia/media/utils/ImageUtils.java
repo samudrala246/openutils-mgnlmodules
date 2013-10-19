@@ -874,8 +874,9 @@ public final class ImageUtils
         if (nodeDataName == null)
         {
 
-            MediaTypeConfiguration mtc = MediaConfigurationManager.getInstance().getMediaTypeConfigurationFromMedia(
-                media);
+            MediaTypeConfiguration mtc = Components
+                .getComponent(MediaConfigurationManager.class)
+                .getMediaTypeConfigurationFromMedia(media);
             if (mtc == null)
             {
                 nodeDataName = BaseTypeHandler.ORGINAL_NODEDATA_NAME;
@@ -1169,10 +1170,10 @@ public final class ImageUtils
 
         Point size = parseForSize(resolution);
 
-        if (ImageProcessorsManager.getInstance().isValidControlChar(controlChar))
+        if (Components.getComponent(ImageProcessorsManager.class).isValidControlChar(controlChar))
         {
-            img = ImageProcessorsManager
-                .getInstance()
+            img = Components
+                .getComponent(ImageProcessorsManager.class)
                 .getImageResolutionProcessor(controlChar)
                 .getImageForResolution(original, size.x, size.y, params);
         }
@@ -1182,13 +1183,15 @@ public final class ImageUtils
         }
         else
         {
-            img = ImageProcessorsManager
-                .getInstance()
+            img = Components
+                .getComponent(ImageProcessorsManager.class)
                 .getDefaultImageResolutionProcessor()
                 .getImageForResolution(original, size.x, size.y, params);
         }
 
-        for (ImagePostProcessor ipp : ImageProcessorsManager.getInstance().getImagePostProcessorsList())
+        for (ImagePostProcessor ipp : Components
+            .getComponent(ImageProcessorsManager.class)
+            .getImagePostProcessorsList())
         {
             img = ipp.processImage(img, size.x, size.y, params);
         }
@@ -1394,7 +1397,7 @@ public final class ImageUtils
             resolution = StringUtils.substringBefore(resolution, ";");
         }
 
-        if (ImageProcessorsManager.getInstance().isValidControlChar(resolution.charAt(0))
+        if (Components.getComponent(ImageProcessorsManager.class).isValidControlChar(resolution.charAt(0))
             || resolution.charAt(0) < '0'
             || resolution.charAt(0) > '9')
         {

@@ -22,9 +22,11 @@ package net.sourceforge.openutils.mgnlmedia.media.tags.el;
 import info.magnolia.cms.beans.runtime.FileProperties;
 import info.magnolia.context.MgnlContext;
 import info.magnolia.jcr.RuntimeRepositoryException;
+import info.magnolia.jcr.util.NodeUtil;
 import info.magnolia.jcr.util.PropertyUtil;
 import info.magnolia.module.ModuleRegistry;
 import info.magnolia.objectfactory.Components;
+import info.magnolia.repository.RepositoryConstants;
 import it.openutils.mgnlutils.api.NodeUtilsExt;
 
 import java.awt.Point;
@@ -39,11 +41,12 @@ import javax.jcr.NodeIterator;
 import javax.jcr.PropertyType;
 import javax.jcr.RepositoryException;
 import javax.jcr.Value;
-import javax.jcr.query.InvalidQueryException;
 import javax.servlet.http.HttpServletRequest;
 
+import net.sourceforge.openutils.mgnlcriteria.jcr.query.AdvancedResult;
 import net.sourceforge.openutils.mgnlmedia.media.configuration.MediaConfigurationManager;
 import net.sourceforge.openutils.mgnlmedia.media.configuration.MediaTypeConfiguration;
+import net.sourceforge.openutils.mgnlmedia.media.configuration.MediaUsedInManager;
 import net.sourceforge.openutils.mgnlmedia.media.lifecycle.MediaModule;
 import net.sourceforge.openutils.mgnlmedia.media.types.MediaTypeHandler;
 import net.sourceforge.openutils.mgnlmedia.media.types.impl.BaseTypeHandler;
@@ -52,7 +55,6 @@ import net.sourceforge.openutils.mgnlmedia.playlist.PlaylistConstants;
 import net.sourceforge.openutils.mgnlmedia.playlist.utils.PlaylistIterateUtils;
 import net.sourceforge.openutils.mgnlmedia.playlist.utils.PlaylistIterateUtils.MediaNodeAndEntryPath;
 
-import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.math.NumberUtils;
 import org.slf4j.Logger;
@@ -71,7 +73,7 @@ import com.google.common.collect.Iterators;
 public final class MediaEl
 {
 
-    private static MediaConfigurationManager mcm = MediaConfigurationManager.getInstance();
+    private static MediaConfigurationManager mcm = Components.getComponent(MediaConfigurationManager.class);
 
     private static Logger log = LoggerFactory.getLogger(MediaEl.class);
 
@@ -387,7 +389,7 @@ public final class MediaEl
      * @param mediaref media node or UUID
      * @return an array of String(s) containing a list of web pages where this media is used, an empty array otherwise
      */
-    public static String[] usedInWebPages(Object mediaref)
+    public static AdvancedResult usedInWebPages(Object mediaref)
     {
 
         Node media = node(mediaref);
@@ -395,24 +397,14 @@ public final class MediaEl
         if (media == null)
         {
             log.warn("findMediaUsedInWebPages called with a null media");
-            return new String[]{};
+            return AdvancedResult.EMPTY_RESULT;
         }
-        try
-        {
-            List<String> retVal = mcm.getUsedInWebPages(media.getIdentifier());
-            return (CollectionUtils.isNotEmpty(retVal) ? retVal.toArray(new String[retVal.size()]) : EMPTY_STRING_ARRAY);
-        }
-        catch (InvalidQueryException e)
-        {
-            log.error("JCR Query returned the following error: ", e);
-            // ignore this and return an empty List
-        }
-        catch (RepositoryException e)
-        {
-            log.error("JCR Repository returned the following error: ", e);
-            // ignore this and return an empty List
-        }
-        return EMPTY_STRING_ARRAY;
+
+        AdvancedResult retVal = Components.getComponent(MediaUsedInManager.class).getUsedInWorkspace(
+            NodeUtil.getNodeIdentifierIfPossible(media),
+            RepositoryConstants.WEBSITE);
+        return retVal;
+
     }
 
     /**

@@ -19,7 +19,7 @@
 
 package net.sourceforge.openutils.mgnlmedia.media.utils;
 
-import net.sourceforge.openutils.mgnlmedia.media.configuration.ImageProcessorsManager;
+import net.sourceforge.openutils.mgnlmedia.media.configuration.DefaultImageProcessorsManager;
 import net.sourceforge.openutils.mgnlmedia.media.processors.FitInAndFillWithBandsImageResolutionProcessor;
 import net.sourceforge.openutils.mgnlmedia.media.processors.FitInImageResolutionProcessor;
 import net.sourceforge.openutils.mgnlmedia.media.processors.ImageResolutionProcessor;
@@ -33,7 +33,7 @@ import org.apache.commons.lang.ArrayUtils;
  * @author molaschi
  * @version $Id: $
  */
-public class ImageProcessorsManagerMock extends ImageProcessorsManager
+public class ImageProcessorsManagerMock extends DefaultImageProcessorsManager
 {
 
     private final char[] controlChars = new char[]{'o', 'b', 'l', '<', 'x' };

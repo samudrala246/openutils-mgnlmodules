@@ -19,6 +19,8 @@
 
 package net.sourceforge.openutils.mgnlmedia.media.advancedsearch;
 
+import info.magnolia.objectfactory.Components;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -45,7 +47,9 @@ public class SearchFilterSpecFieldMedia extends SearchFilterMultiplevalue
             return super.getOptions();
         }
         List<Option> options = new ArrayList<Option>();
-        Map<String, MediaTypeConfiguration> mediatype = MediaConfigurationManager.getInstance().getTypes();
+        Map<String, MediaTypeConfiguration> mediatype = Components
+            .getComponent(MediaConfigurationManager.class)
+            .getTypes();
         Option option;
         for (String media : mediatype.keySet())
         {

@@ -200,8 +200,8 @@ public class PlaylistView extends MessagesTemplatedMVCHandler
                         entry.setHandle(item.getPlaylistEntryPath());
                         entry.setMedia(NodeUtil.getNodeIdentifierIfPossible(media));
                         entry.setMediaHandle(NodeUtil.getPathIfPossible(media));
-                        MediaTypeConfiguration typeConf = MediaConfigurationManager
-                            .getInstance()
+                        MediaTypeConfiguration typeConf = Components
+                            .getComponent(MediaConfigurationManager.class)
                             .getMediaTypeConfigurationFromMedia(media);
                         if (typeConf != null)
                         {

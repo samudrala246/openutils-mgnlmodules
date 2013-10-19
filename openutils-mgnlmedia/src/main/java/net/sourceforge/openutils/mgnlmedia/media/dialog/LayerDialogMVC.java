@@ -29,6 +29,7 @@ import info.magnolia.cms.util.NodeDataUtil;
 import info.magnolia.context.MgnlContext;
 import info.magnolia.module.admininterface.SaveHandler;
 import info.magnolia.module.admininterface.dialogs.ConfiguredDialog;
+import info.magnolia.objectfactory.Components;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -151,7 +152,7 @@ public class LayerDialogMVC extends ConfiguredDialog
 
         // TODO rename dei nodi in base al filename?
 
-        return MediaConfigurationManager.getInstance().getTypes().get(type).getHandler().onPostSave(node.getJCRNode());
+        return Components.getComponent(MediaConfigurationManager.class).getTypes().get(type).getHandler().onPostSave(node.getJCRNode());
     }
 
     /**
@@ -177,8 +178,7 @@ public class LayerDialogMVC extends ConfiguredDialog
             }
             control.setNodeName(Path.getUniqueLabel(
                 c,
-                Path.getValidatedLabel(MediaConfigurationManager
-                    .getInstance()
+                Path.getValidatedLabel(Components.getComponent(MediaConfigurationManager.class)
                     .getTypes()
                     .get(type)
                     .getHandler()

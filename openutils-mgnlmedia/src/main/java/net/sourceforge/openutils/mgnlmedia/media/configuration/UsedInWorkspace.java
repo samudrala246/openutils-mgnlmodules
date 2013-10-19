@@ -19,8 +19,15 @@
 
 package net.sourceforge.openutils.mgnlmedia.media.configuration;
 
-import info.magnolia.cms.core.MgnlNodeType;
 import info.magnolia.repository.RepositoryConstants;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.apache.commons.lang.builder.ToStringBuilder;
+import org.apache.commons.lang.builder.ToStringStyle;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 /**
@@ -34,97 +41,72 @@ public class UsedInWorkspace
 
     private String workspaceName;
 
-    private String nodeType = MgnlNodeType.NT_PAGE;
+    private List<String> nodetypes = new ArrayList<String>();
 
-    private String basePath = "/";
+    private String basepath = "/";
 
-    private String propertyName = ".";
+    private List<String> properties = new ArrayList<String>();
 
-    /**
-     * 
-     */
     public UsedInWorkspace()
     {
     }
 
-    /**
-     * @param workspaceName
-     * @param nodeType
-     */
     public UsedInWorkspace(String workspaceName)
     {
         this.workspaceName = workspaceName;
     }
 
-    /**
-     * Returns the workspaceName.
-     * @return the workspaceName
-     */
     public String getWorkspaceName()
     {
         return workspaceName;
     }
 
-    /**
-     * Sets the workspaceName.
-     * @param workspaceName the workspaceName to set
-     */
     public void setWorkspaceName(String workspaceName)
     {
         this.workspaceName = workspaceName;
     }
 
-    /**
-     * Returns the nodeType.
-     * @return the nodeType
-     */
-    public String getNodeType()
+    public List<String> getProperties()
     {
-        return nodeType;
+        return properties;
     }
 
-    /**
-     * Sets the nodeType.
-     * @param nodeType the nodeType to set
-     */
-    public void setNodeType(String nodeType)
+    public List<String> getNodetypes()
     {
-        this.nodeType = nodeType;
+        return nodetypes;
     }
 
-    /**
-     * Returns the basePath.
-     * @return the basePath
-     */
-    public String getBasePath()
+    public String getBasepath()
     {
-        return basePath;
+        return basepath;
     }
 
-    /**
-     * Sets the basePath.
-     * @param basePath the basePath to set
-     */
-    public void setBasePath(String basePath)
+    public void setBasepath(String basepath)
     {
-        this.basePath = basePath;
+        this.basepath = basepath;
     }
 
-    /**
-     * Returns the propertyName.
-     * @return the propertyName
-     */
-    public String getPropertyName()
+    // required for node2bean
+    public void addNodetypes(String nodetype)
     {
-        return propertyName;
+        this.nodetypes.add(nodetype);
     }
 
-    /**
-     * Sets the propertyName.
-     * @param propertyName the propertyName to set
-     */
-    public void setPropertyName(String propertyName)
+    // required for node2bean
+    public void addProperties(String property)
     {
-        this.propertyName = propertyName;
+        this.properties.add(property);
     }
+
+    @Override
+    public String toString()
+    {
+        return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
+            .append("workspaceName", this.workspaceName)
+            .append("basepath", this.basepath)
+            .append("nodetypes", this.nodetypes)
+            .append("properties", this.properties)
+            .toString();
+    }
+
 }

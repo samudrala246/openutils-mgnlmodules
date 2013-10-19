@@ -11,15 +11,18 @@
     <id>main</id>
     <component>
       <type>net.sourceforge.openutils.mgnlmedia.media.configuration.MediaConfigurationManager</type>
-      <implementation>net.sourceforge.openutils.mgnlmedia.media.configuration.MediaConfigurationManager</implementation>
+      <implementation>net.sourceforge.openutils.mgnlmedia.media.configuration.DefaultMediaConfigurationManager</implementation>
     </component>
     <component>
       <type>net.sourceforge.openutils.mgnlmedia.media.configuration.ImageProcessorsManager</type>
-      <implementation>net.sourceforge.openutils.mgnlmedia.media.configuration.ImageProcessorsManager</implementation>
+      <implementation>net.sourceforge.openutils.mgnlmedia.media.configuration.DefaultImageProcessorsManager</implementation>
     </component>
     <component>
       <type>net.sourceforge.openutils.mgnlmedia.media.configuration.MediaUsedInManager</type>
-      <implementation>net.sourceforge.openutils.mgnlmedia.media.configuration.MediaUsedInManager</implementation>
+      <workspace>config</workspace>
+      <path>/modules/media/mediausedin</path>
+      <observed>true</observed>
+      <scope>singleton</scope>
     </component>
   </components>
   <dependencies>

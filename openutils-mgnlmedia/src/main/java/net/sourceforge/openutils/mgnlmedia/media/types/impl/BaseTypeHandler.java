@@ -271,7 +271,7 @@ public abstract class BaseTypeHandler implements MediaTypeHandler
         {
             // should never happen
         }
-        return MediaConfigurationManager.getInstance().getURIMappingPrefix()
+        return Components.getComponent(MediaConfigurationManager.class).getURIMappingPrefix()
             + NodeUtil.getPathIfPossible(media)
             + "/"
             + ORGINAL_NODEDATA_NAME
@@ -386,9 +386,7 @@ public abstract class BaseTypeHandler implements MediaTypeHandler
             if (NodeUtil.isNodeType(originalFileNodeData, NodeType.NT_RESOURCE))
             {
 
-                
-
-                String extension = PropertyUtil.getString(originalFileNodeData,   FileProperties.PROPERTY_EXTENSION);
+                String extension = PropertyUtil.getString(originalFileNodeData, FileProperties.PROPERTY_EXTENSION);
                 info.put(METADATA_EXTENSION, extension);
 
                 String size = StringUtils.EMPTY;
@@ -403,14 +401,17 @@ public abstract class BaseTypeHandler implements MediaTypeHandler
                 }
                 info.put(METADATA_SIZE, size);
 
-                
-                int width = NumberUtils.toInt(PropertyUtil.getString(originalFileNodeData, FileProperties.PROPERTY_WIDTH));
+                int width = NumberUtils.toInt(PropertyUtil.getString(
+                    originalFileNodeData,
+                    FileProperties.PROPERTY_WIDTH));
                 if (width > 0)
                 {
                     info.put(METADATA_WIDTH, Integer.toString(width));
                 }
 
-                int height = NumberUtils.toInt(PropertyUtil.getString(originalFileNodeData, FileProperties.PROPERTY_HEIGHT));
+                int height = NumberUtils.toInt(PropertyUtil.getString(
+                    originalFileNodeData,
+                    FileProperties.PROPERTY_HEIGHT));
                 if (height > 0)
                 {
                     info.put(METADATA_HEIGHT, Integer.toString(height));

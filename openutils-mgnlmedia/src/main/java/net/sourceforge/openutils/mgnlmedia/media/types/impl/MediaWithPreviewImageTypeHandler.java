@@ -20,6 +20,7 @@
 package net.sourceforge.openutils.mgnlmedia.media.types.impl;
 
 import info.magnolia.jcr.util.NodeUtil;
+import info.magnolia.objectfactory.Components;
 
 import javax.jcr.Node;
 import javax.jcr.RepositoryException;
@@ -58,7 +59,7 @@ public abstract class MediaWithPreviewImageTypeHandler extends BaseTypeHandler
 
             try
             {
-                return MediaConfigurationManager.getInstance().getURIMappingPrefix()
+                return Components.getComponent(MediaConfigurationManager.class).getURIMappingPrefix()
                     + NodeUtil.getPathIfPossible(media)
                     + "/resolutions/thumbnail/"
                     + media.getName()

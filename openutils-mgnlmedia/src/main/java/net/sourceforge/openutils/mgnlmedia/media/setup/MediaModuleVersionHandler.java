@@ -29,6 +29,7 @@ import info.magnolia.repository.RepositoryConstants;
 import it.openutils.mgnltasks.BootstrapMissingNodesTask;
 import it.openutils.mgnltasks.ChangeExistingPropertyTask;
 import it.openutils.mgnltasks.CreateMissingPropertyTask;
+import it.openutils.mgnltasks.DeleteNodeTask;
 import it.openutils.mgnltasks.NodeSortTask;
 import it.openutils.mgnltasks.SamplesExtractionTask;
 import it.openutils.mgnltasks.SimpleModuleVersionHandler;
@@ -36,6 +37,9 @@ import it.openutils.mgnltasks.SimpleModuleVersionHandler;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.sourceforge.openutils.mgnlmedia.media.configuration.DefaultImageProcessorsManager;
+import net.sourceforge.openutils.mgnlmedia.media.configuration.DefaultMediaConfigurationManager;
+import net.sourceforge.openutils.mgnlmedia.media.configuration.DefaultMediaUsedInManager;
 import net.sourceforge.openutils.mgnlmedia.media.types.impl.ExternalVideoTypeHandler;
 
 
@@ -248,6 +252,25 @@ public class MediaModuleVersionHandler extends SimpleModuleVersionHandler
 
         // empty placeholder
         tasks.add(new CreateMissingPropertyTask(RepositoryConstants.CONFIG, "/modules/media/config", "baseurl", ""));
+
+        tasks.add(new CreateMissingPropertyTask(
+            RepositoryConstants.CONFIG,
+            "/modules/media/mediatypes",
+            "class",
+            DefaultMediaConfigurationManager.class.getName()));
+        tasks.add(new CreateMissingPropertyTask(
+            RepositoryConstants.CONFIG,
+            "/modules/media/processors",
+            "class",
+            DefaultImageProcessorsManager.class.getName()));
+        tasks.add(new CreateMissingPropertyTask(
+            RepositoryConstants.CONFIG,
+            "/modules/media/mediausedin",
+            "class",
+            DefaultMediaUsedInManager.class.getName()));
+
+        // config moved to /modules/media/mediausedin/entries/website
+        tasks.add(new DeleteNodeTask(RepositoryConstants.CONFIG, "/modules/media/mediausedin/website"));
 
         return tasks;
     }

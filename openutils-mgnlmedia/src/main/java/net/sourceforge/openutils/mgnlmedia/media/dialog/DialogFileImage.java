@@ -24,6 +24,7 @@ import info.magnolia.cms.gui.control.File;
 import info.magnolia.cms.gui.dialog.DialogFile;
 import info.magnolia.cms.gui.misc.CssConstants;
 import info.magnolia.cms.gui.misc.Spacer;
+import info.magnolia.objectfactory.Components;
 
 import java.io.IOException;
 import java.io.Writer;
@@ -167,7 +168,7 @@ public class DialogFileImage extends DialogFile
 
                 out.write("<p><a href=\"");
                 out.write(this.getRequest().getContextPath());
-                out.write(MediaConfigurationManager.getInstance().getURIMappingPrefix());
+                out.write(Components.getComponent(MediaConfigurationManager.class).getURIMappingPrefix());
                 out.write(this.getFileURI(control));
                 out.write("/" + control.getFileName() + "." + control.getExtension());
                 out.write("\" target=\"_blank\">");
@@ -235,7 +236,7 @@ public class DialogFileImage extends DialogFile
 
     private String getPreviewUrl()
     {
-        return MediaConfigurationManager.getInstance().getURIMappingPrefix()
+        return Components.getComponent(MediaConfigurationManager.class).getURIMappingPrefix()
             + this.getStorageNode().getHandle()
             + "/resolutions/thumbnail/"
             + this.getStorageNode().getName()

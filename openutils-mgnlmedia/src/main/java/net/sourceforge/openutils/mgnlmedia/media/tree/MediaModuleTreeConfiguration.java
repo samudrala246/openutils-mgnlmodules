@@ -60,8 +60,8 @@ public class MediaModuleTreeConfiguration extends AbstractTreeConfiguration
         ContextMenuItem menuNewPage = new ContextMenuItem("newFolder");
         menuNewPage.setLabel(msgs.get("tree.config.menu.newFolder")); //$NON-NLS-1$
         menuNewPage.setIcon(request.getContextPath() + "/.resources/media/icons/ico16-folder.png"); //$NON-NLS-1$
-        menuNewPage.setOnclick(tree.getJavascriptTree()
-            + ".createNode('" + MediaConfigurationManager.NT_FOLDER + "');"); //$NON-NLS-1$ //$NON-NLS-2$
+        menuNewPage
+            .setOnclick(tree.getJavascriptTree() + ".createNode('" + MediaConfigurationManager.NT_FOLDER + "');"); //$NON-NLS-1$ //$NON-NLS-2$
         menuNewPage.addJavascriptCondition("new mgnlTreeMenuItemConditionSelectedNotNodeData(" //$NON-NLS-1$
             + tree.getJavascriptTree()
             + ")"); //$NON-NLS-1$
@@ -74,8 +74,8 @@ public class MediaModuleTreeConfiguration extends AbstractTreeConfiguration
 
         List<ContextMenuItem> menusNewMedia = new ArrayList<ContextMenuItem>();
 
-        for (Map.Entry<String, MediaTypeConfiguration> mtc : MediaConfigurationManager
-            .getInstance()
+        for (Map.Entry<String, MediaTypeConfiguration> mtc : Components
+            .getComponent(MediaConfigurationManager.class)
             .getTypes()
             .entrySet())
         {

@@ -19,14 +19,18 @@
 
 package net.sourceforge.openutils.mgnlmedia.media.lifecycle;
 
+import info.magnolia.cms.beans.config.ObservedManager;
 import info.magnolia.module.ModuleLifecycle;
 import info.magnolia.module.ModuleLifecycleContext;
+import info.magnolia.objectfactory.Components;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import javax.inject.Inject;
 
 import net.sourceforge.openutils.mgnlmedia.media.advancedsearch.configuration.SearchMediaQueryConfiguration;
 import net.sourceforge.openutils.mgnlmedia.media.configuration.ImageProcessorsManager;
@@ -87,6 +91,9 @@ public class MediaModule implements ModuleLifecycle
 
     private String baseurl;
 
+    @Inject
+    private MediaConfigurationManager mediaConfigurationManager;
+
     /**
      * Constructor
      */
@@ -100,9 +107,10 @@ public class MediaModule implements ModuleLifecycle
     public void start(ModuleLifecycleContext ctx)
     {
         log.info("Starting module media");
-        ctx.registerModuleObservingComponent("mediatypes", MediaConfigurationManager.getInstance());
-        ctx.registerModuleObservingComponent("processors", ImageProcessorsManager.getInstance());
-        ctx.registerModuleObservingComponent("mediausedin", MediaUsedInManager.getInstance());
+        ctx.registerModuleObservingComponent("mediatypes", (ObservedManager) mediaConfigurationManager);
+        ctx.registerModuleObservingComponent(
+            "processors",
+            (ObservedManager) Components.getComponent(ImageProcessorsManager.class));
         version = ctx.getCurrentModuleDefinition().getVersion().toString();
     }
 
@@ -112,7 +120,7 @@ public class MediaModule implements ModuleLifecycle
     public void stop(ModuleLifecycleContext ctx)
     {
         log.info("Stopping module media");
-        Collection<MediaTypeConfiguration> mtcs = MediaConfigurationManager.getInstance().getTypes().values();
+        Collection<MediaTypeConfiguration> mtcs = mediaConfigurationManager.getTypes().values();
         if (mtcs != null)
         {
             for (MediaTypeConfiguration mtc : mtcs)

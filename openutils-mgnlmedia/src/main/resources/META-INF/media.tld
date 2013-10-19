@@ -218,11 +218,11 @@
     <display-name>usedInWebPages</display-name>
     <name>usedInWebPages</name>
     <function-class>net.sourceforge.openutils.mgnlmedia.media.tags.el.MediaEl</function-class>
-    <function-signature>java.lang.String[] usedInWebPages(java.lang.Object)</function-signature>
+    <function-signature>net.sourceforge.openutils.mgnlcriteria.jcr.query.AdvancedResult usedInWebPages(java.lang.Object)</function-signature>
     <example>
       <![CDATA[
       <c:set var="mediaNode" value="${media:node(content.image)}" />
-      <c:forEach var="page" items="${media:usedInWebPages(mediaNode)}">
+      <c:forEach var="page" items="${media:usedInWebPages(mediaNode).items}">
         <a href="${pageContext.request.contextPath}${page}">${page}</a>
       </c:forEach>
       ]]>

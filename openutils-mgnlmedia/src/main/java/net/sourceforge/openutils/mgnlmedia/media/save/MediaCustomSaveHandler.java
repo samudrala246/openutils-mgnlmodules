@@ -25,6 +25,7 @@ import info.magnolia.cms.security.AccessDeniedException;
 import info.magnolia.cms.util.NodeDataUtil;
 import info.magnolia.context.MgnlContext;
 import info.magnolia.module.admininterface.FieldSaveHandler;
+import info.magnolia.objectfactory.Components;
 
 import javax.jcr.ItemNotFoundException;
 import javax.jcr.Node;
@@ -91,8 +92,8 @@ public class MediaCustomSaveHandler implements FieldSaveHandler
             {
                 Node media = hm.getNodeByIdentifier(value);
 
-                MediaTypeConfiguration mtc = MediaConfigurationManager
-                    .getInstance()
+                MediaTypeConfiguration mtc = Components
+                    .getComponent(MediaConfigurationManager.class)
                     .getMediaTypeConfigurationFromMedia(media);
                 mtc.getHandler().onSavingPropertyMedia(
                     media,
