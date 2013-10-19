@@ -134,24 +134,6 @@ public class MediaModule implements ModuleLifecycle
     }
 
     /**
-     * @deprecated use singleinstance
-     */
-    @Deprecated
-    public boolean isAutoactivate()
-    {
-        return singleinstance;
-    }
-
-    /**
-     * @deprecated use singleinstance
-     */
-    @Deprecated
-    public void setAutoactivate(boolean autoactivate)
-    {
-        this.singleinstance = autoactivate;
-    }
-
-    /**
      * If the singleinstance flag is set, the media module expect that no activation is needed (usually it means the
      * media repository is shared between the author and public instances).
      * @return the value of the singleinstance property

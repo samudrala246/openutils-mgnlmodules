@@ -19,17 +19,10 @@
 
 package net.sourceforge.openutils.mgnlmedia.media.configuration;
 
-import info.magnolia.jcr.util.NodeUtil;
-import info.magnolia.jcr.util.PropertyUtil;
-import it.openutils.mgnlutils.api.ObservedManagerAdapter;
-
-import java.util.Collection;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 import javax.inject.Singleton;
-import javax.jcr.Node;
-import javax.jcr.RepositoryException;
 
 import net.sourceforge.openutils.mgnlmedia.media.processors.FitInAndFillWithBandsImageResolutionProcessor;
 import net.sourceforge.openutils.mgnlmedia.media.processors.FitInImageResolutionProcessor;
@@ -39,6 +32,8 @@ import net.sourceforge.openutils.mgnlmedia.media.processors.ResizeCropCenteredIm
 import net.sourceforge.openutils.mgnlmedia.media.processors.ResizeNoCropImageResolutionProcessor;
 
 import org.apache.commons.lang.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 /**
@@ -78,144 +73,17 @@ import org.apache.commons.lang.StringUtils;
  * @version $Id: $
  */
 @Singleton
-public class DefaultImageProcessorsManager extends ObservedManagerAdapter implements ImageProcessorsManager
+public class DefaultImageProcessorsManager implements ImageProcessorsManager
 {
 
-    private static final String IMAGE_RESOLUTION_PROCESSORS_NAME = "image-resolution";
+    private Map<String, ImageResolutionProcessor> resolutionprocessors = new LinkedHashMap<String, ImageResolutionProcessor>();
 
-    private static final String IMAGE_POST_PROCESSORS_NAME = "image-post";
-
-    private Map<String, ImageResolutionProcessor> imageResProcs = new HashMap<String, ImageResolutionProcessor>();
-
-    private Map<String, ImagePostProcessor> imagePostProcs = new HashMap<String, ImagePostProcessor>();
+    private Map<String, ImagePostProcessor> postprocessors = new LinkedHashMap<String, ImagePostProcessor>();
 
     /**
-     * {@inheritDoc}
+     * Logger.
      */
-    @Override
-    protected void onClear()
-    {
-        imageResProcs.clear();
-        imagePostProcs.clear();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @SuppressWarnings("unchecked")
-    @Override
-    protected void onRegister(Node parentNode)
-    {
-
-        Iterable<Node> nodes;
-        try
-        {
-            nodes = NodeUtil.getNodes(parentNode, NodeUtil.EXCLUDE_META_DATA_FILTER);
-        }
-        catch (RepositoryException e)
-        {
-            log.error("Error initializing image processor configuration", e);
-            return;
-        }
-
-        for (Node processorsNode : nodes)
-        {
-
-            Iterable<Node> processors;
-            try
-            {
-                processors = NodeUtil.getNodes(processorsNode, NodeUtil.EXCLUDE_META_DATA_FILTER);
-            }
-            catch (RepositoryException e)
-            {
-                log
-                    .error(
-                        "Error initializing image processor configuration for " + NodeUtil.getName(processorsNode),
-                        e);
-                continue;
-            }
-
-            for (Node node : processors)
-            {
-                try
-                {
-
-                    if (IMAGE_POST_PROCESSORS_NAME.equals(NodeUtil.getName(processorsNode)))
-                    {
-                        String classNameHandler = PropertyUtil.getString(node, "class");
-                        Class classHandler = Class.forName(classNameHandler);
-                        if (!ImagePostProcessor.class.isAssignableFrom(classHandler))
-                        {
-                            log.error(
-                                "Error getting post processor for {}: class {} not implements ImagePostProcessor",
-                                NodeUtil.getPathIfPossible(node),
-                                classHandler);
-                            continue;
-                        }
-
-                        ImagePostProcessor imagePostProcessor = (ImagePostProcessor) classHandler.newInstance();
-                        imagePostProcs.put(NodeUtil.getName(node), imagePostProcessor);
-                    }
-
-                    if (IMAGE_RESOLUTION_PROCESSORS_NAME.equals(NodeUtil.getName(processorsNode)))
-                    {
-                        String controlChar = NodeUtil.getName(node);
-
-                        String classNameHandler = PropertyUtil.getString(node, "class");
-                        Class classHandler = Class.forName(classNameHandler);
-                        if (!ImageResolutionProcessor.class.isAssignableFrom(classHandler))
-                        {
-                            log
-                                .error(
-                                    "Error getting resolution processor for {}: class {} not implements ImageResolutionProcessor",
-                                    NodeUtil.getPathIfPossible(node),
-                                    classHandler);
-                            continue;
-                        }
-
-                        ImageResolutionProcessor imageResolutionProcessor = (ImageResolutionProcessor) classHandler
-                            .newInstance();
-                        if (!controlChar.equals("default"))
-                        {
-                            controlChar = controlChar.substring(0, 1);
-                        }
-                        imageResProcs.put(controlChar, imageResolutionProcessor);
-                        try
-                        {
-                            if (node.hasProperty("aliases"))
-                            {
-                                String[] aliases = StringUtils.split(PropertyUtil.getString(node, "aliases"), ",");
-                                for (String alias : aliases)
-                                {
-                                    imageResProcs.put(alias, imageResolutionProcessor);
-                                }
-                            }
-                        }
-                        catch (RepositoryException ex)
-                        {
-                            // go on
-                        }
-                    }
-                }
-                catch (InstantiationException ex)
-                {
-                    log.error("Error getting media type configuration for {}", NodeUtil.getPathIfPossible(node), ex);
-                }
-                catch (IllegalAccessException ex)
-                {
-                    log.error("Error getting media type configuration for {}", NodeUtil.getPathIfPossible(node), ex);
-                }
-                catch (ClassNotFoundException ex)
-                {
-                    log.error("Error getting media type configuration for {}", NodeUtil.getPathIfPossible(node), ex);
-                }
-                catch (RuntimeException ex)
-                {
-                    log.error("Error getting media type configuration for {}", NodeUtil.getPathIfPossible(node), ex);
-                }
-            }
-        }
-    }
+    private Logger log = LoggerFactory.getLogger(DefaultImageProcessorsManager.class);
 
     /**
      * Get image resolution processor for a given control char
@@ -224,7 +92,14 @@ public class DefaultImageProcessorsManager extends ObservedManagerAdapter implem
      */
     public ImageResolutionProcessor getImageResolutionProcessor(char controlChar)
     {
-        return imageResProcs.get(String.valueOf(controlChar));
+        String key = String.valueOf(controlChar);
+        if (StringUtils.equals(key, "<"))
+        {
+            log.warn("Deprecated: please use \"l\" instead of \"<\" for FitInImageResolutionProcessor");
+            key = "l";
+        }
+
+        return resolutionprocessors.get(key);
     }
 
     /**
@@ -234,7 +109,7 @@ public class DefaultImageProcessorsManager extends ObservedManagerAdapter implem
      */
     public boolean isValidControlChar(char controlChar)
     {
-        return imageResProcs.keySet().contains(String.valueOf(controlChar));
+        return resolutionprocessors.keySet().contains(String.valueOf(controlChar));
     }
 
     /**
@@ -242,9 +117,9 @@ public class DefaultImageProcessorsManager extends ObservedManagerAdapter implem
      * {@link ResizeCropCenteredImageResolutionProcessor})
      * @return the default image resolution processor
      */
-    public ImageResolutionProcessor getDefaultImageResolutionProcessor()
+    public ImageResolutionProcessor getDefaultResolutionProcessor()
     {
-        return imageResProcs.get("default");
+        return resolutionprocessors.get("default");
     }
 
     /**
@@ -254,24 +129,38 @@ public class DefaultImageProcessorsManager extends ObservedManagerAdapter implem
      */
     public ImagePostProcessor getImagePostProcessor(String name)
     {
-        return imagePostProcs.get(name);
-    }
-
-    /**
-     * Get all image post processors
-     * @return image post processors list
-     */
-    public Collection<ImagePostProcessor> getImagePostProcessorsList()
-    {
-        return imagePostProcs.values();
+        return postprocessors.get(name);
     }
 
     /**
      * Get the map of image post processors
      * @return image post processors map
      */
-    public Map<String, ImagePostProcessor> getImagePostProcessorsMap()
+    public Map<String, ImagePostProcessor> getPostprocessors()
     {
-        return imagePostProcs;
+        return postprocessors;
+    }
+
+    public void setPostprocessors(Map<String, ImagePostProcessor> postprocessors)
+    {
+        this.postprocessors = postprocessors;
+    }
+
+    /**
+     * Returns the resolutionprocessors.
+     * @return the resolutionprocessors
+     */
+    public Map<String, ImageResolutionProcessor> getResolutionprocessors()
+    {
+        return resolutionprocessors;
+    }
+
+    /**
+     * Sets the resolutionprocessors.
+     * @param resolutionprocessors the resolutionprocessors to set
+     */
+    public void setResolutionprocessors(Map<String, ImageResolutionProcessor> resolutionprocessors)
+    {
+        this.resolutionprocessors = resolutionprocessors;
     }
 }

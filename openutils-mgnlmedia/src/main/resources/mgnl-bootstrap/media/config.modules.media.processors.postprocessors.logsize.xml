@@ -1,32 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<sv:node sv:name="bw" xmlns:sv="http://www.jcp.org/jcr/sv/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<sv:node sv:name="logsize" xmlns:sv="http://www.jcp.org/jcr/sv/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <sv:property sv:name="jcr:primaryType" sv:type="Name">
     <sv:value>mgnl:contentNode</sv:value>
   </sv:property>
-  <sv:property sv:name="jcr:mixinTypes" sv:type="Name">
+  <sv:property sv:name="jcr:mixinTypes" sv:type="Name" sv:multiple="true">
     <sv:value>mix:lockable</sv:value>
   </sv:property>
   <sv:property sv:name="jcr:uuid" sv:type="String">
-    <sv:value>fc5d140b-2123-4ebc-b30b-5d4176e9424b</sv:value>
+    <sv:value>a5f39e3b-4364-487c-915a-aaad00535bff</sv:value>
   </sv:property>
   <sv:property sv:name="class" sv:type="String">
-    <sv:value>net.sourceforge.openutils.mgnlmedia.media.processors.BlackAndWhitePostProcessor</sv:value>
+    <sv:value>net.sourceforge.openutils.mgnlmedia.media.processors.LogSizePostProcessor</sv:value>
+  </sv:property>
+  <sv:property sv:name="jcr:createdBy" sv:type="String">
+    <sv:value>admin</sv:value>
   </sv:property>
   <sv:node sv:name="MetaData">
     <sv:property sv:name="jcr:primaryType" sv:type="Name">
       <sv:value>mgnl:metaData</sv:value>
     </sv:property>
+    <sv:property sv:name="jcr:createdBy" sv:type="String">
+      <sv:value>admin</sv:value>
+    </sv:property>
     <sv:property sv:name="mgnl:activated" sv:type="Boolean">
       <sv:value>false</sv:value>
     </sv:property>
     <sv:property sv:name="mgnl:authorid" sv:type="String">
-      <sv:value>superuser</sv:value>
+      <sv:value>admin</sv:value>
     </sv:property>
     <sv:property sv:name="mgnl:creationdate" sv:type="Date">
       <sv:value>2009-09-03T18:28:30.446+02:00</sv:value>
     </sv:property>
     <sv:property sv:name="mgnl:lastmodified" sv:type="Date">
-      <sv:value>2009-09-09T10:15:47.224+02:00</sv:value>
+      <sv:value>2009-09-04T13:01:42.001+02:00</sv:value>
     </sv:property>
   </sv:node>
 </sv:node>

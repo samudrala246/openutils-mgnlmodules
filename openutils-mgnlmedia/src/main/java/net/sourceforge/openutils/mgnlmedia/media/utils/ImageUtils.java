@@ -1185,13 +1185,14 @@ public final class ImageUtils
         {
             img = Components
                 .getComponent(ImageProcessorsManager.class)
-                .getDefaultImageResolutionProcessor()
+                .getDefaultResolutionProcessor()
                 .getImageForResolution(original, size.x, size.y, params);
         }
 
         for (ImagePostProcessor ipp : Components
             .getComponent(ImageProcessorsManager.class)
-            .getImagePostProcessorsList())
+            .getPostprocessors()
+            .values())
         {
             img = ipp.processImage(img, size.x, size.y, params);
         }

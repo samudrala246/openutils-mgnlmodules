@@ -1,23 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<sv:node sv:name="default" xmlns:sv="http://www.jcp.org/jcr/sv/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<sv:node sv:name="n" xmlns:sv="http://www.jcp.org/jcr/sv/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <sv:property sv:name="jcr:primaryType" sv:type="Name">
     <sv:value>mgnl:contentNode</sv:value>
   </sv:property>
-  <sv:property sv:name="jcr:mixinTypes" sv:type="Name">
+  <sv:property sv:name="jcr:mixinTypes" sv:type="Name" sv:multiple="true">
     <sv:value>mix:lockable</sv:value>
   </sv:property>
   <sv:property sv:name="jcr:uuid" sv:type="String">
-    <sv:value>6dbc524e-4d6a-450e-9646-1147a2767118</sv:value>
-  </sv:property>
-  <sv:property sv:name="aliases" sv:type="String">
-    <sv:value>c</sv:value>
+    <sv:value>548599ee-b91f-43e0-aae3-7a7bf3f3aca2</sv:value>
   </sv:property>
   <sv:property sv:name="class" sv:type="String">
-    <sv:value>net.sourceforge.openutils.mgnlmedia.media.processors.ResizeCropCenteredImageResolutionProcessor</sv:value>
+    <sv:value>net.sourceforge.openutils.mgnlmedia.media.processors.ResizeNoCropImageResolutionProcessor</sv:value>
+  </sv:property>
+  <sv:property sv:name="jcr:createdBy" sv:type="String">
+    <sv:value>admin</sv:value>
   </sv:property>
   <sv:node sv:name="MetaData">
     <sv:property sv:name="jcr:primaryType" sv:type="Name">
       <sv:value>mgnl:metaData</sv:value>
+    </sv:property>
+    <sv:property sv:name="jcr:createdBy" sv:type="String">
+      <sv:value>admin</sv:value>
+    </sv:property>
+    <sv:property sv:name="mgnl:activated" sv:type="Boolean">
+      <sv:value>false</sv:value>
     </sv:property>
     <sv:property sv:name="mgnl:authorid" sv:type="String">
       <sv:value>admin</sv:value>
@@ -26,7 +32,7 @@
       <sv:value>2009-09-03T18:25:55.848+02:00</sv:value>
     </sv:property>
     <sv:property sv:name="mgnl:lastmodified" sv:type="Date">
-      <sv:value>2009-09-03T18:28:25.707+02:00</sv:value>
+      <sv:value>2009-09-03T18:31:07.041+02:00</sv:value>
     </sv:property>
   </sv:node>
 </sv:node>

@@ -1,32 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<sv:node sv:name="n" xmlns:sv="http://www.jcp.org/jcr/sv/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<sv:node sv:name="p" xmlns:sv="http://www.jcp.org/jcr/sv/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <sv:property sv:name="jcr:primaryType" sv:type="Name">
     <sv:value>mgnl:contentNode</sv:value>
   </sv:property>
-  <sv:property sv:name="jcr:mixinTypes" sv:type="Name">
+  <sv:property sv:name="jcr:mixinTypes" sv:type="Name" sv:multiple="true">
     <sv:value>mix:lockable</sv:value>
   </sv:property>
   <sv:property sv:name="jcr:uuid" sv:type="String">
-    <sv:value>e625c6d1-c2d2-4eb4-97c1-eda7f5d34dd1</sv:value>
+    <sv:value>c97d6259-c109-4929-bea9-f42b5592dec7</sv:value>
   </sv:property>
   <sv:property sv:name="class" sv:type="String">
-    <sv:value>net.sourceforge.openutils.mgnlmedia.media.processors.ResizeNoCropImageResolutionProcessor</sv:value>
+    <sv:value>net.sourceforge.openutils.mgnlmedia.media.crop.PzcImageProcessor</sv:value>
+  </sv:property>
+  <sv:property sv:name="jcr:createdBy" sv:type="String">
+    <sv:value>admin</sv:value>
   </sv:property>
   <sv:node sv:name="MetaData">
     <sv:property sv:name="jcr:primaryType" sv:type="Name">
       <sv:value>mgnl:metaData</sv:value>
     </sv:property>
+    <sv:property sv:name="jcr:createdBy" sv:type="String">
+      <sv:value>admin</sv:value>
+    </sv:property>
     <sv:property sv:name="mgnl:activated" sv:type="Boolean">
       <sv:value>false</sv:value>
     </sv:property>
     <sv:property sv:name="mgnl:authorid" sv:type="String">
-      <sv:value>admin</sv:value>
+      <sv:value>superuser</sv:value>
     </sv:property>
     <sv:property sv:name="mgnl:creationdate" sv:type="Date">
-      <sv:value>2009-09-03T18:25:55.848+02:00</sv:value>
+      <sv:value>2009-09-03T18:28:30.446+02:00</sv:value>
     </sv:property>
     <sv:property sv:name="mgnl:lastmodified" sv:type="Date">
-      <sv:value>2009-09-03T18:31:07.041+02:00</sv:value>
+      <sv:value>2010-10-28T18:51:53.752+02:00</sv:value>
     </sv:property>
   </sv:node>
 </sv:node>

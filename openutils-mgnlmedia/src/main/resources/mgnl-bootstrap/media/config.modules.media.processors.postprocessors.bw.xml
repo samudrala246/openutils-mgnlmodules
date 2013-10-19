@@ -1,20 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<sv:node sv:name="rc" xmlns:sv="http://www.jcp.org/jcr/sv/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<sv:node sv:name="bw" xmlns:sv="http://www.jcp.org/jcr/sv/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <sv:property sv:name="jcr:primaryType" sv:type="Name">
     <sv:value>mgnl:contentNode</sv:value>
   </sv:property>
-  <sv:property sv:name="jcr:mixinTypes" sv:type="Name">
+  <sv:property sv:name="jcr:mixinTypes" sv:type="Name" sv:multiple="true">
     <sv:value>mix:lockable</sv:value>
   </sv:property>
   <sv:property sv:name="jcr:uuid" sv:type="String">
-    <sv:value>fc6d140b-2133-4abc-b30b-5d4a76e9424b</sv:value>
+    <sv:value>b3258444-6292-43e5-a412-76a8106275a3</sv:value>
   </sv:property>
   <sv:property sv:name="class" sv:type="String">
-    <sv:value>net.sourceforge.openutils.mgnlmedia.media.processors.RoundedCornersProcessor</sv:value>
+    <sv:value>net.sourceforge.openutils.mgnlmedia.media.processors.BlackAndWhitePostProcessor</sv:value>
+  </sv:property>
+  <sv:property sv:name="jcr:createdBy" sv:type="String">
+    <sv:value>admin</sv:value>
   </sv:property>
   <sv:node sv:name="MetaData">
     <sv:property sv:name="jcr:primaryType" sv:type="Name">
       <sv:value>mgnl:metaData</sv:value>
+    </sv:property>
+    <sv:property sv:name="jcr:createdBy" sv:type="String">
+      <sv:value>admin</sv:value>
     </sv:property>
     <sv:property sv:name="mgnl:activated" sv:type="Boolean">
       <sv:value>false</sv:value>

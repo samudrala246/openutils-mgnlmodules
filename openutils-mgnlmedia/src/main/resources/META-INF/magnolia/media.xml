@@ -15,7 +15,10 @@
     </component>
     <component>
       <type>net.sourceforge.openutils.mgnlmedia.media.configuration.ImageProcessorsManager</type>
-      <implementation>net.sourceforge.openutils.mgnlmedia.media.configuration.DefaultImageProcessorsManager</implementation>
+      <workspace>config</workspace>
+      <path>/modules/media/processors</path>
+      <observed>true</observed>
+      <scope>singleton</scope>
     </component>
     <component>
       <type>net.sourceforge.openutils.mgnlmedia.media.configuration.MediaUsedInManager</type>

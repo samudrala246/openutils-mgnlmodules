@@ -19,7 +19,6 @@
 
 package net.sourceforge.openutils.mgnlmedia.media.configuration;
 
-import java.util.Collection;
 import java.util.Map;
 
 import net.sourceforge.openutils.mgnlmedia.media.processors.ImagePostProcessor;
@@ -37,12 +36,12 @@ public interface ImageProcessorsManager
 
     boolean isValidControlChar(char controlChar);
 
-    ImageResolutionProcessor getDefaultImageResolutionProcessor();
+    ImageResolutionProcessor getDefaultResolutionProcessor();
 
     ImagePostProcessor getImagePostProcessor(String name);
 
-    Collection<ImagePostProcessor> getImagePostProcessorsList();
+    Map<String, ImagePostProcessor> getPostprocessors();
 
-    Map<String, ImagePostProcessor> getImagePostProcessorsMap();
+    Map<String, ImageResolutionProcessor> getResolutionprocessors();
 
 }

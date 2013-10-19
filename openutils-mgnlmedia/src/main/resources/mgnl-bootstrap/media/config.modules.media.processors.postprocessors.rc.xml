@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<sv:node sv:name="p" xmlns:sv="http://www.jcp.org/jcr/sv/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<sv:node sv:name="rc" xmlns:sv="http://www.jcp.org/jcr/sv/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <sv:property sv:name="jcr:primaryType" sv:type="Name">
     <sv:value>mgnl:contentNode</sv:value>
   </sv:property>
@@ -7,10 +7,10 @@
     <sv:value>mix:lockable</sv:value>
   </sv:property>
   <sv:property sv:name="jcr:uuid" sv:type="String">
-    <sv:value>c10d7b60-efc1-4078-9039-4f432f2792bf</sv:value>
+    <sv:value>8071597c-3c20-46ef-9b98-01fbc68f8dad</sv:value>
   </sv:property>
   <sv:property sv:name="class" sv:type="String">
-    <sv:value>net.sourceforge.openutils.mgnlmedia.media.crop.PzcImageProcessor</sv:value>
+    <sv:value>net.sourceforge.openutils.mgnlmedia.media.processors.RoundedCornersProcessor</sv:value>
   </sv:property>
   <sv:property sv:name="jcr:createdBy" sv:type="String">
     <sv:value>admin</sv:value>
@@ -32,7 +32,7 @@
       <sv:value>2009-09-03T18:28:30.446+02:00</sv:value>
     </sv:property>
     <sv:property sv:name="mgnl:lastmodified" sv:type="Date">
-      <sv:value>2010-10-28T18:51:53.752+02:00</sv:value>
+      <sv:value>2009-09-09T10:15:47.224+02:00</sv:value>
     </sv:property>
   </sv:node>
 </sv:node>

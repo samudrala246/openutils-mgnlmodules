@@ -42,7 +42,7 @@ public class ImageProcessorsManagerMock extends DefaultImageProcessorsManager
      * {@inheritDoc}
      */
     @Override
-    public ImageResolutionProcessor getDefaultImageResolutionProcessor()
+    public ImageResolutionProcessor getDefaultResolutionProcessor()
     {
         return new ResizeCropCenteredImageResolutionProcessor();
     }
