@@ -112,7 +112,7 @@ world	/demo-project.html	1be12547-ad82-4c83-8396-213466ceb003	&lt;p&gt;consectet
       </sv:node>
       <sv:node sv:name="grid_files">
         <sv:property sv:name="jcr:primaryType" sv:type="Name">
-          <sv:value>mgnl:contentNode</sv:value>
+          <sv:value>mgnl:component</sv:value>
         </sv:property>
         <sv:property sv:name="jcr:mixinTypes" sv:type="Name" sv:multiple="true">
           <sv:value>mix:lockable</sv:value>
