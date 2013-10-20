@@ -99,7 +99,7 @@ public class MediaGridColumnType extends AbstractGridColumnType
      * {@inheritDoc}
      */
     @Override
-    public void processColumnOnLoad(String[] column, Content colConfig)
+    public void processColumnOnLoad(String[] column, Content colConfig, String propertyName, Content storageNode)
     {
         String valueType = StringUtils.defaultIfEmpty(NodeDataUtil.getString(colConfig, "valueType"), "uuid");
         if ("uuid".equals(valueType))
