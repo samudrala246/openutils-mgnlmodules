@@ -1,7 +1,7 @@
 /**
  *
  * E-learning Module for Magnolia CMS (http://www.openmindlab.com/lab/products/lms.html)
- * Copyright(C) 2010-2011, Openmind S.r.l. http://www.openmindonline.it
+ * Copyright(C) 2010-2013, Openmind S.r.l. http://www.openmindonline.it
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -16,7 +16,6 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 package net.sourceforge.openutils.mgnllms.report;
 
 import java.util.ArrayList;
