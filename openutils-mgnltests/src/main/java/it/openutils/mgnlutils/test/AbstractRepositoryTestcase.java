@@ -18,7 +18,7 @@
  */
 
 package it.openutils.mgnlutils.test;
- 
+
 import info.magnolia.cms.core.Path;
 import info.magnolia.cms.core.SystemProperty;
 import info.magnolia.cms.util.ClasspathResourcesUtil;
@@ -55,6 +55,7 @@ import info.magnolia.objectfactory.configuration.ImplementationConfiguration;
 import info.magnolia.objectfactory.configuration.InstanceConfiguration;
 import info.magnolia.objectfactory.configuration.ProviderConfiguration;
 import info.magnolia.repository.DefaultRepositoryManager;
+import info.magnolia.repository.RepositoryConstants;
 import info.magnolia.repository.RepositoryManager;
 import info.magnolia.test.ComponentsTestUtil;
 import info.magnolia.test.FixedModuleDefinitionReader;
@@ -76,6 +77,8 @@ import java.util.Map;
 import javax.jcr.ImportUUIDBehavior;
 import javax.jcr.Node;
 import javax.jcr.RepositoryException;
+import javax.jcr.observation.EventListenerIterator;
+import javax.jcr.observation.ObservationManager;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
@@ -183,7 +186,20 @@ public abstract class AbstractRepositoryTestcase
                 logger.setLevel(Level.WARN);
             }
             MgnlContext.release();
-            Components.getComponent(SystemContext.class).release();
+
+            SystemContext systemContext = Components.getComponent(SystemContext.class);
+
+            final ObservationManager observationManager = systemContext
+                .getJCRSession(RepositoryConstants.CONFIG)
+                .getWorkspace()
+                .getObservationManager();
+            final EventListenerIterator listeners = observationManager.getRegisteredEventListeners();
+            while (listeners.hasNext())
+            {
+                observationManager.removeEventListener(listeners.nextEventListener());
+            }
+
+            systemContext.release();
 
             Components.getComponent(RepositoryManager.class).shutdown();
             if (true)

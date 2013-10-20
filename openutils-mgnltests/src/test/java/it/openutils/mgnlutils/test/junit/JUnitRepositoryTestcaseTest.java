@@ -57,7 +57,7 @@ public class JUnitRepositoryTestcaseTest extends JUnitRepositoryTestcase
         Node letters = session.getNode("/letters");
         Assert.assertNotNull(letters);
 
-        Assert.assertEquals(NodeUtil.getCollectionFromNodeIterator(letters.getNodes()).size(), 26);
+        Assert.assertEquals(NodeUtil.asList(NodeUtil.getNodes(letters, NodeUtil.EXCLUDE_META_DATA_FILTER)).size(), 26);
     }
 
     @Test
