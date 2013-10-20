@@ -11,7 +11,7 @@
     
     [@cms.init /]
     
-    <link rel="stylesheet" type="text/css" href="${contextPath}/.resources/contextmenu/css/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="${contextPath}/.resources/bootstrap/3.0/css/bootstrap.min.css" />
     
     <!-- samples css/js -->
     <link rel="stylesheet" type="text/css" href="${contextPath}/.resources/contextmenu/css/contextmenu-samples.css" />

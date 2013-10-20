@@ -14,7 +14,7 @@
       ${contextmenu:init()} 
       ${contextmenu:links()}
       <cms:init />
-      <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/.resources/contextmenu/css/bootstrap.min.css" />
+      <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/.resources/bootstrap/3.0/css/bootstrap.min.css" />
       <!-- samples css/js -->
       <link rel="stylesheet" type="text/css"
         href="${pageContext.request.contextPath}/.resources/contextmenu/css/contextmenu-samples.css" />

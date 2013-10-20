@@ -11,7 +11,7 @@
       <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
       <title> ${content.title}
       </title>
-      <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/.resources/bootstrap/css/bootstrap.min.css" />
+      <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/.resources/bootstrap/3.0/css/bootstrap.min.css" />
       <style>
     <![CDATA[
       code { display: block}

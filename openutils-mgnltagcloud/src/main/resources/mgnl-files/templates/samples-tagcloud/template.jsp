@@ -11,7 +11,7 @@
       <cms:init />
       <title>${content.title}</title>
       <link rel="stylesheet" type="text/css"
-        href="${pageContext.request.contextPath}/.resources/tagcloud/samples/css/bootstrap.min.css" />
+        href="${pageContext.request.contextPath}/.resources/bootstrap/3.0/css/bootstrap.min.css" />
       <link rel="stylesheet" type="text/css"
         href="${pageContext.request.contextPath}/.resources/tagcloud/samples/css/tagcloud-samples.css" />
     </head>
