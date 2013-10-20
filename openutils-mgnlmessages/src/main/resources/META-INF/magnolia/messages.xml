@@ -45,7 +45,6 @@
       <version>*</version>
     </dependency>
   </dependencies>
-</dependencies>
   <repositories>
     <repository>
       <name>magnolia</name>
