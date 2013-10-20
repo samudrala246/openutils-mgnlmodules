@@ -1,5 +1,5 @@
-    <?xml version="1.0" encoding="UTF-8"?>
-    <!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
 <log4j:configuration>
       <!-- log4j test configuration -->
   <appender name="test-appender" class="org.apache.log4j.ConsoleAppender">
@@ -29,6 +29,9 @@
     <priority value="WARN" />
   </category>
   <category name="score">
+    <priority value="INFO" />
+  </category>
+  <category name="it">
     <priority value="INFO" />
   </category>
   <category name="info.magnolia.module.model.reader.BetwixtModuleDefinitionReader">
