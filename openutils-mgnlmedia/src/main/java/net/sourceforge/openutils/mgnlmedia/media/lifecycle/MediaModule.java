@@ -108,9 +108,6 @@ public class MediaModule implements ModuleLifecycle
     {
         log.info("Starting module media");
         ctx.registerModuleObservingComponent("mediatypes", (ObservedManager) mediaConfigurationManager);
-        ctx.registerModuleObservingComponent(
-            "processors",
-            (ObservedManager) Components.getComponent(ImageProcessorsManager.class));
         version = ctx.getCurrentModuleDefinition().getVersion().toString();
     }
 

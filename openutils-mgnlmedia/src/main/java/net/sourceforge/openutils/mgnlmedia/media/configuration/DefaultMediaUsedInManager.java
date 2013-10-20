@@ -112,7 +112,15 @@ public class DefaultMediaUsedInManager implements MediaUsedInManager
             .setBasePath(basepath)
             .addOrder(Order.desc("@jcr:score"));
 
-        criteria.add(Restrictions.not(Restrictions.in("@jcr:primaryType", uiw.getNodetypes())));
+        if (uiw.getNodetypes() != null && !uiw.getNodetypes().isEmpty())
+        {
+            Disjunction nodetypes = Restrictions.disjunction();
+            for (String string : uiw.getNodetypes())
+            {
+                nodetypes.add(Restrictions.eq("@jcr:primaryType", string));
+            }
+            criteria.add(nodetypes);
+        }
 
         Disjunction properties = Restrictions.disjunction();
         for (String string : uiw.getProperties())

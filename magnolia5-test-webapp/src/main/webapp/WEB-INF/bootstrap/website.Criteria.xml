@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <sv:node sv:name="Criteria" xmlns:sv="http://www.jcp.org/jcr/sv/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <sv:property sv:name="jcr:primaryType" sv:type="Name">
-    <sv:value>mgnl:content</sv:value>
+    <sv:value>mgnl:page</sv:value>
   </sv:property>
   <sv:property sv:name="jcr:mixinTypes" sv:type="Name" sv:multiple="true">
     <sv:value>mix:lockable</sv:value>
@@ -37,7 +37,7 @@
   </sv:node>
   <sv:node sv:name="pets">
     <sv:property sv:name="jcr:primaryType" sv:type="Name">
-      <sv:value>mgnl:content</sv:value>
+      <sv:value>mgnl:page</sv:value>
     </sv:property>
     <sv:property sv:name="jcr:mixinTypes" sv:type="Name" sv:multiple="true">
       <sv:value>mix:lockable</sv:value>
@@ -73,7 +73,7 @@
     </sv:node>
     <sv:node sv:name="cats">
       <sv:property sv:name="jcr:primaryType" sv:type="Name">
-        <sv:value>mgnl:content</sv:value>
+        <sv:value>mgnl:page</sv:value>
       </sv:property>
       <sv:property sv:name="jcr:mixinTypes" sv:type="Name" sv:multiple="true">
         <sv:value>mix:lockable</sv:value>
@@ -109,7 +109,7 @@
       </sv:node>
       <sv:node sv:name="1">
         <sv:property sv:name="jcr:primaryType" sv:type="Name">
-          <sv:value>mgnl:content</sv:value>
+          <sv:value>mgnl:page</sv:value>
         </sv:property>
         <sv:property sv:name="jcr:mixinTypes" sv:type="Name" sv:multiple="true">
           <sv:value>mix:lockable</sv:value>
@@ -152,7 +152,7 @@
       </sv:node>
       <sv:node sv:name="7">
         <sv:property sv:name="jcr:primaryType" sv:type="Name">
-          <sv:value>mgnl:content</sv:value>
+          <sv:value>mgnl:page</sv:value>
         </sv:property>
         <sv:property sv:name="jcr:mixinTypes" sv:type="Name" sv:multiple="true">
           <sv:value>mix:lockable</sv:value>
@@ -195,7 +195,7 @@
       </sv:node>
       <sv:node sv:name="8">
         <sv:property sv:name="jcr:primaryType" sv:type="Name">
-          <sv:value>mgnl:content</sv:value>
+          <sv:value>mgnl:page</sv:value>
         </sv:property>
         <sv:property sv:name="jcr:mixinTypes" sv:type="Name" sv:multiple="true">
           <sv:value>mix:lockable</sv:value>
@@ -238,7 +238,7 @@
       </sv:node>
       <sv:node sv:name="13">
         <sv:property sv:name="jcr:primaryType" sv:type="Name">
-          <sv:value>mgnl:content</sv:value>
+          <sv:value>mgnl:page</sv:value>
         </sv:property>
         <sv:property sv:name="jcr:mixinTypes" sv:type="Name" sv:multiple="true">
           <sv:value>mix:lockable</sv:value>
@@ -282,7 +282,7 @@
     </sv:node>
     <sv:node sv:name="dogs">
       <sv:property sv:name="jcr:primaryType" sv:type="Name">
-        <sv:value>mgnl:content</sv:value>
+        <sv:value>mgnl:page</sv:value>
       </sv:property>
       <sv:property sv:name="jcr:mixinTypes" sv:type="Name" sv:multiple="true">
         <sv:value>mix:lockable</sv:value>
@@ -318,7 +318,7 @@
       </sv:node>
       <sv:node sv:name="3">
         <sv:property sv:name="jcr:primaryType" sv:type="Name">
-          <sv:value>mgnl:content</sv:value>
+          <sv:value>mgnl:page</sv:value>
         </sv:property>
         <sv:property sv:name="jcr:mixinTypes" sv:type="Name" sv:multiple="true">
           <sv:value>mix:lockable</sv:value>
@@ -361,7 +361,7 @@
       </sv:node>
       <sv:node sv:name="4">
         <sv:property sv:name="jcr:primaryType" sv:type="Name">
-          <sv:value>mgnl:content</sv:value>
+          <sv:value>mgnl:page</sv:value>
         </sv:property>
         <sv:property sv:name="jcr:mixinTypes" sv:type="Name" sv:multiple="true">
           <sv:value>mix:lockable</sv:value>
@@ -404,7 +404,7 @@
       </sv:node>
       <sv:node sv:name="10">
         <sv:property sv:name="jcr:primaryType" sv:type="Name">
-          <sv:value>mgnl:content</sv:value>
+          <sv:value>mgnl:page</sv:value>
         </sv:property>
         <sv:property sv:name="jcr:mixinTypes" sv:type="Name" sv:multiple="true">
           <sv:value>mix:lockable</sv:value>
@@ -447,7 +447,7 @@
       </sv:node>
       <sv:node sv:name="12">
         <sv:property sv:name="jcr:primaryType" sv:type="Name">
-          <sv:value>mgnl:content</sv:value>
+          <sv:value>mgnl:page</sv:value>
         </sv:property>
         <sv:property sv:name="jcr:mixinTypes" sv:type="Name" sv:multiple="true">
           <sv:value>mix:lockable</sv:value>
@@ -491,7 +491,7 @@
     </sv:node>
     <sv:node sv:name="lizards">
       <sv:property sv:name="jcr:primaryType" sv:type="Name">
-        <sv:value>mgnl:content</sv:value>
+        <sv:value>mgnl:page</sv:value>
       </sv:property>
       <sv:property sv:name="jcr:mixinTypes" sv:type="Name" sv:multiple="true">
         <sv:value>mix:lockable</sv:value>
@@ -527,7 +527,7 @@
       </sv:node>
       <sv:node sv:name="5">
         <sv:property sv:name="jcr:primaryType" sv:type="Name">
-          <sv:value>mgnl:content</sv:value>
+          <sv:value>mgnl:page</sv:value>
         </sv:property>
         <sv:property sv:name="jcr:mixinTypes" sv:type="Name" sv:multiple="true">
           <sv:value>mix:lockable</sv:value>
@@ -571,7 +571,7 @@
     </sv:node>
     <sv:node sv:name="snakes">
       <sv:property sv:name="jcr:primaryType" sv:type="Name">
-        <sv:value>mgnl:content</sv:value>
+        <sv:value>mgnl:page</sv:value>
       </sv:property>
       <sv:property sv:name="jcr:mixinTypes" sv:type="Name" sv:multiple="true">
         <sv:value>mix:lockable</sv:value>
@@ -607,7 +607,7 @@
       </sv:node>
       <sv:node sv:name="6">
         <sv:property sv:name="jcr:primaryType" sv:type="Name">
-          <sv:value>mgnl:content</sv:value>
+          <sv:value>mgnl:page</sv:value>
         </sv:property>
         <sv:property sv:name="jcr:mixinTypes" sv:type="Name" sv:multiple="true">
           <sv:value>mix:lockable</sv:value>
@@ -651,7 +651,7 @@
     </sv:node>
     <sv:node sv:name="birds">
       <sv:property sv:name="jcr:primaryType" sv:type="Name">
-        <sv:value>mgnl:content</sv:value>
+        <sv:value>mgnl:page</sv:value>
       </sv:property>
       <sv:property sv:name="jcr:mixinTypes" sv:type="Name" sv:multiple="true">
         <sv:value>mix:lockable</sv:value>
@@ -687,7 +687,7 @@
       </sv:node>
       <sv:node sv:name="9">
         <sv:property sv:name="jcr:primaryType" sv:type="Name">
-          <sv:value>mgnl:content</sv:value>
+          <sv:value>mgnl:page</sv:value>
         </sv:property>
         <sv:property sv:name="jcr:mixinTypes" sv:type="Name" sv:multiple="true">
           <sv:value>mix:lockable</sv:value>
@@ -730,7 +730,7 @@
       </sv:node>
       <sv:node sv:name="11">
         <sv:property sv:name="jcr:primaryType" sv:type="Name">
-          <sv:value>mgnl:content</sv:value>
+          <sv:value>mgnl:page</sv:value>
         </sv:property>
         <sv:property sv:name="jcr:mixinTypes" sv:type="Name" sv:multiple="true">
           <sv:value>mix:lockable</sv:value>
@@ -774,7 +774,7 @@
     </sv:node>
     <sv:node sv:name="hamsters">
       <sv:property sv:name="jcr:primaryType" sv:type="Name">
-        <sv:value>mgnl:content</sv:value>
+        <sv:value>mgnl:page</sv:value>
       </sv:property>
       <sv:property sv:name="jcr:mixinTypes" sv:type="Name" sv:multiple="true">
         <sv:value>mix:lockable</sv:value>
@@ -810,7 +810,7 @@
       </sv:node>
       <sv:node sv:name="2">
         <sv:property sv:name="jcr:primaryType" sv:type="Name">
-          <sv:value>mgnl:content</sv:value>
+          <sv:value>mgnl:page</sv:value>
         </sv:property>
         <sv:property sv:name="jcr:mixinTypes" sv:type="Name" sv:multiple="true">
           <sv:value>mix:lockable</sv:value>
