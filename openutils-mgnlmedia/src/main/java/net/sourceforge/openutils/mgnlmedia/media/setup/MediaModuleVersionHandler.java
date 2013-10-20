@@ -243,12 +243,7 @@ public class MediaModuleVersionHandler extends SimpleModuleVersionHandler
             "wildcards",
             Boolean.TRUE));
 
-        tasks.add(new ChangeExistingPropertyTask(
-            RepositoryConstants.CONFIG,
-            "/modules/media/mediausedin/website",
-            "nodeType",
-            "mgnl:content",
-            "mgnl:page"));
+         
 
         // empty placeholder
         tasks.add(new CreateMissingPropertyTask(RepositoryConstants.CONFIG, "/modules/media/config", "baseurl", ""));
@@ -269,8 +264,23 @@ public class MediaModuleVersionHandler extends SimpleModuleVersionHandler
             "class",
             DefaultMediaUsedInManager.class.getName()));
 
-        // config moved to /modules/media/mediausedin/entries/website
-        tasks.add(new DeleteNodeTask(RepositoryConstants.CONFIG, "/modules/media/mediausedin/website"));
+        tasks
+            .add(new DeleteNodeTask(
+                RepositoryConstants.CONFIG,
+                "/modules/media/mediausedin/website",
+                "Configuration from /modules/media/mediausedin has now been changed and moved to the subnode \"entries\". The configuration has been reverted to the default"));
+
+        tasks
+            .add(new DeleteNodeTask(
+                RepositoryConstants.CONFIG,
+                "/modules/media/processors/image-post",
+                "Configuration node image-post into /modules/media/processors has been renamed to \"postprocessors\". The configuration has been reverted to the default"));
+
+        tasks
+            .add(new DeleteNodeTask(
+                RepositoryConstants.CONFIG,
+                "/modules/media/processors/image-resolution",
+                "Configuration node image-resolution into /modules/media/processors has been renamed to \"resolutionprocessors\". The configuration has been reverted to the default"));
 
         return tasks;
     }

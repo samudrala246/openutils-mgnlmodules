@@ -27,6 +27,9 @@ import it.openutils.mgnlutils.api.NodeUtilsExt;
 import javax.jcr.RepositoryException;
 import javax.jcr.Session;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 
 /**
  * Deletes a node (if existing).
@@ -36,9 +39,26 @@ import javax.jcr.Session;
 public class DeleteNodeTask extends AbstractRepositoryTask
 {
 
-    private final String workspaceName;
+    private String workspaceName;
 
-    private final String nodePath;
+    private String nodePath;
+
+    private String warning;
+
+    private Logger log = LoggerFactory.getLogger(DeleteNodeTask.class);
+
+    /**
+     * @param workspaceName workspace (for example "config")
+     * @param nodePath node path
+     * @param warning optional warning message which will be shown if the node to delete actually exists
+     */
+    public DeleteNodeTask(String workspaceName, String nodePath, String warning)
+    {
+        super("Deleting the node " + nodePath, "Deleting the node " + nodePath);
+        this.workspaceName = workspaceName;
+        this.nodePath = nodePath;
+        this.warning = warning;
+    }
 
     /**
      * @param workspaceName workspace (for example "config")
@@ -46,21 +66,23 @@ public class DeleteNodeTask extends AbstractRepositoryTask
      */
     public DeleteNodeTask(String workspaceName, String nodePath)
     {
-        super("Deleting the node " + nodePath, "Deleting the node " + nodePath);
-        this.workspaceName = workspaceName;
-        this.nodePath = nodePath;
+        this(workspaceName, nodePath, null);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     protected void doExecute(InstallContext installContext) throws RepositoryException, TaskExecutionException
     {
 
-        Session hm = installContext.getJCRSession(workspaceName);
+        Session session = installContext.getJCRSession(workspaceName);
 
-        NodeUtilsExt.deleteIfExisting(hm, nodePath);
+        if (NodeUtilsExt.exists(session, nodePath))
+        {
+            if (warning != null)
+            {
+                installContext.warn(warning);
+            }
+            NodeUtilsExt.deleteIfExisting(session, nodePath);
+        }
     }
 
 }
