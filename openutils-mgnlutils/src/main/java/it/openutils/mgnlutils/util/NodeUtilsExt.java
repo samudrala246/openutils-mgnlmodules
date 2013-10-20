@@ -21,6 +21,7 @@ package it.openutils.mgnlutils.util;
 
 import info.magnolia.cms.core.AggregationState;
 import info.magnolia.cms.core.Path;
+import info.magnolia.cms.util.ContentUtil;
 import info.magnolia.content2bean.Content2BeanException;
 import info.magnolia.content2bean.Content2BeanUtil;
 import info.magnolia.context.MgnlContext;
@@ -31,6 +32,10 @@ import info.magnolia.jcr.util.PropertyUtil;
 import info.magnolia.jcr.wrapper.ChannelVisibilityContentDecorator;
 import info.magnolia.jcr.wrapper.HTMLEscapingNodeWrapper;
 import info.magnolia.jcr.wrapper.I18nNodeWrapper;
+import info.magnolia.link.LinkFactory;
+import info.magnolia.link.LinkTransformerManager;
+import info.magnolia.link.LinkUtil;
+import info.magnolia.objectfactory.Components;
 
 import java.util.regex.Pattern;
 
@@ -254,5 +259,20 @@ public class NodeUtilsExt
             return null;
         }
         return NodeUtil.getPathIfPossible(node) + "/" + PropertyUtil.getString(node, "fileName");
+    }
+
+    @SuppressWarnings("deprecation")
+    public static String createLink(Node node, boolean addcontextpath)
+    {
+        if (node == null)
+        {
+            return null;
+        }
+
+        return LinkTransformerManager
+            .getInstance()
+            .getAbsolute(addcontextpath)
+            .transform(LinkFactory.createLink(ContentUtil.asContent(node)));
+
     }
 }

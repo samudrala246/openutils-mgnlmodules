@@ -28,15 +28,17 @@ import info.magnolia.cms.i18n.MessagesManager;
 import info.magnolia.cms.security.Permission;
 import info.magnolia.cms.security.PermissionUtil;
 import info.magnolia.cms.security.SecurityUtil;
-import info.magnolia.cms.security.User; 
+import info.magnolia.cms.security.User;
 import info.magnolia.context.MgnlContext;
-import info.magnolia.context.WebContext;
-import info.magnolia.init.MagnoliaConfigurationProperties; 
+import info.magnolia.init.MagnoliaConfigurationProperties;
+import info.magnolia.jcr.util.ContentMap;
 import info.magnolia.jcr.util.NodeUtil;
+import info.magnolia.jcr.wrapper.HTMLEscapingNodeWrapper;
 import info.magnolia.link.LinkException;
 import info.magnolia.link.LinkUtil;
 import info.magnolia.objectfactory.Components;
 import info.magnolia.repository.RepositoryConstants;
+import it.openutils.mgnlutils.util.NodeUtilsExt;
 
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Field;
@@ -225,7 +227,7 @@ public final class MgnlUtilsElFunctions
     public static String link(String uuidOrPathOrUrl)
     {
         String cleanedurl = StringUtils.replace(StringUtils.trim(uuidOrPathOrUrl), "&", "&amp;");
-        String contextPath = ((WebContext) MgnlContext.getInstance()).getContextPath();
+        String contextPath = safeContextPath();
 
         if (StringUtils.isBlank(cleanedurl))
         {
@@ -261,8 +263,7 @@ public final class MgnlUtilsElFunctions
         // Check if uuidOrPathOrUrl is an UUID
         try
         {
-            cleanedurl = MgnlContext.getContextPath()
-                + LinkUtil.convertUUIDtoURI(cleanedurl, RepositoryConstants.WEBSITE);
+            cleanedurl = safeContextPath() + LinkUtil.convertUUIDtoURI(cleanedurl, RepositoryConstants.WEBSITE);
         }
         catch (LinkException e)
         {
@@ -655,7 +656,7 @@ public final class MgnlUtilsElFunctions
      */
     public static String baseUrl()
     {
-        return baseUrlWithoutContextPath() + MgnlContext.getWebContext().getRequest().getContextPath();
+        return baseUrlWithoutContextPath() + safeContextPath();
     }
 
     /**
@@ -753,27 +754,38 @@ public final class MgnlUtilsElFunctions
     }
 
     /**
-     * Returns a link from an uuid. Accepts in input uuid. Returns "#" if provided uuid is not found.
+     * Returns a link from an uuid. Accepts an uuid, a path, a Node, Content or ContentMap object. Returns "#" if
+     * provided uuid is not found. Automatically adds the context path.
      * @param uuid uuid to find
      * @param repo repository within search - can be null - default is 'website'
      * @return a link from an uuid.
      */
-    public static String repoUuidLink(String uuid, String repo)
+    public static String repoUuidLink(Object uuid, String repo)
     {
-        String url = "#";
-        try
+        return link(uuid, repo, true);
+    }
+
+    /**
+     * Returns a link from an uuid. Accepts an uuid, a path, a Node, Content or ContentMap object. Returns "#" if
+     * provided uuid is not found. Don't add the context path.
+     * @param uuid uuid to find
+     * @param repo repository within search - can be null - default is 'website'
+     * @return a link from an uuid.
+     */
+    public static String linkNoCtx(Object uuid, String repo)
+    {
+        return link(uuid, repo, false);
+    }
+
+    public static String link(Object uuid, String repo, boolean addcontextpath)
+    {
+        Node node = node(uuid, repo);
+        if (node == null)
         {
-            url = MgnlContext.getContextPath()
-                + LinkUtil.convertUUIDtoURI(uuid, StringUtils.isNotBlank(repo) ? repo : RepositoryConstants.WEBSITE);
-        }
-        catch (LinkException e)
-        {
-            log.debug("Failed to parse links with from "
-                + MgnlContext.getAggregationState().getCurrentURI()
-                + e.getMessage());
+            return "#";
         }
 
-        return url;
+        return NodeUtilsExt.createLink(node, addcontextpath);
     }
 
     /**
@@ -984,7 +996,9 @@ public final class MgnlUtilsElFunctions
 
             try
             {
-                Session session = MgnlContext.getJCRSession(repo);
+                Session session = MgnlContext.getJCRSession(StringUtils.isNotBlank(repo)
+                    ? repo
+                    : RepositoryConstants.WEBSITE);
                 if (identifier.startsWith("/"))
                 {
                     if (session.nodeExists(identifier))
@@ -1049,7 +1063,8 @@ public final class MgnlUtilsElFunctions
     {
         Subject subject = MgnlContext.getSubject();
 
-        Set<info.magnolia.cms.security.auth.Entity> principalDetails = subject.getPrincipals(info.magnolia.cms.security.auth.Entity.class);
+        Set<info.magnolia.cms.security.auth.Entity> principalDetails = subject
+            .getPrincipals(info.magnolia.cms.security.auth.Entity.class);
         Iterator<info.magnolia.cms.security.auth.Entity> entityIterator = principalDetails.iterator();
         info.magnolia.cms.security.auth.Entity userDetails = entityIterator.next();
 
@@ -1353,6 +1368,13 @@ public final class MgnlUtilsElFunctions
         }
     }
 
+    /**
+     * Loads the ancestor of the given jcr Node/ContentMap. Returns null if the object is null or if requested level is
+     * greater than current depth
+     * @param nodeorcontent input Node or ContentMap
+     * @param level ancestor level
+     * @return Node or null
+     */
     public static Node ancestor(Object nodeorcontent, int level)
     {
 
@@ -1385,7 +1407,31 @@ public final class MgnlUtilsElFunctions
                 e.getMessage() });
             return null;
         }
+    }
 
+    /**
+     * Removes escaping of HTML on properties
+     * @param object Node or ContentMap
+     * @return same Node without wrapping. Null safe
+     */
+    public static Node decode(Object object)
+    {
+        Node node = MgnlUtilsDeprecatedAdapters.toNode(object);
+        if (node == null)
+        {
+            return null;
+        }
+
+        return NodeUtil.deepUnwrap(node, HTMLEscapingNodeWrapper.class);
+    }
+
+    private static String safeContextPath()
+    {
+        if (MgnlContext.isWebContext())
+        {
+            return MgnlContext.getContextPath();
+        }
+        return StringUtils.EMPTY;
     }
 
 }

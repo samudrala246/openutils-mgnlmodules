@@ -101,6 +101,11 @@ public class MgnlUtilsDeprecatedAdapters
         {
             return ((NodeMapWrapper) nodeorcontent).getJCRNode();
         }
+        else if (nodeorcontent instanceof String)
+        {
+            // just ignore
+            log.debug("Unable to handle object of type {}", nodeorcontent);
+        }
         else
         {
             log.warn("Unable to handle object of type {}", nodeorcontent);

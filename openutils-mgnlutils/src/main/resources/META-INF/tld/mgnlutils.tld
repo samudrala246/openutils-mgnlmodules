@@ -241,10 +241,16 @@ mu:isLine('aaa\nbb\nc', 'b') = false]]></example>
     <function-signature>java.lang.String activePageFullUrl()</function-signature>
   </function>
   <function>
-    <description>Returns a link from an uuid. Accepts in input uuid.</description>
+    <description>Returns a link from an uuid. Accepts an uuid, path. Node or ContentMap. Automatically adds the context path.</description>
     <name>repoUuidLink</name>
     <function-class>it.openutils.mgnlutils.el.MgnlUtilsElFunctions</function-class>
-    <function-signature>java.lang.String repoUuidLink(java.lang.String, java.lang.String)</function-signature>
+    <function-signature>java.lang.String repoUuidLink(java.lang.Object, java.lang.String)</function-signature>
+  </function>
+  <function>
+    <description>Returns a link from an uuid. Accepts an uuid, path. Node or ContentMap. Don't add the context path</description>
+    <name>linkNoCtx</name>
+    <function-class>it.openutils.mgnlutils.el.MgnlUtilsElFunctions</function-class>
+    <function-signature>java.lang.String linkNoCtx(java.lang.Object, java.lang.String)</function-signature>
   </function>
   <function>
     <description>Convert a content list into a collection, also wrapping the content inside a I18NNodeMapWrapper</description>
@@ -435,6 +441,12 @@ mu:isLine('aaa\nbb\nc', 'b') = false]]></example>
     <name>ancestor</name>
     <function-class>it.openutils.mgnlutils.el.MgnlUtilsElFunctions</function-class>
     <function-signature>javax.jcr.Node ancestor(java.lang.Object, int)</function-signature>
+  </function>
+  <function>
+    <description>Removes escaping of HTML on properties.</description>
+    <name>decode</name>
+    <function-class>it.openutils.mgnlutils.el.MgnlUtilsElFunctions</function-class>
+    <function-signature>javax.jcr.Node decode(java.lang.Object)</function-signature>
   </function>
   <!-- please don't add new funtions without a meaningfull <description> -->
 </taglib>
