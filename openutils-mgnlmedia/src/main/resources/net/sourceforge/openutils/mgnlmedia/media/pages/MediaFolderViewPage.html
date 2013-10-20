@@ -547,7 +547,7 @@ MediaFolderView.InfoTooltips = new Class({
                 [#list media.usedInNodes?values[key_index].items as node]
                 <li>
                   [#assign link = this.link(node)]
-                  <a href="${this.request.contextPath}${link}" target="_blank">
+                  <a href="${link}" target="_blank">
                     ${link}
                   </a>
                 </li>
