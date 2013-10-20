@@ -33,6 +33,7 @@ import info.magnolia.jcr.util.MetaDataUtil;
 import info.magnolia.jcr.util.NodeUtil;
 import info.magnolia.module.admininterface.commands.ActivationCommand;
 import info.magnolia.objectfactory.Components;
+import info.magnolia.templating.functions.TemplatingFunctions;
 import it.openutils.mgnlutils.api.NodeUtilsExt;
 import it.openutils.mgnlutils.el.MgnlPagingElFunctions;
 import it.openutils.mgnlutils.el.MgnlPagingElFunctions.Page;
@@ -511,7 +512,9 @@ public class MediaFolderViewPage extends MessagesTemplatedMVCHandler
         {
             return null;
         }
-        MediaTypeConfiguration mtc = Components.getComponent(MediaConfigurationManager.class).getMediaTypeConfigurationFromMedia(media);
+        MediaTypeConfiguration mtc = Components
+            .getComponent(MediaConfigurationManager.class)
+            .getMediaTypeConfigurationFromMedia(media);
         String url = mtc.getHandler().getUrl(media);
 
         String filename = mtc.getHandler().getFullFilename(media);
@@ -895,5 +898,10 @@ public class MediaFolderViewPage extends MessagesTemplatedMVCHandler
     public String getModuleVersion()
     {
         return MediaEl.module().getVersion();
+    }
+
+    public String link(Node node)
+    {
+        return Components.getComponent(TemplatingFunctions.class).link(node);
     }
 }

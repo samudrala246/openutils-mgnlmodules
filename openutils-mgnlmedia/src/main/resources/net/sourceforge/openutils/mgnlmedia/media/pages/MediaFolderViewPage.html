@@ -5,7 +5,7 @@
     <title>${this.path!?html!""}</title>
     <link rel="stylesheet" type="text/css" href="${this.request.contextPath}/.resources/media/css/multibox.css" />
     <link rel="stylesheet" type="text/css" href="${this.request.contextPath}/.resources/media/css/sexy-tooltips/msn.css" />
-    <link rel="stylesheet" type="text/css" href="${this.request.contextPath}/.resources/media/css/folderView.css?version=${this.moduleVersion}" />
+    <link rel="stylesheet" type="text/css" href="${this.request.contextPath}/.resources/media/css/folderView.css?version=${this.moduleVersion!}" />
     <link rel="stylesheet" type="text/css" href="${this.request.contextPath}/.resources/media/css/mooSelecta.css" />
     <!--[if lte IE 7]>
     <link rel="stylesheet" type="text/css" href="${this.request.contextPath}/.resources/media/css/ie-fix.css" />
@@ -537,18 +537,21 @@ MediaFolderView.InfoTooltips = new Class({
               [/#if]
             </ul>
           </div>
-          [#if media.usedInWebPages?size = 0]
+          [#if media.numberOfReferences = 0]
           <span>${this.msgs.get('media.nopages')}</span>
           [#else]
-          <span class="tips menuitem">${this.msgs.get('media.pages')} (${media.usedInWebPages?size})</span>
+          <span class="tips menuitem">${this.msgs.get('media.pages')} (${media.usedInWebPages.totalSize})</span>
           <div class="pages menu" style="display: none;">
             <ul class="mediamenu medialinks">
-              [#list media.usedInUris as uri]
-              <li>
-                <a href="${this.request.contextPath}${uri}" target="_blank">
-                  ${uri}
-                </a>
-              </li>
+              [#list media.usedInNodes?keys as key]
+                [#list media.usedInNodes?values[key_index].items as node]
+                <li>
+                  [#assign link = this.link(node)]
+                  <a href="${this.request.contextPath}${link}" target="_blank">
+                    ${link}
+                  </a>
+                </li>
+                [/#list]
               [/#list]
             </ul>
           </div>

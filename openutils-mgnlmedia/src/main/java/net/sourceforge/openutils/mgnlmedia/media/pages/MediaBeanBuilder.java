@@ -108,6 +108,13 @@ public class MediaBeanBuilder implements Function<Node, MediaBean>
             mb.setUsedInWebPages(workspacePaths.get(RepositoryConstants.WEBSITE));
             mb.setUsedInNodes(workspacePaths);
 
+            int count = 0;
+            for (AdvancedResult wp : workspacePaths.values())
+            {
+                count += wp.getTotalSize();
+            }
+            mb.setNumberOfReferences(count);
+
         }
         catch (RepositoryException ex)
         {

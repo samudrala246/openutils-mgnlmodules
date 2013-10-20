@@ -68,6 +68,8 @@ public class MediaBean
 
     private Map<String, AdvancedResult> usedInNodes = new HashMap<String, AdvancedResult>();
 
+    private Integer numberOfReferences;
+
     private boolean canPublish;
 
     private boolean writable;
@@ -409,4 +411,15 @@ public class MediaBean
     {
         this.icon = icon;
     }
+
+    public Integer getNumberOfReferences()
+    {
+        return numberOfReferences;
+    }
+
+    public void setNumberOfReferences(Integer numberOfReferences)
+    {
+        this.numberOfReferences = numberOfReferences;
+    }
+
 }

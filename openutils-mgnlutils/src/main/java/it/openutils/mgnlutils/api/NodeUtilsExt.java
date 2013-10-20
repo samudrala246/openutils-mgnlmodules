@@ -19,13 +19,18 @@
 
 package it.openutils.mgnlutils.api;
 
+import info.magnolia.cms.core.AggregationState;
 import info.magnolia.cms.core.Path;
 import info.magnolia.content2bean.Content2BeanException;
 import info.magnolia.content2bean.Content2BeanUtil;
 import info.magnolia.context.MgnlContext;
 import info.magnolia.jcr.RuntimeRepositoryException;
+import info.magnolia.jcr.decoration.ContentDecoratorUtil;
 import info.magnolia.jcr.util.NodeUtil;
 import info.magnolia.jcr.util.PropertyUtil;
+import info.magnolia.jcr.wrapper.ChannelVisibilityContentDecorator;
+import info.magnolia.jcr.wrapper.HTMLEscapingNodeWrapper;
+import info.magnolia.jcr.wrapper.I18nNodeWrapper;
 
 import java.util.regex.Pattern;
 
@@ -208,8 +213,38 @@ public class NodeUtilsExt
         {
             return null;
         }
-        // TODO introduce configured wrapping
+        node = wrapWithChannelVisibilityWrapper(node);
+        if (!NodeUtil.isWrappedWith(node, I18nNodeWrapper.class))
+        {
+            node = new I18nNodeWrapper(node);
+        }
+        if (!NodeUtil.isWrappedWith(node, HTMLEscapingNodeWrapper.class))
+        {
+            node = new HTMLEscapingNodeWrapper(node, true);
+        }
+
         return node;
+    }
+
+    private static Node wrapWithChannelVisibilityWrapper(Node content)
+    {
+        if (ContentDecoratorUtil.isDecoratedWith(content, ChannelVisibilityContentDecorator.class)
+            || !MgnlContext.isWebContext())
+        {
+            return content;
+        }
+
+        AggregationState aggregationState = MgnlContext.getAggregationState();
+        if (aggregationState == null)
+        {
+            return content;
+        }
+        String channel = aggregationState.getChannel().getName();
+        if (StringUtils.isEmpty(channel) || StringUtils.equalsIgnoreCase(channel, "all"))
+        {
+            return content;
+        }
+        return new ChannelVisibilityContentDecorator(channel).wrapNode(content);
     }
 
     public static String getBinaryPath(Node node)
