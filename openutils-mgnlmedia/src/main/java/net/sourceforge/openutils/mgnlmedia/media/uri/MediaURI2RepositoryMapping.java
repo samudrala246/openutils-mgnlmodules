@@ -23,7 +23,7 @@ import info.magnolia.cms.beans.config.URI2RepositoryMapping;
 import info.magnolia.context.MgnlContext;
 import info.magnolia.jcr.util.PropertyUtil;
 import info.magnolia.link.Link;
-import it.openutils.mgnlutils.api.NodeUtilsExt;
+import it.openutils.mgnlutils.util.NodeUtilsExt;
 
 import javax.jcr.Node;
 import javax.jcr.PathNotFoundException;

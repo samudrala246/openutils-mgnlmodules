@@ -24,7 +24,7 @@ import info.magnolia.content2bean.Content2BeanException;
 import info.magnolia.jcr.RuntimeRepositoryException;
 import info.magnolia.jcr.util.NodeUtil;
 import info.magnolia.objectfactory.Components;
-import it.openutils.mgnlutils.api.NodeUtilsExt;
+import it.openutils.mgnlutils.util.NodeUtilsExt;
 
 import java.util.ArrayList;
 import java.util.HashMap;

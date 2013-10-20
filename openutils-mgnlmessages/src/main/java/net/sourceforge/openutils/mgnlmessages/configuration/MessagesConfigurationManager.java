@@ -26,8 +26,8 @@ import info.magnolia.jcr.util.NodeUtil;
 import info.magnolia.jcr.util.PropertyUtil;
 import info.magnolia.objectfactory.Components;
 import info.magnolia.repository.RepositoryConstants;
-import it.openutils.mgnlutils.api.NodeUtilsExt;
-import it.openutils.mgnlutils.api.ObservedManagerAdapter;
+import it.openutils.mgnlutils.util.NodeUtilsExt;
+import it.openutils.mgnlutils.util.ObservedManagerAdapter;
 
 import java.util.ArrayList;
 import java.util.Collections;

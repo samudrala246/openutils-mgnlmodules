@@ -24,7 +24,7 @@ import info.magnolia.jcr.util.NodeUtil;
 import info.magnolia.jcr.util.PropertyUtil;
 import info.magnolia.module.ModuleRegistry;
 import info.magnolia.objectfactory.Components;
-import it.openutils.mgnlutils.api.NodeUtilsExt;
+import it.openutils.mgnlutils.util.NodeUtilsExt;
 
 import java.io.IOException;
 import java.io.PrintWriter;

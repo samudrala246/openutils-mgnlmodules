@@ -26,7 +26,7 @@ import info.magnolia.cms.util.AlertUtil;
 import info.magnolia.context.MgnlContext;
 import info.magnolia.jcr.util.NodeUtil;
 import info.magnolia.jcr.util.PropertyUtil;
-import it.openutils.mgnlutils.api.NodeUtilsExt;
+import it.openutils.mgnlutils.util.NodeUtilsExt;
 
 import java.io.File;
 import java.io.FileOutputStream;

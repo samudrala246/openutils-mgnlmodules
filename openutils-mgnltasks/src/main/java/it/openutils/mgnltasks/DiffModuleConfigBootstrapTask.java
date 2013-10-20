@@ -24,7 +24,7 @@ import info.magnolia.importexport.DataTransporter;
 import info.magnolia.jcr.util.NodeUtil;
 import info.magnolia.module.InstallContext;
 import info.magnolia.repository.RepositoryConstants;
-import it.openutils.mgnlutils.api.NodeUtilsExt;
+import it.openutils.mgnlutils.util.NodeUtilsExt;
 
 import java.io.File;
 import java.io.FileInputStream;

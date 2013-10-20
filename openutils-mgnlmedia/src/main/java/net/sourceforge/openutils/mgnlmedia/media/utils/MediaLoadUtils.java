@@ -25,7 +25,7 @@ import info.magnolia.context.MgnlContext;
 import info.magnolia.context.SystemContext;
 import info.magnolia.jcr.util.MetaDataUtil;
 import info.magnolia.objectfactory.Components;
-import it.openutils.mgnlutils.api.NodeUtilsExt;
+import it.openutils.mgnlutils.util.NodeUtilsExt;
 
 import java.io.File;
 import java.io.FileOutputStream;

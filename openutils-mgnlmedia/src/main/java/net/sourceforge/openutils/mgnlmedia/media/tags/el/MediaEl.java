@@ -27,7 +27,7 @@ import info.magnolia.jcr.util.PropertyUtil;
 import info.magnolia.module.ModuleRegistry;
 import info.magnolia.objectfactory.Components;
 import info.magnolia.repository.RepositoryConstants;
-import it.openutils.mgnlutils.api.NodeUtilsExt;
+import it.openutils.mgnlutils.util.NodeUtilsExt;
 
 import java.awt.Point;
 import java.util.ArrayList;

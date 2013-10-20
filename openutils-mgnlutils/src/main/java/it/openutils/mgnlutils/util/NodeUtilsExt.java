@@ -17,7 +17,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package it.openutils.mgnlutils.api;
+package it.openutils.mgnlutils.util;
 
 import info.magnolia.cms.core.AggregationState;
 import info.magnolia.cms.core.Path;

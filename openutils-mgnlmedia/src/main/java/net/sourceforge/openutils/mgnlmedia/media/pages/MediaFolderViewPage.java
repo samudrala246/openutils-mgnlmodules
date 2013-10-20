@@ -34,9 +34,9 @@ import info.magnolia.jcr.util.NodeUtil;
 import info.magnolia.module.admininterface.commands.ActivationCommand;
 import info.magnolia.objectfactory.Components;
 import info.magnolia.templating.functions.TemplatingFunctions;
-import it.openutils.mgnlutils.api.NodeUtilsExt;
 import it.openutils.mgnlutils.el.MgnlPagingElFunctions;
 import it.openutils.mgnlutils.el.MgnlPagingElFunctions.Page;
+import it.openutils.mgnlutils.util.NodeUtilsExt;
 
 import java.io.IOException;
 import java.util.ArrayList;

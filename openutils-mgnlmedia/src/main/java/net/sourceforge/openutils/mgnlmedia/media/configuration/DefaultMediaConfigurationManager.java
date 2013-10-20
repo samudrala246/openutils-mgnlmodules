@@ -23,8 +23,8 @@ import info.magnolia.cms.beans.config.URI2RepositoryManager;
 import info.magnolia.cms.beans.config.URI2RepositoryMapping;
 import info.magnolia.jcr.util.NodeUtil;
 import info.magnolia.jcr.util.PropertyUtil;
-import it.openutils.mgnlutils.api.NodeUtilsExt;
-import it.openutils.mgnlutils.api.ObservedManagerAdapter;
+import it.openutils.mgnlutils.util.NodeUtilsExt;
+import it.openutils.mgnlutils.util.ObservedManagerAdapter;
 
 import java.util.Collection;
 import java.util.Iterator;

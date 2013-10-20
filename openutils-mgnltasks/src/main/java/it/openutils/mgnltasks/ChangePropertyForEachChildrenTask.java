@@ -23,7 +23,7 @@ import info.magnolia.jcr.util.NodeUtil;
 import info.magnolia.module.InstallContext;
 import info.magnolia.module.delta.AbstractRepositoryTask;
 import info.magnolia.module.delta.TaskExecutionException;
-import it.openutils.mgnlutils.api.NodeUtilsExt;
+import it.openutils.mgnlutils.util.NodeUtilsExt;
 
 import javax.jcr.Node;
 import javax.jcr.RepositoryException;

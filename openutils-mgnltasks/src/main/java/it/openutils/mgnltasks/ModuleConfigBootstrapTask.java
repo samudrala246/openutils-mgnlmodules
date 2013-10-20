@@ -24,7 +24,7 @@ import info.magnolia.module.InstallContext;
 import info.magnolia.module.delta.BootstrapResourcesTask;
 import info.magnolia.module.delta.TaskExecutionException;
 import info.magnolia.repository.RepositoryConstants;
-import it.openutils.mgnlutils.api.NodeUtilsExt;
+import it.openutils.mgnlutils.util.NodeUtilsExt;
 
 import java.io.IOException;
 import java.util.ArrayList;

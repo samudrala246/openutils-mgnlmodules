@@ -22,7 +22,7 @@ package net.sourceforge.openutils.mgnlmedia.media.types.impl;
 import info.magnolia.cms.beans.runtime.FileProperties;
 import info.magnolia.cms.core.MgnlNodeType;
 import info.magnolia.jcr.util.PropertyUtil;
-import it.openutils.mgnlutils.api.NodeUtilsExt;
+import it.openutils.mgnlutils.util.NodeUtilsExt;
 
 import java.io.InputStream;
 
