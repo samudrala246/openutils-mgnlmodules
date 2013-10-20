@@ -7,7 +7,7 @@
     <sv:value>mix:lockable</sv:value>
   </sv:property>
   <sv:property sv:name="jcr:uuid" sv:type="String">
-    <sv:value>68e7e24a-fcc1-45af-8285-1a91589b9181</sv:value>
+    <sv:value>68e7e24a-fcc1-45af-8285-1a91589b9182</sv:value>
   </sv:property>
   <sv:property sv:name="class" sv:type="String">
     <sv:value>net.sourceforge.openutils.mgnllms.samples.listeners.StudentLevelListener</sv:value>

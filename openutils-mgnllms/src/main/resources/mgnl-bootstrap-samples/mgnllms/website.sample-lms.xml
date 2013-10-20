@@ -3,7 +3,7 @@
   <sv:property sv:name="jcr:primaryType" sv:type="Name">
     <sv:value>mgnl:page</sv:value>
   </sv:property>
-  <sv:property sv:name="jcr:mixinTypes" sv:type="Name">
+  <sv:property sv:name="jcr:mixinTypes" sv:type="Name" sv:multiple="true">
     <sv:value>mix:lockable</sv:value>
   </sv:property>
   <sv:property sv:name="jcr:uuid" sv:type="String">
@@ -26,17 +26,17 @@
       <sv:value>2010-08-24T12:25:12.356+02:00</sv:value>
     </sv:property>
     <sv:property sv:name="mgnl:lastmodified" sv:type="Date">
-      <sv:value>2010-08-24T12:29:06.136+02:00</sv:value>
+      <sv:value>2013-10-20T17:12:47.930+02:00</sv:value>
     </sv:property>
     <sv:property sv:name="mgnl:template" sv:type="String">
-      <sv:value>lms:pages/lms-sample</sv:value>
+      <sv:value>mgnllms:pages/lms-sample</sv:value>
     </sv:property>
   </sv:node>
   <sv:node sv:name="courses">
     <sv:property sv:name="jcr:primaryType" sv:type="Name">
       <sv:value>mgnl:page</sv:value>
     </sv:property>
-    <sv:property sv:name="jcr:mixinTypes" sv:type="Name">
+    <sv:property sv:name="jcr:mixinTypes" sv:type="Name" sv:multiple="true">
       <sv:value>mix:lockable</sv:value>
     </sv:property>
     <sv:property sv:name="jcr:uuid" sv:type="String">
@@ -59,10 +59,10 @@
         <sv:value>2010-08-24T12:29:10.761+02:00</sv:value>
       </sv:property>
       <sv:property sv:name="mgnl:lastmodified" sv:type="Date">
-        <sv:value>2010-08-24T12:29:19.770+02:00</sv:value>
+        <sv:value>2013-10-20T17:12:58.469+02:00</sv:value>
       </sv:property>
       <sv:property sv:name="mgnl:template" sv:type="String">
-        <sv:value>lms:pages/lms-sample-courses</sv:value>
+        <sv:value>mgnllms:pages/lms-sample-courses</sv:value>
       </sv:property>
     </sv:node>
   </sv:node>
