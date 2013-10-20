@@ -70,6 +70,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -188,20 +189,29 @@ public abstract class AbstractRepositoryTestcase
             MgnlContext.release();
 
             SystemContext systemContext = Components.getComponent(SystemContext.class);
-
-            final ObservationManager observationManager = systemContext
-                .getJCRSession(RepositoryConstants.CONFIG)
-                .getWorkspace()
-                .getObservationManager();
-            final EventListenerIterator listeners = observationManager.getRegisteredEventListeners();
-            while (listeners.hasNext())
+            
+            RepositoryManager repositoryManager = Components.getComponent(RepositoryManager.class);
+            
+            Collection<String> workspaceNames = repositoryManager.getWorkspaceNames();
+            
+            for (String workspace : workspaceNames)
             {
-                observationManager.removeEventListener(listeners.nextEventListener());
+                final ObservationManager observationManager = systemContext
+                    .getJCRSession(workspace)
+                    .getWorkspace()
+                    .getObservationManager();
+                final EventListenerIterator listeners = observationManager.getRegisteredEventListeners();
+                while (listeners.hasNext())
+                {
+                    observationManager.removeEventListener(listeners.nextEventListener());
+                }
             }
+
+           
 
             systemContext.release();
 
-            Components.getComponent(RepositoryManager.class).shutdown();
+            repositoryManager.shutdown();
             if (true)
             {
                 cleanUp();
