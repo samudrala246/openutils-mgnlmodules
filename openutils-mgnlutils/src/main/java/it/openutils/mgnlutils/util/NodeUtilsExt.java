@@ -222,10 +222,6 @@ public class NodeUtilsExt
         {
             node = new I18nNodeWrapper(node);
         }
-        if (!NodeUtil.isWrappedWith(node, HTMLEscapingNodeWrapper.class))
-        {
-            node = new HTMLEscapingNodeWrapper(node, true);
-        }
 
         return node;
     }
