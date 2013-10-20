@@ -10,7 +10,7 @@
   <packaging>jar</packaging>
   <artifactId>openutils-mgnlext</artifactId>
   <name>openutils-mgnlext</name>
-  <version>5.0.0-SNAPSHOT</version>
+  <version>5.0.10-SNAPSHOT</version>
   <scm>
     <connection>scm:svn:svn+ssh://svn.code.sf.net/p/openutils/code/magnoliamodules/trunk/openutils-mgnlext</connection>
     <developerConnection>scm:svn:svn+ssh://svn.code.sf.net/p/openutils/code/magnoliamodules/trunk/openutils-mgnlext</developerConnection>

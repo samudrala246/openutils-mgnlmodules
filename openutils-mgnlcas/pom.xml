@@ -10,7 +10,7 @@
   <packaging>jar</packaging>
   <artifactId>openutils-mgnlcas</artifactId>
   <name>CAS integration module for Magnolia CMS</name>
-  <version>5.0.0-SNAPSHOT</version>
+  <version>5.0.10-SNAPSHOT</version>
   <inceptionYear>2007</inceptionYear>
   <licenses>
     <license>

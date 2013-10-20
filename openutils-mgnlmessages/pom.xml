@@ -11,7 +11,7 @@
   <artifactId>openutils-mgnlmessages</artifactId>
   <name>Messages Module for Magnolia CMS</name>
   <description>Manage your translations from the Magnolia admin interface</description>
-  <version>5.0.2-SNAPSHOT</version>
+  <version>5.0.10-SNAPSHOT</version>
   <licenses>
     <license>
       <name>GPLv3</name>
@@ -87,27 +87,27 @@
     <dependency>
       <groupId>net.sourceforge.openutils</groupId>
       <artifactId>openutils-mgnltasks</artifactId>
-      <version>5.0.0</version>
+      <version>5.0.10-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>net.sourceforge.openutils</groupId>
       <artifactId>openutils-mgnlext</artifactId>
-      <version>2.1</version>
+      <version>5.0.10-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>net.sourceforge.openutils</groupId>
       <artifactId>openutils-mgnlcriteria</artifactId>
-      <version>5.0.1</version>
+      <version>5.0.10-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>net.sourceforge.openutils</groupId>
       <artifactId>openutils-mgnlutils</artifactId>
-      <version>5.0.2-SNAPSHOT</version>
+      <version>5.0.10-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>net.sourceforge.openutils</groupId>
       <artifactId>openutils-mgnltests</artifactId>
-      <version>5.0.1-SNAPSHOT</version>
+      <version>5.0.10-SNAPSHOT</version>
       <scope>test</scope>
     </dependency>
     <dependency>

@@ -10,10 +10,8 @@
   <packaging>jar</packaging>
   <artifactId>openutils-mgnlmedia</artifactId>
   <name>SimpleMedia Module for Magnolia CMS</name>
-  <description>SimpleMedia Module for Magnolia CMS: a module for Magnolia CMS for easier management of multimedia
-    assets.
-  </description>
-  <version>5.0.3-SNAPSHOT</version>
+  <description>SimpleMedia Module for Magnolia CMS: a module for Magnolia CMS for easier management of multimedia assets.</description>
+  <version>5.0.10-SNAPSHOT</version>
   <inceptionYear>2008</inceptionYear>
   <licenses>
     <license>
@@ -117,22 +115,22 @@
     <dependency>
       <groupId>net.sourceforge.openutils</groupId>
       <artifactId>openutils-mgnltasks</artifactId>
-      <version>5.0.1-SNAPSHOT</version>
+      <version>5.0.10-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>net.sourceforge.openutils</groupId>
       <artifactId>openutils-mgnlcontrols</artifactId>
-      <version>5.0.0</version>
+      <version>5.0.10-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>net.sourceforge.openutils</groupId>
       <artifactId>openutils-mgnlext</artifactId>
-      <version>2.1</version>
+      <version>5.0.10-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>net.sourceforge.openutils</groupId>
       <artifactId>openutils-mgnlutils</artifactId>
-      <version>5.0.2-SNAPSHOT</version>
+      <version>5.0.10-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>net.sourceforge.openutils</groupId>
@@ -170,7 +168,7 @@
     <dependency>
       <groupId>net.sourceforge.openutils</groupId>
       <artifactId>openutils-mgnltests</artifactId>
-      <version>5.0.1-SNAPSHOT</version>
+      <version>5.0.10-SNAPSHOT</version>
       <scope>test</scope>
     </dependency>
     <dependency>
@@ -181,7 +179,7 @@
     <dependency>
       <groupId>net.sourceforge.openutils</groupId>
       <artifactId>openutils-mgnlcriteria</artifactId>
-      <version>5.0.1</version>
+      <version>5.0.10-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>javax.servlet.jsp</groupId>

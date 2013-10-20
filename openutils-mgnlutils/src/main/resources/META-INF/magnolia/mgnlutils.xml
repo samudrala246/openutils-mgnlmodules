@@ -17,15 +17,15 @@
   <dependencies>
     <dependency>
       <name>core</name>
-      <version>4.5.11/*</version>
-    </dependency>
-    <dependency>
-      <name>criteria</name>
-      <version>5.0.1/*</version>
+      <version>4.5.11/4.5.99</version>
     </dependency>
     <dependency>
       <name>rendering</name>
-      <version>4.5.11/*</version>
+      <version>*</version>
+    </dependency>
+    <dependency>
+      <name>criteria</name>
+      <version>5.0.10/*</version>
     </dependency>
   </dependencies>
 </module>

@@ -12,7 +12,7 @@
   <name>Stripes module for Magnolia CMS</name>
   <description>A Magnolia Module that let you use Stripes Framework inside Magnolia</description>
   <inceptionYear>2008</inceptionYear>
-  <version>5.0.1-SNAPSHOT</version>
+  <version>5.0.10-SNAPSHOT</version>
   <licenses>
     <license>
       <name>GPLv3</name>
@@ -72,7 +72,7 @@
     <dependency>
       <groupId>net.sourceforge.openutils</groupId>
       <artifactId>openutils-mgnltasks</artifactId>
-      <version>5.0.0</version>
+      <version>5.0.10-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>info.magnolia</groupId>

@@ -9,7 +9,7 @@
   <packaging>jar</packaging>
   <artifactId>openutils-mgnltests</artifactId>
   <name>Test utilities for Magnolia CMS</name>
-  <version>5.0.1-SNAPSHOT</version>
+  <version>5.0.10-SNAPSHOT</version>
   <inceptionYear>2009</inceptionYear>
   <description>A collection of testing utilities for Magnolia CMS</description>
   <url>http://www.openmindlab.com/lab/products/mgnltests.html</url>

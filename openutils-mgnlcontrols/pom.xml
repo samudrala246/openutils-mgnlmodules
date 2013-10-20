@@ -11,7 +11,7 @@
   <artifactId>openutils-mgnlcontrols</artifactId>
   <name>Controls module for Magnolia CMS</name>
   <description>Additional controls that can be used in Magnolia dialogs</description>
-  <version>5.0.1-SNAPSHOT</version>
+  <version>5.0.10-SNAPSHOT</version>
   <inceptionYear>2008</inceptionYear>
   <licenses>
     <license>
@@ -92,17 +92,17 @@
     <dependency>
       <groupId>net.sourceforge.openutils</groupId>
       <artifactId>openutils-mgnltasks</artifactId>
-      <version>5.0.0</version>
+      <version>5.0.10-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>net.sourceforge.openutils</groupId>
       <artifactId>openutils-mgnlext</artifactId>
-      <version>2.2</version>
+      <version>5.0.10-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>net.sourceforge.openutils</groupId>
       <artifactId>openutils-mgnlutils</artifactId>
-      <version>5.0.2-SNAPSHOT</version>
+      <version>5.0.10-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>javax.servlet</groupId>

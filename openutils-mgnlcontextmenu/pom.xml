@@ -12,7 +12,7 @@
   <artifactId>openutils-mgnlcontextmenu</artifactId>
   <name>ContextMenu Module for Magnolia CMS</name>
   <description>A magnolia module for editing content via context menu</description>
-  <version>4.5.5-SNAPSHOT</version>
+  <version>5.0.10-SNAPSHOT</version>
   <inceptionYear>2010</inceptionYear>
   <licenses>
     <license>
@@ -110,12 +110,12 @@
     <dependency>
       <groupId>net.sourceforge.openutils</groupId>
       <artifactId>openutils-mgnlutils</artifactId>
-      <version>5.0.2-SNAPSHOT</version>
+      <version>5.0.10-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>net.sourceforge.openutils</groupId>
       <artifactId>openutils-mgnltasks</artifactId>
-      <version>5.0.1-SNAPSHOT</version>
+      <version>5.0.10-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>net.sourceforge.openutils</groupId>
@@ -125,7 +125,7 @@
     <dependency>
       <groupId>net.sourceforge.openutils</groupId>
       <artifactId>openutils-mgnlmedia</artifactId>
-      <version>5.0.0</version>
+      <version>5.0.10-SNAPSHOT</version>
       <optional>true</optional>
     </dependency>
     <dependency>

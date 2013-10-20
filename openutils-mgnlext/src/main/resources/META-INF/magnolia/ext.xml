@@ -5,4 +5,10 @@
   <displayName>openutils-mgnlext</displayName>
   <description>A repackaging of ext-js for easier usage into Magnolia</description>
   <version>${project.version}</version>
+  <dependencies>
+    <dependency>
+      <name>core</name>
+      <version>4.5.11/4.5.99</version>
+    </dependency>
+  </dependencies>
 </module>

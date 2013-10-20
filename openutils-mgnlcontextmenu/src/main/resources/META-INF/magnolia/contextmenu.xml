@@ -5,7 +5,7 @@
   <displayName>contextmenu</displayName>
   <description>Openutils - Magnolia Context Menu Library</description>
   <class>net.sourceforge.openutils.mgnlcontextmenu.module.ContextMenuModule</class>
-    <versionHandler>net.sourceforge.openutils.mgnlcontextmenu.setup.ContextMenuModuleVersionHandler</versionHandler>
+  <versionHandler>net.sourceforge.openutils.mgnlcontextmenu.setup.ContextMenuModuleVersionHandler</versionHandler>
   <version>${project.version}</version>
   <components>
     <id>main</id>
@@ -14,4 +14,18 @@
       <implementation>net.sourceforge.openutils.mgnlcontextmenu.configuration.ContextMenuManager</implementation>
     </component>
   </components>
+  <dependencies>
+    <dependency>
+      <name>core</name>
+      <version>4.5.11/4.5.99</version>
+    </dependency>
+    <dependency>
+      <name>mgnlutils</name>
+      <version>5.0.10/*</version>
+    </dependency>
+    <dependency>
+      <name>adminInterface</name>
+      <version>*</version>
+    </dependency>
+  </dependencies>
 </module>

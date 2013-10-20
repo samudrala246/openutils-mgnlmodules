@@ -10,7 +10,7 @@
   <packaging>jar</packaging>
   <artifactId>openutils-mgnlutils</artifactId>
   <name>Generic utilities for Magnolia CMS</name>
-  <version>5.0.2-SNAPSHOT</version>
+  <version>5.0.10-SNAPSHOT</version>
   <inceptionYear>2009</inceptionYear>
   <description>A collection of Magnolia utilities and extensions</description>
   <url>http://www.openmindlab.com/lab/products/mgnlutils.html</url>
@@ -116,7 +116,7 @@
     <dependency>
       <groupId>net.sourceforge.openutils</groupId>
       <artifactId>openutils-mgnlcriteria</artifactId>
-      <version>5.0.1</version>
+      <version>5.0.10-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>javax.servlet</groupId>
@@ -133,7 +133,7 @@
     <dependency>
       <groupId>net.sourceforge.openutils</groupId>
       <artifactId>openutils-mgnltests</artifactId>
-      <version>5.0.0</version>
+      <version>5.0.10-SNAPSHOT</version>
       <scope>test</scope>
     </dependency>
     <dependency>

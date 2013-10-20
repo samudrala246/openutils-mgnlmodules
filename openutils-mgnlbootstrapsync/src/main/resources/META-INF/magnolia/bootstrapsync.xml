@@ -6,4 +6,18 @@
   <description>Bootstrap Synchronizer</description>
   <class>it.openutils.mgnlbootstrapsync.lifecycle.BootstrapSyncModuleLifecycle</class>
   <version>${project.version}</version>
+  <dependencies>
+    <dependency>
+      <name>core</name>
+      <version>4.5.11/4.5.99</version>
+    </dependency>
+    <dependency>
+      <name>mgnlutils</name>
+      <version>5.0.10/*</version>
+    </dependency>
+    <dependency>
+      <name>adminInterface</name>
+      <version>*</version>
+    </dependency>
+  </dependencies>
 </module>
