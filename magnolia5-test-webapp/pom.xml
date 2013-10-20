@@ -221,7 +221,7 @@
     <magnolia.version2>5.0-prev1-rc1</magnolia.version2>
     <!-- <magnolia.version2>5.0.4</magnolia.version2> -->
     <stk.version>2.5.3</stk.version>
-    <jackrabbit.version>2.6.2</jackrabbit.version>
+    <jackrabbit.version>2.6.4</jackrabbit.version>
   </properties>
   <build>
     <plugins>
