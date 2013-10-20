@@ -20,11 +20,9 @@
 package net.sourceforge.openutils.mgnlcontextmenu.el;
 
 import info.magnolia.cms.security.Permission;
-import info.magnolia.cms.util.DeprecationUtil;
 import info.magnolia.context.MgnlContext;
 import info.magnolia.context.WebContext;
 import info.magnolia.jcr.util.NodeUtil;
-import info.magnolia.jcr.util.PropertyUtil;
 import info.magnolia.jcr.wrapper.HTMLEscapingNodeWrapper;
 import info.magnolia.objectfactory.Components;
 import it.openutils.mgnlutils.el.MgnlUtilsDeprecatedAdapters;

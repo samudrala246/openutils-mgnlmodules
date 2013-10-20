@@ -23,7 +23,6 @@ import info.magnolia.cms.beans.runtime.MultipartForm;
 import info.magnolia.cms.core.Content;
 import info.magnolia.cms.security.AccessDeniedException;
 import info.magnolia.cms.util.NodeDataUtil;
-import info.magnolia.module.ModuleRegistry;
 import info.magnolia.module.admininterface.FieldSaveHandler;
 import info.magnolia.objectfactory.Components;
 

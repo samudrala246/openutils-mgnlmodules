@@ -21,7 +21,6 @@ package it.openutils.mgnltasks;
 
 import info.magnolia.cms.core.MgnlNodeType;
 import info.magnolia.jcr.util.NodeUtil;
-import info.magnolia.jcr.util.PropertyUtil;
 import info.magnolia.module.InstallContext;
 import info.magnolia.module.delta.AbstractRepositoryTask;
 import info.magnolia.module.delta.TaskExecutionException;
@@ -30,8 +29,6 @@ import it.openutils.mgnlutils.util.NodeUtilsExt;
 import javax.jcr.Node;
 import javax.jcr.RepositoryException;
 import javax.jcr.Session;
-
-import org.apache.commons.lang.StringUtils;
 
 
 /**

@@ -25,6 +25,7 @@ import info.magnolia.module.delta.Task;
 import info.magnolia.objectfactory.Components;
 import info.magnolia.repository.RepositoryConstants;
 import it.openutils.mgnltasks.CreateMissingPropertyTask;
+import it.openutils.mgnltasks.FilesExtractionTask;
 import it.openutils.mgnltasks.SimpleModuleVersionHandler;
 
 import java.util.ArrayList;
@@ -32,8 +33,6 @@ import java.util.List;
 
 import net.sourceforge.openutils.mgnlcontextmenu.configuration.DefaultGetGlobalEntriesNodeStrategy;
 import net.sourceforge.openutils.mgnlcontextmenu.configuration.DefaultPersistenceStrategy;
-
-import org.apache.commons.lang.StringUtils;
 
 
 /**
@@ -50,20 +49,9 @@ public class ContextMenuModuleVersionHandler extends SimpleModuleVersionHandler
     {
         List<Task> tasks = new ArrayList<Task>();
 
-        if (Components.getComponent(MagnoliaConfigurationProperties.class).getBooleanProperty("magnolia.bootstrap.samples"))
+        if (samplesEnabled())
         {
-            tasks.add(new FilesExtractionTask("Samples extraction", "Extracts jsp files for samples.")
-            {
-
-                /**
-                 * {@inheritDoc}
-                 */
-                @Override
-                protected boolean accept(String resource)
-                {
-                    return super.accept(resource) && StringUtils.contains(resource, "/samples-contextmenu/");
-                }
-            });
+            tasks.add(new FilesExtractionTask("/samples-contextmenu/"));
         }
 
         tasks.add(new CreateMissingPropertyTask(

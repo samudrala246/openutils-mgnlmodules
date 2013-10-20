@@ -25,7 +25,6 @@ import info.magnolia.cms.core.MgnlNodeType;
 import info.magnolia.jcr.util.NodeUtil;
 import info.magnolia.jcr.util.PropertyUtil;
 import info.magnolia.module.admininterface.SaveHandlerImpl;
-import it.openutils.mgnlutils.util.NodeUtilsExt;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -36,10 +35,7 @@ import java.util.List;
 
 import javax.imageio.ImageIO;
 import javax.jcr.Node;
-import javax.jcr.Property;
-import javax.jcr.PropertyType;
 import javax.jcr.RepositoryException;
-import javax.jcr.nodetype.NodeType;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;

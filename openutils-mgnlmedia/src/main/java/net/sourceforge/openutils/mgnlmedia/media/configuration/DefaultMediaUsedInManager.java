@@ -19,13 +19,6 @@
 
 package net.sourceforge.openutils.mgnlmedia.media.configuration;
 
-import info.magnolia.cms.core.MgnlNodeType;
-import info.magnolia.content2bean.Content2BeanException;
-import info.magnolia.jcr.RuntimeRepositoryException;
-import info.magnolia.jcr.util.NodeUtil;
-import info.magnolia.objectfactory.Components;
-import it.openutils.mgnlutils.util.NodeUtilsExt;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -35,7 +28,6 @@ import java.util.Set;
 
 import javax.inject.Singleton;
 import javax.jcr.Node;
-import javax.jcr.RepositoryException;
 
 import net.sourceforge.openutils.mgnlcriteria.jcr.query.AdvancedResult;
 import net.sourceforge.openutils.mgnlcriteria.jcr.query.Criteria;

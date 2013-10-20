@@ -1,7 +1,7 @@
 /**
  *
- * Rules module for Magnolia CMS (http://www.openmindlab.com/lab/products/mgnlrules.html)
- * Copyright(C) 2010-2013, Openmind S.r.l. http://www.openmindonline.it
+ * Tasks for for Magnolia CMS (http://www.openmindlab.com/lab/products/mgnltasks.html)
+ * Copyright(C) 2008-2013, Openmind S.r.l. http://www.openmindonline.it
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -16,8 +16,7 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
-package net.sourceforge.openutils.mgnlrules.setup;
+package it.openutils.mgnltasks;
 
 import info.magnolia.cms.core.HierarchyManager;
 import info.magnolia.cms.core.Path;
@@ -34,7 +33,7 @@ import org.apache.commons.lang.StringUtils;
 
 
 /**
- * Extract files to webapp root.
+ * Extract files to webapp root. Files must be contained in a /mgnl-files folder in the classpath.
  * @author fgiust
  * @author dschivo
  */
@@ -42,14 +41,12 @@ import org.apache.commons.lang.StringUtils;
 public class FilesExtractionTask extends AbstractTask
 {
 
-    public FilesExtractionTask(String taskName, String taskDescription)
-    {
-        super(taskName, taskDescription);
-    }
+    private String path;
 
-    public FilesExtractionTask()
+    public FilesExtractionTask(String path)
     {
-        this("Files extraction", "Extracts files to webapp root.");
+        super("Files extraction", "Extracts files from " + path + " to webapp root.");
+        this.path = path;
     }
 
     /**
@@ -94,6 +91,6 @@ public class FilesExtractionTask extends AbstractTask
 
     protected boolean accept(String resource)
     {
-        return resource.startsWith("/mgnl-files/");
+        return resource.contains("/mgnl-files/") && StringUtils.contains(resource, path);
     }
 }

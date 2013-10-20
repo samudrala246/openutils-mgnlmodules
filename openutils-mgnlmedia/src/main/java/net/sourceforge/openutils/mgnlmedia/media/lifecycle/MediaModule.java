@@ -22,7 +22,6 @@ package net.sourceforge.openutils.mgnlmedia.media.lifecycle;
 import info.magnolia.cms.beans.config.ObservedManager;
 import info.magnolia.module.ModuleLifecycle;
 import info.magnolia.module.ModuleLifecycleContext;
-import info.magnolia.objectfactory.Components;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -33,10 +32,8 @@ import java.util.Map;
 import javax.inject.Inject;
 
 import net.sourceforge.openutils.mgnlmedia.media.advancedsearch.configuration.SearchMediaQueryConfiguration;
-import net.sourceforge.openutils.mgnlmedia.media.configuration.ImageProcessorsManager;
 import net.sourceforge.openutils.mgnlmedia.media.configuration.MediaConfigurationManager;
 import net.sourceforge.openutils.mgnlmedia.media.configuration.MediaTypeConfiguration;
-import net.sourceforge.openutils.mgnlmedia.media.configuration.MediaUsedInManager;
 import net.sourceforge.openutils.mgnlmedia.media.utils.LockUtils;
 import net.sourceforge.openutils.mgnlmedia.media.zip.ZipImporter;
 import net.sourceforge.openutils.mgnlmedia.playlist.pages.PlaylistLink;

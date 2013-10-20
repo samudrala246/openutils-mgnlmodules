@@ -19,7 +19,6 @@
 
 package net.sourceforge.openutils.mgnlmedia.media.setup;
 
-import info.magnolia.init.MagnoliaConfigurationProperties;
 import info.magnolia.module.InstallContext;
 import info.magnolia.module.ModuleRegistry;
 import info.magnolia.module.delta.SetupModuleRepositoriesTask;
@@ -84,8 +83,7 @@ public class MediaModuleVersionHandler extends SimpleModuleVersionHandler
     {
         List<Task> tasks = new ArrayList<Task>();
 
-        if (Components.getComponent(MagnoliaConfigurationProperties.class).getBooleanProperty(
-            "magnolia.bootstrap.samples"))
+        if (samplesEnabled())
         {
             tasks.add(new SamplesExtractionTask());
         }
@@ -242,8 +240,6 @@ public class MediaModuleVersionHandler extends SimpleModuleVersionHandler
             "/modules/media/config/search/filters/query",
             "wildcards",
             Boolean.TRUE));
-
-         
 
         // empty placeholder
         tasks.add(new CreateMissingPropertyTask(RepositoryConstants.CONFIG, "/modules/media/config", "baseurl", ""));

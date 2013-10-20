@@ -19,16 +19,13 @@
 
 package net.sourceforge.openutils.mgnlrules.setup;
 
-import info.magnolia.init.MagnoliaConfigurationProperties;
 import info.magnolia.module.InstallContext;
 import info.magnolia.module.delta.Task;
-import info.magnolia.objectfactory.Components;
+import it.openutils.mgnltasks.FilesExtractionTask;
 import it.openutils.mgnltasks.SimpleModuleVersionHandler;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import org.apache.commons.lang.StringUtils;
 
 
 /**
@@ -46,34 +43,11 @@ public class RuleModuleVersionHandler extends SimpleModuleVersionHandler
     {
         List<Task> tasks = new ArrayList<Task>();
 
-        tasks.add(new FilesExtractionTask()
+        tasks.add(new FilesExtractionTask("/WEB-INF/jsps/"));
+
+        if (samplesEnabled())
         {
-
-            /**
-             * {@inheritDoc}
-             */
-            @Override
-            protected boolean accept(String resource)
-            {
-                return super.accept(resource) && StringUtils.contains(resource, "/WEB-INF/jsps/");
-            }
-        });
-
-        if (Components.getComponent(MagnoliaConfigurationProperties.class).getBooleanProperty(
-            "magnolia.bootstrap.samples"))
-        {
-            tasks.add(new FilesExtractionTask("Samples extraction", "Extracts jsp files for samples.")
-            {
-
-                /**
-                 * {@inheritDoc}
-                 */
-                @Override
-                protected boolean accept(String resource)
-                {
-                    return super.accept(resource) && StringUtils.contains(resource, "/samples-rules/");
-                }
-            });
+            tasks.add(new FilesExtractionTask("/samples-rules/"));
         }
 
         return tasks;

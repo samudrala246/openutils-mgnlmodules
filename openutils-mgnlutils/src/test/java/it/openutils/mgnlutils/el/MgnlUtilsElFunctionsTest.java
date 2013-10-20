@@ -33,7 +33,6 @@ import it.openutils.mgnlutils.test.RepositoryTestConfiguration;
 import it.openutils.mgnlutils.test.TestNgRepositoryTestcase;
 
 import java.lang.reflect.Method;
-import java.util.Locale;
 
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;

@@ -24,7 +24,6 @@ import info.magnolia.cms.core.MgnlNodeType;
 import info.magnolia.jcr.util.NodeUtil;
 import info.magnolia.jcr.util.PropertyUtil;
 import info.magnolia.objectfactory.Components;
-import it.openutils.mgnlutils.util.NodeUtilsExt;
 
 import java.awt.image.BufferedImage;
 import java.io.InputStream;

@@ -19,13 +19,12 @@
 
 package net.sourceforge.openutils.mgnllms.module;
 
-import info.magnolia.cms.core.SystemProperty;
 import info.magnolia.cms.security.Permission;
 import info.magnolia.module.InstallContext;
 import info.magnolia.module.delta.SetPropertyTask;
 import info.magnolia.module.delta.Task;
 import it.openutils.mgnltasks.AddPermissionTask;
-import it.openutils.mgnltasks.SamplesExtractionTask;
+import it.openutils.mgnltasks.FilesExtractionTask;
 import it.openutils.mgnltasks.SimpleModuleVersionHandler;
 
 import java.util.ArrayList;
@@ -58,9 +57,10 @@ public class LMSModuleVersionHandler extends SimpleModuleVersionHandler
     {
         List<Task> tasks = new ArrayList<Task>();
 
-        if (SystemProperty.getBooleanProperty(SystemProperty.MAGNOLIA_BOOTSTRAP_SAMPLES))
+        if (samplesEnabled())
         {
-            tasks.add(new SamplesExtractionTask());
+            tasks.add(new FilesExtractionTask("/samples-lms/"));
+
             tasks.add(new AddPermissionTask("anonymous", "website", "/sample-lms", Permission.READ));
             tasks.add(new AddPermissionTask("anonymous", "website", "/sample-lms/*", Permission.NONE));
             tasks.add(new AddPermissionTask("anonymous", "uri", "/sample-lms.html", Permission.READ));

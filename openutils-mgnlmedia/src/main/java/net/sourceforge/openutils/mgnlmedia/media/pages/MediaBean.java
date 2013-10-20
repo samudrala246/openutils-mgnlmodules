@@ -22,7 +22,6 @@ package net.sourceforge.openutils.mgnlmedia.media.pages;
 import info.magnolia.cms.core.MetaData;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.jcr.Node;

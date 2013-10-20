@@ -19,7 +19,6 @@
 
 package net.sourceforge.openutils.mgnlmedia.media.pages;
 
-import info.magnolia.cms.beans.config.URI2RepositoryManager;
 import info.magnolia.cms.exchange.ActivationManagerFactory;
 import info.magnolia.cms.security.Permission;
 import info.magnolia.jcr.util.MetaDataUtil;
@@ -28,7 +27,6 @@ import info.magnolia.jcr.util.PropertyUtil;
 import info.magnolia.objectfactory.Components;
 import info.magnolia.repository.RepositoryConstants;
 
-import java.util.List;
 import java.util.Map;
 
 import javax.jcr.Node;

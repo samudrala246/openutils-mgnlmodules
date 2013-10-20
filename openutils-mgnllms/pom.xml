@@ -108,7 +108,7 @@
     <dependency>
       <groupId>net.sourceforge.openutils</groupId>
       <artifactId>openutils-mgnltasks</artifactId>
-      <version>5.0.0</version>
+      <version>5.0.1-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>net.sourceforge.openutils</groupId>

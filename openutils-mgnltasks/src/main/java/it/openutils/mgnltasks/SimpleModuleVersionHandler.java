@@ -164,4 +164,10 @@ public class SimpleModuleVersionHandler extends DefaultModuleVersionHandler
     {
         delta.getTasks().add(new ModuleConfigBootstrapTask(modulename, includedRepositoriesInBootstrap));
     }
+
+    protected boolean samplesEnabled()
+    {
+        return Components.getComponent(MagnoliaConfigurationProperties.class).getBooleanProperty(
+            "magnolia.bootstrap.samples");
+    }
 }

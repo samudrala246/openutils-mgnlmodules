@@ -19,7 +19,6 @@
 package it.openutils.mgnlutils.util;
 
 import info.magnolia.cms.beans.config.ServerConfiguration;
-import info.magnolia.context.MgnlContext;
 import info.magnolia.init.MagnoliaConfigurationProperties;
 import info.magnolia.rendering.context.RenderingContext;
 import info.magnolia.rendering.engine.RenderException;
