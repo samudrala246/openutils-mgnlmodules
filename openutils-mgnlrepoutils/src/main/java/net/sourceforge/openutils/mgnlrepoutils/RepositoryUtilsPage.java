@@ -19,12 +19,13 @@
 
 package net.sourceforge.openutils.mgnlrepoutils;
 
-import info.magnolia.cms.beans.config.ContentRepository;
 import info.magnolia.cms.util.AlertUtil;
 import info.magnolia.context.MgnlContext;
 import info.magnolia.module.admininterface.TemplatedMVCHandler;
 import info.magnolia.objectfactory.Components;
 import info.magnolia.repository.RepositoryManager;
+import info.magnolia.repository.definition.WorkspaceMappingDefinition;
+import it.openutils.mgnlutils.util.NodeUtilsExt;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
@@ -134,7 +135,7 @@ public class RepositoryUtilsPage extends TemplatedMVCHandler
     private SearchIndex getSearchIndex(String repo) throws RepositoryException, NoSuchMethodException,
         IllegalAccessException, InvocationTargetException
     {
-        WorkspaceImpl workspace = (WorkspaceImpl) MgnlContext.getHierarchyManager(repo).getWorkspace();
+        WorkspaceImpl workspace = (WorkspaceImpl) NodeUtilsExt.unwrap(MgnlContext.getJCRSession(repo).getWorkspace());
 
         QueryManagerImpl queryManager = (QueryManagerImpl) workspace.getQueryManager();
 
@@ -144,10 +145,13 @@ public class RepositoryUtilsPage extends TemplatedMVCHandler
 
     private PersistenceManager getPersistenceManager(String repo) throws Exception
     {
-        WorkspaceImpl workspace = (WorkspaceImpl) MgnlContext.getHierarchyManager(repo).getWorkspace();
+        WorkspaceImpl workspace = (WorkspaceImpl) NodeUtilsExt.unwrap(MgnlContext.getJCRSession(repo).getWorkspace());
         Repository repository = workspace.getSession().getRepository();
 
-        String workspaceName = ContentRepository.getMappedWorkspaceName(repo);
+        WorkspaceMappingDefinition mapping = Components.getComponent(RepositoryManager.class).getWorkspaceMapping(repo);
+
+        String workspaceName = mapping != null ? mapping.getPhysicalWorkspaceName() : repo;
+
         return getPM(repository, workspaceName);
     }
 

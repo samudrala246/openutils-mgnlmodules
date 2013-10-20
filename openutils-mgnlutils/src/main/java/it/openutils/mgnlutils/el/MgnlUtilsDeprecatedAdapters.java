@@ -27,6 +27,7 @@ import info.magnolia.cms.util.NodeMapWrapper;
 import info.magnolia.context.MgnlContext;
 import info.magnolia.context.WebContext;
 import info.magnolia.jcr.util.ContentMap;
+import it.openutils.mgnlutils.util.NodeUtilsExt;
 
 import java.util.Properties;
 
@@ -52,8 +53,7 @@ public class MgnlUtilsDeprecatedAdapters
         AggregationState aggregationState = getAggregationStateIfAvailable();
         if (aggregationState != null)
         {
-            Content mainContent = aggregationState.getCurrentContent();
-            return mainContent != null ? mainContent.getJCRNode() : null;
+            return toNode(aggregationState.getCurrentContent());
         }
         return null;
     }
@@ -63,8 +63,7 @@ public class MgnlUtilsDeprecatedAdapters
         AggregationState aggregationState = getAggregationStateIfAvailable();
         if (aggregationState != null)
         {
-            Content mainContent = aggregationState.getMainContent();
-            return mainContent != null ? mainContent.getJCRNode() : null;
+            return toNode(aggregationState.getMainContent());
         }
         return null;
     }
@@ -95,11 +94,11 @@ public class MgnlUtilsDeprecatedAdapters
         }
         else if (nodeorcontent instanceof Content)
         {
-            return ((Content) nodeorcontent).getJCRNode();
+            return NodeUtilsExt.wrap(((Content) nodeorcontent).getJCRNode());
         }
         else if (nodeorcontent instanceof NodeMapWrapper)
         {
-            return ((NodeMapWrapper) nodeorcontent).getJCRNode();
+            return NodeUtilsExt.wrap(((NodeMapWrapper) nodeorcontent).getJCRNode());
         }
         else if (nodeorcontent instanceof String)
         {

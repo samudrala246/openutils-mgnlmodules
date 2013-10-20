@@ -21,8 +21,8 @@ package net.sourceforge.openutils.mgnltagcloud.util;
 
 import info.magnolia.context.SystemContext;
 import info.magnolia.jcr.RuntimeRepositoryException;
-import info.magnolia.jcr.wrapper.DelegateSessionWrapper;
 import info.magnolia.objectfactory.Components;
+import it.openutils.mgnlutils.util.NodeUtilsExt;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -98,15 +98,8 @@ public class JackrabbitUtil
         Session session;
         try
         {
-            session = Components.getComponent(SystemContext.class).getJCRSession(repository);
-
             // TAGCLOUD-21
-            while (session instanceof DelegateSessionWrapper)
-            {
-                session = ((DelegateSessionWrapper) session).getWrappedSession();
-            }
-
-            return session;
+            return NodeUtilsExt.unwrap(Components.getComponent(SystemContext.class).getJCRSession(repository));
         }
         catch (RepositoryException e)
         {

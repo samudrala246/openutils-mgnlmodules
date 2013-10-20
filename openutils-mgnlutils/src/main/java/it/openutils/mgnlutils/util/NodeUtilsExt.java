@@ -21,7 +21,6 @@ package it.openutils.mgnlutils.util;
 
 import info.magnolia.cms.core.AggregationState;
 import info.magnolia.cms.core.Path;
-import info.magnolia.cms.util.ContentUtil;
 import info.magnolia.content2bean.Content2BeanException;
 import info.magnolia.content2bean.Content2BeanUtil;
 import info.magnolia.context.MgnlContext;
@@ -30,12 +29,12 @@ import info.magnolia.jcr.decoration.ContentDecoratorUtil;
 import info.magnolia.jcr.util.NodeUtil;
 import info.magnolia.jcr.util.PropertyUtil;
 import info.magnolia.jcr.wrapper.ChannelVisibilityContentDecorator;
+import info.magnolia.jcr.wrapper.DelegateSessionWrapper;
+import info.magnolia.jcr.wrapper.DelegateWorkspaceWrapper;
 import info.magnolia.jcr.wrapper.HTMLEscapingNodeWrapper;
 import info.magnolia.jcr.wrapper.I18nNodeWrapper;
 import info.magnolia.link.LinkFactory;
 import info.magnolia.link.LinkTransformerManager;
-import info.magnolia.link.LinkUtil;
-import info.magnolia.objectfactory.Components;
 
 import java.util.regex.Pattern;
 
@@ -43,9 +42,9 @@ import javax.jcr.ItemNotFoundException;
 import javax.jcr.Node;
 import javax.jcr.RepositoryException;
 import javax.jcr.Session;
+import javax.jcr.Workspace;
 
 import org.apache.commons.lang.StringUtils;
-
 
 /**
  * @author fgiust
@@ -75,7 +74,7 @@ public class NodeUtilsExt
         {
             try
             {
-                return session.getNode(absolutepath);
+                return wrap(session.getNode(absolutepath));
             }
             catch (RepositoryException e)
             {
@@ -153,7 +152,7 @@ public class NodeUtilsExt
         {
             try
             {
-                return NodeUtil.getNodeByIdentifier(workspace, uuidOrPath);
+                return wrap(NodeUtil.getNodeByIdentifier(workspace, uuidOrPath));
             }
             catch (ItemNotFoundException e)
             {
@@ -168,7 +167,7 @@ public class NodeUtilsExt
         {
             try
             {
-                return getNodeIfExists(MgnlContext.getJCRSession(workspace), uuidOrPath);
+                return wrap(getNodeIfExists(MgnlContext.getJCRSession(workspace), uuidOrPath));
             }
             catch (RepositoryException e)
             {
@@ -272,7 +271,35 @@ public class NodeUtilsExt
         return LinkTransformerManager
             .getInstance()
             .getAbsolute(addcontextpath)
-            .transform(LinkFactory.createLink(ContentUtil.asContent(node)));
+            .transform(LinkFactory.createLink(info.magnolia.cms.util.ContentUtil.asContent(node)));
 
+    }
+
+    public static Session unwrap(Session session)
+    {
+        if (session == null)
+        {
+            return null;
+        }
+        while (session instanceof DelegateSessionWrapper)
+        {
+            session = ((DelegateSessionWrapper) session).getWrappedSession();
+        }
+
+        return session;
+    }
+
+    public static Workspace unwrap(Workspace workspace)
+    {
+        if (workspace == null)
+        {
+            return null;
+        }
+        while (workspace instanceof DelegateWorkspaceWrapper)
+        {
+            workspace = ((DelegateWorkspaceWrapper) workspace).getWrappedWorkspace();
+        }
+
+        return workspace;
     }
 }

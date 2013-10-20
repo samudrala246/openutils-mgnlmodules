@@ -79,6 +79,11 @@
       <version>5.0.1</version>
     </dependency>
     <dependency>
+      <groupId>net.sourceforge.openutils</groupId>
+      <artifactId>openutils-mgnlutils</artifactId>
+      <version>5.0.2-SNAPSHOT</version>
+    </dependency>
+    <dependency>
       <groupId>javax.servlet</groupId>
       <artifactId>servlet-api</artifactId>
       <version>2.5</version>

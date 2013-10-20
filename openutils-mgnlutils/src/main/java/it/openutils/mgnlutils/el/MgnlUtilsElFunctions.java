@@ -142,22 +142,10 @@ public final class MgnlUtilsElFunctions
         {
             return null;
         }
-        try
-        {
-            Node node = MgnlContext.getJCRSession(repository).getNode(path);
 
-            return node;
+        Node node = NodeUtilsExt.getNodeByIdOrPath(repository, path);
 
-        }
-        catch (RepositoryException e)
-        {
-            log.debug("{} loading path {} from workspace {}:{}", new Object[]{
-                e.getClass().getName(),
-                path,
-                repository,
-                e.getMessage() });
-        }
-        return null;
+        return node;
     }
 
     /**
@@ -994,31 +982,8 @@ public final class MgnlUtilsElFunctions
                 return null;
             }
 
-            try
-            {
-                Session session = MgnlContext.getJCRSession(StringUtils.isNotBlank(repo)
-                    ? repo
-                    : RepositoryConstants.WEBSITE);
-                if (identifier.startsWith("/"))
-                {
-                    if (session.nodeExists(identifier))
-                    {
-                        content = session.getNode(identifier);
-                    }
-                }
-                else
-                {
-                    content = session.getNodeByIdentifier(StringUtils.trim(identifier));
-                }
-            }
-            catch (ItemNotFoundException e)
-            {
-                log.debug("Node \"" + identifier + "\" not found");
-            }
-            catch (RepositoryException e)
-            {
-                log.error(e.getClass().getName() + " getting node \"" + identifier + "\"", e);
-            }
+            content = NodeUtilsExt.getNodeByIdOrPath(repo, StringUtils.trim(identifier));
+
         }
         else
         {
@@ -1162,21 +1127,7 @@ public final class MgnlUtilsElFunctions
             return null;
         }
 
-        Session session;
-        try
-        {
-            session = MgnlContext.getJCRSession(repo);
-            Node loaded = session.getNodeByIdentifier(uuid);
-
-            return loaded;
-
-        }
-        catch (ItemNotFoundException e)
-        {
-            // ignore
-        }
-
-        return null;
+        return NodeUtilsExt.getNodeByIdOrPath(repo, uuid);
     }
 
     /**

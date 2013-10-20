@@ -155,7 +155,7 @@ public class LinkfixPage extends TemplatedMVCHandler
                 // test it
                 try
                 {
-                    MgnlContext.getHierarchyManager(repo);
+                    MgnlContext.getJCRSession(repo);
                 }
                 catch (IllegalArgumentException e)
                 {

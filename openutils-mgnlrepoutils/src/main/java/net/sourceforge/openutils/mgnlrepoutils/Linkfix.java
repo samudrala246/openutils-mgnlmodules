@@ -19,11 +19,10 @@
 
 package net.sourceforge.openutils.mgnlrepoutils;
 
-import info.magnolia.cms.core.Content;
-import info.magnolia.cms.core.Content.ContentFilter;
-import info.magnolia.cms.core.ItemType;
-import info.magnolia.cms.core.NodeData;
 import info.magnolia.context.MgnlContext;
+import info.magnolia.jcr.util.MetaDataUtil;
+import info.magnolia.jcr.util.NodeUtil;
+import it.openutils.mgnlutils.util.NodeUtilsExt;
 
 import java.io.StringWriter;
 import java.util.Collection;
@@ -31,6 +30,9 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javax.jcr.Node;
+import javax.jcr.Property;
+import javax.jcr.PropertyIterator;
 import javax.jcr.PropertyType;
 import javax.jcr.RepositoryException;
 import javax.jcr.Value;
@@ -53,22 +55,6 @@ public class Linkfix
 
     private static final Pattern UUID_PATTERN = Pattern
         .compile("([a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12})");
-
-    private static final ContentFilter ACCEPTALL_CONTENTFILTER = new ContentFilter()
-    {
-
-        public boolean accept(Content content)
-        {
-            try
-            {
-                return !ItemType.NT_METADATA.equals(content.getNodeTypeName());
-            }
-            catch (RepositoryException e)
-            {
-                return true;
-            }
-        }
-    };
 
     private Map<String, String> replacements;
 
@@ -153,7 +139,7 @@ public class Linkfix
 
             log.info("Processing {}", source);
 
-            Content node = MgnlContext.getHierarchyManager(repo).getContent(path);
+            Node node = MgnlContext.getJCRSession(repo).getNode(path);
             processNode(node);
         }
 
@@ -165,26 +151,27 @@ public class Linkfix
      * @param node
      * @throws RepositoryException
      */
-    private void processNode(Content node) throws RepositoryException
+    private void processNode(Node node) throws RepositoryException
     {
-        log.debug("Processing {}", node.getHandle());
+        log.debug("Processing {}", NodeUtil.getPathIfPossible(node));
         nodesCount++;
 
-        Collection<NodeData> nodedatas = node.getNodeDataCollection();
+        PropertyIterator properties = node.getProperties();
 
         boolean nodeUpdated = false;
-        for (NodeData nodedata : nodedatas)
+        while (properties.hasNext())
         {
-            nodeUpdated = processNodedata(nodedata) || nodeUpdated;
+            nodeUpdated = processProperty(properties.nextProperty()) || nodeUpdated;
         }
 
         if (nodeUpdated)
         {
-            node.updateMetaData();
+            MetaDataUtil.updateMetaData(node);
         }
 
-        Collection<Content> children = node.getChildren(ACCEPTALL_CONTENTFILTER);
-        for (Content child : children)
+        Iterable<Node> children = NodeUtil.getNodes(node, NodeUtil.EXCLUDE_META_DATA_FILTER);
+
+        for (Node child : children)
         {
             processNode(child);
         }
@@ -195,9 +182,9 @@ public class Linkfix
      * @param nodedata
      * @throws RepositoryException
      */
-    private boolean processNodedata(NodeData data) throws RepositoryException
+    private boolean processProperty(Property data) throws RepositoryException
     {
-        if (data.isMultiValue() == NodeData.MULTIVALUE_TRUE)
+        if (data.isMultiple())
         {
             return processMultiValue(data);
         }
@@ -214,7 +201,7 @@ public class Linkfix
      * @param data
      * @throws RepositoryException
      */
-    private boolean processString(NodeData data) throws RepositoryException
+    private boolean processString(Property data) throws RepositoryException
     {
         String dataAsString = data.getString();
         if (StringUtils.isEmpty(dataAsString))
@@ -236,10 +223,7 @@ public class Linkfix
             {
                 log.debug("Replacing UUID {} with {}", uuid, newuuid);
 
-                fullLog.append(String.format(
-                    "%s:%s\n",
-                    data.getHierarchyManager().getWorkspace().getName(),
-                    data.getHandle()));
+                fullLog.append(String.format("%s:%s\n", data.getSession().getWorkspace().getName(), data.getPath()));
 
                 gotMatches = true;
                 substitutionsCount++;
@@ -265,10 +249,7 @@ public class Linkfix
 
                 log.debug("Replacing text {} with {}", plainpath, repl.getValue());
 
-                fullLog.append(String.format(
-                    "%s:%s\n",
-                    data.getHierarchyManager().getWorkspace().getName(),
-                    data.getHandle()));
+                fullLog.append(String.format("%s:%s\n", data.getSession().getWorkspace().getName(), data.getPath()));
 
                 gotMatches = true;
                 substitutionsCount++;
@@ -283,7 +264,7 @@ public class Linkfix
         if (gotMatches)
         {
             data.setValue(newString);
-            data.save();
+            data.getSession().save();
             return true;
         }
 
@@ -320,8 +301,12 @@ public class Linkfix
                         String newhandle = StringUtils.replace(handle, replacement.getKey(), replacement.getValue());
                         try
                         {
-                            Content newcontent = MgnlContext.getHierarchyManager(repo).getContent(newhandle);
-                            return newcontent.getUUID();
+                            Node newcontent = NodeUtilsExt.getNodeIfExists(MgnlContext.getJCRSession(repo), newhandle);
+
+                            if (newcontent != null)
+                            {
+                                return NodeUtil.getNodeIdentifierIfPossible(newcontent);
+                            }
                         }
                         catch (RepositoryException e)
                         {
@@ -339,7 +324,7 @@ public class Linkfix
      * @param data
      * @throws RepositoryException
      */
-    private boolean processMultiValue(NodeData data) throws RepositoryException
+    private boolean processMultiValue(Property data) throws RepositoryException
     {
         Value[] values = data.getValues();
 
@@ -378,12 +363,7 @@ public class Linkfix
                 String newString = sb.toString();
                 log.info("Creating value {}", newString);
 
-                values[j] = data
-                    .getHierarchyManager()
-                    .getWorkspace()
-                    .getSession()
-                    .getValueFactory()
-                    .createValue(newString);
+                values[j] = data.getSession().getWorkspace().getSession().getValueFactory().createValue(newString);
 
             }
         }
@@ -394,7 +374,7 @@ public class Linkfix
             log.debug("Setting value {} {}", values.length, values);
 
             data.setValue(values);
-            data.save();
+            data.getSession().save();
             return true;
         }
 
