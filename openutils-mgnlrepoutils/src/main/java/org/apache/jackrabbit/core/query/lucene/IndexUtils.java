@@ -55,7 +55,7 @@ public class IndexUtils
 
         MultiIndex index = searchIndex.getIndex();
 
-        ConsistencyCheck check = ConsistencyCheck.run(index, searchIndex.getContext().getItemStateManager());
+        ConsistencyCheck check = index.runConsistencyCheck();
 
         List<ConsistencyCheckError> errors = check.getErrors();
 
