@@ -144,7 +144,7 @@ public abstract class BaseTypeHandler implements MediaTypeHandler
         throws AccessDeniedException, RepositoryException
     {
         Document doc = new Document(f, type + extension);
-        doc.setExtention(extension);
+        doc.setExtension(extension);
         SaveHandlerImpl.saveDocument(
             info.magnolia.cms.util.ContentUtil.asContent(media),
             doc,
