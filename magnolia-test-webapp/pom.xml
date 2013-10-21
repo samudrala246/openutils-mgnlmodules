@@ -286,7 +286,7 @@
   <properties>
     <magnolia.version>4.5.11</magnolia.version>
     <stk.version>2.0.10</stk.version>
-    <jackrabbit.version>2.6.4</jackrabbit.version>
+    <jackrabbit.version>2.6.1</jackrabbit.version>
   </properties>
   <build>
     <plugins>
