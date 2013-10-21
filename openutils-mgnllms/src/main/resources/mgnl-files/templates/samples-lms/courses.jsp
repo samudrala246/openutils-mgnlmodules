@@ -12,19 +12,22 @@
       <title>${actpage.title}</title>
       <cms:init />
       <link rel="stylesheet" type="text/css"
-        href="${pageContext.request.contextPath}/.resources/media-samples/css/bootstrap.min.css" />
+        href="${pageContext.request.contextPath}/.resources/bootstrap/3.0/css/bootstrap.min.css" />
     </head>
     <body>
-      <h1>${actpage.title}</h1>
-      <p>Click on a course in the list below. It opens a popup with the course inside</p>
-      <ul>
-        <c:forEach items="${lmsfn:courseList()}" var="course">
-          <li>
-            <lmsfn:playerUrl course="${course}" target="blank" />
-          </li>
-        </c:forEach>
-      </ul>
-      <p>The code to create the list is:</p>
+      <div id="main" class="container">
+        <div id="header">
+          <h1>${actpage.title}</h1>
+        </div>
+        <p>Click on a course in the list below. It opens a popup with the course inside</p>
+        <ul>
+          <c:forEach items="${lmsfn:courseList()}" var="course">
+            <li>
+              <lmsfn:playerUrl course="${course}" target="blank" />
+            </li>
+          </c:forEach>
+        </ul>
+        <p>The code to create the list is:</p>
       <pre>
         &amp;lt;ul&amp;gt;
           &amp;lt;c:forEach items="\${lmsfn:courseList()}" var="course"&amp;gt;
@@ -34,6 +37,7 @@
           &amp;lt;/c:forEach&amp;gt;
         &amp;lt;/ul&amp;gt;
       </pre>
+      </div>
     </body>
   </html>
 </jsp:root>
