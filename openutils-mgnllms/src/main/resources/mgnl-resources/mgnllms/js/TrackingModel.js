@@ -165,7 +165,7 @@ var TrackingModel = new Class(
 					
 				}else{
 					/*No objective defined for the activity, create artificial objective for tracking purpose*/
-					this.primaryObjective = new Objective({objectiveID:"artificialObjective-"+this.node.options.data.item.identifier,mapInfo: new Hash()},this.node,node.at);
+					this.primaryObjective = new Objective({objectiveID:"artificialObjective-"+this.node.options.data.item.identifier,mapInfo: new Hash()},this.node,this.node.at);
 					this.primaryObjective.setPrimary();
 					this.at.objectives.set(this.primaryObjective.id,this.primaryObjective);
 					this.objectives.push(this.primaryObjective.id);
@@ -224,7 +224,7 @@ var TrackingModel = new Class(
 				} else {
 					return this._attemptCompletionAmount;
 				}
-			},
+			}
 		});
 
 

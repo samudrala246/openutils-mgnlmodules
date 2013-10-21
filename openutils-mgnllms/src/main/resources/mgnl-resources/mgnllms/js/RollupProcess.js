@@ -116,7 +116,7 @@ var RollupProcess = new Class({
 							target.setObjectiveSatisfiedStatus(false);
 						}
 					}else{
-						target.setObjectiveProgressStatus(false);
+						//target.setObjectiveProgressStatus(false);
 					}
 				}
 			}
@@ -145,11 +145,11 @@ var RollupProcess = new Class({
 					rollupCondition: [{
 						condition: 'satisfied',
 						operator: 'noop'
-					}],
+					}]
 				}),
 				rollupAction: new Hash({
 					action: 'satisfied'
-				}),
+				})
 			});
 			
 			/*
@@ -184,9 +184,11 @@ var RollupProcess = new Class({
 	/* Activity Progress Rollup Using Measure Process [RB.1.3 a] */
 	activityRollupUsingMeasureProcess: function(node){
 		var tm = node.options.data.track;
-		tm.setAttemptProgressStatus(false);
-		tm.setAttemptCompletionStatus(false);
 		if (node.options.data.item.completionThreshold.completedByMeasure == true){
+			
+			tm.setAttemptProgressStatus(false);
+			tm.setAttemptCompletionStatus(false);
+			
 			if (tm.attemptCompletionAmount == 0){
 				tm.setAttemptCompletionStatus(false);
 			}else{
@@ -199,7 +201,7 @@ var RollupProcess = new Class({
 				}
 			}
 		}else{
-			tm.setAttemptProgressStatus(false);
+			//tm.setAttemptProgressStatus(false);
 		} 
 	},
 	
@@ -225,11 +227,11 @@ var RollupProcess = new Class({
 					rollupCondition: [{
 						condition: 'completed',
 						operator: 'noop'
-					}],
+					}]
 				}),
 				rollupAction: new Hash({
 					action: 'completed'
-				}),
+				})
 			});
 			
 			/*
@@ -391,8 +393,19 @@ var RollupProcess = new Class({
 					}
 				},this);
 			}
-			return !!contributingChildren.length 
-				&& contributingChildren[rr.childActivitySet.toLowerCase()](function(i){return i && i!='unknown'},rr.minimumCount ? rr.minimumCount : rr.minimumPercent);
+			
+			var child = contributingChildren[rr.childActivitySet.toLowerCase()](
+					function(i){
+						return i && i!='unknown'
+					},
+					rr.minimumCount ? rr.minimumCount : rr.minimumPercent
+				);
+
+			// vecchia funzione
+			// && contributingChildren[rr.childActivitySet.toLowerCase()](function(i){return i && i!='unknown'},rr.minimumCount ? rr.minimumCount : rr.minimumPercent);
+			var check = !!contributingChildren.length &&  child ;
+				
+			return check;
 		},this);
 	
 	},

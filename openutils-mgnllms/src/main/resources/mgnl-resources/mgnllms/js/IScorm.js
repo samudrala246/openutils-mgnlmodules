@@ -75,8 +75,8 @@ var IScorm = new Class({
 					}),
 					pause: new Element('img',{
 						src: contextPath + ".resources/mgnllms/icons/pause.png"
-					}),
-				},
+					})
+				}
 		};
 		
     	node.setOptions(options);
@@ -125,7 +125,7 @@ var IScorm = new Class({
 				found = this.owner.nodes[this.options.data.index-i];
 		}while(!found && this.options.data.index-i == 0);
 		return found;
-	},
+	}
 });
 
 var ScormTreeItem = new Class({
@@ -178,7 +178,7 @@ var ScormTreeFolder= new Class({
 
 var ScormTree = new Class({
 	Extends: Jx.Tree,
-	Implements: IScorm,
+	Implements: IScorm
 });
 
 function defaulter (item,seqCollection){
@@ -210,7 +210,7 @@ function defaulter (item,seqCollection){
 		completionSetByContent: item.sequencing.deliveryControls.completionSetByContent == 
 			null ? false: item.sequencing.deliveryControls.completionSetByContent,
 		objectiveSetByContent: item.sequencing.deliveryControls.objectiveSetByContent == 
-			null ? false: item.sequencing.deliveryControls.objectiveSetByContent,
+			null ? false: item.sequencing.deliveryControls.objectiveSetByContent
 	};
 	
 	/*
@@ -220,14 +220,14 @@ function defaulter (item,seqCollection){
 	item.completionThreshold = {
 		completedByMeasure: !item.completionThreshold.completedByMeasure ? false : item.completionThreshold.completedByMeasure,
 		minProgressMeasure: !item.completionThreshold.minProgressMeasure ? 1.0   : item.completionThreshold.minProgressMeasure,
-		progressWeight: 	!item.completionThreshold.progressWeight	 ? 1.0	 : item.completionThreshold.progressWeight, 
+		progressWeight: 	!item.completionThreshold.progressWeight	 ? 1.0	 : item.completionThreshold.progressWeight 
 	};
 	
 	
 	if (!item.sequencing.constrainedChoiceConsiderations) item.sequencing.constrainedChoiceConsiderations = {};
 	item.sequencing.constrainedChoiceConsiderations = {
 		preventActivation : !item.sequencing.constrainedChoiceConsiderations.preventActivation ? false : item.sequencing.constrainedChoiceConsiderations.preventActivation,
-		constrainChoice : !item.sequencing.constrainedChoiceConsiderations.constrainChoice ? false : item.sequencing.constrainedChoiceConsiderations.constrainChoice,
+		constrainChoice : !item.sequencing.constrainedChoiceConsiderations.constrainChoice ? false : item.sequencing.constrainedChoiceConsiderations.constrainChoice
 	};
 	
 	if (!item.sequencing.rollupRules) item.sequencing.rollupRules ={};
@@ -235,7 +235,7 @@ function defaulter (item,seqCollection){
 			rollupObjectiveSatisfied: !item.sequencing.rollupRules.rollupObjectiveSatisfied  ? true: item.sequencing.rollupRules.rollupObjectiveSatisfied,
 			rollupProgressCompletion: !item.sequencing.rollupRules.rollupProgressCompletion  ? true: item.sequencing.rollupRules.rollupProgressCompletion,
 			objectiveMeasureWeight: !item.sequencing.rollupRules.objectiveMeasureWeight  ? 1.0000: item.sequencing.rollupRules.objectiveMeasureWeight,
-			rollupRule: !item.sequencing.rollupRules.rollupRule ? [] : item.sequencing.rollupRules.rollupRule,
+			rollupRule: !item.sequencing.rollupRules.rollupRule ? [] : item.sequencing.rollupRules.rollupRule
 	};
 	
 	if (!item.sequencing.rollupConsiderations) item.sequencing.rollupConsiderations = {};

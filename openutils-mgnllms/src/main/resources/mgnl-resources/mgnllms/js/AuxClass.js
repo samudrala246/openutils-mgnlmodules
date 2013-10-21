@@ -204,6 +204,7 @@ var seqCondition = new Class({
 	
 	COMPLETED: function(rc) {
 		var res =scormAND(this.tm.getAttemptProgressStatus(),this.tm.getAttemptCompletionStatus());
+		//var res =this.tm.getAttemptCompletionStatus();
 		return res;
 	},
 	ACTIVITYPROGRESSKNOWN: function(rc) {
@@ -256,7 +257,7 @@ var navigationRequest = new Hash({
 				terminationRequest: null,
 				sequencingRequest: 	'start',
 				targetActivity: 	null,
-				exception: null,
+				exception: null
 			};
 		}else{
 			return {
@@ -264,7 +265,7 @@ var navigationRequest = new Hash({
 				terminationRequest: null,
 				sequencingRequest: 	null,
 				targetActivity: 	null,
-				exception: "NB.2.1-1",
+				exception: "NB.2.1-1"
 			};
 		}
 	},
@@ -607,5 +608,5 @@ var navigationRequest = new Hash({
 			temp.exception = 'NB.2.1-2';
 			return temp;
 		}
-	},
+	}
 });

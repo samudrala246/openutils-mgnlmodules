@@ -12,12 +12,16 @@ var API = new Class( {
 	GetValue : function(cmiKey) {
 		try {
 			validatorGetValueStatus(this.status);
-			r = this.s.get(cmiKey);
+			var r = this.s.get(cmiKey);
+			if(cmiKey.indexOf("_children") > 0 && $type(r)=="array" ){
+				r = r.join(',');
+			}
+			//console.info("GetValue",cmiKey," -> ",r)
 			this.lastError = 0;
 			return r;
 		} catch (e) {
 			this.lastError = e.errorNumber;
-			console.error(e.message);
+			//console.error(e.message);
 			return "";
 		}
 	},
@@ -25,24 +29,26 @@ var API = new Class( {
 	SetValue : function(cmiKey, value) {
 		try {
 			validatorSetValueStatus(this.status);
-			console.info("SetValue",cmiKey,value)
+			//console.info("SetValue",cmiKey,value)
 			this.s.set(cmiKey, value);
 			this.lastError = 0;
 			return "true";
 		} catch (e) {
 			this.lastError = e.errorNumber;
-			console.error(e.message);
+			//console.error(e.message);
 			return "false"
 		}
 	},
 	
 	GetLastError : function() {
-		console.info("GetLastError: " + this.lastError);
+		if(this.lastError){
+			//console.info("GetLastError: " + this.lastError);
+		}
 		return this.lastError;
 	},
 
 	GetErrorString : function(input) {
-		console.info("GetErrorString ", input, " ", ErrorMessages[input]);
+		//console.info("GetErrorString ", input, " ", ErrorMessages[input]);
 		return ErrorMessages[input]?ErrorMessages[input]:"";
 	},
 
@@ -52,7 +58,7 @@ var API = new Class( {
 
 	Initialize : function(input) {
 		try {
-			console.group("Initialize");
+			//console.group("Initialize");
 			validatorEmptyStringInput(input);
 			validatorInitializeStatus(this.status);
 			new Request({
@@ -60,7 +66,7 @@ var API = new Class( {
 				url: this.at.context+urlPersistence,
 				async : false,
 				onSuccess:function(response){
-					var decodedJson = JSON.decode(response)
+					var decodedJson = JSON.decode(response);
 					new Hash(decodedJson.cmi).each(function(v,k){
 						if (v.array){
 							if (k=="interactions"){
@@ -83,14 +89,17 @@ var API = new Class( {
 						}
 					},this);
 
+					if(decodedJson != null && decodedJson.adl!=null)
+						{
 					decodedJson.adl.each(function(v,i){
 						this.s.adl.data.array.push(new Hash({
 							id : v.id,
 							store : v.store,
 							readSharedData: v.readSharedData,
-							writeSharedData: v.writeSharedData,
+							writeSharedData: v.writeSharedData
 						}));
 					},this);
+						}
 					if (this.s.cmi.entry != "ab-initio"){
 						switch (this.s.cmi.exit){
 							case "suspend":
@@ -108,7 +117,7 @@ var API = new Class( {
 				command: 'initialize',
 				mgnlPath: path,
 				mgnlRepository: 'lms',
-				activityId : this.node.getName(),
+				activityId : this.node.getName()
 			});
 			this.lastError = 0;
 			this.status = RUNNING;
@@ -116,7 +125,7 @@ var API = new Class( {
 			return "true";
 		} catch (e) {
 			this.lastError = e.errorNumber?e.errorNumber:1000;
-			console.error(e.message?e.message:"Module error",e);
+			//console.error(e.message?e.message:"Module error",e);
 			this.at.debounce = false;
 			return "false"
 		}
@@ -129,8 +138,8 @@ var API = new Class( {
 			if (this.s.cmi.total_time && this.s.cmi.session_time){
 				this.s.cmi.total_time = new ScormTime(this.s.cmi.total_time).add(new ScormTime(this.s.cmi.session_time)).time;
 			}
-			console.info("Terminate", this.node.options.label);
-			console.groupEnd()
+			//console.info("Terminate", this.node.options.label);
+			//console.groupEnd()
 			validatorEmptyStringInput(input);
 			validatorTerminateStatus(this.status);
 			this.lastError = 0;
@@ -143,35 +152,60 @@ var API = new Class( {
 				url: this.at.context+urlPersistence,
 				async : false,
 				onSuccess: function(response){
-					console.log(response);
+					//console.log(response);
 				}.bind(this),
 				onFailure: function(){
 					throw new ScormError(391)
 				}
 			}).post({
 				command: 'terminate',
-				values: this.s.cmi.exit == "suspend" ? JSON.encode(new Hash(this.s.cmi).filter(function(item,key){
+				values:  JSON.encode(new Hash(this.s.cmi).filter(function(item,key){
 					return !/^(completion_threshold|launch_data|max_time_allowed|scaled_passing_score|time_limit_action|version)$/.test(key);
-				})).slice(1,-1): "",
+				})).slice(1,-1),
 				adldata: JSON.encode(this.s.adl.data.array),
+				'cmi.exit': this.s.cmi.exit,
 				mgnlPath: path,
 				mgnlRepository: 'lms',
-				activityId : this.node.getName(),
+				activityId : this.node.getName()
 			});
+			
 			if (this.s.adl.nav.request!='_none_'){
 				this.at.overallSequencingProcess(this.s.adl.nav.request);
 			}
+
+			//LB questa chiamata richiama il processo di exitall per far parsare correttamente gli stati success e satistied
+			// l'alberatura si chiuederà ma va bene cosi.
+			this.at.endAttemptProcess(this.at.current);
+			
+			//LB richiamo il setStatus per memorizzare i dati.
+			var current = this.at;
+	    	var  json = current.toJSON();
+			
+	       	new Request({
+			  method: 'post',
+			  url: this.at.context+urlPersistence,
+			  async: false,
+			  onSuccess: function(response){
+					//console.log(response);
+				}.bind(this)
+			}).post({
+			  courseStatus: json,
+			  mgnlPath: path,
+			  mgnlRepository: 'lms',
+			  command: 'setStatus'
+			});
+			
 			return "true";
 		} catch (e) {
 			this.lastError = e.errorNumber;
-			console.error(e.message);
+			//console.error(e.message);
 			return "false"
 		}
 	},
 
 	Commit : function(input) {
 		try {
-			console.info("Commit");
+			//console.info("Commit");
 			validatorEmptyStringInput(input);
 			validatorCommitStatus(this.status);
 			new Request({
@@ -179,7 +213,7 @@ var API = new Class( {
 				url: this.at.context+urlPersistence,
 				async : false,
 				onSuccess: function(response){
-					console.log(response);
+					//console.log(response);
 				}.bind(this),
 				onFailure: function(){
 					throw new ScormError(391)
@@ -192,13 +226,13 @@ var API = new Class( {
 				adldata: JSON.encode(this.s.adl.data.array),
 				mgnlPath: path,
 				mgnlRepository: 'lms',
-				activityId : this.node.getName(),
+				activityId : this.node.getName()
 			});
 			this.lastError = 0;
 			return "true";
 		} catch (e) {
 			this.lastError = e.errorNumber;
-			console.error(e.message);
+			//console.error(e.message);
 			return "false"
 		}
 	},
@@ -209,5 +243,5 @@ var API = new Class( {
 
 	_getStore: function(){
 		return this.s;
-	},
+	}
 });

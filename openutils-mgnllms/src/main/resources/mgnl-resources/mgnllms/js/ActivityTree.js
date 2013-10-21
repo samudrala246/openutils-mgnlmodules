@@ -45,6 +45,7 @@ var ActivityTree = new Class({
 	 */ 
 	start: function(){
 		var req = this.suspendedActivity ? "resumeall" : !this.current ? "start" :"";
+		this.recHideAndDisable()
 		this.overallSequencingProcess(req);
 	},
 	
@@ -63,7 +64,7 @@ var ActivityTree = new Class({
 		var toEncode = new Hash({
 			objectives: new Hash(),
 			tracks: new Hash(),
-			suspendedActivity: this.suspendedActivity ? this.suspendedActivity.getName() : "",
+			suspendedActivity: this.suspendedActivity ? this.suspendedActivity.getName() : ""
 		});
 		
 		function recExplo(node,i){
@@ -206,12 +207,12 @@ var ActivityTree = new Class({
 				return{
 					activity: null,
 					endSs: fs.endSs,
-					exception: fs.exception,
+					exception: fs.exception
 				}
 			}else{
 				return{
 					activity: fs.activity,
-					exception: null,
+					exception: null
 				}
 			}
 		}
@@ -526,7 +527,7 @@ var ActivityTree = new Class({
 				activity: fats.activity,
 				deliverable: fats.deliverable,
 				endSs: fats.endSs,
-				exception: fats.exception,
+				exception: fats.exception
 			};
 		}
 	},
@@ -595,7 +596,7 @@ var ActivityTree = new Class({
 			return {
 				activity: node,
 				deliverable: false,
-				exception: "SB.2.2-1",
+				exception: "SB.2.2-1"
 			};
 		}
 		/*
@@ -612,7 +613,7 @@ var ActivityTree = new Class({
 					activity: node,
 					deliverable: false,
 					endSs: ftts.endSs,
-					exception: ftts.exception,
+					exception: ftts.exception
 				};
 			/* 3.3 */
 			}else{
@@ -640,7 +641,7 @@ var ActivityTree = new Class({
 			return {
 				deliverable: false,
 				activity: node,
-				exception: "SB.2.2-2",
+				exception: "SB.2.2-2"
 			};
 		}
 		/* 6 */
@@ -999,7 +1000,7 @@ var ActivityTree = new Class({
 				});
 				this.current = this.root;
 				temp.valid = true;
-				temp. sequencingRequest = 'exit';
+				temp.sequencingRequest = 'exit';
 				return temp;
 			break;
 		}
@@ -1015,7 +1016,7 @@ var ActivityTree = new Class({
 			if(node.options.data.item.sequencing.deliveryControls.tracked == true){
 				if (node.options.data.item.sequencing.deliveryControls.completionSetByContent==false
 						&& node.options.data.track.getAttemptProgressStatus()==false){
-					node.options.data.track.getAttemptProgressStatus()==true;
+					node.options.data.track.setAttemptProgressStatus(true);
 					node.options.data.track.setAttemptCompletionStatus(true);
 				}
 				if (node.options.data.item.sequencing.deliveryControls.objectiveSetByContent==false){
@@ -1046,9 +1047,14 @@ var ActivityTree = new Class({
 		new RollupProcess(node,this).overallRollupProcess();
 		
 		node.deselectNode();
-		console.debug("Attempt end: " + node.options.label);
+		this.recHideAndDisable()
 		if (!node.options.enabled && !node.options.data.track.activityIsActive){
-			node.disable();
+			try{
+				node.disable();
+			}catch(e){
+				//non facciamo niente, potrebbe esserci un errore di mootools 
+				//facendo il fade del nodo
+			}
 		}
 //		API_1484_11 = null;
 		$('scormFrame').src = null;
@@ -1078,7 +1084,7 @@ var ActivityTree = new Class({
 	
 	/* Overall Sequencing Process [OP.1] */
 	overallSequencingProcess: function(request,target){
-		at.clearDebounce.delay(1000);
+		at.clearDebounce.delay(1000,at);
 		
 		var pendingRequest;
 		
@@ -1094,7 +1100,7 @@ var ActivityTree = new Class({
 		
 		if (nr.valid==false){
 			/* handle exception */
-			console.error('Sequencing request process exception: ',nr.exception);
+//			console.error('Sequencing request process exception: ',nr.exception);
 			return;
 		}
 		target=nr.target;
@@ -1102,7 +1108,7 @@ var ActivityTree = new Class({
 			var tr = this.terminationRequestProcess(nr.terminationRequest.toLowerCase());
 			if (!tr.valid){
 				/* handle exception */
-				console.error('Sequencing request process exception: ',tr.exception);
+//				console.error('Sequencing request process exception: ',tr.exception);
 				return;
 			}
 			if (tr.sequencingRequest){
@@ -1115,7 +1121,7 @@ var ActivityTree = new Class({
 			var sr = this.sequencingRequestProcess(nr.sequencingRequest.toLowerCase(),target);
 			if (!sr.valid){
 				/* handle exception */
-				console.error('Sequencing request process exception: ',sr.exception);
+//				console.error('Sequencing request process exception: ',sr.exception);
 				return;
 			}
 			/* 1.4.3 */
@@ -1130,7 +1136,7 @@ var ActivityTree = new Class({
 // }else{
 // location.reload();
 // }
-				console.info("End sequencing session");
+//				console.info("End sequencing session");
 				return;
 				/*
 				 * Exit Overall Sequencing Process - the sequencing session has
@@ -1147,7 +1153,7 @@ var ActivityTree = new Class({
 		if (delivery){
 			var drp = this.deliveryRequestProcess(delivery);
 			if (false == drp.valid){
-				console.log(drp);
+//				console.log(drp);
 				return;
 			}
 			this.contentDeliveryEnvironmentProcess(delivery);
@@ -1228,63 +1234,7 @@ var ActivityTree = new Class({
 			this.scormPlayer.layout.buttons.previousBtn.setEnabled(false);
 		}
 		
-		function recHideAndDisable(node,at,rec,rec2){
-			node.enable()
-			var descend = false;
-			var descend2 = false;
-			var rp = new RollupProcess(node,at);
-// var nr = navigationRequest["choice"].bind(at)(node);
-// var nr = at.choiceSequencingRequestProcess(delivery);
-			var current = at.current;
-			var nr = at.sequencingRequestProcess('choice',node,true);
-			at.current = current;
-			
-			if(nr.valid==false ){
-// if(nr.exception!=null){
-				node.disable();
-			}
-			
-			if (rp.sequencingRulesCheckProcess(node,['disabled'])|| rec){
-				node.disable();
-				descend = true
-			}
-			
-			if (node != delivery 
-					&& !!node.options.data.item.sequencing.limitConditions 
-					&& !!node.options.data.item.sequencing.limitConditions.attemptLimit 
-					&& node.options.data.track.activityAttemptCount >= node.options.data.item.sequencing.limitConditions.attemptLimit || rec2){
-				node.disable();
-				descend2 = true;
-			}
-			
-			if (node.nodes){
-				node.nodes.each(function(n){
-					recHideAndDisable(n, at, descend, descend2);
-				})
-			}
-			var f = new Fx.Slide(node.domObj);
-			f.show();
-			
-			if (rp.sequencingRulesCheckProcess(node,['hiddenfromchoice'])){
-				new Fx.Slide(node.domObj).hide();
-			}
-			/*
-			 * isvisible (optional): The isvisible attribute indicates whether
-			 * or not this item is displayed when the structure of the package
-			 * is displayed or rendered. If not present, value is defaulted to
-			 * be true [3]. The value only affects the item for which it is
-			 * defined and not the children of the item or a resource associated
-			 * with an item. XML Data Type: xs:boolean.
-			 */
-			if (node.options.data.item.isvisible == false){
-				new Fx.Slide(node.domLabel.getParent()).hide();
-			}
-		}
-		
-		
-		
-		
-		recHideAndDisable(this.root,this);
+		this.recHideAndDisable();
 		
 		var path = delivery.pathFromRoot().reverse();
 		path.each(function(n){
@@ -1346,7 +1296,7 @@ var ActivityTree = new Class({
 		if (delivery.nodes){
 			return {
 				valid: false,
-				exception: "DB.1.1-1",
+				exception: "DB.1.1-1"
 			};
 		}
 		var actPath = delivery.pathFromRoot();
@@ -1354,7 +1304,7 @@ var ActivityTree = new Class({
 		if (actPath.length == 0){
 			return {
 				valid: false,
-				exception: "DB.1.1-2",
+				exception: "DB.1.1-2"
 			};
 		}
 		var toReturn = {valid: true, exception: null};
@@ -1447,7 +1397,7 @@ var ActivityTree = new Class({
 			this.debounce = true;
 			this.overallSequencingProcess('exitall');
 			this.debounce = false;
-			window.close();
+			//window.close();
 		}
 	},
 
@@ -1510,8 +1460,8 @@ var ActivityTree = new Class({
 					}),
 					pause: new Element('img',{
 						src: contextPath + ".resources/mgnllms/icons/pause.png"
-					}),
-				},
+					})
+				}
 		};
 		
     	node.setOptions(options);
@@ -1566,5 +1516,61 @@ var ActivityTree = new Class({
 			this.objectives[obj.id].update(obj,this);
 		},this);
 		this.current.options.data.track.update(s);
+	},
+	/**
+	 * rec e rec2 servono per disabilitare tutto un ramo una volta che trovo un nodo da disabilitare
+	 */
+	recHideAndDisable: function (node,rec,rec2){
+		if (!node){
+			node = this.root
+		}
+		node.enable()
+		var descend = false
+		 	,descend2 = false
+			,rp = new RollupProcess(node,this)
+			,current = this.current
+			,nr = this.sequencingRequestProcess('choice',node,true);
+			
+		this.current = current;
+		
+		if(nr.valid==false ){
+			node.disable();
+		}
+		
+		if (rp.sequencingRulesCheckProcess(node,['disabled'])|| rec){
+			node.disable();
+			descend = true
+		}
+		
+		if (node
+				&& !!node.options.data.item.sequencing.limitConditions 
+				&& !!node.options.data.item.sequencing.limitConditions.attemptLimit 
+				&& node.options.data.track.activityAttemptCount >= node.options.data.item.sequencing.limitConditions.attemptLimit || rec2){
+			node.disable();
+			descend2 = true;
+		}
+		
+		if (node.nodes){
+			node.nodes.each(function(n){
+				this.recHideAndDisable(n, descend, descend2);
+			},this)
+		}
+		var f = new Fx.Slide(node.domObj);
+		f.show();
+		
+		if (rp.sequencingRulesCheckProcess(node,['hiddenfromchoice'])){
+			new Fx.Slide(node.domObj).hide();
+		}
+		/*
+		 * isvisible (optional): The isvisible attribute indicates whether
+		 * or not this item is displayed when the structure of the package
+		 * is displayed or rendered. If not present, value is defaulted to
+		 * be true [3]. The value only affects the item for which it is
+		 * defined and not the children of the item or a resource associated
+		 * with an item. XML Data Type: xs:boolean.
+		 */
+		if (node.options.data.item.isvisible == false){
+			new Fx.Slide(node.domLabel.getParent()).hide();
+		}
 	}
 });

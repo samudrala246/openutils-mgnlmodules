@@ -131,6 +131,11 @@ function validatorInteractionsLearnerResponseAndCorrectResponse(cmiKey, value) {
 			var splitted = value.split("[,]");
 			var splittedHash = new Hash();
 
+			/*
+			 * Chissà a cosa sarebbe dovuto servire. Commentato il codice perchè altrimenti non è possibile
+			 * inserire due pattern uguali in diverse interaction
+			 * RTE REQ_64.7.2.7.1 (verificato anche nella versione più attuale della documentazione)
+			 * commentiamo comunque questa verifica 
 			for ( var i = 0; i < this.cmi.interactions.array.length; i++) {
 				for (j = 0; j < this.cmi.interactions.array[i].correct_responses.array.length; j++) {
 					if (this.cmi.interactions.array[i].correct_responses.array[j].pattern == value) {
@@ -138,6 +143,7 @@ function validatorInteractionsLearnerResponseAndCorrectResponse(cmiKey, value) {
 					}
 				}
 			}
+			*/
 
 			if (value != "") {
 				for ( var i = 0; i < splitted.length; i++) {

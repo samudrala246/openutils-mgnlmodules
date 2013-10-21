@@ -20,7 +20,7 @@ ErrorMessages = new Hash( {
 	406 : "Data Model Element Type Mismatch",
 	407 : "Data Model Element Value Out Of Range",
 	408 : "Data Model Dependency Not Established",
-	1000: "Module error",
+	1000: "Module error"
 });
 
 NOT_INITIALIZED = 0;
@@ -35,7 +35,7 @@ var ScormError = new Class( {
 				+ ErrorMessages.get(this.errorNumber);
 		if (info) {
 			this.info = info;
-			console.error(errorNumber,this.info)
+//			console.error(errorNumber,this.info)
 		}
 	}
 });
@@ -53,16 +53,16 @@ var Store = new Class( {
 			audio_level : 1,
 			language: "",
 			delivery_speed : 1,
-			audio_captioning: 0,
+			audio_captioning: 0
 		}),
 		completion_status: "unknown",
 		success_status: "unknown",
-		completion_threshold: "",
+		completion_threshold: ""
 		
 	},
 	adl : {
 		nav: $empty(),
-		data: $empty(),
+		data: $empty()
 	},
 
 	initialize : function(at) {

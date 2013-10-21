@@ -3,6 +3,9 @@
 // se vengono cambiati i nomi delle variabili che persistono i
 // dati nel jcr, cambiare i corrispondenti campi in
 // MagnoliaLearnerActivitiesManager.java
+
+//PATCH aggiunto ai setter degli attribuiti degli obiettivi la propagazione utilizzando le mapInfo 
+
 var Objective = new Class(
 		{
 			initialize : function(objective, node, at) {
@@ -218,18 +221,22 @@ var Objective = new Class(
 
 			setObjectiveProgressStatus : function(v) {
 				this._objectiveProgressStatus = v
+				this.writeObjectiveMaps()
 			},
 
 			setObjectiveNormalizedMeasure : function(v) {
 				this._objectiveNormalizedMeasure = parseFloat(v);
+                this.writeObjectiveMaps()
 			},
 
 			setObjectiveSatisfiedStatus : function(v) {
 				this._objectiveSatisfiedStatus = v;
+                this.writeObjectiveMaps()
 			},
 
 			setObjectiveMeasureStatus : function(v) {
 				this._objectiveMeasureStatus = v
+				this.writeObjectiveMaps()
 			}
 
 		});

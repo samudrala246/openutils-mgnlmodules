@@ -20,5 +20,5 @@ var GlobalSharedObjective = new Class({
 		this.toJSON = _toJSON(/^(_current|id|caller)$/,
 				this);
 		this.fromJSON = _fromJSON.bind(this);
-	},
+	}
 });
