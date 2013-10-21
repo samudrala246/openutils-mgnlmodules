@@ -46,6 +46,7 @@ import info.magnolia.init.properties.ClasspathPropertySource;
 import info.magnolia.init.properties.InitPathsPropertySource;
 import info.magnolia.init.properties.ModulePropertiesSource;
 import info.magnolia.jcr.wrapper.DelegateSessionWrapper;
+import info.magnolia.jcr.wrapper.DelegateWorkspaceWrapper;
 import info.magnolia.module.ModuleLifecycle;
 import info.magnolia.module.ModuleManagementException;
 import info.magnolia.module.ModuleManager;
@@ -80,6 +81,7 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 
@@ -88,6 +90,7 @@ import javax.jcr.Node;
 import javax.jcr.Repository;
 import javax.jcr.RepositoryException;
 import javax.jcr.Session;
+import javax.jcr.Workspace;
 import javax.jcr.observation.EventListenerIterator;
 import javax.jcr.observation.ObservationManager;
 
@@ -96,6 +99,7 @@ import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.jackrabbit.core.RepositoryImpl;
 import org.apache.jackrabbit.core.SessionImpl;
+import org.apache.jackrabbit.core.WorkspaceImpl;
 import org.apache.jackrabbit.core.jndi.BindableRepository;
 import org.apache.log4j.Level;
 import org.slf4j.Logger;
@@ -226,9 +230,10 @@ public abstract class AbstractRepositoryTestcase
 
             Collection<String> workspaceNames = repositoryManager.getWorkspaceNames();
 
-            for (String workspace : workspaceNames)
+            // manually cleanup active sessions to avoid duplicate closures()
+            for (String workspaceName : workspaceNames)
             {
-                Session session = systemContext.getJCRSession(workspace);
+                Session session = systemContext.getJCRSession(workspaceName);
 
                 final ObservationManager observationManager = session.getWorkspace().getObservationManager();
                 final EventListenerIterator listeners = observationManager.getRegisteredEventListeners();
@@ -237,20 +242,28 @@ public abstract class AbstractRepositoryTestcase
                     observationManager.removeEventListener(listeners.nextEventListener());
                 }
 
-                // BindableRepository br = ((BindableRepository) repositoryManager.getRepository(repositoryManager
-                // .getWorkspaceMapping(workspace)
-                // .getRepositoryName()));
-                //
-                // final Field repoField = BindableRepository.class.getDeclaredField("repository");
-                // repoField.setAccessible(true);
-                // Repository repository = (Repository) repoField.get(br);
-                //
-                // while (session instanceof DelegateSessionWrapper)
-                // {
-                // session = ((DelegateSessionWrapper) session).getWrappedSession();
-                // }
-                //
-                // ((RepositoryImpl) repository).loggedOut((SessionImpl) session);
+                BindableRepository br = ((BindableRepository) repositoryManager.getRepository(repositoryManager
+                    .getWorkspaceMapping(workspaceName)
+                    .getRepositoryName()));
+
+                final Field repoField = BindableRepository.class.getDeclaredField("repository");
+                repoField.setAccessible(true);
+                Repository repository = (Repository) repoField.get(br);
+
+                while (session instanceof DelegateSessionWrapper)
+                {
+                    session = ((DelegateSessionWrapper) session).getWrappedSession();
+                }
+
+                final Field asclass = RepositoryImpl.class.getDeclaredField("activeSessions");
+                asclass.setAccessible(true);
+                Map<Session, Session> activesessions = (Map<Session, Session>) asclass.get(repository);
+
+                for (Session as : new HashSet<Session>(activesessions.keySet()))
+                {
+                    ((RepositoryImpl) repository).loggedOut((SessionImpl) as);
+                    // as.logout();
+                }
 
             }
 
