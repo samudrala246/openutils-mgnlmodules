@@ -21,6 +21,14 @@ package it.openutils.mgnlutils.test;
 
 import info.magnolia.cms.core.Path;
 import info.magnolia.cms.core.SystemProperty;
+import info.magnolia.cms.security.AccessManager;
+import info.magnolia.cms.security.MgnlGroupManager;
+import info.magnolia.cms.security.MgnlRoleManager;
+import info.magnolia.cms.security.PermissionUtil;
+import info.magnolia.cms.security.Realm;
+import info.magnolia.cms.security.SecuritySupport;
+import info.magnolia.cms.security.SecuritySupportImpl;
+import info.magnolia.cms.security.SystemUserManager;
 import info.magnolia.cms.util.ClasspathResourcesUtil;
 import info.magnolia.cms.util.ContentUtil;
 import info.magnolia.content2bean.Content2BeanException;
@@ -37,6 +45,7 @@ import info.magnolia.init.MagnoliaConfigurationProperties;
 import info.magnolia.init.properties.ClasspathPropertySource;
 import info.magnolia.init.properties.InitPathsPropertySource;
 import info.magnolia.init.properties.ModulePropertiesSource;
+import info.magnolia.jcr.wrapper.DelegateSessionWrapper;
 import info.magnolia.module.ModuleLifecycle;
 import info.magnolia.module.ModuleManagementException;
 import info.magnolia.module.ModuleManager;
@@ -55,14 +64,13 @@ import info.magnolia.objectfactory.configuration.ImplementationConfiguration;
 import info.magnolia.objectfactory.configuration.InstanceConfiguration;
 import info.magnolia.objectfactory.configuration.ProviderConfiguration;
 import info.magnolia.repository.DefaultRepositoryManager;
-import info.magnolia.repository.RepositoryConstants;
 import info.magnolia.repository.RepositoryManager;
 import info.magnolia.test.ComponentsTestUtil;
 import info.magnolia.test.FixedModuleDefinitionReader;
 import info.magnolia.test.TestMagnoliaConfigurationProperties;
 import info.magnolia.test.TestMagnoliaInitPaths;
 import info.magnolia.test.mock.MockContext;
-import info.magnolia.test.mock.MockUtil;
+import info.magnolia.test.mock.MockWebContext;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -77,14 +85,18 @@ import java.util.Map;
 
 import javax.jcr.ImportUUIDBehavior;
 import javax.jcr.Node;
+import javax.jcr.Repository;
 import javax.jcr.RepositoryException;
+import javax.jcr.Session;
 import javax.jcr.observation.EventListenerIterator;
 import javax.jcr.observation.ObservationManager;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
-import org.apache.jackrabbit.core.jndi.BindableRepositoryFactory;
+import org.apache.jackrabbit.core.RepositoryImpl;
+import org.apache.jackrabbit.core.SessionImpl;
+import org.apache.jackrabbit.core.jndi.BindableRepository;
 import org.apache.log4j.Level;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -132,8 +144,20 @@ public abstract class AbstractRepositoryTestcase
 
         initDefaultImplementations();
         SystemProperty.getProperties().load(this.getClass().getResourceAsStream(magnoliaProperties));
-        MockUtil.initMockContext();
-        workaroundJCR1778();
+
+        // MockUtil.initMockContext();
+
+        final MockContext ctx = new MockWebContext()
+        {
+
+            @Override
+            public AccessManager getAccessManager(String workspace)
+            {
+                return PermissionUtil.getAccessManager(workspace, getSubject());
+            }
+        };
+        MgnlContext.setInstance(ctx);
+        ComponentsTestUtil.setImplementation(SystemContext.class, MockContext.class);
 
         if (autoStart)
         {
@@ -158,6 +182,14 @@ public abstract class AbstractRepositoryTestcase
             }
 
         }
+
+        final SecuritySupportImpl sec = new SecuritySupportImpl();
+        sec.setGroupManager(new MgnlGroupManager());
+        sec.setRoleManager(new MgnlRoleManager());
+        SystemUserManager systemUserManager = new SystemUserManager();
+        systemUserManager.setRealmName(Realm.REALM_SYSTEM.getName());
+        sec.addUserManager(Realm.REALM_SYSTEM.getName(), systemUserManager);
+        ComponentsTestUtil.setInstance(SecuritySupport.class, sec);
 
     }
 
@@ -189,25 +221,38 @@ public abstract class AbstractRepositoryTestcase
             MgnlContext.release();
 
             SystemContext systemContext = Components.getComponent(SystemContext.class);
-            
+
             RepositoryManager repositoryManager = Components.getComponent(RepositoryManager.class);
-            
+
             Collection<String> workspaceNames = repositoryManager.getWorkspaceNames();
-            
+
             for (String workspace : workspaceNames)
             {
-                final ObservationManager observationManager = systemContext
-                    .getJCRSession(workspace)
-                    .getWorkspace()
-                    .getObservationManager();
+                Session session = systemContext.getJCRSession(workspace);
+
+                final ObservationManager observationManager = session.getWorkspace().getObservationManager();
                 final EventListenerIterator listeners = observationManager.getRegisteredEventListeners();
                 while (listeners.hasNext())
                 {
                     observationManager.removeEventListener(listeners.nextEventListener());
                 }
-            }
 
-           
+                // BindableRepository br = ((BindableRepository) repositoryManager.getRepository(repositoryManager
+                // .getWorkspaceMapping(workspace)
+                // .getRepositoryName()));
+                //
+                // final Field repoField = BindableRepository.class.getDeclaredField("repository");
+                // repoField.setAccessible(true);
+                // Repository repository = (Repository) repoField.get(br);
+                //
+                // while (session instanceof DelegateSessionWrapper)
+                // {
+                // session = ((DelegateSessionWrapper) session).getWrappedSession();
+                // }
+                //
+                // ((RepositoryImpl) repository).loggedOut((SessionImpl) session);
+
+            }
 
             systemContext.release();
 
@@ -254,8 +299,7 @@ public abstract class AbstractRepositoryTestcase
         configuration.combine(configurationBuilder.getComponentsFromModules("main", mr.getModuleDefinitions()));
 
         // Content2BeanProcessorImpl uses dependency injection and since we don't have that with MockComponentProvider
-        // we
-        // need to manually create this object and replace the component configuration read from core.xml
+        // we need to manually create this object and replace the component configuration read from core.xml
         final TypeMappingImpl typeMapping = new TypeMappingImpl();
         configuration.registerInstance(TypeMapping.class, typeMapping);
         configuration.registerInstance(Content2BeanProcessor.class, new Content2BeanProcessorImpl(typeMapping));
@@ -306,45 +350,15 @@ public abstract class AbstractRepositoryTestcase
         return Collections.singletonList(core);
     }
 
-    /**
-     * Workaround for JCR-1778.
-     */
-    @SuppressWarnings("unchecked")
-    static void workaroundJCR1778()
-    {
-        try
-        {
-            Field cacheField = BindableRepositoryFactory.class.getDeclaredField("cache");
-            cacheField.setAccessible(true);
-            final Map<String, String> cache = (Map<String, String>) cacheField.get(null);
-            cache.clear();
-        }
-        catch (SecurityException e)
-        {
-            // ignore
-        }
-        catch (NoSuchFieldException e)
-        {
-            // ignore
-        }
-        catch (IllegalArgumentException e)
-        {
-            // ignore
-        }
-        catch (IllegalAccessException e)
-        {
-            // ignore
-        }
-    }
-
     protected void modifyContextesToUseRealRepository()
     {
-        SystemContext systemContext = Components.getComponent(SystemContext.class);
-        RepositoryManager repositoryManager = Components.getComponent(RepositoryManager.class);
-        SystemRepositoryStrategy repositoryStrategy = new SystemRepositoryStrategy(repositoryManager);
+        // create a mock web context with same repository acquiring strategy as the system context
+        MockContext systemContext = (MockContext) MgnlContext.getSystemContext();
+        SystemRepositoryStrategy repositoryStrategy = Components.newInstance(SystemRepositoryStrategy.class);
 
-        ((MockContext) systemContext).setRepositoryStrategy(repositoryStrategy);
-        ((MockContext) MgnlContext.getInstance()).setRepositoryStrategy(repositoryStrategy);
+        systemContext.setRepositoryStrategy(repositoryStrategy);
+        MockContext ctx = (MockContext) MgnlContext.getInstance();
+        ctx.setRepositoryStrategy(repositoryStrategy);
     }
 
     protected void startRepository(String repositoryConfigFileName, String jackrabbitRepositoryConfigFileName,

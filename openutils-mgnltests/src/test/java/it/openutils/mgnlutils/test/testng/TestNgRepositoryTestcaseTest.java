@@ -19,6 +19,7 @@
 
 package it.openutils.mgnlutils.test.testng;
 
+import info.magnolia.cms.security.AccessManager;
 import info.magnolia.context.MgnlContext;
 import info.magnolia.jcr.util.NodeUtil;
 import info.magnolia.module.ModuleRegistry;
@@ -39,6 +40,8 @@ import org.testng.annotations.Test;
 
 @RepositoryTestConfiguration(repositoryConfig = "/utils-repository/test-repositories.xml", jackrabbitRepositoryConfig = "/utils-repository/jackrabbit-test-configuration.xml", bootstrapFiles = {
     "/utils-bootstrap/website.pets.xml",
+    "/utils-bootstrap/users.system.anonymous.xml",
+    "/utils-bootstrap/userroles.anonymous.xml",
     "/utils-bootstrap/website.letters.xml",
     "/utils-bootstrap/config.modules.testmodule.xml" }, magnoliaProperties = "/test-magnolia.properties", startModules = {@ModuleConfiguration(name = "testmodule", moduleclass = TestModule.class) })
 public class TestNgRepositoryTestcaseTest extends TestNgRepositoryTestcase
@@ -49,6 +52,9 @@ public class TestNgRepositoryTestcaseTest extends TestNgRepositoryTestcase
     {
         Session session = MgnlContext.getJCRSession(RepositoryConstants.WEBSITE);
         Assert.assertNotNull(session);
+
+        AccessManager accessManager = MgnlContext.getAccessManager(RepositoryConstants.WEBSITE);
+        Assert.assertNotNull(accessManager);
 
         Node pets = session.getNode("/pets");
         Assert.assertNotNull(pets);
