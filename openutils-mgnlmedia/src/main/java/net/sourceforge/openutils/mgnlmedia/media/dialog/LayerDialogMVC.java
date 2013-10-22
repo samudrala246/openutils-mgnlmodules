@@ -25,6 +25,7 @@ import info.magnolia.cms.core.ItemType;
 import info.magnolia.cms.core.Path;
 import info.magnolia.cms.gui.dialog.Dialog;
 import info.magnolia.cms.gui.misc.Sources;
+import info.magnolia.cms.util.ContentUtil;
 import info.magnolia.cms.util.NodeDataUtil;
 import info.magnolia.context.MgnlContext;
 import info.magnolia.module.admininterface.SaveHandler;
@@ -150,9 +151,52 @@ public class LayerDialogMVC extends ConfiguredDialog
 
         String type = NodeDataUtil.getString(node, "type");
 
-        // TODO rename dei nodi in base al filename?
+        // rename node if image filename has changed
+        if (!StringUtils.equals(handler.getNodeName(), "mgnlNew"))
+        {
+            String newnodename = Components
+                .getComponent(MediaConfigurationManager.class)
+                .getTypes()
+                .get(type)
+                .getHandler()
+                .getNewNodeName(form, request);
 
-        return Components.getComponent(MediaConfigurationManager.class).getTypes().get(type).getHandler().onPostSave(node.getJCRNode());
+            Content c;
+            try
+            {
+                Content previousnode = hm.getContent(handler.getPath());
+                c = previousnode.getParent();
+
+                String validatedlabel = Path.getValidatedLabel(newnodename);
+
+                if (!StringUtils.equals(handler.getNodeName(), validatedlabel))
+                {
+                    log.debug("Node name changed from {} to {}", handler.getNodeName(), validatedlabel);
+
+                    String uniqueLabel = Path.getUniqueLabel(c, validatedlabel);
+
+                    log.debug("Renaming node from {} to {}", previousnode.getHandle(), c.getHandle()
+                        + "/"
+                        + uniqueLabel);
+
+                    ContentUtil.moveInSession(previousnode, c.getHandle() + "/" + uniqueLabel);
+                    c.getJCRNode().getSession().save();
+
+                }
+            }
+            catch (RepositoryException e)
+            {
+                // ignore, can't rename
+                log.warn("Unable to rename node {}", node.getHandle());
+            }
+        }
+
+        return Components
+            .getComponent(MediaConfigurationManager.class)
+            .getTypes()
+            .get(type)
+            .getHandler()
+            .onPostSave(node.getJCRNode());
     }
 
     /**
@@ -178,7 +222,8 @@ public class LayerDialogMVC extends ConfiguredDialog
             }
             control.setNodeName(Path.getUniqueLabel(
                 c,
-                Path.getValidatedLabel(Components.getComponent(MediaConfigurationManager.class)
+                Path.getValidatedLabel(Components
+                    .getComponent(MediaConfigurationManager.class)
                     .getTypes()
                     .get(type)
                     .getHandler()
