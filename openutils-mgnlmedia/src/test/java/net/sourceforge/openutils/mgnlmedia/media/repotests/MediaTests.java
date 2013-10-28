@@ -22,6 +22,7 @@ package net.sourceforge.openutils.mgnlmedia.media.repotests;
 import info.magnolia.cms.core.MgnlNodeType;
 import info.magnolia.context.MgnlContext;
 import info.magnolia.jcr.util.NodeUtil;
+import info.magnolia.test.ComponentsTestUtil;
 import it.openutils.mgnlutils.test.RepositoryTestConfiguration;
 import it.openutils.mgnlutils.test.TestNgRepositoryTestcase;
 
@@ -30,6 +31,8 @@ import java.io.InputStream;
 import javax.jcr.Node;
 import javax.jcr.Session;
 
+import net.sourceforge.openutils.mgnlmedia.media.configuration.DefaultMediaConfigurationManager;
+import net.sourceforge.openutils.mgnlmedia.media.configuration.MediaConfigurationManager;
 import net.sourceforge.openutils.mgnlmedia.media.utils.MediaLoadUtils;
 
 import org.apache.commons.io.IOUtils;
@@ -41,9 +44,11 @@ import org.testng.annotations.Test;
  * @author fgiust
  * @version $Id$
  */
-@RepositoryTestConfiguration(jackrabbitRepositoryConfig = "/test-repository/jackrabbit-test-configuration.xml", repositoryConfig = "/test-repository/test-repositories.xml", autostart = true)
-// , startModules = @ModuleConfiguration(name = "media", moduleclass = MediaModule.class)
-// , bootstrapFiles = "/test-bootstrap/media.x.xml"
+@RepositoryTestConfiguration(jackrabbitRepositoryConfig = "/test-repository/jackrabbit-test-configuration.xml", //
+repositoryConfig = "/test-repository/test-repositories.xml", //
+autostart = true, //
+bootstrapDirectory = {"/mgnl-bootstrap/media", "/mgnl-bootstrap/media-nooverwrite" })
+// , startModules = @ModuleConfiguration(name = "media", moduleclass = MediaModule.class))
 public class MediaTests extends TestNgRepositoryTestcase
 {
 
@@ -53,6 +58,7 @@ public class MediaTests extends TestNgRepositoryTestcase
     {
         super.setUp();
         // MgnlContext.getHierarchyManager("media").save();
+        ComponentsTestUtil.setImplementation(MediaConfigurationManager.class, DefaultMediaConfigurationManager.class);
     }
 
     @Test(enabled = true)

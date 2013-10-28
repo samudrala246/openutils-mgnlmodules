@@ -46,7 +46,6 @@ import info.magnolia.init.properties.ClasspathPropertySource;
 import info.magnolia.init.properties.InitPathsPropertySource;
 import info.magnolia.init.properties.ModulePropertiesSource;
 import info.magnolia.jcr.wrapper.DelegateSessionWrapper;
-import info.magnolia.jcr.wrapper.DelegateWorkspaceWrapper;
 import info.magnolia.module.ModuleLifecycle;
 import info.magnolia.module.ModuleManagementException;
 import info.magnolia.module.ModuleManager;
@@ -78,7 +77,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Field;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
@@ -90,16 +88,15 @@ import javax.jcr.Node;
 import javax.jcr.Repository;
 import javax.jcr.RepositoryException;
 import javax.jcr.Session;
-import javax.jcr.Workspace;
 import javax.jcr.observation.EventListenerIterator;
 import javax.jcr.observation.ObservationManager;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.jackrabbit.core.RepositoryImpl;
 import org.apache.jackrabbit.core.SessionImpl;
-import org.apache.jackrabbit.core.WorkspaceImpl;
 import org.apache.jackrabbit.core.jndi.BindableRepository;
 import org.apache.log4j.Level;
 import org.slf4j.Logger;
@@ -145,6 +142,7 @@ public abstract class AbstractRepositoryTestcase
 
         boolean autoStart = repositoryTestConfiguration.autostart();
         boolean quiet = repositoryTestConfiguration.quiet();
+        boolean security = repositoryTestConfiguration.security();
 
         initDefaultImplementations();
         SystemProperty.getProperties().load(this.getClass().getResourceAsStream(magnoliaProperties));
@@ -175,7 +173,8 @@ public abstract class AbstractRepositoryTestcase
             bootstrapFile(repositoryTestConfiguration.bootstrapFiles());
 
             // bootstrap files from directory
-            if (StringUtils.isNotBlank(repositoryTestConfiguration.bootstrapDirectory()))
+            if (repositoryTestConfiguration.bootstrapDirectory() != null
+                && repositoryTestConfiguration.bootstrapDirectory().length > 0)
             {
                 bootstrapDirectory(repositoryTestConfiguration.bootstrapDirectory());
             }
@@ -187,13 +186,18 @@ public abstract class AbstractRepositoryTestcase
 
         }
 
-        final SecuritySupportImpl sec = new SecuritySupportImpl();
-        sec.setGroupManager(new MgnlGroupManager());
-        sec.setRoleManager(new MgnlRoleManager());
-        SystemUserManager systemUserManager = new SystemUserManager();
-        systemUserManager.setRealmName(Realm.REALM_SYSTEM.getName());
-        sec.addUserManager(Realm.REALM_SYSTEM.getName(), systemUserManager);
-        ComponentsTestUtil.setInstance(SecuritySupport.class, sec);
+        if (security)
+        {
+            final SecuritySupportImpl sec = new SecuritySupportImpl();
+            sec.setGroupManager(new MgnlGroupManager());
+            sec.setRoleManager(new MgnlRoleManager());
+            SystemUserManager systemUserManager = new SystemUserManager();
+            systemUserManager.setRealmName(Realm.REALM_SYSTEM.getName());
+            sec.addUserManager(Realm.REALM_SYSTEM.getName(), systemUserManager);
+            sec.setRoleManager(new MgnlRoleManager());
+            sec.setGroupManager(new MgnlGroupManager());
+            ComponentsTestUtil.setInstance(SecuritySupport.class, sec);
+        }
 
     }
 
@@ -439,22 +443,31 @@ public abstract class AbstractRepositoryTestcase
 
     /**
      * Loads all the bootstrap files in a specified path under the classpath
-     * @param path classpath path
+     * @param paths classpath path
      * @throws RepositoryException thrown during import
      * @throws IOException if there are errors while loading the files
      */
-    protected void bootstrapDirectory(String path) throws IOException, RepositoryException
+    protected void bootstrapDirectory(final String... paths) throws IOException, RepositoryException
     {
-        List<String> resourcesToBootstrap = new ArrayList<String>();
 
-        for (File file : new File(path).listFiles())
+        String[] resourcesToBootstrap = ClasspathResourcesUtil.findResources(new ClasspathResourcesUtil.Filter()
         {
-            resourcesToBootstrap.add(file.getAbsolutePath());
-        }
 
-        BootstrapUtil.bootstrap(
-            resourcesToBootstrap.toArray(new String[resourcesToBootstrap.size()]),
-            ImportUUIDBehavior.IMPORT_UUID_COLLISION_THROW);
+            @Override
+            public boolean accept(final String name)
+            {
+                for (String string : paths)
+                {
+                    if (StringUtils.contains(name, string))
+                    {
+                        return true;
+                    }
+                }
+                return false;
+            }
+        });
+
+        BootstrapUtil.bootstrap(resourcesToBootstrap, ImportUUIDBehavior.IMPORT_UUID_COLLISION_THROW);
     }
 
     /**

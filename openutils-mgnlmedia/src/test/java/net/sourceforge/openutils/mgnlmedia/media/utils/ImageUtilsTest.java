@@ -31,7 +31,9 @@ import java.util.Map;
 
 import javax.jcr.Node;
 
+import net.sourceforge.openutils.mgnlmedia.media.configuration.DefaultMediaConfigurationManager;
 import net.sourceforge.openutils.mgnlmedia.media.configuration.ImageProcessorsManager;
+import net.sourceforge.openutils.mgnlmedia.media.configuration.MediaConfigurationManager;
 
 import org.apache.commons.io.IOUtils;
 import org.testng.Assert;
@@ -53,6 +55,7 @@ public class ImageUtilsTest
     public void setup()
     {
         ComponentsTestUtil.setInstance(ImageProcessorsManager.class, new ImageProcessorsManagerMock());
+        ComponentsTestUtil.setImplementation(MediaConfigurationManager.class, DefaultMediaConfigurationManager.class);
     }
 
     /**

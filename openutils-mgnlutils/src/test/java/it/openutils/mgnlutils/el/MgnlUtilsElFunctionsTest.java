@@ -118,11 +118,6 @@ public class MgnlUtilsElFunctionsTest extends TestNgRepositoryTestcase
         ((MockWebContext) MgnlContext.getInstance()).setContextPath("/testcontextpath");
         Components.getComponent(ServerConfiguration.class).setDefaultExtension("html");
 
-        Class classI18nContentSupport = Class.forName("info.magnolia.cms.i18n.DefaultI18nContentSupport");
-        Method i18nGetLocale = classI18nContentSupport.getMethod("getDefaultLocale");
-        // Magnolia version >= 4.3.x
-        i18nGetLocale.invoke(i18nSupport, en.getLocale());
-
         // info.magnolia.link.BaseLinkTest.setUp()
         // not configured in the repository
         ComponentsTestUtil.setImplementation(URI2RepositoryManager.class, URI2RepositoryManager.class);

@@ -43,7 +43,7 @@ import org.testng.annotations.Test;
     "/utils-bootstrap/users.system.anonymous.xml",
     "/utils-bootstrap/userroles.anonymous.xml",
     "/utils-bootstrap/website.letters.xml",
-    "/utils-bootstrap/config.modules.testmodule.xml" }, magnoliaProperties = "/test-magnolia.properties", startModules = {@ModuleConfiguration(name = "testmodule", moduleclass = TestModule.class) })
+    "/utils-bootstrap/config.modules.testmodule.xml" }, magnoliaProperties = "/test-magnolia.properties", security = true, startModules = {@ModuleConfiguration(name = "testmodule", moduleclass = TestModule.class) })
 public class TestNgRepositoryTestcaseTest extends TestNgRepositoryTestcase
 {
 

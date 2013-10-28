@@ -35,7 +35,8 @@ import java.lang.annotation.Target;
 @Target(ElementType.TYPE)
 @Inherited
 @Documented
-public @interface RepositoryTestConfiguration {
+public @interface RepositoryTestConfiguration
+{
 
     /**
      * Path for magnolia repository config file. Defaults to "/test-repositories.xml".
@@ -55,7 +56,7 @@ public @interface RepositoryTestConfiguration {
     /**
      * A list of directory (classpath paths) to bootstrap.
      */
-    String bootstrapDirectory() default "";
+    String[] bootstrapDirectory() default "";
 
     /**
      * magnolia.properties location. Defaults to "/test-magnolia.properties".
@@ -71,6 +72,12 @@ public @interface RepositoryTestConfiguration {
      * Quiet (shut up logging during startup). Defaults to true.
      */
     boolean quiet() default true;
+
+    /**
+     * Setup security (if disabled AccessManager, UserManager and ACL checking will not be available)
+     * @return
+     */
+    boolean security() default false;
 
     /**
      * Name of modules that should be registered and started. Configuration should exist in the repository for these

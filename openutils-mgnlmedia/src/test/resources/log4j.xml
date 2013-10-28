@@ -14,7 +14,7 @@
     <priority value="INFO" />
   </category>
   <category name="info">
-    <priority value="DEBUG" />
+    <priority value="INFO" />
   </category>
   <category name="org">
     <priority value="WARN" />
