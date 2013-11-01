@@ -836,7 +836,7 @@ public final class ImageUtils
         }
         try
         {
-            if (resolutions != null && resolutions.hasProperty(getResolutionPath(resolution)))
+            if (resolutions != null && resolutions.hasNode(getResolutionPath(resolution)))
             {
                 if (lazy)
                 {
