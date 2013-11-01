@@ -40,7 +40,7 @@ import javax.jcr.Node;
 import javax.jcr.RepositoryException;
 import javax.jcr.Session;
 
-import net.sourceforge.openutils.mgnlmessages.lifecycle.MessagesModuleLifecycle;
+import net.sourceforge.openutils.mgnlmessages.MessagesModule;
 
 import org.apache.commons.lang.StringUtils;
 
@@ -151,37 +151,6 @@ public class MessagesConfigurationManager extends ObservedManagerAdapter
         {
             return new ArrayList<String>();
         }
-    }
-
-    public static void saveKeyValue(String key, String value, String locale) throws RepositoryException
-    {
-        Session session;
-        try
-        {
-            session = Components.getComponent(SystemContext.class).getJCRSession(MessagesModuleLifecycle.REPO);
-        }
-        catch (RepositoryException e)
-        {
-            throw new RuntimeRepositoryException(e);
-        }
-
-        String path = "/" + StringUtils.replace(key, ".", "/");
-
-        Node content = NodeUtil.createPath(session.getRootNode(), path, MgnlNodeType.NT_CONTENTNODE);
-
-        if (!StringUtils.isEmpty(locale))
-        {
-            if (!StringUtils.isEmpty(value))
-            {
-                content.setProperty(locale, value);
-            }
-            else
-            {
-                NodeUtilsExt.deletePropertyIfExist(content, locale);
-            }
-        }
-
-        session.save();
     }
 
     /**

@@ -43,9 +43,10 @@ import javax.jcr.Session;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.openutils.mgnlmessages.MessagesModule;
+import net.sourceforge.openutils.mgnlmessages.MessagesUtils;
 import net.sourceforge.openutils.mgnlmessages.configuration.MessagesConfigurationManager;
 import net.sourceforge.openutils.mgnlmessages.el.MessagesEl;
-import net.sourceforge.openutils.mgnlmessages.lifecycle.MessagesModuleLifecycle;
 
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
@@ -171,7 +172,7 @@ public class MessagesEditPage extends TemplatedMVCHandler
     {
         try
         {
-            MessagesConfigurationManager.saveKeyValue(key, text, locale);
+            MessagesUtils.saveKeyValue(key, text, locale);
             json = "rootObj = {value: 'OK'}";
         }
         catch (RepositoryException e)
@@ -187,7 +188,7 @@ public class MessagesEditPage extends TemplatedMVCHandler
     {
         try
         {
-            Session session = Components.getComponent(SystemContext.class).getJCRSession(MessagesModuleLifecycle.REPO);
+            Session session = Components.getComponent(SystemContext.class).getJCRSession(MessagesModule.REPO);
 
             String path = "/" + StringUtils.replace(key, ".", "/");
             session.removeItem(path);
@@ -285,7 +286,7 @@ public class MessagesEditPage extends TemplatedMVCHandler
      */
     protected void moveNode(String source, String destination) throws RepositoryException
     {
-        Session session = Components.getComponent(SystemContext.class).getJCRSession(MessagesModuleLifecycle.REPO);
+        Session session = Components.getComponent(SystemContext.class).getJCRSession(MessagesModule.REPO);
 
         String goTo = destination;
 

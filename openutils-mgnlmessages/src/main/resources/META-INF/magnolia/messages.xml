@@ -4,7 +4,7 @@
   <name>messages</name>
   <displayName>magnolia messages module</displayName>
   <description>magnolia messages module</description>
-  <class>net.sourceforge.openutils.mgnlmessages.lifecycle.MessagesModuleLifecycle</class>
+  <class>net.sourceforge.openutils.mgnlmessages.MessagesModule</class>
   <versionHandler>net.sourceforge.openutils.mgnlmessages.setup.MessagesModuleVersionHandler</versionHandler>
   <version>${project.version}</version>
   <properties>

@@ -27,8 +27,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.openutils.mgnlmessages.configuration.MessagesConfigurationManager;
-
 
 /**
  * @author molaschi
@@ -58,7 +56,7 @@ public class MessagesServlet extends HttpServlet
 
         try
         {
-            MessagesConfigurationManager.saveKeyValue(key, text, locale);
+            MessagesUtils.saveKeyValue(key, text, locale);
         }
         catch (RepositoryException ex)
         {

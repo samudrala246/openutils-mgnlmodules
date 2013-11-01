@@ -44,6 +44,7 @@ import javax.jcr.RepositoryException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.openutils.mgnlmessages.MessagesUtils;
 import net.sourceforge.openutils.mgnlmessages.configuration.MessagesConfigurationManager;
 
 import org.apache.commons.io.IOUtils;
@@ -296,7 +297,7 @@ public class MessagesImpExpPage extends TemplatedMVCHandler
                     {
                         try
                         {
-                            MessagesConfigurationManager.saveKeyValue(key, value, locales.get(c - 1));
+                            MessagesUtils.saveKeyValue(key, value, locales.get(c - 1));
                         }
                         catch (RepositoryException e)
                         {

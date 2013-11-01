@@ -17,7 +17,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package net.sourceforge.openutils.mgnlmessages.lifecycle;
+package net.sourceforge.openutils.mgnlmessages;
 
 import info.magnolia.cms.i18n.MessagesManager;
 import info.magnolia.module.ModuleLifecycle;
@@ -32,7 +32,7 @@ import org.slf4j.LoggerFactory;
 /**
  * @author molaschi
  */
-public class MessagesModuleLifecycle implements ModuleLifecycle
+public class MessagesModule implements ModuleLifecycle
 {
 
     /**
@@ -40,7 +40,7 @@ public class MessagesModuleLifecycle implements ModuleLifecycle
      */
     public static final String REPO = "messages";
 
-    private Logger log = LoggerFactory.getLogger(MessagesModuleLifecycle.class);
+    private Logger log = LoggerFactory.getLogger(MessagesModule.class);
 
     /**
      * {@inheritDoc}
