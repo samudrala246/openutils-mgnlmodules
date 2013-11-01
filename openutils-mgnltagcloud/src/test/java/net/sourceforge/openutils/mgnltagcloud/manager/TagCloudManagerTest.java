@@ -29,6 +29,7 @@ import info.magnolia.context.MgnlContext;
 import info.magnolia.jcr.util.NodeUtil;
 import info.magnolia.objectfactory.Components;
 import info.magnolia.repository.RepositoryConstants;
+import info.magnolia.test.ComponentsTestUtil;
 import info.magnolia.test.RepositoryTestCase;
 
 import java.util.Map;
@@ -272,6 +273,7 @@ public class TagCloudManagerTest extends RepositoryTestCase
 
         hmConfig.save();
 
+        ComponentsTestUtil.setImplementation(TagCloudManager.class, DefaultTagCloudManager.class);
         DefaultTagCloudManager manager = (DefaultTagCloudManager) Components.getComponent(TagCloudManager.class);
         manager.jackrabbitUtil = new JackrabbitUtil();
 
@@ -281,8 +283,9 @@ public class TagCloudManagerTest extends RepositoryTestCase
     @Override
     public void tearDown() throws Exception
     {
-        super.tearDown();
+        ComponentsTestUtil.setImplementation(TagCloudManager.class, DefaultTagCloudManager.class);
         Components.getComponent(TagCloudManager.class).stopObserving();
+        super.tearDown();
     }
 
     /**
