@@ -135,6 +135,11 @@ public class SimpleMessagesImpl extends AbstractMessagesImpl
                 IOUtils.closeQuietly(stream);
             }
         }
+
+        if (bundle == null)
+        {
+            log.warn("Got a request for a missing bundle {}, please check your configuration", basename);
+        }
         return bundle;
     }
 
