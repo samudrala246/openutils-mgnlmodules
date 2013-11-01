@@ -220,13 +220,22 @@ public class MediaLoadUtils
         {
             if (StringUtils.isNotEmpty(contentNodeName))
             {
-                currContent = currContent.addNode(contentNodeName, MediaConfigurationManager.NT_FOLDER);
 
-                if (MediaEl.module().isSingleinstance() && !MetaDataUtil.getMetaData(currContent).getIsActivated())
+                if (currContent.hasNode(contentNodeName))
                 {
-                    MetaDataUtil.getMetaData(currContent).setActivated();
+                    currContent = currContent.getNode(contentNodeName);
+                }
+                else
+                {
+                    currContent = currContent.addNode(contentNodeName, MediaConfigurationManager.NT_FOLDER);
+
+                    if (MediaEl.module().isSingleinstance() && !MetaDataUtil.getMetaData(currContent).getIsActivated())
+                    {
+                        MetaDataUtil.getMetaData(currContent).setActivated();
+                    }
                 }
             }
+
         }
         return currContent;
 
