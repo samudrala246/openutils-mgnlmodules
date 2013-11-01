@@ -23,6 +23,7 @@ import info.magnolia.cms.beans.runtime.Document;
 import info.magnolia.cms.i18n.Messages;
 import info.magnolia.cms.util.AlertUtil;
 import info.magnolia.module.admininterface.TemplatedMVCHandler;
+import info.magnolia.objectfactory.Components;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -44,8 +45,8 @@ import javax.jcr.RepositoryException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.openutils.mgnlmessages.MessagesModule;
 import net.sourceforge.openutils.mgnlmessages.MessagesUtils;
-import net.sourceforge.openutils.mgnlmessages.configuration.MessagesConfigurationManager;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
@@ -93,9 +94,9 @@ public class MessagesImpExpPage extends TemplatedMVCHandler
         HSSFWorkbook wb = new HSSFWorkbook();
 
         Map<String, Set<Messages>> messages = new HashMap<String, Set<Messages>>();
-        List<Locale> locales = MessagesConfigurationManager.getAvaiableLocales();
+        List<Locale> locales = MessagesUtils.getAvaiableLocales();
 
-        for (String basename : MessagesConfigurationManager.getBaseNames())
+        for (String basename : Components.getComponent(MessagesModule.class).getBasenames())
         {
 
             Set<Messages> msgs = new LinkedHashSet<Messages>();

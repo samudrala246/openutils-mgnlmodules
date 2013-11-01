@@ -45,7 +45,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.openutils.mgnlmessages.MessagesModule;
 import net.sourceforge.openutils.mgnlmessages.MessagesUtils;
-import net.sourceforge.openutils.mgnlmessages.configuration.MessagesConfigurationManager;
 import net.sourceforge.openutils.mgnlmessages.el.MessagesEl;
 
 import org.apache.commons.lang.StringUtils;
@@ -125,7 +124,7 @@ public class MessagesEditPage extends TemplatedMVCHandler
             }
             Collections.sort(keys);
 
-            locales = MessagesConfigurationManager.getAvaiableLocales();
+            locales = MessagesUtils.getAvaiableLocales();
 
             Locale loc = this.request.getLocale();
             if (locales != null && !locales.isEmpty() && !locales.contains(loc))
@@ -241,7 +240,7 @@ public class MessagesEditPage extends TemplatedMVCHandler
         if (!StringUtils.isBlank(text))
         {
             Locale locBk = MgnlContext.getLocale();
-            for (Locale newLoc : MessagesConfigurationManager.getAvaiableLocales())
+            for (Locale newLoc : MessagesUtils.getAvaiableLocales())
             {
                 MgnlContext.setLocale(newLoc);
                 Messages messages = MgnlContext.getMessages();

@@ -26,9 +26,14 @@ import info.magnolia.jcr.util.NodeUtil;
 import info.magnolia.objectfactory.Components;
 import it.openutils.mgnlutils.util.NodeUtilsExt;
 
+import java.util.List;
+import java.util.Locale;
+
 import javax.jcr.Node;
 import javax.jcr.RepositoryException;
 import javax.jcr.Session;
+
+import net.sourceforge.openutils.mgnlmessages.configuration.MessagesConfigurationManager;
 
 import org.apache.commons.lang.StringUtils;
 
@@ -69,5 +74,10 @@ public class MessagesUtils
         }
 
         session.save();
+    }
+
+    public static List<Locale> getAvaiableLocales()
+    {
+        return Components.getComponent(MessagesConfigurationManager.class).getLocales();
     }
 }

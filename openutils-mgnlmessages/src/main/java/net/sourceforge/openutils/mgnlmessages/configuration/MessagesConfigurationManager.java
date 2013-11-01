@@ -20,13 +20,9 @@
 package net.sourceforge.openutils.mgnlmessages.configuration;
 
 import info.magnolia.cms.core.MgnlNodeType;
-import info.magnolia.context.SystemContext;
 import info.magnolia.jcr.RuntimeRepositoryException;
 import info.magnolia.jcr.util.NodeUtil;
 import info.magnolia.jcr.util.PropertyUtil;
-import info.magnolia.objectfactory.Components;
-import info.magnolia.repository.RepositoryConstants;
-import it.openutils.mgnlutils.util.NodeUtilsExt;
 import it.openutils.mgnlutils.util.ObservedManagerAdapter;
 
 import java.util.ArrayList;
@@ -38,11 +34,6 @@ import java.util.Locale;
 import javax.inject.Singleton;
 import javax.jcr.Node;
 import javax.jcr.RepositoryException;
-import javax.jcr.Session;
-
-import net.sourceforge.openutils.mgnlmessages.MessagesModule;
-
-import org.apache.commons.lang.StringUtils;
 
 
 /**
@@ -113,43 +104,6 @@ public class MessagesConfigurationManager extends ObservedManagerAdapter
         catch (RepositoryException e)
         {
             throw new RuntimeRepositoryException(e);
-        }
-    }
-
-    public static List<Locale> getAvaiableLocales()
-    {
-        return Components.getComponent(MessagesConfigurationManager.class).getLocales();
-    }
-
-    @SuppressWarnings("unchecked")
-    public static List<String> getBaseNames()
-    {
-        Session session;
-        try
-        {
-            session = Components.getComponent(SystemContext.class).getJCRSession(RepositoryConstants.CONFIG);
-        }
-        catch (RepositoryException e)
-        {
-            throw new RuntimeRepositoryException(e);
-        }
-        try
-        {
-            Node basenamesNode = session.getNode("/modules/messages/basenames");
-
-            Iterable<Node> nodes = NodeUtil.getNodes(basenamesNode, NodeUtil.EXCLUDE_META_DATA_FILTER);
-
-            List<String> basenames = new ArrayList<String>();
-
-            for (Node bn : nodes)
-            {
-                basenames.add(PropertyUtil.getString(bn, "basename"));
-            }
-            return basenames;
-        }
-        catch (RepositoryException e)
-        {
-            return new ArrayList<String>();
         }
     }
 

@@ -20,6 +20,8 @@
 package net.sourceforge.openutils.mgnlmessages.i18n;
 
 import info.magnolia.cms.i18n.AbstractMessagesImpl;
+import info.magnolia.module.ModuleRegistry;
+import info.magnolia.objectfactory.Components;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -29,6 +31,7 @@ import java.util.Locale;
 import java.util.MissingResourceException;
 import java.util.Set;
 
+import net.sourceforge.openutils.mgnlmessages.MessagesModule;
 import net.sourceforge.openutils.mgnlmessages.configuration.MessagesConfigurationManager;
 
 import org.apache.commons.collections.IteratorUtils;
@@ -52,9 +55,13 @@ public class MultiBundleMessagesImpl extends AbstractMessagesImpl
     {
         super(null, locale);
         messages = new ArrayList<OpenutilsMessagesImpl>();
-        for (String basename : MessagesConfigurationManager.getBaseNames())
+        if (Components.getComponent(ModuleRegistry.class).getModuleInstance("messages") != null)
         {
-            messages.add(new OpenutilsMessagesImpl(basename, locale));
+            for (String basename : ((MessagesModule) Components.getComponent(ModuleRegistry.class).getModuleInstance(
+                "messages")).getBasenames())
+            {
+                messages.add(new OpenutilsMessagesImpl(basename, locale));
+            }
         }
     }
 

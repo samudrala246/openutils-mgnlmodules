@@ -19,7 +19,14 @@
 
 package net.sourceforge.openutils.mgnlmessages.setup;
 
+import info.magnolia.module.InstallContext;
+import info.magnolia.module.delta.Task;
+import info.magnolia.repository.RepositoryConstants;
+import it.openutils.mgnltasks.MoveSubnodesAndDeleteTask;
 import it.openutils.mgnltasks.SimpleModuleVersionHandler;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -28,4 +35,22 @@ import it.openutils.mgnltasks.SimpleModuleVersionHandler;
  */
 public class MessagesModuleVersionHandler extends SimpleModuleVersionHandler
 {
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected List<Task> getStartupTasks(InstallContext installContext)
+    {
+        List<Task> tasks = new ArrayList<Task>();
+
+        tasks
+            .add(new MoveSubnodesAndDeleteTask(
+                RepositoryConstants.CONFIG,
+                "/modules/messages/basenames",
+                "/modules/messages/config/basenames",
+                "Basenames configuration has been migrated from /modules/messages/basenames to /modules/messages/config/basenames. Please check your configuration"));
+
+        return tasks;
+    }
 }

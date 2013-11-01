@@ -23,8 +23,13 @@ import info.magnolia.cms.i18n.MessagesManager;
 import info.magnolia.module.ModuleLifecycle;
 import info.magnolia.module.ModuleLifecycleContext;
 import info.magnolia.objectfactory.Components;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import net.sourceforge.openutils.mgnlmessages.configuration.MessagesConfigurationManager;
 
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -35,12 +40,11 @@ import org.slf4j.LoggerFactory;
 public class MessagesModule implements ModuleLifecycle
 {
 
-    /**
-     *
-     */
     public static final String REPO = "messages";
 
     private Logger log = LoggerFactory.getLogger(MessagesModule.class);
+
+    private List<String> basenames = new ArrayList<String>();
 
     /**
      * {@inheritDoc}
@@ -50,7 +54,7 @@ public class MessagesModule implements ModuleLifecycle
         log.info("Starting module messages");
         ctx.registerModuleObservingComponent("locales", Components.getComponent(MessagesConfigurationManager.class));
 
-        Components.getComponent(MessagesManager.class).init();
+        Components.getComponent(MessagesManager.class).reload();
     }
 
     /**
@@ -59,6 +63,36 @@ public class MessagesModule implements ModuleLifecycle
     public void stop(ModuleLifecycleContext ctx)
     {
         log.info("Stopping module messages");
+    }
+
+    /**
+     * Returns the basenames.
+     * @return the basenames
+     */
+    public List<String> getBasenames()
+    {
+        return basenames;
+    }
+
+    /**
+     * Sets the basenames.
+     * @param basenames the basenames to set
+     */
+    public void setBasenames(List<String> basenames)
+    {
+        this.basenames = basenames;
+    }
+
+    /**
+     * Sets the basenames.
+     * @param basenames the basenames to set
+     */
+    public void addBasenames(String basename)
+    {
+        if (StringUtils.isNotBlank(basename))
+        {
+            this.basenames.add(basename);
+        }
     }
 
 }
