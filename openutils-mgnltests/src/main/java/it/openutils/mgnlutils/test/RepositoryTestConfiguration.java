@@ -56,7 +56,7 @@ public @interface RepositoryTestConfiguration
     /**
      * A list of directory (classpath paths) to bootstrap.
      */
-    String[] bootstrapDirectory() default "";
+    String[] bootstrapDirectory() default {};
 
     /**
      * magnolia.properties location. Defaults to "/test-magnolia.properties".

@@ -458,7 +458,7 @@ public abstract class AbstractRepositoryTestcase
             {
                 for (String string : paths)
                 {
-                    if (StringUtils.contains(name, string))
+                    if (StringUtils.contains(name, string) && StringUtils.endsWithIgnoreCase(name, ".xml"))
                     {
                         return true;
                     }
