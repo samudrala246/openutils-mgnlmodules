@@ -64,6 +64,7 @@ import info.magnolia.objectfactory.configuration.ImplementationConfiguration;
 import info.magnolia.objectfactory.configuration.InstanceConfiguration;
 import info.magnolia.objectfactory.configuration.ProviderConfiguration;
 import info.magnolia.repository.DefaultRepositoryManager;
+import info.magnolia.repository.RepositoryConstants;
 import info.magnolia.repository.RepositoryManager;
 import info.magnolia.test.ComponentsTestUtil;
 import info.magnolia.test.FixedModuleDefinitionReader;
@@ -93,7 +94,6 @@ import javax.jcr.observation.ObservationManager;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
-import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.jackrabbit.core.RepositoryImpl;
 import org.apache.jackrabbit.core.SessionImpl;
@@ -482,12 +482,21 @@ public abstract class AbstractRepositoryTestcase
         throws Content2BeanException, RepositoryException
     {
         // register and start module
-        Node node = MgnlContext.getJCRSession("config").getNode("/modules/" + modulename + "/config");
-        ModuleLifecycle module = (ModuleLifecycle) Content2BeanUtil.toBean(
-            ContentUtil.asContent(node),
-            true,
-            moduleClass);
-        module.start(null);
+        String nodemoconfig = "/modules/" + modulename + "/config";
+        ModuleLifecycle module = null;
+
+        if (MgnlContext.getJCRSession(RepositoryConstants.CONFIG).nodeExists(nodemoconfig))
+        {
+            Node node = MgnlContext.getJCRSession(RepositoryConstants.CONFIG).getNode(
+                "/modules/" + modulename + "/config");
+            module = (ModuleLifecycle) Content2BeanUtil.toBean(ContentUtil.asContent(node), true, moduleClass);
+            module.start(null);
+        }
+        else
+        {
+            module = Components.getComponent(moduleClass);
+        }
+
         Components.getComponent(ModuleRegistry.class).registerModuleInstance(modulename, module);
 
         return module;
