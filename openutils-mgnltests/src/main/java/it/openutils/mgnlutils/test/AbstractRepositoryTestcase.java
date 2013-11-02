@@ -79,6 +79,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Field;
+import java.net.URL;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
@@ -389,9 +390,14 @@ public abstract class AbstractRepositoryTestcase
             logger.setLevel(Level.WARN);
         }
 
-        InputStream repositoryConfigFileStream = ClasspathResourcesUtil
-            .getResource(repositoryConfigFileName)
-            .openStream();
+        URL repositoryConfigURL = ClasspathResourcesUtil.getResource(repositoryConfigFileName);
+
+        if (repositoryConfigURL == null)
+        {
+            throw new IllegalArgumentException("Unable to find repository config file " + repositoryConfigFileName);
+        }
+
+        InputStream repositoryConfigFileStream = repositoryConfigURL.openStream();
 
         extractConfigFile("magnolia.repositories.config", repositoryConfigFileStream, "target/repositories.xml");
 

@@ -59,7 +59,7 @@ import org.testng.annotations.Test;
  * @author cstrappazzon
  * @version $Id$
  */
-@RepositoryTestConfiguration(repositoryConfig = "/utils-repository/test-repositories.xml", jackrabbitRepositoryConfig = "/repo-conf/jackrabbit-memory-search.xml", magnoliaProperties = "/test-magnolia.properties", startModules = {@ModuleConfiguration(name = "tagcloud", moduleclass = TagCloudModule.class) })
+@RepositoryTestConfiguration(jackrabbitRepositoryConfig = "/repo-conf/jackrabbit-memory-search.xml", magnoliaProperties = "/test-magnolia.properties", startModules = {@ModuleConfiguration(name = "tagcloud", moduleclass = TagCloudModule.class) })
 public class TagCloudManagerTest extends TestNgRepositoryTestcase
 {
 
