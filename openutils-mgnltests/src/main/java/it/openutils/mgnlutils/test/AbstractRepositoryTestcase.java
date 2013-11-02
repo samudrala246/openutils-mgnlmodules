@@ -47,6 +47,7 @@ import info.magnolia.init.properties.InitPathsPropertySource;
 import info.magnolia.init.properties.ModulePropertiesSource;
 import info.magnolia.jcr.wrapper.DelegateSessionWrapper;
 import info.magnolia.module.ModuleLifecycle;
+import info.magnolia.module.ModuleLifecycleContextImpl;
 import info.magnolia.module.ModuleManagementException;
 import info.magnolia.module.ModuleManager;
 import info.magnolia.module.ModuleManagerImpl;
@@ -490,7 +491,6 @@ public abstract class AbstractRepositoryTestcase
             Node node = MgnlContext.getJCRSession(RepositoryConstants.CONFIG).getNode(
                 "/modules/" + modulename + "/config");
             module = (ModuleLifecycle) Content2BeanUtil.toBean(ContentUtil.asContent(node), true, moduleClass);
-            module.start(null);
         }
         else
         {
@@ -498,6 +498,8 @@ public abstract class AbstractRepositoryTestcase
         }
 
         Components.getComponent(ModuleRegistry.class).registerModuleInstance(modulename, module);
+        ModuleLifecycleContextImpl lifecycleCtx = new ModuleLifecycleContextImpl();
+        module.start(lifecycleCtx);
 
         return module;
     }
