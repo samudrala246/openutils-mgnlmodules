@@ -19,18 +19,18 @@
 
 package net.sourceforge.openutils.mgnltagcloud.manager;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotSame;
-import static org.junit.Assert.fail;
+import info.magnolia.cms.beans.config.ObservedManager;
 import info.magnolia.cms.core.MgnlNodeType;
 import info.magnolia.cms.core.Path;
-import info.magnolia.cms.util.ClasspathResourcesUtil;
+import info.magnolia.cms.util.ContentUtil;
 import info.magnolia.context.MgnlContext;
 import info.magnolia.jcr.util.NodeUtil;
 import info.magnolia.objectfactory.Components;
 import info.magnolia.repository.RepositoryConstants;
 import info.magnolia.test.ComponentsTestUtil;
-import info.magnolia.test.RepositoryTestCase;
+import it.openutils.mgnlutils.test.ModuleConfiguration;
+import it.openutils.mgnlutils.test.RepositoryTestConfiguration;
+import it.openutils.mgnlutils.test.TestNgRepositoryTestcase;
 
 import java.util.Map;
 import java.util.Set;
@@ -40,23 +40,30 @@ import javax.jcr.RepositoryException;
 import javax.jcr.Session;
 import javax.jcr.Value;
 
+import net.sourceforge.openutils.mgnltagcloud.bean.TagCloud;
 import net.sourceforge.openutils.mgnltagcloud.el.TagCloudElFunctions;
 import net.sourceforge.openutils.mgnltagcloud.module.TagCloudModule;
 import net.sourceforge.openutils.mgnltagcloud.util.JackrabbitUtil;
 
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.jackrabbit.value.ValueFactoryImpl;
-import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.testng.Assert;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Test;
 
 
 /**
  * @author cstrappazzon
  * @version $Id$
  */
-public class TagCloudManagerTest extends RepositoryTestCase
+@RepositoryTestConfiguration(repositoryConfig = "/utils-repository/test-repositories.xml", jackrabbitRepositoryConfig = "/repo-conf/jackrabbit-memory-search.xml", magnoliaProperties = "/test-magnolia.properties", startModules = {@ModuleConfiguration(name = "tagcloud", moduleclass = TagCloudModule.class) })
+public class TagCloudManagerTest extends TestNgRepositoryTestcase
 {
+
+    private static final String ObservedManager = null;
 
     /**
      * Set list of tag values
@@ -115,7 +122,7 @@ public class TagCloudManagerTest extends RepositoryTestCase
         Map<String, Integer> tags = TagCloudElFunctions.notcached(RepositoryConstants.WEBSITE, pathList[0], "tags", 2);
         log.debug("Time: " + (System.currentTimeMillis() - time));
         log.debug("PathMap freq: {}", tags);
-        assertEquals(nodesNumber, tags.get("tag1 tag4"));
+        Assert.assertEquals(nodesNumber, tags.get("tag1 tag4"));
     }
 
     /**
@@ -128,12 +135,12 @@ public class TagCloudManagerTest extends RepositoryTestCase
         Map<String, Integer> tags = TagCloudElFunctions.cached(RepositoryConstants.WEBSITE, pathList[1], "tags", 2);
         log.debug("Time: " + (System.currentTimeMillis() - time));
         log.debug("tagCloud freq: {}", tags);
-        assertEquals(nodesNumber, tags.get("tag2"));
+        Assert.assertEquals(nodesNumber, tags.get("tag2"));
         time = System.currentTimeMillis();
         tags = TagCloudElFunctions.cached(RepositoryConstants.WEBSITE, pathList[1], "tags", 2);
         log.debug("Time: " + (System.currentTimeMillis() - time));
         log.debug("tagCloud freq: {}", tags);
-        assertEquals(nodesNumber, tags.get("tag1 tag4"));
+        Assert.assertEquals(nodesNumber, tags.get("tag1 tag4"));
     }
 
     /**
@@ -147,7 +154,7 @@ public class TagCloudManagerTest extends RepositoryTestCase
         log.debug("Tags: {}", tags);
         log.debug("Ordered Tags: {}", orderedTags);
 
-        assertNotSame(tags.keySet(), orderedTags.keySet());
+        Assert.assertNotSame(tags.keySet(), orderedTags.keySet());
     }
 
     /**
@@ -161,9 +168,9 @@ public class TagCloudManagerTest extends RepositoryTestCase
         Map<String, Integer> countedTags = TagCloudElFunctions.sortbycount(tags, false);
         log.debug("Tags: {}", countedTags);
 
-        assertNotSame(tags, countedTags);
+        Assert.assertNotSame(tags, countedTags);
         Set<String> listOrderedTag = countedTags.keySet();
-        assertEquals("tag32", listOrderedTag.iterator().next().toString());
+        Assert.assertEquals("tag32", listOrderedTag.iterator().next().toString());
     }
 
     /**
@@ -172,7 +179,15 @@ public class TagCloudManagerTest extends RepositoryTestCase
     @Test
     public void testNamed()
     {
-        Map<String, Integer> tags = TagCloudElFunctions.named("cloud1");
+        String cloudname = "cloud1";
+        TagCloud tagCloud = Components.getComponent(TagCloudManager.class).getTagCloud(cloudname);
+
+        if (tagCloud == null)
+        {
+            Assert.fail("Tagcloud " + cloudname + " not configured");
+        }
+
+        Map<String, Integer> tags = TagCloudElFunctions.named(cloudname);
         log.debug("Tags: {}", tags);
 
         try
@@ -193,13 +208,13 @@ public class TagCloudManagerTest extends RepositoryTestCase
         catch (InterruptedException e)
         {
             log.error("Interrupt exception", e);
-            fail(e.getMessage());
+            Assert.fail(e.getMessage());
         }
 
-        tags = TagCloudElFunctions.named("cloud1");
+        tags = TagCloudElFunctions.named(cloudname);
         log.debug("Tags: {}", tags);
 
-        assertEquals(true, tags.containsKey("prova"));
+        Assert.assertEquals(true, tags.containsKey("prova"));
     }
 
     /**
@@ -215,13 +230,17 @@ public class TagCloudManagerTest extends RepositoryTestCase
 
         log.debug("Properties {}", mapProperties);
 
-        assertEquals(new Integer(5), mapProperties.get("count"));
-        assertEquals(tags.get("tag1 tag4"), mapProperties.get("max"));
+        Assert.assertEquals(new Integer(5), mapProperties.get("count"));
+        Assert.assertEquals(tags.get("tag1 tag4"), mapProperties.get("max"));
     }
 
+    @SuppressWarnings("deprecation")
     @Override
+    @BeforeClass
     public void setUp() throws Exception
     {
+        ComponentsTestUtil.setImplementation(TagCloudManager.class, DefaultTagCloudManager.class);
+
         super.setUp();
 
         session = MgnlContext.getInstance().getJCRSession(RepositoryConstants.WEBSITE);
@@ -254,10 +273,10 @@ public class TagCloudManagerTest extends RepositoryTestCase
         }
         session.save();
 
-        Session hmConfig = MgnlContext.getInstance().getJCRSession(RepositoryConstants.CONFIG);
+        Session configsession = MgnlContext.getInstance().getJCRSession(RepositoryConstants.CONFIG);
         Node contentTagcloud = NodeUtil.createPath(
             session.getNode("/"),
-            Path.getValidatedLabel("clouds"),
+            "/modules/tagcloud/clouds",
             MgnlNodeType.NT_CONTENT);
 
         Node contentCloud = NodeUtil.createPath(
@@ -271,35 +290,23 @@ public class TagCloudManagerTest extends RepositoryTestCase
         contentCloud.setProperty("enabled", ValueFactoryImpl.getInstance().createValue(true));
         contentCloud.setProperty("count", ValueFactoryImpl.getInstance().createValue(50));
 
-        hmConfig.save();
+        configsession.save();
 
-        ComponentsTestUtil.setImplementation(TagCloudManager.class, DefaultTagCloudManager.class);
         DefaultTagCloudManager manager = (DefaultTagCloudManager) Components.getComponent(TagCloudManager.class);
         manager.jackrabbitUtil = new JackrabbitUtil();
 
         manager.onRegister(contentCloud);
+
+        ObservedManager tagCloudManager = (ObservedManager) Components.getComponent(TagCloudManager.class);
+        tagCloudManager.register(ContentUtil.asContent(contentTagcloud.getParent()));
     }
 
     @Override
+    @AfterClass
     public void tearDown() throws Exception
     {
-        ComponentsTestUtil.setImplementation(TagCloudManager.class, DefaultTagCloudManager.class);
         Components.getComponent(TagCloudManager.class).stopObserving();
         super.tearDown();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    protected void startRepository() throws Exception
-    {
-        extractConfigFile(
-            "magnolia.indexingConfiguration",
-            ClasspathResourcesUtil.getResource("/indexing_configuration.xml").openStream(),
-            "target/repositories/magnolia/indexing_configuration.xml");
-
-        super.startRepository();
     }
 
 }
