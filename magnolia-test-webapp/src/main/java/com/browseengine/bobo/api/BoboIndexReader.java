@@ -1,7 +1,7 @@
 /**
  *
- * Tagcloud module for Magnolia CMS (http://www.openmindlab.com/lab/products/mgnltagcloud.html)
- * Copyright(C) 2010-2013, Openmind S.r.l. http://www.openmindonline.it
+ * Magnolia test webapp (http://openutils.sourceforge.net/magnolia-test-webapp)
+ * Copyright(C) ${project.inceptionYear}-2013, Openmind S.r.l. http://www.openmindonline.it
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -16,7 +16,6 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 // lucene 3.6 compatibility patch for bobo-browse 3.2.0, see https://github.com/senseidb/bobo/commit/e78d91ef8a00965d8d55c819f967cac172c23d17
 /**
  * Bobo Browse Engine - High performance faceted/parametric search implementation 

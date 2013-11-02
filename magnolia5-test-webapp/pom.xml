@@ -10,7 +10,7 @@
   <modelVersion>4.0.0</modelVersion>
   <packaging>war</packaging>
   <artifactId>magnolia5-test-webapp</artifactId>
-  <name>Magnolia test webapp</name>
+  <name>Magnolia5 test webapp</name>
   <description>A basic Magnolia webapp that can be used while developing openutils magnolia modules</description>
   <version>0.1-SNAPSHOT</version>
   <dependencies>
