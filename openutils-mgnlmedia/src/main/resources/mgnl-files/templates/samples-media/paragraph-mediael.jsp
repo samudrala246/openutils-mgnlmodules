@@ -62,5 +62,14 @@
         <img src="${media:urlres(mediaNode, 'n100x100;bw')}" />
       </div>
     </div>
+  <!--
+  <div>
+  <h3>MEDIA-307</h3>
+  <div>
+  <pre>media:urlres(mediaNode, 'o1000x600;background=FFFFFF')</pre> <img
+    src="${pageContext.request.contextPath}${media:urlres(mediaNode, 'o1000x600;background=FFFFFF')}" />
+  </div>
+  </div>
+  -->
   </div>
 </jsp:root>

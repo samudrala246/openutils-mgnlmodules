@@ -274,7 +274,9 @@ public final class ImageUtils
 
             AffineTransform at = new AffineTransform();
             double delta = ((double) x) / original.getWidth();
-            if (x > original.getWidth())
+            // MEDIA-307
+            // if (x > original.getWidth())
+            if (x >= original.getWidth())
             {
                 at.scale(delta, delta);
                 at.translate((canvasX - x) / (2 * delta), (canvasY - y) / (2 * delta));
