@@ -227,22 +227,10 @@ public final class MgnlUtilsElFunctions
         // Check if there is already an extensions, else add default one
         if (cleanedurl.startsWith("/"))
         {
-            String configuredExtension = Components.getComponent(ServerConfiguration.class).getDefaultExtension();
+            cleanedurl = Components.getComponent(I18nContentSupport.class).toI18NURI(cleanedurl);
+            cleanedurl = contextPath + cleanedurl;
 
-            if (StringUtils.isNotBlank(configuredExtension))
-            {
-
-                String defaultExtension = "." + configuredExtension;
-                cleanedurl = Components.getComponent(I18nContentSupport.class).toI18NURI(cleanedurl);
-                cleanedurl = contextPath + cleanedurl;
-
-                if (!cleanedurl.endsWith(defaultExtension) && cleanedurl.indexOf(".") < 0)
-                {
-                    return cleanedurl + defaultExtension;
-                }
-            }
-
-            return cleanedurl;
+            return addDefaultExtension(cleanedurl);
         }
 
         // Check if uuidOrPathOrUrl is an UUID
@@ -259,6 +247,27 @@ public final class MgnlUtilsElFunctions
 
         // If got an error return the cleaned string
         return cleanedurl;
+    }
+
+    private static String addDefaultExtension(String url)
+    {
+        String configuredExtension = Components.getComponent(ServerConfiguration.class).getDefaultExtension();
+
+        if (StringUtils.isNotBlank(configuredExtension))
+        {
+
+            String defaultExtension = "." + configuredExtension;
+
+            if (!url.endsWith(defaultExtension)
+                && !StringUtils.contains(url, ".")
+                && !StringUtils.contains(url, "?")
+                && !StringUtils.endsWith(url, "/"))
+            {
+                return url + defaultExtension;
+            }
+        }
+
+        return url;
     }
 
     /**
