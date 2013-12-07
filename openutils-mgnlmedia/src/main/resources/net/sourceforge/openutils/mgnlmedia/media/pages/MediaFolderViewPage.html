@@ -38,7 +38,7 @@ var MediaFolderView = new Class({
   new MediaFolderView.Sorting('sorting', this.options);
     new MediaFolderView.EditMenus('li.media .menuitem');
     new MediaFolderView.InfoTooltips('li.media .image');
-    Cookie.write('mediafolderpath', '${this.path!}', {duration: 30});
+    Cookie.write('mediafolderpath', '${this.path!?js_string}', {duration: 30});
     [#if (this.request.getParameter('command')!'') == 'saveAsPlaylist']
     this.openPlaylistFromSearchDialog();
     [/#if]
@@ -327,7 +327,7 @@ MediaFolderView.InfoTooltips = new Class({
   <body id="mediafolderview" class="bg-${this.bgSelector}">
     <form action="" style="display:none" id="actionForm" method="post">
       <input type="hidden" id="actionCmd" name="command" value="delete" />
-      <input type="hidden" id="actionPath" name="path" value="${this.path!""}" />
+      <input type="hidden" id="actionPath" name="path" value="${this.path!?html!""}" />
       <input type="hidden" id="actionSearch" name="search" value="${this.search!""}" />
       <input type="hidden" id="actionNode" name="node" />
       <input type="hidden" id="actionDest" name="dest" />
@@ -337,7 +337,7 @@ MediaFolderView.InfoTooltips = new Class({
       [/#if]
       <input type="hidden" name="search" value="${this.search!''}" />
       [#if this.path?exists]
-        <input type="hidden" name="path" value="${this.path}" />
+        <input type="hidden" name="path" value="${this.path!?html!""}" />
       [/#if]
     </form>
 
