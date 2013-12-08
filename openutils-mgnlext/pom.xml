@@ -9,11 +9,11 @@
   <packaging>jar</packaging>
   <artifactId>openutils-mgnlext</artifactId>
   <name>openutils-mgnlext</name>
-  <version>5.0.10</version>
+  <version>5.0.11-SNAPSHOT</version>
   <scm>
-    <connection>scm:svn:svn+ssh://svn.code.sf.net/p/openutils/code/tags/openutils-mgnlext-5.0.10</connection>
-    <developerConnection>scm:svn:svn+ssh://svn.code.sf.net/p/openutils/code/tags/openutils-mgnlext-5.0.10</developerConnection>
-    <url>scm:svn:svn+ssh://svn.code.sf.net/p/openutils/code/tags/openutils-mgnlext-5.0.10</url>
+    <connection>scm:svn:svn+ssh://svn.code.sf.net/p/openutils/code/magnoliamodules/trunk/openutils-mgnlext</connection>
+    <developerConnection>scm:svn:svn+ssh://svn.code.sf.net/p/openutils/code/magnoliamodules/trunk/openutils-mgnlext</developerConnection>
+    <url>http://sourceforge.net/p/openutils/code/HEAD/tree/trunk/openutils-mgnlext</url>
   </scm>
   <licenses>
     <license>
