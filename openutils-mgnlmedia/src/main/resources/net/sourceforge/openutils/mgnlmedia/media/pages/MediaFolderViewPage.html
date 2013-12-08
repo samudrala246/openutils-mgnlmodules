@@ -565,7 +565,14 @@ MediaFolderView.InfoTooltips = new Class({
              [#if !url?contains('://') ]
               [#assign url = "${this.request.contextPath}${media.previewUrl}"]
              [/#if]
-            <a id="mb${index}" class="multibox" href="${url}">
+             
+             [#if url?contains('http://youtu.be/') ]
+              [#assign url = "http://www.youtube.com/embed/${url?substring(16)}"]
+              
+              [#-- hack for using youtube embed while keeping the correct url for jwplayer - from http://youtu.be/zwXDHSrNFbQ to http://www.youtube.com/embed/zwXDHSrNFbQ --]
+              
+             [/#if]
+            <a id="mb${index}" class="multibox" href="${url}"  >
               [#assign thumbnailPath = media.thumbnailUrl]
               [#if thumbnailPath == '']
                 [#assign thumbnailPath = "/.resources/media/icons/thumb-broken.png"]
