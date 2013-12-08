@@ -25,9 +25,9 @@
     <url>http://jira.openmindlab.com/browse/SCORM</url>
   </issueManagement>
   <scm>
-    <connection>scm:svn:svn+ssh://svn.code.sf.net/p/openutils/code/trunk/openutils-mgnllms</connection>
-    <developerConnection>scm:svn:svn+ssh://svn.code.sf.net/p/openutils/code/trunk/openutils-mgnllms</developerConnection>
-    <url>http://sourceforge.net/p/openutils/code/HEAD/tree/trunk/openutils-mgnllms</url>
+    <connection>scm:svn:svn+ssh://svn.code.sf.net/p/openutils/code/magnoliamodules/trunk/openutils-mgnllms</connection>
+    <developerConnection>scm:svn:svn+ssh://svn.code.sf.net/p/openutils/code/magnoliamodules/trunk/openutils-mgnllms</developerConnection>
+    <url>http://sourceforge.net/p/openutils/code/HEAD/tree/magnoliamodules/trunk/openutils-mgnllms</url>
   </scm>
   <build>
     <resources>
