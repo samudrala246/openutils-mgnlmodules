@@ -534,7 +534,7 @@ e8726d5f-99b0-4f3c-97e5-68a7a3ea6bd0
         <sv:value>2011-07-01T17:59:08.549+02:00</sv:value>
       </sv:property>
       <sv:property sv:name="mgnl:lastmodified" sv:type="Date">
-        <sv:value>2012-04-10T10:25:48.212+02:00</sv:value>
+        <sv:value>2013-12-08T20:24:13.740+01:00</sv:value>
       </sv:property>
       <sv:property sv:name="mgnl:template" sv:type="String">
         <sv:value>media:pages/sampleSimpleMedia</sv:value>
@@ -567,7 +567,7 @@ e8726d5f-99b0-4f3c-97e5-68a7a3ea6bd0
           <sv:value>2011-07-01T17:59:47.625+02:00</sv:value>
         </sv:property>
         <sv:property sv:name="mgnl:lastmodified" sv:type="Date">
-          <sv:value>2011-11-20T21:20:30.927+01:00</sv:value>
+          <sv:value>2013-12-08T20:24:13.740+01:00</sv:value>
         </sv:property>
       </sv:node>
       <sv:node sv:name="00">
@@ -584,7 +584,7 @@ e8726d5f-99b0-4f3c-97e5-68a7a3ea6bd0
           <sv:value>admin</sv:value>
         </sv:property>
         <sv:property sv:name="media" sv:type="String">
-          <sv:value>41f81027-183f-4860-9d88-fcc3a6c5ce05</sv:value>
+          <sv:value>d7bfa8ee-7f0c-4400-8e38-8ab1a9de6e5a</sv:value>
         </sv:property>
         <sv:node sv:name="MetaData">
           <sv:property sv:name="jcr:primaryType" sv:type="Name">
@@ -600,7 +600,7 @@ e8726d5f-99b0-4f3c-97e5-68a7a3ea6bd0
             <sv:value>2011-07-01T18:00:01.154+02:00</sv:value>
           </sv:property>
           <sv:property sv:name="mgnl:lastmodified" sv:type="Date">
-            <sv:value>2011-11-20T21:20:30.927+01:00</sv:value>
+            <sv:value>2013-12-08T20:24:13.740+01:00</sv:value>
           </sv:property>
           <sv:property sv:name="mgnl:template" sv:type="String">
             <sv:value>media:components/samples-mediatag</sv:value>

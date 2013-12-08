@@ -56,7 +56,7 @@
     <c:set var="width" value="320" />
   </c:if>
   <c:if test="${empty height or height eq 0}">
-    <c:set var="height" value="${media.type eq 'audio' ? 20 : 240}" />
+    <c:set var="height" value="${mediaNode.type eq 'audio' ? 20 : 240}" />
   </c:if>
   <c:set var="previewwidth" value="${width}" />
   <c:set var="previewheight" value="${height}" />
