@@ -52,7 +52,7 @@
     <priority value="INFO" />
   </category>
   <category name="it.openutils.mgnlutils.el">
-    <priority value="DEBUG" />
+    <priority value="INFO" />
   </category>
   <root>
     <priority value="ALL" />

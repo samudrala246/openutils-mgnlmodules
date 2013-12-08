@@ -12,6 +12,7 @@
       <title> ${content.title}
       </title>
       <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/.resources/bootstrap/3.0/css/bootstrap.min.css" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       <style>
     <![CDATA[
       code { display: block}
@@ -27,6 +28,10 @@
         <c:set var="oldcontent" value="${state.currentContent}" />
         <c:set var="contentMap" value="${content}" />
         <c:set var="node" value="${oldcontent.JCRNode}" />
+        <p>
+        You can now use javax.jcr.Node objects directly into jsps. Also ContentMap or old Content and NodeMapWrapper are
+        handled, so you can use the same set of properties for any of them.
+        </p>
         <table class="table table-striped table-bordered table-hover">
           <thead>
             <tr>
@@ -50,11 +55,11 @@
             <tr>
               <th>class
               </th>
-              <td>${node.class.name}
+              <td>${node['class'].name}
               </td>
-              <td>${contentMap.class.name }
+              <td>${contentMap['class'].name }
               </td>
-              <td>${oldcontent.class.name}
+              <td>${oldcontent['class'].name}
               </td>
             </tr>
             <tr>

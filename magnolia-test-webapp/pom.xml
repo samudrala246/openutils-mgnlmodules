@@ -189,11 +189,13 @@
       <artifactId>openutils-mgnlstruts11</artifactId>
       <version>5.0.10-SNAPSHOT</version>
     </dependency>
+    <!--
     <dependency>
       <groupId>net.sourceforge.openutils</groupId>
       <artifactId>openutils-mgnltasks</artifactId>
       <version>5.0.10-SNAPSHOT</version>
     </dependency>
+    -->
     <dependency>
       <groupId>net.sourceforge.openutils</groupId>
       <artifactId>openutils-mgnlutils</artifactId>

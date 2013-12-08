@@ -4,20 +4,21 @@
   xmlns:lmsfn="urn:jsptld:lms-fn">
   <jsp:directive.page contentType="text/html; charset=UTF-8" session="false" />
   <jsp:text>
-    <![CDATA[<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> ]]>
+    <![CDATA[<!DOCTYPE html> ]]>
   </jsp:text>
   <html xmlns="http://www.w3.org/1999/xhtml" lang="en">
     <head>
       <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-      <title>${actpage.title}</title>
+      <title>${content.title}</title>
       <cms:init />
       <link rel="stylesheet" type="text/css"
         href="${pageContext.request.contextPath}/.resources/bootstrap/3.0/css/bootstrap.min.css" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     </head>
     <body>
       <div id="main" class="container">
         <div id="header">
-          <h1>${actpage.title}</h1>
+          <h1>${content.title}</h1>
           <p>Welcome to Magnolia LMS Module sample page.</p>
           <p>The sample course repository is structured as:</p>
         </div>

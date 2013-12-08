@@ -12,6 +12,7 @@
       <title> ${content.title}
       </title>
       <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/.resources/bootstrap/3.0/css/bootstrap.min.css" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       <style>
     <![CDATA[
       code { display: block}
@@ -50,11 +51,11 @@
             <tr>
               <th>class
               </th>
-              <td>${node.class.name}
+              <td>${node['class'].name}
               </td>
-              <td>${contentMap.class.name }
+              <td>${contentMap['class'].name }
               </td>
-              <td>${oldcontent.class.name}
+              <td>${oldcontent['class'].name}
               </td>
             </tr>
             <tr>
