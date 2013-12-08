@@ -1,4 +1,4 @@
-<jsp:root version="2.0" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:su="urn:jsptld:http://openutils.sf.net/openutils-stringutils"
+<jsp:root version="2.1" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:su="urn:jsptld:http://openutils.sf.net/openutils-stringutils"
   xmlns:c="urn:jsptld:http://java.sun.com/jsp/jstl/core">
   <jsp:directive.page contentType="text/html; charset=UTF-8" session="false" />
   <html xmlns:javaee="http://java.sun.com/xml/ns/javaee" xmlns:fo="http://www.w3.org/1999/XSL/Format">
