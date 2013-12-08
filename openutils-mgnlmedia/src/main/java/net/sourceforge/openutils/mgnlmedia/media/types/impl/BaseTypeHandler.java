@@ -223,7 +223,7 @@ public abstract class BaseTypeHandler implements MediaTypeHandler
     {
         try
         {
-            return !media.hasProperty(ORGINAL_NODEDATA_NAME);
+            return !media.hasNode(ORGINAL_NODEDATA_NAME);
         }
         catch (RepositoryException e)
         {

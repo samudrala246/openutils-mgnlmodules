@@ -502,7 +502,7 @@ MediaFolderView.InfoTooltips = new Class({
               [/#if]
               [#if !media.external]
               <li>
-                <a href="?command=download&amp;path=${media.handle}" style="background-image: url('${this.request.contextPath}/.resources/media/icons/ico16-download.png');">
+                <a href="${this.request.contextPath}/media/download${media.handle}" style="background-image: url('${this.request.contextPath}/.resources/media/icons/ico16-download.png');">
                   <span>${this.msgs.get('media.download')}</span>
                 </a>
               </li>

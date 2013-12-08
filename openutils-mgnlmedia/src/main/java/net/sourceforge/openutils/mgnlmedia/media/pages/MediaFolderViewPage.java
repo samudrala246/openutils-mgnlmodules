@@ -19,6 +19,7 @@
 
 package net.sourceforge.openutils.mgnlmedia.media.pages;
 
+import info.magnolia.cms.beans.runtime.FileProperties;
 import info.magnolia.cms.core.MgnlNodeType;
 import info.magnolia.cms.core.Path;
 import info.magnolia.cms.exchange.ActivationManagerFactory;
@@ -31,6 +32,7 @@ import info.magnolia.context.MgnlContext;
 import info.magnolia.init.MagnoliaConfigurationProperties;
 import info.magnolia.jcr.util.MetaDataUtil;
 import info.magnolia.jcr.util.NodeUtil;
+import info.magnolia.jcr.util.PropertyUtil;
 import info.magnolia.module.admininterface.commands.ActivationCommand;
 import info.magnolia.objectfactory.Components;
 import info.magnolia.templating.functions.TemplatingFunctions;
@@ -48,6 +50,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.jcr.Node;
+import javax.jcr.PathNotFoundException;
 import javax.jcr.RepositoryException;
 import javax.jcr.Session;
 import javax.servlet.ServletException;
@@ -60,6 +63,7 @@ import net.sourceforge.openutils.mgnlmedia.media.configuration.MediaConfiguratio
 import net.sourceforge.openutils.mgnlmedia.media.configuration.MediaTypeConfiguration;
 import net.sourceforge.openutils.mgnlmedia.media.lifecycle.MediaModule;
 import net.sourceforge.openutils.mgnlmedia.media.tags.el.MediaEl;
+import net.sourceforge.openutils.mgnlmedia.media.types.impl.BaseTypeHandler;
 
 import org.apache.commons.chain.Command;
 import org.apache.commons.lang.StringUtils;
@@ -510,14 +514,57 @@ public class MediaFolderViewPage extends MessagesTemplatedMVCHandler
 
         if (media == null)
         {
+            try
+            {
+                response.sendError(404);
+            }
+            catch (IOException e)
+            {
+                // ignore
+            }
             return null;
         }
+
         MediaTypeConfiguration mtc = Components
             .getComponent(MediaConfigurationManager.class)
             .getMediaTypeConfigurationFromMedia(media);
+
+        if (mtc == null)
+        {
+
+            // path points to a node but not a media
+            try
+            {
+                response.sendError(404);
+            }
+            catch (IOException e)
+            {
+                // ignore
+            }
+            return null;
+        }
         String url = mtc.getHandler().getUrl(media);
 
         String filename = mtc.getHandler().getFullFilename(media);
+
+        try
+        {
+            if (media.hasNode(BaseTypeHandler.ORGINAL_NODEDATA_NAME))
+            {
+                Node original = media.getNode(BaseTypeHandler.ORGINAL_NODEDATA_NAME);
+                String mime = PropertyUtil.getString(original, FileProperties.PROPERTY_CONTENTTYPE);
+
+                if (StringUtils.isNotEmpty(mime))
+                {
+                    this.response.setContentType(mime);
+                }
+            }
+        }
+        catch (RepositoryException e)
+        {
+            // should not happen
+            log.debug(e.getMessage(), e);
+        }
 
         this.response.addHeader("Content-Disposition", "attachment; filename=" + filename);
         try
