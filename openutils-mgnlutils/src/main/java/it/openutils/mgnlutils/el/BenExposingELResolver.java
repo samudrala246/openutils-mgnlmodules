@@ -28,8 +28,8 @@ import javax.el.ELContext;
 import javax.el.ELException;
 import javax.el.ELResolver;
 import javax.el.PropertyNotWritableException;
-import javax.servlet.ServletContext;
-import javax.servlet.jsp.JspFactory;
+import javax.servlet.jsp.JspContext;
+import javax.servlet.jsp.PageContext;
 
 import org.apache.commons.lang.ObjectUtils;
 import org.slf4j.Logger;
@@ -65,7 +65,8 @@ public class BenExposingELResolver extends ELResolver
     @Override
     public Object getValue(ELContext elContext, Object base, Object property) throws ELException
     {
-        if (base == null)
+        if (base == null
+            && ((PageContext) elContext.getContext(JspContext.class)).findAttribute(ObjectUtils.toString(property)) == null)
         {
             Object result = beans.get(ObjectUtils.toString(property));
             if (result != null)
@@ -80,13 +81,14 @@ public class BenExposingELResolver extends ELResolver
     @Override
     public Class< ? > getType(ELContext elContext, Object base, Object property) throws ELException
     {
-        if (base == null)
+        if (base == null
+            && ((PageContext) elContext.getContext(JspContext.class)).findAttribute(ObjectUtils.toString(property)) == null)
         {
             Object result = beans.get(ObjectUtils.toString(property));
             if (result != null)
             {
                 elContext.setPropertyResolved(true);
-                result.getClass();
+                return result.getClass();
             }
         }
         return null;

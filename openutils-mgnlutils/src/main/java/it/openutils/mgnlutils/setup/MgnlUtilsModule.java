@@ -19,8 +19,10 @@
 
 package it.openutils.mgnlutils.setup;
 
+import java.util.HashMap;
 import java.util.Map;
 
+import freemarker.ext.beans.BeanModel;
 import freemarker.template.TemplateModel;
 import info.magnolia.freemarker.FreemarkerConfig;
 import info.magnolia.module.ModuleLifecycle;
@@ -66,10 +68,17 @@ public class MgnlUtilsModule implements ModuleLifecycle
             {
                 Map<String, TemplateModel> sharedVariables = freemarkerConfig.getSharedVariables();
 
+                Map<String, Object> plainBeans = new HashMap<String, Object>();
+                for (Map.Entry<String, TemplateModel> var : sharedVariables.entrySet())
+                {
+                    plainBeans.put(var.getKey(), ((BeanModel) var.getValue()).getWrappedObject());
+                }
+
+                // getWrappedObject
                 JspFactory
                     .getDefaultFactory()
                     .getJspApplicationContext(servletContext)
-                    .addELResolver(new BenExposingELResolver(sharedVariables));
+                    .addELResolver(new BenExposingELResolver(plainBeans));
             }
 
         }

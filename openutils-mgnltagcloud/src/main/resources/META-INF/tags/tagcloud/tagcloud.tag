@@ -1,4 +1,4 @@
-<jsp:root version="2.0" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:c="http://java.sun.com/jsp/jstl/core"
+<jsp:root version="2.1" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:c="http://java.sun.com/jsp/jstl/core"
   xmlns:fn="http://java.sun.com/jsp/jstl/functions" xmlns:tagcloud="http://net.sourceforge.openutils/mgnlTagCloud"
   xmlns:fmt="urn:jsptld:http://java.sun.com/jsp/jstl/fmt">
   <jsp:directive.attribute name="name" required="false" rtexprvalue="true" />

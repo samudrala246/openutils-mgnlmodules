@@ -1,4 +1,4 @@
-<jsp:root version="2.0" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:cms="urn:jsptld:cms-taglib"
+<jsp:root version="2.1" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:cms="urn:jsptld:cms-taglib"
   xmlns:c="urn:jsptld:http://java.sun.com/jsp/jstl/core" xmlns:fmt="urn:jsptld:http://java.sun.com/jsp/jstl/fmt"
   xmlns:media="http://net.sourceforge.openutils/mgnlMedia" xmlns:cmsu="urn:jsptld:cms-util-taglib" xmlns:cmsfn="http://www.magnolia.info/tlds/cmsfn-taglib.tld"
   xmlns:su="http://openutils.sf.net/openutils-stringutils" xmlns:fn="http://java.sun.com/jsp/jstl/functions" xmlns:mu="mgnlutils"

@@ -1,4 +1,4 @@
-<jsp:root version="2.0" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:c="http://java.sun.com/jsp/jstl/core"
+<jsp:root version="2.1" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:c="http://java.sun.com/jsp/jstl/core"
   xmlns:cms="http://magnolia-cms.com/taglib/templating-components/cms" xmlns:cmsfn="http://magnolia-cms.com/taglib/templating-components/cmsfn" xmlns:cmsu="cms-util-taglib"
   xmlns:fmt="http://java.sun.com/jsp/jstl/fmt" xmlns:fn="http://java.sun.com/jsp/jstl/functions" xmlns:media="http://net.sourceforge.openutils/mgnlMedia"
   xmlns:su="http://openutils.sf.net/openutils-stringutils">
@@ -74,12 +74,11 @@ pzc: apply zoom and crop to image as specified by the pzc parameter (value must 
   <c:set value="${media:node(item)}" var="mediaNode" />
   <c:choose>
     <c:when test="${!empty mediaNode}">
-      <c:set var="media" value="${media:node(mediaNode)}" />
       <c:choose>
-        <c:when test="${crop and (media.type eq 'image' or media.type eq 'wallpaper' or videoImagePreview)}">
+        <c:when test="${crop and (mediaNode.type eq 'image' or mediaNode.type eq 'wallpaper' or videoImagePreview)}">
           <media:crop item="${media}" width="${width}" height="${height}" property="${cropProperty}" jquery="${cropJquery}" jqueryui="${cropJqueryUI}" loadjs="${cropJs}" />
         </c:when>
-        <c:when test="${media.type eq 'image' or media.type eq 'wallpaper' or videoImagePreview}">
+        <c:when test="${mediaNode.type eq 'image' or mediaNode.type eq 'wallpaper' or videoImagePreview}">
           <c:choose>
             <c:when test="${width eq 0 and height eq 0}">
               <c:set var="url" value="${media:url(mediaNode)}" />
@@ -145,7 +144,7 @@ pzc: apply zoom and crop to image as specified by the pzc parameter (value must 
             <![CDATA[ />]]>
           </c:if>
         </c:when>
-        <c:when test="${media.type eq 'video' or media.type eq 'audio' or media.type eq 'youtube' }">
+        <c:when test="${mediaNode.type eq 'video' or mediaNode.type eq 'audio' or mediaNode.type eq 'youtube' }">
           <c:set var="url" value="${media:url(mediaNode)}"/>
           
           
@@ -183,7 +182,7 @@ pzc: apply zoom and crop to image as specified by the pzc parameter (value must 
           
          
         </c:when>
-        <c:when test="${media.type eq 'swf' }">
+        <c:when test="${mediaNode.type eq 'swf' }">
         
           <c:if test="${!(width gt 0)}">
             <c:set var="width" value="${media:width(mediaNode)}" />
