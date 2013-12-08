@@ -12,7 +12,7 @@
   <name>Stripes module for Magnolia CMS</name>
   <description>A Magnolia Module that let you use Stripes Framework inside Magnolia</description>
   <inceptionYear>2008</inceptionYear>
-  <version>5.0.10</version>
+  <version>5.0.11-SNAPSHOT</version>
   <licenses>
     <license>
       <name>GPLv3</name>
@@ -25,9 +25,9 @@
     <url>http://jira.openmindlab.com/browse/MGNLSTRIPES</url>
   </issueManagement>
   <scm>
-    <connection>scm:svn:svn+ssh://svn.code.sf.net/p/openutils/code/tags/openutils-mgnlstripes-5.0.10</connection>
-    <developerConnection>scm:svn:svn+ssh://svn.code.sf.net/p/openutils/code/tags/openutils-mgnlstripes-5.0.10</developerConnection>
-    <url>scm:svn:svn+ssh://svn.code.sf.net/p/openutils/code/tags/openutils-mgnlstripes-5.0.10</url>
+    <connection>scm:svn:svn+ssh://svn.code.sf.net/p/openutils/code/magnoliamodules/trunk/openutils-mgnlstripes</connection>
+    <developerConnection>scm:svn:svn+ssh://svn.code.sf.net/p/openutils/code/magnoliamodules/trunk/openutils-mgnlstripes</developerConnection>
+    <url>http://sourceforge.net/p/openutils/code/HEAD/tree/trunk/openutils-mgnlstripes</url>
   </scm>
   <build>
     <resources>
