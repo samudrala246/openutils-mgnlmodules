@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <parent>
     <groupId>net.sourceforge.openutils</groupId>
     <artifactId>openutils-parent</artifactId>
@@ -11,7 +10,7 @@
   <packaging>jar</packaging>
   <artifactId>openutils-mgnltagcloud</artifactId>
   <name>Tagcloud module for Magnolia CMS</name>
-  <version>5.0.10-SNAPSHOT</version>
+  <version>5.0.10</version>
   <description>A module for managing tag clouds for Magnolia CMS</description>
   <licenses>
     <license>
@@ -26,11 +25,11 @@
   </issueManagement>
   <inceptionYear>2010</inceptionYear>
   <scm>
-    <connection>scm:svn:svn+ssh://svn.code.sf.net/p/openutils/code/magnoliamodules/trunk/openutils-mgnltagcloud
+    <connection>scm:svn:svn+ssh://svn.code.sf.net/p/openutils/code/tags/openutils-mgnltagcloud-5.0.10
     </connection>
-    <developerConnection>scm:svn:svn+ssh://svn.code.sf.net/p/openutils/code/magnoliamodules/trunk/openutils-mgnltagcloud
+    <developerConnection>scm:svn:svn+ssh://svn.code.sf.net/p/openutils/code/tags/openutils-mgnltagcloud-5.0.10
     </developerConnection>
-    <url>http://sourceforge.net/p/openutils/code/HEAD/tree/trunk/openutils-mgnltagcloud</url>
+    <url>scm:svn:svn+ssh://svn.code.sf.net/p/openutils/code/tags/openutils-mgnltagcloud-5.0.10</url>
   </scm>
   <build>
     <plugins>
