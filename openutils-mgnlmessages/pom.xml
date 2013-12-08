@@ -92,7 +92,7 @@
     <dependency>
       <groupId>net.sourceforge.openutils</groupId>
       <artifactId>openutils-mgnlcriteria</artifactId>
-      <version>5.0.10-SNAPSHOT</version>
+      <version>5.0.10</version>
     </dependency>
     <dependency>
       <groupId>net.sourceforge.openutils</groupId>
@@ -102,7 +102,7 @@
     <dependency>
       <groupId>net.sourceforge.openutils</groupId>
       <artifactId>openutils-mgnltests</artifactId>
-      <version>5.0.10-SNAPSHOT</version>
+      <version>5.0.10</version>
       <scope>test</scope>
     </dependency>
     <dependency>
