@@ -9,7 +9,7 @@
   <packaging>jar</packaging>
   <artifactId>openutils-mgnltests</artifactId>
   <name>Test utilities for Magnolia CMS</name>
-  <version>5.0.10</version>
+  <version>5.0.11-SNAPSHOT</version>
   <inceptionYear>2009</inceptionYear>
   <description>A collection of testing utilities for Magnolia CMS</description>
   <url>http://www.openmindlab.com/lab/products/mgnltests.html</url>
@@ -24,9 +24,9 @@
     </license>
   </licenses>
   <scm>
-    <connection>scm:svn:svn+ssh://svn.code.sf.net/p/openutils/code/tags/openutils-mgnltests-5.0.10</connection>
-    <developerConnection>scm:svn:svn+ssh://svn.code.sf.net/p/openutils/code/tags/openutils-mgnltests-5.0.10 </developerConnection>
-    <url>scm:svn:svn+ssh://svn.code.sf.net/p/openutils/code/tags/openutils-mgnltests-5.0.10</url>
+    <connection>scm:svn:svn+ssh://svn.code.sf.net/p/openutils/code/magnoliamodules/trunk/openutils-mgnltests</connection>
+    <developerConnection>scm:svn:svn+ssh://svn.code.sf.net/p/openutils/code/magnoliamodules/trunk/openutils-mgnltests </developerConnection>
+    <url>http://sourceforge.net/p/openutils/code/HEAD/tree/trunk/openutils-mgnltests</url>
   </scm>
   <build>
     <resources>
