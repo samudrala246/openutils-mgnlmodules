@@ -142,11 +142,23 @@
       <scope>test</scope>
       <version>${magnolia.version}</version>
     </dependency>
+    <!-- jackrabbit 2.4
     <dependency>
       <groupId>com.browseengine.bobo</groupId>
       <artifactId>bobo-browse</artifactId>
-      <version>3.2.0</version>
-      <!-- <version>2.5.1</version> for jackrabbit 2.4 -->
+      <version>2.5.1</version>
+      <exclusions>
+        <exclusion>
+          <groupId>org.springframework</groupId>
+          <artifactId>spring-context</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+    -->
+    <dependency>
+       <groupId>net.sourceforge.openutils</groupId>
+      <artifactId>bobo-browse</artifactId>
+      <version>3.2.0.lucene36</version>
       <exclusions>
         <exclusion>
           <groupId>org.springframework</groupId>

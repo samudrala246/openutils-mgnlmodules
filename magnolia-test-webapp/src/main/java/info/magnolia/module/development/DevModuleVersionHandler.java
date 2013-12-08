@@ -1,7 +1,7 @@
 /**
  *
  * Magnolia test webapp (http://openutils.sourceforge.net/magnolia-test-webapp)
- * Copyright(C) ${project.inceptionYear}-2013, Openmind S.r.l. http://www.openmindonline.it
+ * Copyright(C) 2009-2013, Openmind S.r.l. http://www.openmindonline.it
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
