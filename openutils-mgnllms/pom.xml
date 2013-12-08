@@ -10,7 +10,7 @@
   <artifactId>openutils-mgnllms</artifactId>
   <name>E-learning Module for Magnolia CMS</name>
   <description>A module for Magnolia CMS to build a simple Learning Management System.</description>
-  <version>5.0.10</version>
+  <version>5.0.11-SNAPSHOT</version>
   <inceptionYear>2010</inceptionYear>
   <licenses>
     <license>
@@ -24,9 +24,9 @@
     <url>http://jira.openmindlab.com/browse/SCORM</url>
   </issueManagement>
   <scm>
-    <connection>scm:svn:svn+ssh://svn.code.sf.net/p/openutils/code/tags/openutils-mgnllms-5.0.10</connection>
-    <developerConnection>scm:svn:svn+ssh://svn.code.sf.net/p/openutils/code/tags/openutils-mgnllms-5.0.10</developerConnection>
-    <url>http://sourceforge.net/p/openutils/code/HEAD/tree/tags/openutils-mgnllms-5.0.10</url>
+    <connection>scm:svn:svn+ssh://svn.code.sf.net/p/openutils/code/magnoliamodules/trunk/openutils-mgnllms</connection>
+    <developerConnection>scm:svn:svn+ssh://svn.code.sf.net/p/openutils/code/magnoliamodules/trunk/openutils-mgnllms</developerConnection>
+    <url>http://sourceforge.net/p/openutils/code/HEAD/tree/magnoliamodules/trunk/openutils-mgnllms</url>
   </scm>
   <build>
     <resources>
