@@ -10,7 +10,7 @@
   <artifactId>openutils-mgnlmessages</artifactId>
   <name>Messages Module for Magnolia CMS</name>
   <description>Manage your translations from the Magnolia admin interface</description>
-  <version>5.0.10</version>
+  <version>5.0.11-SNAPSHOT</version>
   <licenses>
     <license>
       <name>GPLv3</name>
@@ -24,9 +24,9 @@
   </issueManagement>
   <inceptionYear>2008</inceptionYear>
   <scm>
-    <connection>scm:svn:svn+ssh://svn.code.sf.net/p/openutils/code/tags/openutils-mgnlmessages-5.0.10</connection>
-    <developerConnection>scm:svn:svn+ssh://svn.code.sf.net/p/openutils/code/tags/openutils-mgnlmessages-5.0.10</developerConnection>
-    <url>scm:svn:svn+ssh://svn.code.sf.net/p/openutils/code/tags/openutils-mgnlmessages-5.0.10</url>
+    <connection>scm:svn:svn+ssh://svn.code.sf.net/p/openutils/code/magnoliamodules/trunk/openutils-mgnlmessages</connection>
+    <developerConnection>scm:svn:svn+ssh://svn.code.sf.net/p/openutils/code/magnoliamodules/trunk/openutils-mgnlmessages</developerConnection>
+    <url>http://sourceforge.net/p/openutils/code/HEAD/tree/trunk/openutils-mgnlmessages</url>
   </scm>
   <build>
     <resources>
