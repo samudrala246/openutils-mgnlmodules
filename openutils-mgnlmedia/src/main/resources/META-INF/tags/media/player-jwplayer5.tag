@@ -30,8 +30,13 @@
     description="Adds the share features to the player (only supported for jwplayer 4/5)" />
   <jsp:directive.attribute name="analytics" required="false" rtexprvalue="true" type="java.lang.Boolean"
     description="Track views using google analytics (only supported for jwplayer 5)" />
+  <jsp:directive.attribute name="player" required="false" rtexprvalue="true" type="java.lang.String"
+    description="Player path (jwplayer5 or jwplayer6)" />
+    
+  <c:set var="playerfolder" value="${player}" />
+  
   <c:if test="${empty requestScope['mgnlmedia_jwplayer5_link_drawn']}">
-    <script type="text/javascript" src="${pageContext.request.contextPath}/.resources/media/players/jwplayer5/jwplayer.js"><!-- -->
+    <script type="text/javascript" src="${pageContext.request.contextPath}/.resources/media/players/${playerfolder}/jwplayer.js"><!-- -->
     </script>
     <c:set var="mgnlmedia_jwplayer5_link_drawn" scope="request" value="true" />
   </c:if>
@@ -75,14 +80,14 @@ height: ${height},
               streamer: "${fn:substring(url, 0, fn:length(url) - fn:length(file))}",
               ]]>
       </c:when>
-      <c:otherwise> file:"${fn:contains(url, '://')? '' : pageContext.request.contextPath}${url}",</c:otherwise>
+      <c:otherwise> file:"${url}",</c:otherwise>
     </c:choose>
     
 
     <![CDATA[
 modes: [
   { type: "flash", 
-      src: "${pageContext.request.contextPath}/.resources/media/players/jwplayer5/player.swf" 
+      src: "${pageContext.request.contextPath}/.resources/media/players/${playerfolder}/player.swf" 
   },
   { type: "html5" },
   { type: "download" }
@@ -111,7 +116,7 @@ modes: [
               <![CDATA[file=${file}&amp;streamer=${fn:substring(url, 0, fn:length(url) - fn:length(file))}]]>
       </c:when>
       <c:otherwise>
-              <![CDATA[file=${fn:contains(url, '://')? '' : pageContext.request.contextPath}${url}]]>
+              <![CDATA[file=${url}]]>
       </c:otherwise>
     </c:choose>
   </c:set>

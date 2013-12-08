@@ -76,17 +76,12 @@
   </c:if>
   <c:if test="${!empty(url)}">
     <c:choose>
-      <c:when test="${player eq 'jwplayer5' or player eq 'jwplayer'}">
+      <c:when test="${fn:contains(player, 'jwplayer')}">
         <media:player-jwplayer5 url="${url}" preview="${preview}" share="${share}"
           item="${item}" width="${width}" height="${height}" autoPlay="${autoPlay}" loop="${loop}" thumbnail="${thumbnail}"
-          noPlayIcon="${noPlayIcon}" controlbar="${controlbar}" skin="${skin}" analytics="${analytics}"/>
+          noPlayIcon="${noPlayIcon}" controlbar="${controlbar}" skin="${skin}" analytics="${analytics}" player="${player eq 'jwplayer' ? 'jwplayer5' : player}"/>
       </c:when>
       <c:otherwise>
-        <c:choose>
-          <c:when test="${player eq 'jwplayer4'}">
-            <c:set var="player" value="jwplayer4/player.swf" />
-          </c:when>
-        </c:choose>
         <c:set var="playerPath">
           <c:choose>
             <c:when test="${!fn:startsWith(player, '/')}">${pageContext.request.contextPath}/.resources/media/players/${player}</c:when>
