@@ -17,41 +17,37 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package it.openutils.mgnlutils.setup;
+package it.openutils.mgnltasks;
 
-import info.magnolia.init.MagnoliaConfigurationProperties;
 import info.magnolia.module.InstallContext;
-import info.magnolia.module.delta.Task;
-import info.magnolia.objectfactory.Components;
-import it.openutils.mgnltasks.FilesExtractionTask;
-import it.openutils.mgnltasks.SimpleModuleVersionHandler;
+import info.magnolia.module.delta.BootstrapResourcesTask;
 
-import java.util.ArrayList;
-import java.util.List;
+import org.apache.commons.lang.StringUtils;
 
 
 /**
+ * Bootstrap al the files in a given directory.
  * @author fgiust
  * @version $Id$
  */
-public class MgnlUtilsModuleVersionHandler extends SimpleModuleVersionHandler
+public class DirectoryBootstrapTask extends BootstrapResourcesTask
 {
+
+    private final String directory;
+
+    public DirectoryBootstrapTask(String directory)
+    {
+        super("Bootstrap", "Bootstraps all the file in the mgnl-bootstrap/" + directory + " directory");
+        this.directory = directory;
+    }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    protected List<Task> getStartupTasks(InstallContext installContext)
+    protected boolean acceptResource(InstallContext ctx, String resourceName)
     {
-        List<Task> tasks = new ArrayList<Task>();
-
-        if (Components.getComponent(MagnoliaConfigurationProperties.class).getBooleanProperty(
-            "magnolia.bootstrap.samples"))
-        {
-            tasks.add(new FilesExtractionTask("/samples/sample-magnoliautils"));
-        }
-
-        return tasks;
+        final String resourceFilename = StringUtils.substringAfter(resourceName, "/mgnl-bootstrap/" + directory + "/");
+        return !StringUtils.contains(resourceFilename, "/") && resourceFilename.endsWith(".xml");
     }
-
 }

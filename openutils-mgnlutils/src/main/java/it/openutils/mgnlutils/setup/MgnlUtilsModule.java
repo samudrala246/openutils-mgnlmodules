@@ -19,8 +19,13 @@
 
 package it.openutils.mgnlutils.setup;
 
+import java.util.Map;
+
+import freemarker.template.TemplateModel;
+import info.magnolia.freemarker.FreemarkerConfig;
 import info.magnolia.module.ModuleLifecycle;
 import info.magnolia.module.ModuleLifecycleContext;
+import it.openutils.mgnlutils.el.BenExposingELResolver;
 import it.openutils.mgnlutils.el.NodeElResolver;
 
 import javax.inject.Inject;
@@ -41,6 +46,9 @@ public class MgnlUtilsModule implements ModuleLifecycle
     @Inject
     private ServletContext servletContext;
 
+    @Inject
+    private FreemarkerConfig freemarkerConfig;
+
     private Logger log = LoggerFactory.getLogger(MgnlUtilsModule.class);
 
     /**
@@ -51,7 +59,19 @@ public class MgnlUtilsModule implements ModuleLifecycle
         try
         {
             JspFactory.getDefaultFactory().getJspApplicationContext(servletContext).addELResolver(new NodeElResolver());
+
             log.info("EL resolver for javax.jcr.Node added");
+
+            if (freemarkerConfig != null)
+            {
+                Map<String, TemplateModel> sharedVariables = freemarkerConfig.getSharedVariables();
+
+                JspFactory
+                    .getDefaultFactory()
+                    .getJspApplicationContext(servletContext)
+                    .addELResolver(new BenExposingELResolver(sharedVariables));
+            }
+
         }
         catch (IllegalStateException e)
         {

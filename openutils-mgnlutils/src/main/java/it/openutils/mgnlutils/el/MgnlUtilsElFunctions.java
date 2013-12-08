@@ -37,6 +37,7 @@ import info.magnolia.link.LinkException;
 import info.magnolia.link.LinkUtil;
 import info.magnolia.objectfactory.Components;
 import info.magnolia.repository.RepositoryConstants;
+import it.openutils.mgnlutils.el.MgnlPagingElFunctions.Page;
 import it.openutils.mgnlutils.util.NodeUtilsExt;
 
 import java.io.UnsupportedEncodingException;

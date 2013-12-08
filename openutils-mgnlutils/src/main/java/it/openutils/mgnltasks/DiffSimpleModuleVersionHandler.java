@@ -17,41 +17,26 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package it.openutils.mgnlutils.setup;
+package it.openutils.mgnltasks;
 
-import info.magnolia.init.MagnoliaConfigurationProperties;
-import info.magnolia.module.InstallContext;
-import info.magnolia.module.delta.Task;
-import info.magnolia.objectfactory.Components;
-import it.openutils.mgnltasks.FilesExtractionTask;
-import it.openutils.mgnltasks.SimpleModuleVersionHandler;
-
-import java.util.ArrayList;
-import java.util.List;
+import info.magnolia.module.delta.Delta;
 
 
 /**
- * @author fgiust
+ * Extends SimpleModuleVersionHandler, optimizing the bootstrap by only loading changed files.
+ * @author dschivo
  * @version $Id$
  */
-public class MgnlUtilsModuleVersionHandler extends SimpleModuleVersionHandler
+public class DiffSimpleModuleVersionHandler extends SimpleModuleVersionHandler
 {
 
     /**
      * {@inheritDoc}
      */
     @Override
-    protected List<Task> getStartupTasks(InstallContext installContext)
+    protected void addModuleConfigBootstrapTasks(String modulename, Delta delta)
     {
-        List<Task> tasks = new ArrayList<Task>();
-
-        if (Components.getComponent(MagnoliaConfigurationProperties.class).getBooleanProperty(
-            "magnolia.bootstrap.samples"))
-        {
-            tasks.add(new FilesExtractionTask("/samples/sample-magnoliautils"));
-        }
-
-        return tasks;
+        delta.getTasks().add(new DiffModuleConfigBootstrapTask(modulename, includedRepositoriesInBootstrap));
     }
 
 }

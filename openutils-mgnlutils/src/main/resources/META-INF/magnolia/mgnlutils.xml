@@ -27,5 +27,11 @@
       <name>criteria</name>
       <version>5.0.10/*</version>
     </dependency>
+      <dependency>
+      <name>tasks</name>
+      <version>5.0.10/*</version>
+      <optional>true</optional>
+      <!-- legacy module, added only to prevent import of old versions -->
+    </dependency>
   </dependencies>
 </module>
