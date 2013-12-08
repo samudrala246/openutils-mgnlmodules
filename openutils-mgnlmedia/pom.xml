@@ -1,5 +1,4 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <parent>
     <groupId>net.sourceforge.openutils</groupId>
     <artifactId>openutils-parent</artifactId>
@@ -11,7 +10,7 @@
   <artifactId>openutils-mgnlmedia</artifactId>
   <name>SimpleMedia Module for Magnolia CMS</name>
   <description>SimpleMedia Module for Magnolia CMS: a module for Magnolia CMS for easier management of multimedia assets.</description>
-  <version>5.0.10-SNAPSHOT</version>
+  <version>5.0.10</version>
   <inceptionYear>2008</inceptionYear>
   <licenses>
     <license>
@@ -25,11 +24,11 @@
     <url>http://jira.openmindlab.com/browse/MEDIA</url>
   </issueManagement>
   <scm>
-    <connection>scm:svn:svn+ssh://svn.code.sf.net/p/openutils/code/magnoliamodules/trunk/openutils-mgnlmedia
+    <connection>scm:svn:svn+ssh://svn.code.sf.net/p/openutils/code/tags/openutils-mgnlmedia-5.0.10
     </connection>
-    <developerConnection>scm:svn:svn+ssh://svn.code.sf.net/p/openutils/code/magnoliamodules/trunk/openutils-mgnlmedia
+    <developerConnection>scm:svn:svn+ssh://svn.code.sf.net/p/openutils/code/tags/openutils-mgnlmedia-5.0.10
     </developerConnection>
-    <url>http://sourceforge.net/p/openutils/code/HEAD/tree/trunk/openutils-mgnlmedia</url>
+    <url>scm:svn:svn+ssh://svn.code.sf.net/p/openutils/code/tags/openutils-mgnlmedia-5.0.10</url>
   </scm>
   <build>
     <resources>
