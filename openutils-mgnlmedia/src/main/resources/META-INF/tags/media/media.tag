@@ -124,12 +124,16 @@ pzc: apply zoom and crop to image as specified by the pzc parameter (value must 
             </c:if>
             <c:if test="${not ignoreDim}">
               <c:if test="${ size[0] gt 0}">
-                <c:set var="style">${style}${(!empty style)?';':''}width:${size[0]*emRatio}${(not useEm ? 'px':'em')}
-                </c:set>
+                <c:choose>
+                  <c:when test="${!useEM}"><![CDATA[ width="${su:toFloorLong(size[0])}"]]> </c:when>
+                  <c:otherwise><c:set var="style" value="${style}${(!empty style)?';':''}width:${size[0]*emRatio}em" /></c:otherwise>
+                </c:choose>
               </c:if>
               <c:if test="${ size[1] gt 1}">
-                <c:set var="style">${style}${(!empty style)?';':''}height:${size[1]*emRatio}${(not useEm ? 'px':'em')}
-                </c:set>
+                <c:choose>
+                  <c:when test="${!useEM}"><![CDATA[ heigth="${su:toFloorLong(size[1])}"]]></c:when>
+                  <c:otherwise><c:set var="style" value="${style}${(!empty style)?';':''}height:${size[1]*emRatio}em" /></c:otherwise>
+                </c:choose>
               </c:if>
             </c:if>
             <c:if test="${not empty cssClass}">
