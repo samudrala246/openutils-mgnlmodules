@@ -10,7 +10,7 @@
   <artifactId>openutils-mgnlgroovy</artifactId>
   <name>Groovy Shell for Magnolia CMS</name>
   <description>Groovy Shell for Magnolia CMS is a module for running Groovy Scripts from the Magnolia admin interface. </description>
-  <version>5.0.10</version>
+  <version>5.0.11-SNAPSHOT</version>
   <inceptionYear>2008</inceptionYear>
   <licenses>
     <license>
@@ -24,9 +24,9 @@
     <url>http://jira.openmindlab.com/browse/GROOVY</url>
   </issueManagement>
   <scm>
-    <connection>scm:svn:svn+ssh://svn.code.sf.net/p/openutils/code/tags/openutils-mgnlgroovy-5.0.10</connection>
-    <developerConnection>scm:svn:svn+ssh://svn.code.sf.net/p/openutils/code/tags/openutils-mgnlgroovy-5.0.10</developerConnection>
-    <url>scm:svn:svn+ssh://svn.code.sf.net/p/openutils/code/tags/openutils-mgnlgroovy-5.0.10</url>
+    <connection>scm:svn:svn+ssh://svn.code.sf.net/p/openutils/code/magnoliamodules/trunk/openutils-mgnlgroovy</connection>
+    <developerConnection>scm:svn:svn+ssh://svn.code.sf.net/p/openutils/code/magnoliamodules/trunk/openutils-mgnlgroovy</developerConnection>
+    <url>http://sourceforge.net/p/openutils/code/HEAD/tree/trunk/openutils-mgnlgroovy</url>
   </scm>
   <build>
     <resources>
