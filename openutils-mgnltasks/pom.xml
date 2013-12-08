@@ -10,13 +10,13 @@
   <packaging>jar</packaging>
   <artifactId>openutils-mgnltasks</artifactId>
   <name>Tasks for for Magnolia CMS</name>
-  <version>5.0.10</version>
+  <version>5.0.11-SNAPSHOT</version>
   <description>A collection of useful magnolia update tasks that can be reused in custom modules (transitional module, merged into mgnlutils)</description>
   <inceptionYear>2008</inceptionYear>
   <scm>
-    <connection>scm:svn:svn+ssh://svn.code.sf.net/p/openutils/code/tags/openutils-mgnltasks-5.0.10</connection>
-    <developerConnection>scm:svn:svn+ssh://svn.code.sf.net/p/openutils/code/tags/openutils-mgnltasks-5.0.10</developerConnection>
-    <url>scm:svn:svn+ssh://svn.code.sf.net/p/openutils/code/tags/openutils-mgnltasks-5.0.10</url>
+    <connection>scm:svn:svn+ssh://svn.code.sf.net/p/openutils/code/magnoliamodules/trunk/openutils-mgnltasks</connection>
+    <developerConnection>scm:svn:svn+ssh://svn.code.sf.net/p/openutils/code/magnoliamodules/trunk/openutils-mgnltasks</developerConnection>
+    <url>http://sourceforge.net/p/openutils/code/HEAD/tree/trunk/openutils-mgnltasks</url>
   </scm>
   <licenses>
     <license>
