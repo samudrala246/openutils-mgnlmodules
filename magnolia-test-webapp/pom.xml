@@ -132,17 +132,17 @@
     <dependency>
       <groupId>net.sourceforge.openutils</groupId>
       <artifactId>openutils-mgnlbootstrapsync</artifactId>
-      <version>5.0.10-SNAPSHOT</version>
+      <version>5.0.11-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>net.sourceforge.openutils</groupId>
       <artifactId>openutils-mgnlcas</artifactId>
-      <version>5.0.10-SNAPSHOT</version>
+      <version>5.0.11-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>net.sourceforge.openutils</groupId>
       <artifactId>openutils-mgnlcontrols</artifactId>
-      <version>5.0.10-SNAPSHOT</version>
+      <version>5.0.11-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>net.sourceforge.openutils</groupId>
@@ -152,74 +152,67 @@
     <dependency>
       <groupId>net.sourceforge.openutils</groupId>
       <artifactId>openutils-mgnlcache</artifactId>
-      <version>5.0.10-SNAPSHOT</version>
+      <version>5.0.11-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>net.sourceforge.openutils</groupId>
       <artifactId>openutils-mgnlext</artifactId>
-      <version>5.0.10-SNAPSHOT</version>
+      <version>5.0.11-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>net.sourceforge.openutils</groupId>
       <artifactId>openutils-mgnlgroovy</artifactId>
-      <version>5.0.10-SNAPSHOT</version>
+      <version>5.0.11-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>net.sourceforge.openutils</groupId>
       <artifactId>openutils-mgnlmedia</artifactId>
-      <version>5.0.10-SNAPSHOT</version>
+      <version>5.0.11-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>net.sourceforge.openutils</groupId>
       <artifactId>openutils-mgnlmessages</artifactId>
-      <version>5.0.10-SNAPSHOT</version>
+      <version>5.0.11-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>net.sourceforge.openutils</groupId>
       <artifactId>openutils-mgnlrepoutils</artifactId>
-      <version>5.0.10-SNAPSHOT</version>
+      <version>5.0.11-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>net.sourceforge.openutils</groupId>
       <artifactId>openutils-mgnlstripes</artifactId>
-      <version>5.0.10-SNAPSHOT</version>
+      <version>5.0.11-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>net.sourceforge.openutils</groupId>
       <artifactId>openutils-mgnlstruts11</artifactId>
-      <version>5.0.10-SNAPSHOT</version>
+      <version>5.0.11-SNAPSHOT</version>
     </dependency>
-    <!--
-    <dependency>
-      <groupId>net.sourceforge.openutils</groupId>
-      <artifactId>openutils-mgnltasks</artifactId>
-      <version>5.0.10-SNAPSHOT</version>
-    </dependency>
-    -->
     <dependency>
       <groupId>net.sourceforge.openutils</groupId>
       <artifactId>openutils-mgnlutils</artifactId>
-      <version>5.0.10</version>
+      <version>5.0.11-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>net.sourceforge.openutils</groupId>
       <artifactId>openutils-mgnltagcloud</artifactId>
-      <version>5.0.10-SNAPSHOT</version>
+      <version>5.0.11-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>net.sourceforge.openutils</groupId>
       <artifactId>openutils-mgnlrules</artifactId>
-      <version>5.0.10-SNAPSHOT</version>
+      <version>5.0.11-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>net.sourceforge.openutils</groupId>
       <artifactId>openutils-mgnlcontextmenu</artifactId>
-      <version>5.0.10-SNAPSHOT</version>
+      <version>5.0.11-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>net.sourceforge.openutils</groupId>
       <artifactId>openutils-mgnllms</artifactId>
-      <version>5.0.10-SNAPSHOT</version>
+      <version>5.0.11-SNAPSHOT</version>
     </dependency>
   </dependencies>
   <dependencyManagement>
