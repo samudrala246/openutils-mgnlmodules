@@ -22,6 +22,7 @@ package net.sourceforge.openutils.mgnlsimplecache.filesystem;
 import info.magnolia.cms.core.Path;
 import info.magnolia.cms.util.MBeanUtil;
 import info.magnolia.cms.util.ObservationUtil;
+import info.magnolia.module.files.MD5CheckingFileExtractor;
 import info.magnolia.repository.RepositoryConstants;
 import info.magnolia.voting.Voter;
 
@@ -29,6 +30,8 @@ import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -42,6 +45,7 @@ import javax.servlet.http.HttpServletRequest;
 import net.sourceforge.openutils.mgnlsimplecache.managers.CacheManager;
 import net.sourceforge.openutils.mgnlsimplecache.managers.CachedItem;
 
+import org.apache.commons.codec.binary.Hex;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.filefilter.IOFileFilter;
 import org.apache.commons.io.filefilter.TrueFileFilter;
@@ -82,6 +86,8 @@ public class FSCacheManager implements CacheManager, FSCacheManagerMBean, EventL
 
     private volatile boolean active = true;
 
+    private MessageDigest hashDigest;
+
     /**
      * Logger.
      */
@@ -109,6 +115,16 @@ public class FSCacheManager implements CacheManager, FSCacheManagerMBean, EventL
         catch (Throwable e)
         {
             log.error("Error registering cache MBean: " + e.getClass().getName() + " " + e.getMessage());
+        }
+
+        try
+        {
+            hashDigest = MessageDigest.getInstance("MD5");
+        }
+        catch (NoSuchAlgorithmException e)
+        {
+            // should never happen
+            throw new RuntimeException(e);
         }
     }
 
@@ -310,7 +326,19 @@ public class FSCacheManager implements CacheManager, FSCacheManagerMBean, EventL
                 key += "-qs-" + request.getQueryString().hashCode();
             }
         }
-        return key;
+
+        // build hash (avoid long filenames or invalid chars)
+        key = String.valueOf(Hex.encodeHex(hashDigest.digest(key.getBytes())));
+
+        // build directories with the first 4 chars
+        StringBuffer path = new StringBuffer();
+        for (int i = 0; i < 4; i++)
+        {
+            path.append(key.substring(i, i + 1)).append("/");
+        }
+        path.append(key);
+
+        return path.toString();
     }
 
     /**
