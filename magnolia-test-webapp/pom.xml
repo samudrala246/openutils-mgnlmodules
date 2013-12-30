@@ -129,6 +129,7 @@
       <artifactId>openutils-elfunctions</artifactId>
       <version>1.1.2</version>
     </dependency>
+<!--
     <dependency>
       <groupId>net.sourceforge.openutils</groupId>
       <artifactId>openutils-mgnlbootstrapsync</artifactId>
@@ -139,6 +140,7 @@
       <artifactId>openutils-mgnlcas</artifactId>
       <version>5.0.11-SNAPSHOT</version>
     </dependency>
+-->
     <dependency>
       <groupId>net.sourceforge.openutils</groupId>
       <artifactId>openutils-mgnlcontrols</artifactId>
@@ -186,17 +188,17 @@
     </dependency>
     <dependency>
       <groupId>net.sourceforge.openutils</groupId>
-      <artifactId>openutils-mgnlstruts11</artifactId>
-      <version>5.0.11-SNAPSHOT</version>
-    </dependency>
-    <dependency>
-      <groupId>net.sourceforge.openutils</groupId>
       <artifactId>openutils-mgnlutils</artifactId>
       <version>5.0.11-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>net.sourceforge.openutils</groupId>
       <artifactId>openutils-mgnltagcloud</artifactId>
+      <version>5.0.11-SNAPSHOT</version>
+    </dependency>
+    <dependency>
+      <groupId>net.sourceforge.openutils</groupId>
+      <artifactId>openutils-mgnlmail</artifactId>
       <version>5.0.11-SNAPSHOT</version>
     </dependency>
     <dependency>
