@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE configuration SYSTEM "http://jackrabbit.apache.org/dtd/indexing-configuration-1.0.dtd">
-<configuration xmlns:nt="http://www.jcp.org/jcr/nt/1.0">
-  <analyzers>
-    <analyzer class="org.apache.lucene.analysis.KeywordAnalyzer">
-      <property>tags</property>
-    </analyzer>
-  </analyzers>
-</configuration>
