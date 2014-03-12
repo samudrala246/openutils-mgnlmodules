@@ -20,32 +20,25 @@
 package net.sourceforge.openutils.mgnlmedia.media.dialog;
 
 import info.magnolia.cms.core.Content;
-import info.magnolia.cms.core.HierarchyManager;
 import info.magnolia.cms.core.ItemType;
 import info.magnolia.cms.core.Path;
 import info.magnolia.cms.gui.dialog.Dialog;
 import info.magnolia.cms.gui.misc.Sources;
 import info.magnolia.cms.util.ContentUtil;
 import info.magnolia.cms.util.NodeDataUtil;
-import info.magnolia.context.MgnlContext;
 import info.magnolia.module.admininterface.SaveHandler;
 import info.magnolia.module.admininterface.dialogs.ConfiguredDialog;
 import info.magnolia.objectfactory.Components;
-
-import java.io.IOException;
-import java.io.PrintWriter;
-
-import javax.jcr.RepositoryException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import net.sourceforge.openutils.mgnlmedia.media.configuration.MediaConfigurationManager;
-import net.sourceforge.openutils.mgnlmedia.media.lifecycle.MediaModule;
-
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.jcr.RepositoryException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.io.PrintWriter;
 
 /**
  * With {@link LayerDialog} allows to have a dialog in an Ext js layer.
@@ -56,6 +49,7 @@ import org.slf4j.LoggerFactory;
 public class LayerDialogMVC extends ConfiguredDialog
 {
 
+    private static final String IS_NEW_NODE = "net.sourceforge.openutils.mgnlmedia.IS_NEW_NODE";
     /**
      * Logger.
      */
@@ -152,7 +146,8 @@ public class LayerDialogMVC extends ConfiguredDialog
         String type = NodeDataUtil.getString(node, "type");
 
         // rename node if image filename has changed
-        if (!StringUtils.equals(handler.getNodeName(), "mgnlNew"))
+        Object isNewNode = request.getAttribute(IS_NEW_NODE);
+        if (isNewNode == null || !((Boolean) isNewNode))
         {
             String newnodename = Components
                 .getComponent(MediaConfigurationManager.class)
@@ -205,12 +200,12 @@ public class LayerDialogMVC extends ConfiguredDialog
     @Override
     protected boolean onPreSave(SaveHandler control)
     {
-        String type = this.request.getParameter("type");
+        String type = request.getParameter("type");
 
         if (control.getNodeName().equals("mgnlNew"))
         {
-            HierarchyManager hm = MgnlContext.getHierarchyManager(MediaModule.REPO);
-            Content c = null;
+            request.setAttribute(IS_NEW_NODE, true);
+            Content c;
             try
             {
                 c = hm.getContent(control.getPath());
