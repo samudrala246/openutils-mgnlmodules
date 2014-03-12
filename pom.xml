@@ -38,6 +38,5 @@
     <module>openutils-mgnllms</module>
     <module>openutils-mgnlmail</module>
     <module>magnolia-test-webapp</module>
-    <module>magnolia5-test-webapp</module>
   </modules>
 </project>
